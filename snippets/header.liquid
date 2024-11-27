@@ -1,0 +1,8 @@
+{%- liquid
+if template.suffix != 'config' and request.design_mode == false
+  section 'title_config'
+  section 'pr_item_config'
+  section 'btn_config'
+endif -%}
+
+{%- if t_name == 'index' -%}<h1 class="site-header__logo t4s-d-none">{{- shop.name -}}</h1>{%- endif -%}

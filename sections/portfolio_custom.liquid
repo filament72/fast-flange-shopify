@@ -1,0 +1,813 @@
+<!-- sections/portfolio_custom.liquid -->
+{%- liquid
+  assign sid = section.id
+  assign stt_layout = section.settings.layout
+  assign stt_image_bg = section.settings.image_bg
+  if stt_layout == 't4s-se-container'
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+
+ -%} 
+
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-top-head.css' | asset_url | stylesheet_tag }}
+
+{{ 't4s-slider-settings.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickity_custom.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+{{ 't4s-portfolio.css' | asset_url | stylesheet_tag }}
+
+<link rel="stylesheet" href="{{ 'base_drop.min.css' | asset_url }}" media="all">
+<link href="{{ 't4s-loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+
+{% render 'section_style', sid: sid -%} 
+<div class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} >
+  {{- html_layout[0] -}}
+  {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+  {%- render 'section_tophead' -%}
+  <div class="t4s-portfolio">
+    <div class="{{ section.settings.content_align }} t4s_ratio_mix t4s_ratio_cuspx_mb_{{ section.settings.custom_mb }} t4s_ratio_cuspx_tb_{{ section.settings.custom_tb }} t4s_ratio_cuspx_{{ section.settings.custom_dk }} t4s_position_{{ section.settings.image_position }} t4s_{{ section.settings.image_size }} t4s-row t4s-justify-content-center t4s-gx-lg-{{ section.settings.space_h_item }} t4s-gy-lg-{{ section.settings.space_v_item }} t4s-gx-md-{{ section.settings.space_h_item_tb }} t4s-gy-md-{{ section.settings.space_v_item_tb }} t4s-gx-{{ section.settings.space_h_item_mb }} t4s-gy-{{ section.settings.space_v_item_mb }} t4s-portfolio-des-{{ section.settings.portfolio_des }}" style="--bg-color:{{ section.settings.bg_color }};--text-color:{{ section.settings.text_color }};--text-hover-color:{{ section.settings.text_hover_color }};">
+      {%- for block in section.blocks -%}
+        {%-liquid
+          assign aid = block.settings.article.id
+          assign image = block.settings.article.image
+          assign article_url = block.settings.article.url
+          assign handle = block.settings.article | split: "/" | first
+          assign blog_title = blogs[handle].title
+          assign blog_url = blogs[handle].url
+         -%}
+        <article rticle class="t4s-col-item t4s-portfolio-item t4s-post-item t4s-col-{{ block.settings.col_mb }} t4s-col-md-{{ block.settings.col_tb }} t4s-col-lg-{{ block.settings.col_dk }} t4s-article-{{ aid }}">
+          <div class="t4s-article-inner t4s-pr t4s-oh">
+            {%- if image != blank -%}
+              <div class="t4s-article-thumb t4s-pr" >
+                <a class="t4s-article-img t4s-d-block " href="{{ article_url }}">
+                  <div
+                    class="t4s_ratio t4s-bg-11 t4s_ratio t4s_ratio_hasmb"
+                    style="--ratioapt: {{ image.aspect_ratio | default: 1.5 }};--ratioaptmb: {{ image_mb.aspect_ratio | default: 1.5 }};--aspect-ratio-cus : {{ section.settings.height_dk }}px;--aspect-ratio-custb : {{ section.settings.height_tb }}px;--aspect-ratio-cusmb : {{ section.settings.height_mb }}px;"
+                  >
+                    <img
+                      class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff"
+                      data-src="{{ image | image_url: width: 1 }}"
+                      data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]"
+                      data-optimumx="2"
+                      data-sizes="auto"
+                      src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                      width="{{ image.width }}"
+                      height="{{ image.height }}"
+                      alt="{{ image.alt | escape }}"
+                      loading="lazy"
+                    >
+                  </div>
+                </a>
+              </div>
+            {%- endif -%}
+            <div class="t4s-article-info {% if section.settings.text_align == "center" %} t4s-d-flex t4s-flex-column t4s-align-items-center t4s-text-center{% endif %}">
+              <h3 class="t4s-article-title">
+                <a href="{{ article_url }}">{{ block.settings.article.title }}</a>
+              </h3>
+              {%- if section.settings.show_blog_title != 'disable' -%}
+                <div class="t4s-article-categories t4s-w-100">
+                  {%- if section.settings.show_blog_title == 'blog_current' -%}
+                    <a href="{{ blog_url }}">{{ blog_title }}</a>
+                  {%- else -%}
+                    {%- assign article_tags = block.settings.article.tags | join: ';' | split: ';' -%}
+                    {%- assign blog_tags = article_tags | where: 'blog_' -%}
+                    {%- for tag in blog_tags -%}
+                      <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove: 'blog_' | strip }}</a>
+                      {%- unless forloop.last -%}
+                        <span class="t4s-seperate"></span>
+                      {% endunless -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+  {{- html_layout[1] -}}
+</div>
+{% schema %}
+{
+  "name": "Portfolio custom",
+  "tag": "section",
+  "class": "t4s-section t4s-section-all t4s_bk_flickity t4s_tp_cd t4s-portfolio_custom t4s_tp_tab2",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1. Heading options"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_center",
+      "label": "Center heading align",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading",
+      "default": "Trending Products"
+    },
+    {
+      "type": "richtext",
+      "id": "top_subheading",
+      "label": "Description"
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "Bottom space (Desktop)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_tb",
+      "label": "Bottom space (Tablet)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_mb",
+      "label": "Bottom space (Mobile)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "2. General options"
+    },
+    {
+      "type": "select",
+      "id": "portfolio_des",
+      "label": "Portfolio design",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "show_blog_title",
+      "label": "Show blog title",
+      "info": "From tags contains 'blog_': will show tags on article current contains 'blog_'",
+      "default": "blog_current",
+      "options": [
+        {
+          "value": "disable",
+          "label": "Disable"
+        },
+        {
+          "value": "blog_current",
+          "label": "From blog current"
+        },
+        {
+          "value": "blog_tags",
+          "label": "From tags contains 'blog_'"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background content color",
+      "default": "#c91f28"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "text_hover_color",
+      "label": "Text hover color",
+      "default": "#000"
+    },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Content align",
+      "default": "t4s-text-start",
+      "options": [
+        {
+          "value": "t4s-text-start",
+          "label": "Default"
+        },
+        {
+          "value": "t4s-text-center",
+          "label": "Center"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_dk",
+      "label": "Use custom height (Desktop)",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "height_dk",
+      "label": "Banner height (Desktop)",
+      "default": 600
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_tb",
+      "label": "Use custom height (Tablet)",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "height_tb",
+      "label": "Banner height (Tablet)",
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mb",
+      "label": "Use custom height (Mobile)",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "height_mb",
+      "label": "Banner height (Mobile)",
+      "default": 300
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "Image size",
+      "default": "cover",
+      "info": "This settings apply only if the image ratio is not set to 'Adapt to image'",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Full"
+        },
+        {
+          "value": "contain",
+          "label": "Auto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "1",
+          "label": "Left top"
+        },
+        {
+          "value": "2",
+          "label": "Left center"
+        },
+        {
+          "value": "3",
+          "label": "Left bottom"
+        },
+        {
+          "value": "4",
+          "label": "Right top"
+        },
+        {
+          "value": "5",
+          "label": "Right center"
+        },
+        {
+          "value": "6",
+          "label": "Right bottom"
+        },
+        {
+          "value": "7",
+          "label": "Center top"
+        },
+        {
+          "value": "8",
+          "label": "Center center"
+        },
+        {
+          "value": "9",
+          "label": "Center bottom"
+        }
+      ],
+      "label": "Image position",
+      "default": "8"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "35",
+          "label": "35px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Space horizontal items",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Space vertical items",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item_tb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space horizontal items (Tablet)",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item_tb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Space vertical items (Tablet)",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item_mb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space horizontal items (Mobile)",
+      "default": "10"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item_mb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space vertical items (Mobile)",
+      "default": "10"
+    },
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Portfolio item",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Article"
+        },
+        {
+          "type": "select",
+          "id": "col_dk",
+          "label": "Item width (Desktop)",
+          "default": "6",
+          "options": [
+            {
+              "value": "12",
+              "label": "100%"
+            },
+            {
+              "value": "11",
+              "label": "91.66%"
+            },
+            {
+              "value": "10",
+              "label": "83.33%"
+            },
+            {
+              "value": "9",
+              "label": "75%"
+            },
+            {
+              "value": "8",
+              "label": "66.66%"
+            },
+            {
+              "value": "7",
+              "label": "58.33%"
+            },
+            {
+              "value": "6",
+              "label": "50%"
+            },
+            {
+              "value": "5",
+              "label": "41.66%"
+            },
+            {
+              "value": "4",
+              "label": "33.33%"
+            },
+            {
+              "value": "3",
+              "label": "25%"
+            },
+            {
+              "value": "2",
+              "label": "16.67%"
+            },
+            {
+              "value": "1",
+              "label": "8.33%"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "col_tb",
+          "label": "Item width (Tablet)",
+          "default": "6",
+          "options": [
+            {
+              "value": "12",
+              "label": "100%"
+            },
+            {
+              "value": "11",
+              "label": "91.66%"
+            },
+            {
+              "value": "10",
+              "label": "83.33%"
+            },
+            {
+              "value": "9",
+              "label": "75%"
+            },
+            {
+              "value": "8",
+              "label": "66.66%"
+            },
+            {
+              "value": "7",
+              "label": "58.33%"
+            },
+            {
+              "value": "6",
+              "label": "50%"
+            },
+            {
+              "value": "5",
+              "label": "41.66%"
+            },
+            {
+              "value": "4",
+              "label": "33.33%"
+            },
+            {
+              "value": "3",
+              "label": "25%"
+            },
+            {
+              "value": "2",
+              "label": "16.67%"
+            },
+            {
+              "value": "1",
+              "label": "8.33%"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "col_mb",
+          "label": "Item width (Mobile)",
+          "default": "12",
+          "options": [
+            {
+              "value": "12",
+              "label": "100%"
+            },
+            {
+              "value": "11",
+              "label": "91.66%"
+            },
+            {
+              "value": "10",
+              "label": "83.33%"
+            },
+            {
+              "value": "9",
+              "label": "75%"
+            },
+            {
+              "value": "8",
+              "label": "66.66%"
+            },
+            {
+              "value": "7",
+              "label": "58.33%"
+            },
+            {
+              "value": "6",
+              "label": "50%"
+            },
+            {
+              "value": "5",
+              "label": "41.66%"
+            },
+            {
+              "value": "4",
+              "label": "33.33%"
+            },
+            {
+              "value": "3",
+              "label": "25%"
+            },
+            {
+              "value": "2",
+              "label": "16.67%"
+            },
+            {
+              "value": "1",
+              "label": "8.33%"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Portfolio custom"
+     
+    }
+  ]
+}
+{% endschema %}

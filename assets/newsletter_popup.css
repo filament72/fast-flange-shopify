@@ -1,0 +1,169 @@
+.t4s-popup-newsletter-form svg {
+  fill: currentColor;
+}
+#t4s-popup__newsletter:not(.t4s-news-layout1) {
+  max-width: 800px !important;
+}
+#t4s-popup__newsletter {
+  max-width: 530px !important;
+  background-color: var(--t4s-light-color);
+  margin: 30px auto;
+}
+.t4s-newsletter-popup-design-1 {
+  max-width: 1000px !important;
+  margin: 0 auto;
+  background-color: #fff;
+}
+.t4s-newsletter-popup-design-1
+  .t4s-popup-newsletter-form
+  .t4s-newsletter__inner
+  > .t4s-col-item {
+  flex: 1 0 auto;
+}
+.t4s-popup-newsletter-form .t4s-newsletter__email,
+.t4s-popup-newsletter-form .t4s-newsletter__email::placeholder {
+  color: var(--input-cl);
+}
+.t4s-popup-newsletter-form .t4s-newsletter__email {
+  border: 1px solid var(--border-cl);
+}
+.t4s-popup-newsletter-form .t4s-newsletter__submit {
+  color: var(--btn-cl);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.t4s-newsletter-popup-design-1
+  .t4s-popup-newsletter-form
+  .t4s-newsletter__email {
+  width: 100%;
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 300;
+  height: 60px;
+  max-height: 60px;
+  margin-bottom: 20px;
+}
+.t4s-text-center .t4s-popup-newsletter-form .t4s-newsletter__email {
+  text-align: center;
+}
+.t4s-newsletter-popup-design-1
+  .t4s-popup-newsletter-form
+  .t4s-newsletter__submit {
+  width: 100%;
+  height: 60px;
+  max-height: 60px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  line-height: 30px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.t4s-newsletter-popup-design-1 .t4s-popup-newsletter-form form {
+  margin-bottom: 45px;
+}
+.t4s-newsletter-popup-design-1 .t4s-popup-newsletter-form .t4s-news-heading {
+  font-size: 35px;
+  line-height: 40px;
+  font-weight: 500;
+  color: var(--heading-color);
+  margin-bottom: 25px;
+}
+.t4s-newsletter-popup-design-1 .t4s-popup-newsletter-form .t4s-news-subheading {
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 300;
+  margin-bottom: 35px;
+}
+.t4s-popup-newsletter-form .t4s-newsletter__text {
+  display: inherit;
+}
+
+.t4s-newsletter-popup-design-2
+  .t4s-popup-newsletter-form
+  .t4s-newsletter__email {
+  width: 100%;
+  height: 60px;
+  max-height: 60px;
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 300;
+}
+.t4s-newsletter-popup-design-2
+  .t4s-popup-newsletter-form
+  .t4s-newsletter__submit {
+  height: 60px;
+  max-height: 60px;
+  padding: 0 38px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  line-height: 30px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-left: -1px;
+}
+.t4s-newsletter-popup-design-2 .t4s-popup-newsletter-form {
+  padding: 25px 0 0 0;
+}
+.t4s-newsletter-popup-design-2 {
+  padding: 30px;
+}
+.t4s-newsletter-popup-design-2 .t4s-news-heading {
+  font-size: 35px;
+  line-height: 40px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.t4s-newsletter-popup-design-2 .t4s-news-subheading {
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 300;
+  margin-bottom: 15px;
+}
+
+.t4s-newsletter-popup-design-3 {
+  width: 810px !important;
+}
+
+.t4s-newsletter-popup-design-3 .t4s-news-heading {
+  font-size: 25px;
+  letter-spacing: 4px;
+  line-height: 40px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+.t4s-newsletter-popup-design-3 .t4s-news-subheading {
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 300;
+}
+.t4s-newsletter-popup-design-3 .t4s-newsletter__email {
+  width: 100%;
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 300;
+  height: 60px;
+  max-height: 60px;
+  text-align: start !important;
+}
+.t4s-newsletter-popup-design-3 .t4s-newsletter__submit {
+  font-size: 14px;
+  letter-spacing: 2px;
+  line-height: 30px;
+  text-transform: uppercase;
+  font-weight: 500;
+  height: 60px;
+  max-height: 60px;
+  padding: 0 38px;
+}
+.t4s-popup-newsletter-form .t4s-newsletter__submit:hover {
+  border-color: var(--btn-hover-cl);
+  color: var(--btn-hover-cl);
+}
+.t4s-popup-newsletter-form .t4s-newsletter__email:focus {
+  border: 1px solid var(--border-cl) !important;
+}
+.t4s-popup-newsletter-form .t4s-newsletter__email {
+  padding: 10px 15px;
+}

@@ -1,0 +1,293 @@
+.t4s-lm-bar--txt {
+  font-size: 12px;
+  color: var(--progress-bar-text-cl);
+  font-weight: 500;
+  margin: 10px 0 0;
+  display: block;
+}
+.t4s-lm-bar--progress {
+  display: block;
+  margin: 20px auto 0;
+  width: 450px;
+  height: 6px;
+  background-color: var(--border-color);
+}
+.t4s-prs-footer.t4s-text-center .t4s-lm-bar--progress {
+  margin-left: auto;
+  margin-right: auto;
+}
+.t4s-text-start .t4s-lm-bar--progress,
+.t4s-prs-footer.t4s-text-start .t4s-lm-bar--progress {
+  margin-left: 0;
+}
+.t4s-text-end .t4s-lm-bar--progress,
+.t4s-prs-footer.t4s-text-end .t4s-lm-bar--progress {
+  margin-right: 0;
+}
+.t4s-lm-bar--progress .t4s-lm-bar--current {
+  width: 0;
+  will-change: width;
+  -webkit-transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  height: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 2px;
+  background: var(--accent-color);
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn.t4s-btn-style-outline > span,
+.t4s-pagination-wrapper .t4s-loadmore-btn > span,
+.t4s-pagination-wrapper
+  .t4s-loadmore-btn.t4s-btn-style-outline
+  > .t4s-btn-icon {
+  z-index: 1;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn.is--loading{
+  overflow: unset;
+  margin-top: 63px;
+}
+/* .t4s-pagination-wrapper .t4s-btn-style-outline .t4s-lm-bar--progress .t4s-lm-bar--current {
+  margin: 0;
+  top: var(--border_w);
+  left: var(--border_w);
+  transform: none;
+  height: auto;
+  bottom: var(--border_w);
+}
+.t4s-btn-style-outline[data-load-more] .t4s-lm-bar--progress .t4s-lm-bar--current {
+  background: var(--progress-bar-primary-cl);
+  transition: .3s ease-in-out;
+}
+.t4s-btn-style-outline[data-load-more]:hover .t4s-lm-bar--progress .t4s-lm-bar--current {
+  width: calc(100% - 2 * var(--border_w))!important;
+}
+.t4s-btn-style-outline[data-load-more]:hover{
+  color: var(var(--progress-bar-second-cl))
+}
+.t4s-btn-style-outline[data-load-more]::after,
+.t4s-btn-style-outline[data-load-more]:hover::after {
+  border-color: var(var(--progress-bar-second-cl));
+}
+.t4s-btn-style-outline[data-load-more]::before,
+.t4s-btn-style-outline[data-load-more]:hover::before {
+  background-color: var(--border-color);
+  border-color: var(--border-color);
+}
+.t4s-btn-style-outline[data-load-more] {
+  --btn-color: var(--border-color);
+}
+.t4s-btn-style-outline[data-load-more]:hover {
+  background-color: var(--border-color) !important;
+} */
+.t4s-btn-base,
+.t4s-btn-base.t4s-btn-style-outline .t4s-lm-bar--progress,
+.t4s-btn-base.t4s-btn-effect-rectangle-out:hover .t4s-lm-bar--progress {
+  overflow: hidden;
+}
+/* style btn home 2 - loadmore */
+
+.t4s-pagination-wrapper .t4s-special-loadmore1 .t4s-lm-bar--progress {
+  left: var(--border_w);
+  position: absolute;
+  top: var(--border_w);
+  height: calc(100% - 2 * var(--border_w)) !important;
+  width: calc(100% - 2 * var(--border_w)) !important;
+  margin: 0;
+  background: transparent;
+}
+.t4s-special-loadmore1[data-load-more]
+  .t4s-lm-bar--progress
+  .t4s-lm-bar--current {
+  background: var(--progress-bar-primary-cl);
+  transition: 0.3s ease-in-out;
+  margin: 0;
+  height: 100%;
+  border-radius: 0;
+}
+.t4s-special-loadmore1[data-load-more]::after {
+  color: var(--progress-bar-second-cl);
+  border-color: var(--progress-bar-second-cl);
+}
+.t4s-special-loadmore1[data-load-more]:hover,
+.t4s-special-loadmore1[data-load-more]:hover::after {
+  border-color: var(--progress-bar-active-cl);
+}
+.t4s-special-loadmore1[data-load-more]::before,
+.t4s-special-loadmore1[data-load-more]:hover::before {
+  background-color: var(--border-color);
+  border-color: var(--border-color);
+}
+.t4s-btn-style-outline[data-load-more] {
+  --btn-color: var(--border-color);
+}
+.t4s-pagination-wrapper .t4s-special-loadmore2 {
+  padding: 0 !important;
+}
+.t4s-pagination-wrapper
+  .t4s-special-loadmore2.is--loading
+  > .t4s-loading__spinner {
+  z-index: 2;
+}
+.t4s-pagination-wrapper .t4s-special-loadmore1,
+.t4s-pagination-wrapper .t4s-special-loadmore2 {
+  color: var(--progress-bar-text-cl);
+  overflow: hidden;
+}
+.t4s-pagination-wrapper .t4s-special-loadmore1:hover,
+.t4s-pagination-wrapper .t4s-special-loadmore2:hover {
+  color: var(--progress-bar-active-cl);
+  border-color: var(--progress-bar-active-cl);
+}
+.t4s-pagination-wrapper .t4s-special-loadmore1::before,
+.t4s-pagination-wrapper .t4s-special-loadmore2::before {
+}
+.t4s-pagination-wrapper .t4s-special-loadmore2 .t4s-btn-atc_text {
+  justify-content: center;
+  padding: 0 10px;
+  display: flex;
+}
+.t4s-pagination-wrapper .t4s-special-loadmore2 .t4s-btn-atc_text > span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block !important;
+  height: auto !important;
+  overflow: hidden;
+}
+.t4s-pagination-wrapper
+  .t4s-special-loadmore2.t4s-btn-icon-true
+  .t4s-circle-css {
+  width: 120px;
+  height: 120px;
+}
+.t4s-pagination-wrapper .t4s-special-loadmore2 .t4s-circle--bg {
+  background: conic-gradient(
+    var(--progress-bar-second-cl, #000) var(--cricle-degrees),
+    var(--progress-bar-primary-cl, #eee) var(--cricle-degrees)
+  );
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.t4s-product a.is--loading::after {
+  width: 18px;
+  height: 18px;
+  border: 2px solid;
+  border-color: currentColor;
+  border-top-color: transparent;
+  border-radius: 100%;
+  opacity: 1;
+  -webkit-animation: 450ms linear infinite spin;
+  animation: 450ms linear infinite spin;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  content: "";
+}
+.t4s-product .t4s-product-btns a.is--loading,
+.t4s-product .t4s-product-btns2 a.is--loading {
+  pointer-events: none;
+}
+.t4s-product .t4s-product-btns a.is--loading > span,
+.t4s-product .t4s-product-btns2 a.is--loading > span {
+  opacity: 0;
+  visibility: hidden;
+}
+.t4s-product a.t4s-pr-wishlist.is--loading,
+.css_for_wis_app_true .t4s-product .t4s-pr-wishlist.is--loading {
+  --border-cl: var(--wishlist-cl);
+}
+.t4s-product .t4s-pr-compare.is--loading {
+  --border-cl: var(--compare-cl);
+}
+.t4s-product .t4s-pr-quickview.is--loading {
+  --border-cl: var(--quickview-cl);
+}
+.t4s-product .t4s-pr-addtocart.is--loading {
+  --border-cl: var(--atc-cl);
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn > span,
+.t4s-pagination-wrapper .t4s-loadmore-btn > span {
+  display: flex;
+  align-items: center;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn.is--loading {
+  pointer-events: none;
+  transition: 0.5s ease 0s;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn.is--loading > span,
+.t4s-pagination-wrapper .t4s-loadmore-btn.is--loading .t4s-btn-icon {
+  opacity: 1;
+  visibility: visible;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn .t4s-btn-icon {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  margin-left: 5px;
+}
+.t4s-pagination-wrapper.t4s-prs-head .t4s-loadmore-btn .t4s-btn-icon,
+.t4s-pagination-wrapper.t4s-blog-head .t4s-loadmore-btn .t4s-btn-icon {
+  margin-left: 0;
+  margin-right: 5px;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn .t4s-loadmore-icon {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transition: 0.5s ease 0s;
+  max-width: 78px;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn.is--loading .t4s-loadmore-icon {
+  opacity: 1;
+  visibility: visible;
+}
+body .content--loading {
+  pointer-events: none;
+  position: relative;
+}
+body .content--loading > * {
+  opacity: 0.5;
+}
+body .content--loading::before {
+  position: absolute;
+  content: "";
+  width: 100px;
+  height: 100px;
+  border: 3px solid;
+  border-color: var(--accent-color);
+  border-top-color: #fff;
+  border-radius: 100%;
+  opacity: 1;
+  -webkit-animation: 450ms linear infinite spin;
+  animation: 450ms linear infinite spin;
+  z-index: 20;
+  top: 20%;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+.t4s-prs-footer.t4s-has-btn-none,
+.t4s-flickity-slider + .t4s-prs-footer.t4s-has-btn-load-more {
+  display: none;
+}
+@media (max-width: 767px) {
+  .t4s-lm-bar--progress {
+    width: 250px;
+  }
+}

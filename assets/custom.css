@@ -1,0 +1,59 @@
+/*-----------------------------------------------------------------------------/
+/ Custom Theme CSS
+/-----------------------------------------------------------------------------*/
+/*---------------- Global Custom CSS -------------------*/
+.t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__account {order: 1; } .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__cart {order: 2;} .t4s-discount-collection-layout2 {background-color: #fff;}
+
+@font-face {
+  font-family: 'Quantify';
+  src: url('Quantify Bold.ttf?v=1') format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+:root{
+--font-family-4: 'Quantify';
+}
+.t4s-article-item .t4s-article-info {
+     padding-top: 0px !important; 
+}
+.t4s-article-item .t4s-article-metas {margin-bottom:0px !important}
+a.btn {
+font-size: 15px;
+    line-height: 26px;
+    font-weight: 400;
+    padding: 0 40px;
+    height: 45px;
+    border-end-end-radius: 2px;
+    border-start-end-radius: 2px;
+margin:0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: none;
+    color: #fff;;
+    background-color: #8dc63f;
+}
+
+/*---------------- Custom CSS for only desktop -------------------*/
+@media (min-width: 1025px) {
+  .t4s-article-info{
+padding-inline-end:45px;} .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__account { padding-inline-end: calc(var(--space-icon)/2)!important; } .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__cart {  padding-inline-end: 0 !important;}
+}
+
+/*---------------- Custom CSS for tablet, mobile -------------------*/
+@media (max-width: 1024px) {
+  
+}
+
+/*---------------- Custom CSS for only tablet -------------------*/
+@media (min-width: 768px) and (max-width: 1024px) {
+  .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__account { padding-inline-end: calc(var(--space-icon-tb)/2)!important; } .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__cart {  padding-inline-end: 0 !important;}
+}
+
+/*---------------- Custom CSS for only mobile -------------------*/
+@media (max-width: 767px){
+  .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__account { padding-inline-end: calc(var(--space-icon-mb)/2)!important; } .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__cart {  padding-inline-end: 0 !important;}
+}

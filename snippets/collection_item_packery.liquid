@@ -1,0 +1,42 @@
+{%- liquid
+  assign collection = collections[block.settings.collection]
+  assign image = block.settings.image | default: collection.image
+  assign title = block.settings.title | default: collection.title
+  assign collection_link = block.settings.collection_link | default: collection.url  
+ -%}
+<div class="t4s-collection-content t4s-pr t4s-eff-img-{{ img_effect }}">
+  <div class="t4s-coll-img t4s-pr t4s-oh t4s-eff t4s-eff-{{ b_effect }}" data-cacl-slide>
+    <a class="t4s_collection_item_link t4s-img-wrap t4s-d-block" href="{{ collection_link }}" target="{{ open_link }}">
+      <div class="t4s_ratio t4s-img-wrap" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }}">
+        {%- if image != blank -%}
+          <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image.presentation.focal_point}}"{% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+          <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }})"></span>
+        {%- else -%}
+          {{ 'collection-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}
+        {%- endif -%} 
+      </div>
+    </a>
+  </div>
+  {%- if title != blank -%}
+      <div class="t4s-collection-wrapper t4s-content-{{ block.settings.content_pos }}">
+          <a class="t4s-collection-title t4s-pe-auto" href="{{ collection_link }}" target="{{ open_link }}">
+            <span class="t4s-d-block t4s-text">{{ title }}</span>
+          </a>
+          {% comment %} {%- if all_products_count > 0 -%}
+            <div class="t4s-collec-pr-count">{{ all_products_count }} Products</div>
+          {%- endif -%} {% endcomment %}
+          {%- if block.settings.description != blank -%}
+            <p class="t4s-collection-description">{{ block.settings.description }}</p>
+          {%- elsif collection.description != blank -%}
+            <p class="t4s-collection-description">{{ collection.description }}</p>
+          {%- endif -%}
+          {%- if block.settings.button_label != blank -%}
+          {{ 't4s-button-style.css' | asset_url | stylesheet_tag }}
+          <a class="t4s-collection-btn t4s-pe-auto t4s-btn t4s-btn-style-outline" href="{{ collection_link }}" target="{{ open_link }}">
+              <span class="t4s-text">{{ block.settings.button_label }}</span>
+              <svg class="t4s-btn-icon" xmlns="http://www.w3.org/2000/svg" width="14" fill="currentColor" viewBox="0 0 512 512"><path d="M489.4 233.4L512 256l-22.6 22.6-128 128-22.6 22.6L293.5 384l22.6-22.6L389.5 288 32 288 0 288l0-64 32 0 357.5 0-73.4-73.4L293.5 128l45.3-45.3 22.6 22.6 128 128z"/></svg>
+            </a>
+        {%- endif -%}
+      </div>
+  {%- endif -%}
+</div> 

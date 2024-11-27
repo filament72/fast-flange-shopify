@@ -1,0 +1,186 @@
+{%- liquid
+   assign img_size = 40
+   assign only_icon = 't4s-only_icon_' | append: settings.only_icon
+   assign sid = section.id
+   if sid == 'mb_cat'
+    assign show_code = true
+   elsif sid != 'mb_cat' and request.design_mode or request.page_type == 'index' 
+    assign show_code = true
+   else
+    assign show_code = false
+   endif -%}
+
+{%- if show_code -%}
+  <ul id="menu-mb__cat" class="t4s-mb__menu" data-section-id="{{ sid }}">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- liquid 
+          assign collection = collections[block.settings.cat]
+          assign tt_current = block.settings.title | default: collection.title
+          assign url_current = block.settings.url | default: collection.url
+        -%}
+          {%- if linklists[block.settings.menu].links.size > 0 -%}
+            <li id="item_{{ block.id }}" class="t4s-menu-item t4s-item-level-0 t4s-menu-item-has-children {{ only_icon }}" {{ block.shopify_attributes }}>
+              <a href="{{ url_current }}">
+                <span class="nav_link_txt t4s-d-flex t4s-align-items-center">
+                  {%- if block.settings.icons_op == '2' and block.settings.icon != blank %}
+                    {{ block.settings.icon | strip }}
+                  {%- elsif block.settings.icons_op == '1' and block.settings.image != blank %}
+                    <i class="t4s-d-inline-block"><img class="img_catk_mb" src="{{ block.settings.image | image_url: width: img_size }}" alt="{{ block.settings.image.alt }}" width="{{ image.width }}" height="{{ image.height }}" loading="lazy"></i>
+                  {% endif -%}
+                  {{ tt_current }}{% if block.settings.lb != blank %}
+                    <span class="t4s_lb_nav_mb" style="background-color: {{ block.settings.lb_cl }}">{{ block.settings.lb }}</span>
+                  {% endif %}
+                </span>
+                <span class="t4s-mb-nav__icon"></span>
+              </a>
+              <ul class="t4s-sub-menu">
+                {%- for link in linklists[block.settings.menu].links -%}
+                  {%- assign arrlt = link.title | split: '[' -%}
+                  {%- if link.links != blank -%}
+                    <li class="t4s-menu-item t4s-item-level-1 t4s-menu-item-has-children {{ only_icon }}{% if link.active %} is--current{% endif %}">
+                      <a href="{{ link.url }}">
+                        <span class="nav_link_txt t4s-d-flex t4s-align-items-center">{%- render 'lb_inc_mb', arrlt: arrlt -%}</span>
+                        <span class="t4s-mb-nav__icon"></span>
+                      </a>
+                      <ul class="t4s-sub-sub-menu">
+                        {%- for child_link in link.links -%}
+
+                          {%- assign arrlt = child_link.title | split: '[' -%}
+                          {%- if child_link.links != blank -%}
+                            <li id="item_{{ block.id }}" class="t4s-menu-item t4s-item-level-2 t4s-menu-item-has-children {{ only_icon }}{% if child_link.active %} is--current{% endif %}">
+                              <a href="{{ child_link.url }}">
+                                <span class="nav_link_txt t4s-d-flex t4s-align-items-center">{%- render 'lb_inc_mb', arrlt: arrlt -%}</span>
+                                <span class="t4s-mb-nav__icon"></span>
+                              </a>
+                              <ul class="t4s-sub-sub-sub-menu">
+                                {%- for grandchild_link in child_link.links -%}
+                                  {%- assign arrlt = grandchild_link.title | split: '[' -%}
+                                  <li class="t4s-menu-item t4s-item-level-3{% if grandchild_link.active %} is--current{% endif %}">
+                                    <a href="{{ grandchild_link.url }}">{%- render 'lb_inc_mb', arrlt: arrlt -%}</a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            </li>
+                          {%- else -%}
+                            <li class="t4s-menu-item t4s-item-level-2{% if child_link.active %} is--current{% endif %}">
+                              <a href="{{ child_link.url }}">{%- render 'lb_inc_mb', arrlt: arrlt -%}</a>
+                            </li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    </li>
+                  {%- else -%}
+                    <li class="t4s-menu-item t4s-item-level-1{% if link.active %} is--current{% endif %}">
+                      <a href="{{ link.url }}">{%- render 'lb_inc_mb', arrlt: arrlt -%}</a>
+                    </li>
+                  {%- endif -%}
+
+                {%- endfor -%}
+              </ul>
+            </li>
+          {%- else -%}
+            <li id="item_{{ block.id }}" class="t4s-menu-item t4s-item-level-0">
+              <a href="{{ url_current }}">
+                {%- if block.settings.icons_op == '2' and block.settings.icon != blank %}
+                  {{ block.settings.icon | strip }}
+                {%- elsif block.settings.icons_op == '1' and block.settings.image != blank %}
+                  {% assign image = block.settings.image %}<i class="t4s-d-inline-block">
+                    <img class="img_catk_mb lazyloadt4s" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" data-src="{{ image | image_url: width: img_size }}" alt="{{ image.alt | escape }}" loading="lazy"></i>
+                {% endif -%}
+                {{ tt_current }}{% if block.settings.lb != blank %}
+                  <span class="t4s_lb_nav_mb" style="background-color: {{ block.settings.lb_cl }}">{{ block.settings.lb }}</span>
+                {% endif %}
+              </a>
+            </li>
+          {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      <li>
+        <a href="/admin/themes/">Create your mobile categories menu sidebar and config from Section > Mobile Categories</a>
+      </li>
+    {%- endif -%}
+  </ul>
+{%- else -%}
+  <div data-section-id="{{ sid }}"></div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Mobile Categories",
+  "class": "t4s-sp-section-mb-cat t4s-sp-section-mb-nav t4s-current-scrollbar",
+  "max_blocks": 30,
+  "blocks": [
+    {
+      "type": "cat",
+      "name": "Collection Link List",
+      "settings": [
+        {
+          "label": "+ Collection",
+          "id": "cat",
+          "type": "collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "== Title (optional)",
+          "info": "Leave empty to use 'collection title'."
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link (optional)",
+          "info": "Leave empty to use 'collection url'."
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "== Add menu (optional)"
+        },
+        {
+          "type": "text",
+          "id": "lb",
+          "label": "== Label text"
+        },
+        {
+          "type": "color",
+          "id": "lb_cl",
+          "default": "#e91e63",
+          "label": "== Label color"
+        },
+        {
+          "type": "select",
+          "id": "icons_op",
+          "options": [
+            {
+              "value": "0",
+              "label": "None"
+            },
+            {
+              "value": "1",
+              "label": "Image"
+            },
+            {
+              "value": "2",
+              "label": "Icon"
+            }
+          ],
+          "label": "== Show icons option:",
+          "default": "2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "id": "icon",
+          "type": "text",
+          "label": "Icon",
+          "info": "Ex:user [Fontawesome icons](https://fontawesome.com/search)"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

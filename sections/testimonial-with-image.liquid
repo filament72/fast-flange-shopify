@@ -1,0 +1,910 @@
+<!-- sections/testimonial-with-image.liquid -->
+{{ 't4s-slider-settings.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickity_custom.css' | asset_url | stylesheet_tag }}
+{{ 't4s-testimonials.css' | asset_url | stylesheet_tag }}
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+
+<link href="{{ 't4s-loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- liquid
+  assign sid = section.id
+  assign stt_layout = section.settings.layout
+  assign stt_image_bg = section.settings.image_bg -%}
+
+{%- liquid
+  if stt_layout == 't4s-se-container' 
+   assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+
+  assign layout_des = section.settings.layout_des
+
+  if section.settings.btn_owl == "simple"
+    assign arrow_icon = 1
+  else
+    assign arrow_icon = 2
+  endif
+  assign show_btn = section.settings.show_btn
+  if show_btn != "hidden"
+    assign slider_btns = true
+  else
+    assign slider_btns = false
+  endif
+  assign show_dots = section.settings.show_dots
+  if show_dots != "hidden"
+    assign slider_dots = true
+  else
+    assign slider_dots = false
+  endif
+
+  assign dotUI = false
+  if section.settings.dot_pos == "ontop"
+    assign dotUI = true
+  endif
+  assign index_dots = 0
+
+-%}
+{% render 'section_style', sid: sid %}
+<div class="t4s-section-inner t4s-testimonial icon_slider-{{ section.settings.icon_slider }}  t4s_se_{{ sid }} {{ stt_layout }} {%- if stt_image_bg != blank and stt_layout != 't4s-se-container' -%} t4s-has-imgbg lazyloadt4s {%- endif -%}"  {%- if stt_image_bg != blank and stt_layout != 't4s-se-container' -%}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" {%- endif -%}  >
+  {{- html_layout[0] -}}
+  {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {%- if stt_image_bg != blank -%} t4s-has-imgbg lazyloadt4s {%- endif -%} "  {%- if stt_image_bg != blank -%}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" {%- endif -%} > {%- endif -%}
+  <div class="t4s-style-inner t4s-dots-{{ section.settings.dot_pos }}" style="--heading-cl:{{ section.settings.heading_cl }};--content-cl:{{ section.settings.content_cl }};--name-cl:{{ section.settings.name_cl }};--pos-cl:{{ section.settings.pos_cl }};--rating-cl:{{ section.settings.rate_cl }};--space_h_item:{{ section.settings.space_h_item }}px;">
+    <div class="t4s-style-inner t4s-dots-{{ section.settings.dot_pos }}" style="--heading-cl:{{ section.settings.heading_cl }};--content-cl:{{ section.settings.content_cl }};--name-cl:{{ section.settings.name_cl }};--pos-cl:{{ section.settings.pos_cl }};--rating-cl:{{ section.settings.rate_cl }};--space_h_item:{{ section.settings.space_h_item }}px;">
+      {%- liquid
+        assign icon_slider = section.settings.icon_slider 
+        case icon_slider
+          when '1'
+            assign view_box = "0 0 22 22"
+          when '2'
+            assign view_box = "0 0 24 17"
+          when '3'
+            assign view_box = "0 0 28 20"
+          when '4'
+            assign view_box = "0 0 32 32"
+          when '5'  
+            assign view_box = "0 0 34 18"
+        endcase
+      -%}
+      <div class="t4s-testimonial-main-w-img t4s-row t4s-gx-lg-30 t4s-gy-lg-30  t4s-gx-md-30 t4s-gy-md-30 t4s-gx-30 t4s-gy-30">
+        <div class="t4s-col-item t4s-d-flex t4s-flex-column t4s-justify-content-center t4s-col-lg-6 t4s-col-md-6 t4s-col-12">
+          {%- render 'section_tophead', get_height: true, sid: sid, slider_btns: slider_btns -%}
+          <div id="t4s-testimonial_main-{{ sid }}" class="t4s-section-content t4s-testimonial-w-content icon_slider-{{ section.settings.icon_slider }} t4s-flickity-slider t4s-pr t4s_box_slider t4s-row t4s-row-cols-lg-1 t4s-row-cols-md-1 t4s-row-cols-1 t4s-gx-lg-30 t4s-gy-lg-30 t4s-gx-md-30 t4s-gy-md-30 t4s-gx-15 t4s-gy-15 {% if slider_btns %} t4s-slider-btn__{{ section.settings.btn_pos }}-content t4s-slider-btn-{{ show_btn }} t4s-slider-btn-style-{{ section.settings.btn_owl }} t4s-slider-btn-{{ section.settings.btn_shape }} t4s-slider-btn-{{ section.settings.btn_size }} t4s-slider-btn-cl-{{ section.settings.btn_cl }} t4s-slider-btn-vi-{{ section.settings.btn_vi }} {% endif %}
+            {% if slider_dots %} t4s-dots-style-{{ section.settings.dot_owl }} t4s-slider-dots-{{ show_dots }} t4s-dots-cl-{{ section.settings.dots_cl }} t4s-dots-round-{{ section.settings.dots_round }} {% endif %} t4s-base-dots-{{ section.settings.dots_align }} t4s-flickity-slider flickityt4s" data-flickityt4s-js='{"dotUI": {{ dotUI }}, "customIcon":{{ icon_slider }}, "viewBox":"{{ view_box }}", "setPrevNextButtons": true,"arrowIcon": "{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 1, "contain": 1,"groupCells":"100%", "dragThreshold" : 5, "cellAlign": "center","wrapAround": {{ section.settings.loop }},"prevNextButtons": {{ slider_btns }},"percentPosition": 1,"pageDots": {{ slider_dots }}, "autoPlay" : {{ section.settings.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ section.settings.au_hover }}, "t4sid": "{{ sid }}","navUI": 1,"cellSelector": ".t4s-testimonial-item"}' style="--btn-distance: {{ section.settings.btn_distance }}px;--space-dots: {{ section.settings.dots_space }}px;--dots-bottom-pos: {{ section.settings.dots_bottom_pos }}px;">
+            {%- for block in section.blocks -%}
+              <div class="t4s-col-item t4s-testimonial-item t4s-text-{{ section.settings.testimonial_content }}">
+                <div class="t4s-testimonial-inner" >
+                  {% render 'quote_w_image', block: block %}
+                </div>
+              </div>
+          {%- endfor -%}
+          </div>
+        </div>
+        <div class="t4s-col-item t4s-col-lg-6 t4s-col-md-6 t4s-col-12">
+          <div class="t4s_box_slider2 t4s-row t4s-row-cols-lg-1 t4s-justify-content-center t4s-align-items-center t4s-flickity-slider flickityt4s t4s-gx-0" data-flickityt4s-js='{"asNavFor":"#t4s-testimonial_main-{{ sid }}","contain": 1,"groupCells":"100%","wrapAround":true,"pageDots":false,"prevNextButtons":false, "contain": true}'>
+            {%- for block in section.blocks -%}
+                <div class="t4s-col-item t4s-async-item">
+                  <div class="t4s-async-item-inner t4s-d-flex t4s-justify-content-center t4s-align-items-center">
+                     {%- if block.settings.image_avata != blank -%}
+                        {%- assign image = block.settings.image_avata -%} 
+                          <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+                    {%- endif -%}
+                  </div>  
+                </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{- html_layout[1] -}}
+</div>
+<style>
+.t4s-testimonial-w-content .t4s-rating{
+  gap:6px;
+  margin-bottom:32px;
+}
+.t4s-testimonial-w-content .t4s-rating svg{
+  width:16px;
+  height:16px;
+  color:var(--rating-cl);
+}
+.t4s-testimonial-w-content .t4s-testimonial-heading{
+  font-family: var(--font-family-1);
+  font-size: 24px;
+  font-weight: 600;
+  line-height:31.2px;
+  margin-bottom:12px;
+}
+.t4s-testimonial-w-content .t4s-testimonial-inner .t4s-testimonial-content{
+  font-family: var(--font-family-1);
+  font-size: 16px;
+  font-weight: 400;
+  line-height:22.4px;
+  margin-bottom:32px;
+}
+.t4s-testimonial-w-content .t4s-testimonial-name{
+  font-family: var(--font-family-1);
+  font-size: 16px;
+  font-weight: 600;
+  line-height:20.8px;
+  margin-bottom:8px;
+}
+.t4s-testimonial-w-content .t4s-purchase_item{
+  font-size: 14px;
+  font-weight: 400;
+  line-height:18.2px;
+}
+.t4s-testimonial-w-content .t4s-testimonial-product a{
+  color: #FFF;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18.2px;
+}
+.t4s-testimonial-main-w-img .t4s-flickity-slider .flickityt4s-prev-next-button{
+  position: relative;
+  top:60px;
+  transform:translate(0);
+}
+.rtl_true .t4s-testimonial-main-w-img .t4s-flickity-slider .flickityt4s-prev-next-button{
+  top:60px;
+}
+.t4s-testimonial-main-w-img .t4s-flickity-slider .flickityt4s-prev-next-button.previous{
+  left:0;
+  margin-inline-end:8px;
+  margin-inline-start:15px;
+}
+.rtl_true .t4s-testimonial-main-w-img .t4s-flickity-slider .flickityt4s-prev-next-button.previous{
+  left:0;
+  margin-inline-end:8px;
+  margin-inline-start:15px;
+  right:0;
+}
+.t4s-testimonial-main-w-img .t4s-flickity-slider .flickityt4s-prev-next-button.next{
+  right:0;
+}
+.t4s-testimonial-main-w-img .t4s_box_slider2{
+pointer-events:none;
+}
+@media(max-width:1024px){
+  .t4s-testimonial-w-content .t4s-rating{
+    margin-bottom:15px;
+  }
+  .t4s-testimonial-w-content .t4s-testimonial-heading{
+    margin-bottom:5px;
+    font-size:18px;
+  }
+  .t4s-testimonial-w-content .t4s-testimonial-inner .t4s-testimonial-content{
+    font-size:14px;
+    margin-bottom:20px;
+  }
+  .t4s-testimonial-w-content .t4s-testimonial-name{
+  font-size:14px;
+  line-height:16px;
+  }
+  .t4s-testimonial-main-w-img .t4s-flickity-slider .flickityt4s-prev-next-button{
+    top:25px;
+  }
+  .rtl_true .t4s-testimonial-main-w-img .t4s-flickity-slider .flickityt4s-prev-next-button{
+    top:25px;
+  }
+  .t4s-testimonial-main-w-img .t4s-flickity-slider.t4s-slider-btn-small{
+    --btn-width-slider: 30px;
+    --btn-height-slider: 30px;
+  }
+}
+@media(max-width:767px){
+  .t4s-testimonial-main-w-img .t4s-flickity-slider .flickityt4s-prev-next-button.previous{
+    margin-inline-start:7.5px;
+  }
+  .rtl_true .t4s-testimonial-main-w-img .t4s-flickity-slider .flickityt4s-prev-next-button.previous{
+    margin-inline-start:7.5px;
+  }
+}
+</style>
+{% schema %}
+{
+  "name": "Testimonials with image",
+  "tag": "section",
+  "class": "t4s-section t4s_bk_flickity t4s-section-all t4s_tp_cd t4s_tp_istope t4s-tesimonial-w-img",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1. Heading options"
+    },
+    {
+      "type": "select",
+      "id": "design_heading",
+      "label": "Heading design",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Design 01"
+        },
+        {
+          "value": "2",
+          "label": "Design 02"
+        },
+        {
+          "value": "3",
+          "label": "Design 03"
+        },
+        {
+          "value": "4",
+          "label": "Design 04 (Working when description has content)"
+        },
+        {
+          "value": "5",
+          "label": "Design 05"
+        },
+        {
+          "value": "6",
+          "label": "Design 06"
+        },
+        {
+          "value": "7",
+          "label": "Design 07"
+        },
+        {
+          "value": "8",
+          "label": "Design 08"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading",
+      "default": "Trending right now"
+    },
+    {
+      "type": "richtext",
+      "id": "top_subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_center",
+      "label": "Center heading align",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "Bottom space (Desktop)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_tb",
+      "label": "Bottom space (Tablet)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_mb",
+      "label": "Bottom space (Mobile)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 25
+    },
+    {
+      "type": "select",
+      "id": "col_dk",
+      "label": "Items per row",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_tb",
+      "label": "Items per row (Tablet)",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_mb",
+      "label": "Items per row (Mobile)",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "--Box options--"
+    },
+    {
+      "type": "select",
+      "id": "testimonial_content",
+      "label": "Content align",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "color",
+      "id": "heading_cl",
+      "label": "Heading color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "content_cl",
+      "label": "Content color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "name_cl",
+      "label": "Authorname color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "pos_cl",
+      "label": "Position color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "rate_cl",
+      "label": "Rate star color",
+      "default": "#F5C413"
+    },
+    {
+      "type": "header",
+      "content": "2. Options for carousel layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Enable loop",
+      "info": "At the end of cells, wrap-around to the other end for infinite scrolling",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "au_time",
+      "min": 0,
+      "max": 30,
+      "step": 0.5,
+      "label": "Autoplay speed in second.",
+      "info": "Set is '0' to disable autoplay",
+      "unit": "s",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "au_hover",
+      "label": "Pause autoplay on hover",
+      "info": "Auto-playing will pause when the user hovers over the carousel",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "—————————————————"
+    },
+    {
+      "type": "paragraph",
+      "content": "Prev next button"
+    },
+    {
+      "type": "select",
+      "id": "show_btn",
+      "options": [
+        {
+          "value": "show_all",
+          "label": "Show all screen"
+        },
+        {
+          "value": "show_desktop",
+          "label": "Only show on desktop"
+        },
+        {
+          "value": "show_mobile",
+          "label": "Only show on tablet & mobile"
+        },
+        {
+          "value": "hidden",
+          "label": "Hidden"
+        }
+      ],
+      "label": "Use prev next button",
+      "default": "show_all"
+    },
+    {
+      "type": "select",
+      "id": "icon_slider",
+      "label": "Prev next icon",
+      "default": "1",
+      "options": [
+        {
+          "label": "Default",
+          "value": "0"
+        },
+        {
+          "label": "Solid",
+          "value": "1"
+        },
+        {
+          "label": "Arrow",
+          "value": "2"
+        },
+        {
+          "label": "Long arrow with text",
+          "value": "3"
+        },
+        {
+          "label": "Arrow with text",
+          "value": "4"
+        },
+        {
+          "label": "Long arrow (thin)",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "btn_distance",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Distance from buttons to boundary",
+      "info": "Only works when \"Prev next position is In content\". Only works on desktop.",
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "btn_owl",
+      "label": "Button style",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        },
+        {
+          "value": "simple",
+          "label": "Simple"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_shape",
+      "label": "Button shape",
+      "info": "Not work for 'Simple' button style",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "round",
+          "label": "Round"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_cl",
+      "label": "Button color",
+      "default": "dark",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "custom1",
+          "label": "Custom color 1"
+        },
+        {
+          "value": "custom2",
+          "label": "Custom color 2"
+        },
+        {
+          "value": "custom3",
+          "label": "Custom color 3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_size",
+      "label": "Buttons size",
+      "default": "small",
+      "info": "Not work when icon with text",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "—————————————————"
+    },
+    {
+      "type": "paragraph",
+      "content": "Page dots"
+    },
+    {
+      "type": "select",
+      "id": "show_dots",
+      "info": "Creates and show page dots",
+      "options": [
+        {
+          "value": "show_all",
+          "label": "Show all screen"
+        },
+        {
+          "value": "show_desktop",
+          "label": "Only show on desktop"
+        },
+        {
+          "value": "show_mobile",
+          "label": "Only show on tablet & mobile"
+        },
+        {
+          "value": "hidden",
+          "label": "Hidden"
+        }
+      ],
+      "label": "Use carousel's dots",
+      "default": "hidden"
+    },
+    {
+      "type": "select",
+      "id": "dot_owl",
+      "label": "Dots style",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "thin",
+          "label": "Thin full width"
+        },
+        {
+          "value": "elessi_active",
+          "label": "Elessi active"
+        },
+        {
+          "value": "dots_simple",
+          "label": "Dots simple"
+        },
+        {
+          "value": "outline_active",
+          "label": "Outline active"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "dots_cl",
+      "label": "Dots color",
+      "default": "dark",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light (Best on dark background)"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "custom1",
+          "label": "Custom color 1"
+        },
+        {
+          "value": "custom2",
+          "label": "Custom color 2"
+        },
+        {
+          "value": "custom3",
+          "label": "Custom color 3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "dots_align",
+      "label": "Dots Align",
+      "info": "Work on desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "dots_round",
+      "label": "Enable round dots",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "dots_space",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "label": "Space among dots",
+      "unit": "px",
+      "default": 10,
+      "info": "Not work on Thin style"
+    },
+    {
+      "type": "range",
+      "id": "dots_bottom_pos",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Distance from dots to boundary",
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "What customers say"
+        },
+        {
+          "type": "html",
+          "id": "content",
+          "label": "Text",
+          "default": "The theme is beautiful. Just got a compliment on it today. The customer service has t4sn great."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_avata",
+          "label": "Author's avata",
+          "info": "200x200 recommend"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Author",
+          "default": "Julia Flynn - from Unbreakable Joy"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials with image",
+      "blocks": [
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

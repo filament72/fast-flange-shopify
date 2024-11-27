@@ -1,0 +1,4543 @@
+{%- liquid 
+assign isShowHTMl = false
+if template.suffix == 'config' and request.design_mode
+assign isShowHTMl = true
+endif 
+assign sid = section.id
+
+assign collection = collections['all'] 
+assign enable_rating = settings.enable_rating
+assign imgatt = 'data-'
+assign pr_overlay  = section.settings.pr_overlay | divided_by: 100.0
+assign countdown_overlay  = section.settings.countdown_overlay | divided_by: 100.0
+
+assign show_img = settings.show_img
+assign isGrowaveWishlist = false
+if settings.wishlist_mode == "3" and shop.customer_accounts_enabled
+  assign isGrowaveWishlist = true
+endif
+
+assign placeholder_img = settings.placeholder_img
+assign enable_pr_size = settings.enable_pr_size
+assign show_size_type = settings.show_size_type
+assign size_ck = settings.size_ck | append: ',size,sizes,Größe' 
+assign get_size = size_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+assign enable_pr_color = settings.enable_pr_color
+assign show_cl_type = settings.show_color_type
+assign color_ck = settings.color_ck | append: ',color,colors,couleur,colour'
+assign get_color = color_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+assign price_varies_style = settings.price_varies_style
+assign app_review = settings.app_review
+ -%}
+
+{%- if isShowHTMl -%}
+  {{ 't4s-collection-products.css' | asset_url | stylesheet_tag }}
+  {{ 't4s-collection-pages.css' | asset_url | stylesheet_tag }}
+  <div class="t4s-section-inner t4s_se_{{ sid }}">
+    <div class="t4s-container">
+      {%- paginate collection.products by 4 -%}
+        {% for block in section.blocks %}
+          <div class="t4s-top-heading t4s_des_title_1 t4s-text-center" style="margin-bottom: 30px;margin-top: 50px;">
+            <h3 class="t4s-section-title t4s-title">
+              <span>{{ block.settings.heading }}</span>
+            </h3>
+          </div>
+          <div class="t4s_box_pr_grid t4s-products {% if block.type == "list" %} is--listview {% endif %} t4s_ratio1_1 t4s_rationt t4s_position_8 t4s_cover t4s-row t4s-row-cols-lg-4 t4s-row-cols-md-2 t4s-row-cols-2 t4s-gx-md-30 t4s-gy-md-0 t4s-gx-10 t4s-gy-30 t4s_mb_100" style="margin-bottom: 50px;">
+            {%- liquid 	
+				    case block.type
+			        when '1'
+			          render 'pr-grid-item1' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '2'
+			          render 'pr-grid-item2' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '3'
+			          render 'pr-grid-item3' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '4'
+			          render 'pr-grid-item4' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '5'
+			          render 'pr-grid-item5' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '6'
+			          render 'pr-grid-item6' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '7'
+			          render 'pr-grid-item7' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '8'
+			          render 'pr-grid-item8' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '9'
+			          render 'pr-grid-item9' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '10'
+			          render 'pr-grid-item10' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '11'
+			          render 'pr-grid-item11' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '12'
+			          render 'pr-grid-item12' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '13'
+			          render 'pr-grid-item13' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '14'
+			          render 'pr-grid-item14' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '15'
+			          render 'pr-grid-item15' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '16'
+			          render 'pr-grid-item16' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '17'
+			          render 'pr-grid-item17' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '18'
+			          render 'pr-grid-item18' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '19'
+			          render 'pr-grid-item19' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '20'
+			          render 'pr-grid-item20' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when '21'
+			          render 'pr-grid-item20' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, placeholder_img: placeholder_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: false
+			        when 'list'
+			          render 'pr-list-item' for collections.all.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: false, placeholder_img: placeholder_img, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, imgatt: imgatt, show_list_btns: true
+				    endcase -%}
+          </div>
+        {% endfor %}
+      {%- endpaginate -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{%- style -%}
+  {%- liquid 
+		if section.settings.lh_pr == 0
+			assign lh_pr = 1
+			assign lh_pr_f = 1
+		else
+			assign lh_pr = section.settings.lh_pr | append: 'px'
+			assign lh_pr_f = section.settings.lh_pr | plus: 5 | append: 'px'
+		endif 
+		if section.settings.lh_pr_mb == 0
+			assign lh_pr_mb = 1
+			assign lh_pr_f_mb = 1
+		else
+			assign lh_pr_mb = section.settings.lh_pr_mb | append: 'px'
+			assign lh_pr_f_mb = section.settings.lh_pr_mb | plus: 5 | append: 'px'
+		endif 
+		if section.settings.lh_price_pr == 0
+			assign lh_price_pr = 1
+		else
+			assign lh_price_pr = section.settings.lh_price_pr | append: 'px'
+		endif 
+		if section.settings.lh_price_pr_mb == 0
+			assign lh_price_pr_mb = 1
+		else
+			assign lh_price_pr_mb = section.settings.lh_price_pr_mb | append: 'px'
+		endif -%}
+  .t4s-section-config-product .t4s_box_pr_grid {
+    margin-bottom: 100px;
+  }
+  .t4s-section-config-product .t4s-top-heading {
+    margin-bottom: 30px;
+  }
+  .t4s-product,
+  .t4s-product-quick-view .t4s-product__media-wrapper {
+    --pr-btn-radius-size: {{ section.settings.pr_btn_round }}px;
+  }
+
+  {%- assign countdown_color_lightness       = section.settings.countdown_color | color_extract: 'lightness' -%}
+  {% if settings.enable_compe == false and settings.wishlist_mode == "0" and settings.enable_quickview == false and settings.enable_quickshop == false  %}
+  	.t4s-product .t4s-product-thumb .t4s-product-btns {
+  		display: none !important;
+    }
+  {% endif %}
+  .t4s-product {
+    --pr-title-family: var(--font-family-{{ section.settings.fnt_df_pr }});
+    --pr-title-style: {{ section.settings.txt_tr_pr }};
+    --pr-title-size: {{ section.settings.size_pr }}px;
+    --pr-title-size-mb: {{ section.settings.size_pr_mb }}px;
+    --pr-title-weight: {{ section.settings.fw_pr }};
+    --pr-title-lh: {{ lh_pr }};
+    --pr-title-lh-mb: {{ lh_pr_mb }};
+    --pr-title-ls: {{ section.settings.ls_pr }}px;
+    --pr-title-ls-mb: {{ section.settings.ls_pr_mb }}px;
+
+    --pr-price-size: {{ section.settings.size_price_pr }}px;
+    --pr-price-size-mb: {{ section.settings.size_price_pr_mb }}px;
+    --pr-price-lh: {{ lh_price_pr }};
+    --pr-price-lh-mb: {{ lh_price_pr_mb }};
+    --pr-price-weight: {{ section.settings.fw_price_pr }};
+    --pr-space-img-txt: {{ section.settings.space_img_content }}px;
+    --pr-space-img-txt-mb: {{ section.settings.space_img_content_mb }}px;
+    --pr-space-elements: {{ section.settings.space_elements }}px;
+    --pr-space-elements-mb: {{ section.settings.space_elements_mb }}px;
+
+    --pr-countdown-color: {% if countdown_color_lightness < 85 %}
+      #fff{% else %}
+      #23232c{% endif %};
+    --pr-countdown-bg-color: {{ section.settings.countdown_color | color_modify: 'alpha', countdown_overlay }};
+
+    --swatch-color-size: {{ section.settings.swatch_color_size }}px;
+    --swatch-color-size-mb: {{ section.settings.swatch_color_size_mb }}px;
+    --pr-background-overlay: {{ section.settings.pr_bg_overlay | color_modify: 'alpha', pr_overlay }};
+  }
+
+  .t4s-product-quick-view,
+  .t4s-product-quick-shop {
+    --swatch-color-size: {{ section.settings.swatch_color_size }}px;
+    --swatch-color-size-mb: {{ section.settings.swatch_color_size_mb }}px;
+  }
+
+  .t4s-product,
+  .t4s-container .t4s-row-cols-lg-5 > .t4s-product,
+  .t4s-container .t4s-row-cols-lg-6 > .t4s-product {
+    --pr-title-color: {{ section.settings.pr_title_color }};
+    --pr-title-color-hover: {{ section.settings.pr_title_color_hover }};
+    --pr-price-color: {{ section.settings.price_color }};
+    --pr-secondary-price-color: {{ section.settings.price_secondary }};
+    --pr-price-sale-color: {{ section.settings.price_sale_color }};
+    --pr-vendors-color: {{ section.settings.vendors_color }};
+    --pr-vendors-color-hover: {{ section.settings.vendors_color_hover }};
+    --pr-size-list-color: {{ section.settings.size_list_color }};
+  }
+  .t4s-products > .t4s-pr-featured {
+    --pr-title-size: calc({{ section.settings.size_pr }}px + 2px);
+    --pr-title-size-mb: calc({{ section.settings.size_pr_mb }}px + 2px);
+    --pr-title-lh: {{ lh_pr_f }};
+    --pr-title-lh-mb: {{ lh_pr_f_mb }};
+  }
+{%- endstyle -%}
+{%- for block in section.blocks -%}
+  {%- liquid
+		
+		assign hidden_atc_mb = block.settings.hidden_atc_mb
+		assign hidden_qv_mb = block.settings.hidden_qv_mb
+		assign hidden_wishlist_mb = block.settings.hidden_wishlist_mb
+		assign hidden_compare_mb = block.settings.hidden_compare_mb
+		assign hidden_pr_colors = block.settings.hidden_pr_colors
+		assign hidden_pr_sizes = block.settings.hidden_pr_sizes
+		assign hidden_pr_countdown = block.settings.hidden_pr_countdown 
+	-%}
+  {%- case block.type -%}
+    {%- when '1' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style1 .t4s-pr-addtocart, .t4s-pr-style1 .t4s-product-atc-qty, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style1 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style1 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style1 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style1 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style1 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style1 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style1 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style1 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+
+      }
+      .t4s-pr-style1 {
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when '2' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style2 .t4s-pr-addtocart, .t4s-pr-style2 .t4s-product-atc-qty, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style2 .t4s-pr-quickview, .t4s-pr-style2 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style2 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style2 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style2 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style2 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style2 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_wishlist_mb and hidden_atc_mb and hidden_compare_mb -%}
+          .t4s-pr-style2 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-style2 .t4s-product-info .t4s-pr-variants, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style2 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-style2 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: transparent;
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: transparent;
+      }
+    {%- endstyle -%}
+    {%- when '3' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style3 .t4s-pr-addtocart, .t4s-pr-style3 .t4s-product-atc-qty, .t4s-pr-style3 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style3 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style3 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style3 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style3 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style3 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style3 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style3 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-style3 .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style3 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-style3 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+
+        --wishlist-color: {{ block.settings.wishlist_btn_color }};
+        --wishlist-hover-color: {{ block.settings.wishlist_btn_hover_color }};
+        --wishlist-active-color: {{ block.settings.wishlist_btn_hover_color }};
+
+
+        {%- assign size_list_color_lightness  = block.settings.size_list_color | color_extract: 'lightness' %}
+        --pr-size-list-color: {{ block.settings.size_list_color }};
+        --pr-size-list-color2: {% if size_list_color_lightness < 85 %}
+          #fff{% else %}
+          #000{% endif %};
+      }
+    {%- endstyle -%}
+    {%- when '4' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style4 .t4s-pr-addtocart, .t4s-pr-style4 .t4s-product-atc-qty, .t4s-pr-style4 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style4 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style4 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style4 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style4 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style4 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style4 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style4 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-style4 .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-style4 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style4 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+
+        {%- assign size_list_color_lightness  = block.settings.size_list_color | color_extract: 'lightness' %}
+        --pr-size-list-color: {{ block.settings.size_list_color }};
+        --pr-size-list-color2: {% if size_list_color_lightness < 85 %}
+          #fff{% else %}
+          #000{% endif %};
+      }
+    {%- endstyle -%}
+    {%- when '5' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style5 .t4s-pr-addtocart, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style5 .t4s-pr-quickview, .t4s-pr-style5 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style5 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style5 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style5 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style5 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style5 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style5 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-style5 .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-style5 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style5 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-style5 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when '6' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style6 .t4s-pr-addtocart, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style6 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style6 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style6 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style6 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style6 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style6 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style6 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_qv_mb -%}
+          .t4s-pr-style6 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-style6 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb and hidden_qv_mb -%}
+          .t4s-pr-style6 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-style6 {
+        --pr-simple-btn-color: {{ block.settings.simple_btn_color }};
+        --pr-simple-btn-hover-color: {{ block.settings.simple_btn_hover_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when '7' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style7 .t4s-pr-addtocart, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style7 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style7 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style7 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style7 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style7 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style7 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style7 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style7 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-style7 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when '8' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style8 .t4s-pr-addtocart, .t4s-pr-style8 .t4s-product-atc-qty, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style8 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style8 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style8 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style8 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style8 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style8 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style8 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style8 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-style8 {
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when '9' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style9 .t4s-pr-addtocart, .t4s-pr-style9 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style9 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style9 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style9 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style9 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style9 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style9 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style9 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style9 {
+        --pr-simple-btn-color: {{ block.settings.simple_btn_color }};
+        --pr-simple-btn-hover-color: {{ block.settings.simple_btn_hover_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when '10' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style10 .t4s-pr-addtocart, .t4s-pr-style10 .t4s-product-atc-qty, .t4s-pr-style10 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style10 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style10 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style10 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style10 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style10 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style10 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style10 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style3 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-style10 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+
+        --wishlist-color: {{ block.settings.wishlist_btn_color }};
+        --wishlist-hover-color: {{ block.settings.wishlist_btn_hover_color }};
+        --wishlist-active-color: {{ block.settings.wishlist_btn_hover_color }};
+      }
+    {%- endstyle -%}
+    {%- when '11' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style11 .t4s-pr-addtocart, .t4s-pr-style11 .t4s-product-atc-qty, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style11 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style11 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style11 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style11 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style11 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style11 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style11 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style11 {
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+      @media(min-width: 1025px) {
+        div:not(.is--listview) .t4s-pr-style11 {
+          --pr-title-color: {{ block.settings.pr_title_color }}      ;
+          --pr-title-color-hover: {{ block.settings.pr_title_color_hover }}      ;
+          --pr-price-color: {{ block.settings.price_color }}      ;
+          --pr-secondary-price-color: {{ block.settings.price_secondary }}      ;
+          --pr-price-sale-color: {{ block.settings.price_sale_color }}      ;
+          --pr-vendors-color: {{ block.settings.vendors_color }}      ;
+          --pr-vendors-color-hover: {{ block.settings.vendors_color_hover }}      ;
+          --pr-size-list-color: {{ block.settings.size_list_color }}      ;
+        }
+      }
+    {%- endstyle -%}
+    {%- when '12' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style12 .t4s-pr-addtocart, .t4s-pr-style12 .t4s-product-atc-qty, .t4s-pr-style12 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style12 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style12 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style12 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style12 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style12 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style12 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style12 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style12 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: transparent;
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: transparent;
+      }
+    {%- endstyle -%}
+    {%- when '13' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style13 .t4s-pr-addtocart, .t4s-pr-style13 .t4s-product-atc-qty, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style13 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style13 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style13 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style13 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style13 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style13 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style13 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style13 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+
+      }
+      .t4s-pr-style13 {
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when '14' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style14 .t4s-pr-addtocart, .t4s-pr-style14 .t4s-product-atc-qty, .t4s-pr-style14 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style14 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style14 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style14 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style14 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style14 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style14 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style14 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-style14 .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-style14 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style14 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: transparent;
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: transparent;
+      }
+    {%- endstyle -%}
+    {%- when '15' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style15 .t4s-pr-addtocart, .t4s-pr-style15 .t4s-product-atc-qty, .t4s-pr-style15 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style15 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style15 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style15 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style15 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style15 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style15 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style15 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-style15 .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-style15 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style15 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: transparent;
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: transparent;
+      }
+    {%- endstyle -%}
+    {%- when '16' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style16 .t4s-pr-addtocart, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style16 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style16 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style16 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style16 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style16 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style16 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_qv_mb and hidden_wishlist_mb -%}
+          .t4s-pr-style16 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb and hidden_qv_mb and hidden_wishlist_mb -%}
+          .t4s-pr-style16 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-style16 {
+
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+
+        --pr-group-btn-bg-color-rgb: {{ block.settings.group_btn_bg_color | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+        --pr-group-btn-hover-bg-color-rgb: {{ block.settings.group_btn_hover_bg_color | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+
+      }
+    {%- endstyle -%}
+    {%- when '17' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style17 .t4s-pr-addtocart, .t4s-pr-style17 .t4s-product-atc-qty, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style17 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style17 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style17 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style17 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style17 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style17 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb and hidden_wishlist_mb -%}
+          .t4s-pr-style17 .t4s-product-btns .t4s-pr-btns-group, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_qv_mb and hidden_compare_mb and hidden_wishlist_mb -%}
+          .t4s-pr-style17 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style17 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when '18' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style18 .t4s-pr-addtocart, .t4s-pr-style18 .t4s-product-atc-qty, .t4s-pr-style18 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style18 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style18 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style18 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style18 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style18 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style18 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style18 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-style18 .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-style18 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style18 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: transparent;
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: transparent;
+      }
+    {%- endstyle -%}
+    {%- when '19' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style19 .t4s-pr-addtocart, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style19 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style19 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style19 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style19 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style19 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style11 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style19 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style19 {
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+      @media(min-width: 1025px) {
+        div:not(.is--listview) .t4s-pr-style19 {
+          --pr-title-color: {{ block.settings.pr_title_color }}      ;
+          --pr-title-color-hover: {{ block.settings.pr_title_color_hover }}      ;
+          --pr-price-color: {{ block.settings.price_color }}      ;
+          --pr-secondary-price-color: {{ block.settings.price_secondary }}      ;
+          --pr-price-sale-color: {{ block.settings.price_sale_color }}      ;
+          --pr-vendors-color: {{ block.settings.vendors_color }}      ;
+          --pr-vendors-color-hover: {{ block.settings.vendors_color_hover }}      ;
+          --pr-size-list-color: {{ block.settings.size_list_color }}      ;
+        }
+      }
+    {%- endstyle -%}
+    {%- when '20' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style20 .t4s-pr-addtocart, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style20 .t4s-pr-quickview, .t4s-pr-style20 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style20 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style20 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style20 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style20 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style20 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style20 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-style20 .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-style20 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-style20 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: transparent;
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: transparent;
+      }
+    {%- endstyle -%}
+    {%- when '21' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style21 .t4s-pr-addtocart, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-style21 .t4s-pr-quickview, .t4s-pr-style21 .t4s-product-btns, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-style21 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-style21 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-style21 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-style21 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-style21 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-style21 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-style21 .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-style21 .t4s-product-btns2, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-style21 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-style21 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: transparent;
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: transparent;
+      }
+    {%- endstyle -%}
+    {%- when '22' -%}
+      {%- style -%}
+        @media(max-width: 1024px) {
+          {%- if hidden_atc_mb -%}
+            .t4s-pr-style22 .t4s-pr-addtocart, {%- endif -%}
+          {%- if hidden_qv_mb -%}
+            .t4s-pr-style22 .t4s-pr-quickview, .t4s-pr-style22 .t4s-product-btns, {%- endif -%}
+          {%- if hidden_wishlist_mb -%}
+            .t4s-pr-style22 .t4s-pr-wishlist, {%- endif -%}
+          {%- if hidden_compare_mb -%}
+            .t4s-pr-style22 .t4s-pr-compare, {%- endif -%}
+          {%- if hidden_pr_colors -%}
+            .t4s-pr-style22 .t4s-product-colors, {%- endif -%}
+          {%- if hidden_pr_sizes -%}
+            .t4s-pr-style22 .t4s-product-sizes, {%- endif -%}
+          {%- if hidden_pr_countdown -%}
+            .t4s-pr-style22 .t4s-product-countdown, {%- endif -%}
+          {%- if hidden_qv_mb and hidden_compare_mb -%}
+            .t4s-pr-style22 .t4s-product-btns2, {%- endif -%}
+          {%- if hidden_pr_colors and hidden_pr_sizes -%}
+            .t4s-pr-style22 .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+          {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+            .t4s-pr-style22 .t4s-product-btns2, {%- endif -%}
+          .t4s-abc-xyz {
+            display: none !important;
+          }
+          {%- if hidden_atc_mb -%}
+            .t4s-pr-style22 .t4s-product-thumb .t4s-product-countdown {
+              bottom: 10px !important;
+            }
+          {%- endif -%}
+        }
+        .t4s-pr-style22 {
+          --pr-single-btn-color: {{ block.settings.single_btn_color }};
+          --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+          --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+          --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+          --pr-group-btn-color: {{ block.settings.group_btn_color }};
+          --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+          --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+          --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+        }
+      {%- endstyle -%}
+    {%- when 'packery1' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-packery-item1 .t4s-pr-addtocart, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-packery-item1 .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-packery-item1 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-packery-item1 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-packery-item1 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-packery-item1 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-packery-item1 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-packery-item1 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-packery-item1 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-pr-packery-item1 {
+        --pr-title-color: {{ block.settings.content_color }};
+        --pr-title-color-hover: {{ block.settings.content_color }};
+        --pr-price-color: {{ block.settings.content_color }};
+        --pr-secondary-price-color: {{ block.settings.content_color }};
+        --pr-price-sale-color: {{ block.settings.content_color }};
+        --pr-vendors-color: {{ block.settings.content_color }};
+        --pr-vendors-color-hover: {{ block.settings.content_color }};
+        --pr-size-list-color: {{ block.settings.content_color }};
+        --content-cl: {{ block.settings.content_color }};
+        --content-bg-cl: {{ block.settings.content_bg_color }};
+        --pr-group-btn-color: {{ block.settings.content_color }};
+        --pr-group-btn-bg-color: transparent;
+        --pr-group-btn-hover-color: {{ block.settings.content_color }};
+        --pr-group-btn-hover-bg-color: transparent;
+      }
+    {%- endstyle -%}
+    {%- when 'packery2' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-packery-item2 .t4s-pr-addtocart, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-packery-item2 .t4s-pr-quickview, .t4s-pr-packery-item2 .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-packery-item2 .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-packery-item2 .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-packery-item2 .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-packery-item2 .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-packery-item2 .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-packery-item2 .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-packery-item2 .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+      }
+      .t4s-pr-packery-item2 {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when 'list' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-pr-list .t4s-pr-addtocart, .t4s-pr-list .t4s-product-atc-qty, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-pr-list .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-pr-list .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-pr-list .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-pr-list .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-pr-list .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-pr-list .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-pr-list .t4s-product-btns2, {%- endif -%}
+        {%- if hidden_pr_colors and hidden_pr_sizes -%}
+          .t4s-pr-list .t4s-product-thumb .t4s-pr-variants, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_qv_mb and hidden_wishlist_mb and hidden_compare_mb -%}
+          .t4s-pr-list .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+      }
+      .t4s-product.t4s-pr-list {
+        --pr-single-btn-color: {{ block.settings.single_btn_color }};
+        --pr-single-btn-bg-color: {{ block.settings.single_btn_bg_color }};
+        --pr-single-btn-hover-color: {{ block.settings.single_btn_hover_color }};
+        --pr-single-btn-hover-bg-color: {{ block.settings.single_btn_hover_bg_color }};
+
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+    {%- when 'main_packery' -%}
+    {%- style -%}
+      @media(max-width: 1024px) {
+        {%- if hidden_atc_mb -%}
+          .t4s-main-pr-packery-item .t4s-pr-addtocart, .t4s-main-pr-packery-item .t4s-product-atc-qty, {%- endif -%}
+        {%- if hidden_qv_mb -%}
+          .t4s-main-pr-packery-item .t4s-pr-quickview, {%- endif -%}
+        {%- if hidden_wishlist_mb -%}
+          .t4s-main-pr-packery-item .t4s-pr-wishlist, {%- endif -%}
+        {%- if hidden_compare_mb -%}
+          .t4s-main-pr-packery-item .t4s-pr-compare, {%- endif -%}
+        {%- if hidden_pr_colors -%}
+          .t4s-main-pr-packery-item .t4s-product-colors, {%- endif -%}
+        {%- if hidden_pr_sizes -%}
+          .t4s-main-pr-packery-item .t4s-product-sizes, {%- endif -%}
+        {%- if hidden_pr_countdown -%}
+          .t4s-main-pr-packery-item .t4s-product-countdown, {%- endif -%}
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-main-pr-packery-item .t4s-product-btns, {%- endif -%}
+        .t4s-abc-xyz {
+          display: none !important;
+        }
+        {%- if hidden_atc_mb and hidden_wishlist_mb and hidden_qv_mb and hidden_compare_mb -%}
+          .t4s-main-pr-packery-item .t4s-product-thumb .t4s-product-countdown {
+            bottom: 10px !important;
+          }
+        {%- endif -%}
+
+      }
+      .t4s-main-pr-packery-item {
+        --pr-group-btn-color: {{ block.settings.group_btn_color }};
+        --pr-group-btn-bg-color: {{ block.settings.group_btn_bg_color }};
+        --pr-group-btn-hover-color: {{ block.settings.group_btn_hover_color }};
+        --pr-group-btn-hover-bg-color: {{ block.settings.group_btn_hover_bg_color }};
+      }
+    {%- endstyle -%}
+  {%- endcase -%}
+{%- endfor -%}
+
+{% schema %}
+{
+  "name": "Product Items",
+  "tag": "div",
+  "class": "t4s-section t4s-section-config t4s-section-admn-fixed",
+  "settings": [
+    {
+      "type": "header",
+      "content": "+ Product title"
+    },
+    {
+      "type": "select",
+      "id": "txt_tr_pr",
+      "default": "none",
+      "label": "Title style",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "fnt_df_pr",
+      "label": "Font family",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Font family #1"
+        },
+        {
+          "value": "2",
+          "label": "Font family #2"
+        },
+        {
+          "value": "3",
+          "label": "Font family #3"
+        },
+        {
+          "value": "4",
+          "label": "Font Family #4 (Custom)"
+        },
+        {
+          "value": "5",
+          "label": "Font Family #5 (Custom)"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "size_pr",
+      "min": 10,
+      "max": 50,
+      "step": 0.5,
+      "label": "Title font size",
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "lh_pr",
+      "label": "Title line height",
+      "max": 50,
+      "min": 0,
+      "step": 0.5,
+      "default": 0,
+      "unit": "px",
+      "info": "Set '0' to use default"
+    },
+    {
+      "type": "range",
+      "id": "fw_pr",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "label": "Title font weight",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "ls_pr",
+      "min": -5,
+      "max": 5,
+      "step": 0.1,
+      "label": "Title letter spacing",
+      "info": "set is '0' use to default",
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "+ Product price"
+    },
+    {
+      "type": "range",
+      "id": "size_price_pr",
+      "min": 10,
+      "max": 40,
+      "step": 0.5,
+      "label": "Price size",
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "lh_price_pr",
+      "label": "Price line height",
+      "max": 50,
+      "min": 0,
+      "step": 0.5,
+      "default": 0,
+      "unit": "px",
+      "info": "Set '0' to use default"
+    },
+    {
+      "type": "range",
+      "id": "fw_price_pr",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "label": "Price font weight",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "+ Other"
+    },
+    {
+      "type": "range",
+      "id": "space_img_content",
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "label": "Space between images and content",
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "space_elements",
+      "min": 0,
+      "max": 20,
+      "step": 0.5,
+      "label": "Space between elements of content",
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "swatch_color_size",
+      "label": "Swatch size",
+      "default": 15,
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "+ Mobile options"
+    },
+    {
+      "type": "range",
+      "id": "size_pr_mb",
+      "min": 10,
+      "max": 50,
+      "step": 0.5,
+      "label": "Title font size (Mobile)",
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "lh_pr_mb",
+      "label": "Title line height (Mobile)",
+      "max": 50,
+      "min": 0,
+      "step": 0.5,
+      "default": 0,
+      "unit": "px",
+      "info": "Set '0' to use default"
+    },
+    {
+      "type": "range",
+      "id": "ls_pr_mb",
+      "min": -5,
+      "max": 5,
+      "step": 0.1,
+      "label": "Title letter spacing (Mobile)",
+      "info": "set is '0' use to default",
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "size_price_pr_mb",
+      "min": 10,
+      "max": 40,
+      "step": 0.5,
+      "label": "Price size (Mobile)",
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "lh_price_pr_mb",
+      "label": "Price line height (Mobile)",
+      "max": 50,
+      "min": 0,
+      "step": 0.5,
+      "default": 0,
+      "unit": "px",
+      "info": "Set '0' to use default"
+    },
+    {
+      "type": "paragraph",
+      "content": "---------------------------------"
+    },
+    {
+      "type": "range",
+      "id": "space_img_content_mb",
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "label": "Space between images and content (Mobile)",
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "space_elements_mb",
+      "min": 0,
+      "max": 20,
+      "step": 0.5,
+      "label": "Space between elements of content (Mobile)",
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "swatch_color_size_mb",
+      "label": "Swatch size (Mobile)",
+      "default": 15,
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "+ Color options",
+      "info": "Not working with product style 11"
+    },
+    {
+      "type": "color",
+      "id": "pr_title_color",
+      "label": "Product title",
+      "default": "#293341"
+    },
+    {
+      "type": "color",
+      "id": "pr_title_color_hover",
+      "label": "Product title hover",
+      "default": "#c91f28"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Primary price color",
+      "default": "#7b7b7b"
+    },
+    {
+      "type": "color",
+      "id": "price_secondary",
+      "label": "Secondary price color",
+      "default": "#7b7b7b"
+    },
+    {
+      "type": "color",
+      "id": "price_sale_color",
+      "label": "Sale price  color",
+      "default": "#c91f28"
+    },
+    {
+      "type": "color",
+      "id": "vendors_color",
+      "label": "Vendors",
+      "default": "#7b7b7b"
+    },
+    {
+      "type": "color",
+      "id": "vendors_color_hover",
+      "label": "Vendors hover",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "size_list_color",
+      "label": "Size list color",
+      "default": "#7b7b7b"
+    },
+    {
+      "type": "color",
+      "id": "countdown_color",
+      "label": "Countdown primary color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "countdown_overlay",
+      "label": "Background color countdown opacity",
+      "default": 80,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%"
+    },
+    {
+      "type": "color",
+      "id": "pr_bg_overlay",
+      "label": "Color overlay",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "pr_overlay",
+      "label": "Color overlay opacity",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "1",
+      "name": "Product design 1",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 01"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Add to cart, Quick view, Wishlist, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "2",
+      "name": "Product design 2",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 02"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For quickview button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#23232c"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Add to cart, Wishlist, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Group buttons color",
+          "default": "#7e7e7e"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Group buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "3",
+      "name": "Product design 3",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 03"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#23232c"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Quick view, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "paragraph",
+          "content": "+ Simple buttons"
+        },
+        {
+          "type": "color",
+          "id": "wishlist_btn_color",
+          "label": "Wishlist button color",
+          "default": "#6a6a6a"
+        },
+        {
+          "type": "color",
+          "id": "wishlist_btn_hover_color",
+          "label": "Wishlist button hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "paragraph",
+          "content": "+ Variants color"
+        },
+        {
+          "type": "color",
+          "id": "size_list_color",
+          "label": "Size list color",
+          "default": "#7b7b7b"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "4",
+      "name": "Product design 4",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 04"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#23232c"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Wishlist, Quick view, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "paragraph",
+          "content": "+ Variants color"
+        },
+        {
+          "type": "color",
+          "id": "size_list_color",
+          "label": "Size list color",
+          "default": "#7b7b7b"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "5",
+      "name": "Product design 5",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 05"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Quickview button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#293341"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Wishlist, Add to cart, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#6a6a6a"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "paragraph",
+          "content": "+ Variants color"
+        },
+        {
+          "type": "color",
+          "id": "size_list_color",
+          "label": "Size list color",
+          "default": "#7b7b7b"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "6",
+      "name": "Product design 6",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 06"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product simple buttons",
+          "info": "For Wishlist, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "simple_btn_color",
+          "label": "Group buttons color",
+          "default": "#7e7e7e"
+        },
+        {
+          "type": "color",
+          "id": "simple_btn_hover_color",
+          "label": "Group buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Quickview, Add to cart buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#293341"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "7",
+      "name": "Product design 7",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 07"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Wishlist button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Wishlist button color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Wishlist button hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Quickview, Add to cart, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "8",
+      "name": "Product design 8",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 08"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Add to cart, Quickview, Wishlist, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#ffc300"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "9",
+      "name": "Product design 9",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 09"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product simple buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "simple_btn_color",
+          "label": "Add to cart color",
+          "default": "#293341"
+        },
+        {
+          "type": "color",
+          "id": "simple_btn_hover_color",
+          "label": "Add to cart hover color",
+          "default": "#9db8ce"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Quickview, Add to cart buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#9db8ce"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "10",
+      "name": "Product design 10",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 10"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#293341"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Quickview, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "paragraph",
+          "content": "+ Simple buttons"
+        },
+        {
+          "type": "color",
+          "id": "wishlist_btn_color",
+          "label": "Wishlist button color",
+          "default": "#6a6a6a"
+        },
+        {
+          "type": "color",
+          "id": "wishlist_btn_hover_color",
+          "label": "Wishlist button hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "11",
+      "name": "Product design 11",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 11"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Add to cart, Quickview, Wishlist, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Product color",
+          "info": "For product title, price, vendor, size list"
+        },
+        {
+          "type": "color",
+          "id": "pr_title_color",
+          "label": "Product title",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "pr_title_color_hover",
+          "label": "Product title hover",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "price_color",
+          "label": "Primary price color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "price_secondary",
+          "label": "Secondary price color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "price_sale_color",
+          "label": "Sale price  color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "vendors_color",
+          "label": "Vendors",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "vendors_color_hover",
+          "label": "Vendors hover",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "size_list_color",
+          "label": "Size list color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "12",
+      "name": "Product design 12",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 12"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#c81f28"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Wishlist, Quickview, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#2e3845"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c81f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "13",
+      "name": "Product design 13",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 13"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Add to cart, Quickview, Wishlist, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "14",
+      "name": "Product design 14",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 14"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#76ac2f"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#76ac2f"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Wishlist, Quickview, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#76ac2f"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "15",
+      "name": "Product design 15",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 15"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#293341"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#76ac2f"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Wishlist, Quickview, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#76ac2f"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "16",
+      "name": "Product design 16",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 16"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Compare button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Compare button color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Compare button hover color",
+          "default": "#eda698"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Quickview, Add to cart, Wishlist buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#eda698"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#87cfc2"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "17",
+      "name": "Product design 17",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 17"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Compare button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#81be17"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Compare button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Buttons hover color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Quickview, Comapre, Wishlist buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#81be17"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "18",
+      "name": "Product design 18",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 18"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Quickview, Add to cart, Wishlist buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "19",
+      "name": "Product design 19",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 19"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Add to cart, Quickview, Wishlist, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Product color",
+          "info": "For product title, price, vendor, size list"
+        },
+        {
+          "type": "color",
+          "id": "pr_title_color",
+          "label": "Product title",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "pr_title_color_hover",
+          "label": "Product title hover",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "price_color",
+          "label": "Primary price color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "price_secondary",
+          "label": "Secondary price color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "price_sale_color",
+          "label": "Sale price  color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "vendors_color",
+          "label": "Vendors",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "vendors_color_hover",
+          "label": "Vendors hover",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "size_list_color",
+          "label": "Size list color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "20",
+      "name": "Product design 20",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 20"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Quick view button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#23232c"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Wishlist, Add to cart, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "21",
+      "name": "Product design 21",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 21"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Quick view button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#23232c"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Wishlist, Add to cart, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "22",
+      "name": "Product design 22",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product design 22"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Quick view button, Add to cart"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#23232c"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons 2",
+          "info": "For Wishlist, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Button color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Button background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "packery1",
+      "name": "Product packery 01",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "+ Product packery color",
+          "info": "For all content"
+        },
+        {
+          "type": "color",
+          "id": "content_color",
+          "label": "Content color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "content_bg_color",
+          "label": "Content background color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "packery2",
+      "name": "Product packery 02",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Quick view button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#293341"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Wishlist, Quick view, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "name": "Product list",
+      "limit": 1,
+      "settings": [
+				{
+	        "type": "text",
+	        "id": "heading",
+	        "label": "Heading",
+	        "default": "Product list"
+		    },
+        {
+          "type": "header",
+          "content": "+ Product single buttons",
+          "info": "For Add to cart button"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_color",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_bg_color",
+          "label": "Button background color",
+          "default": "#23232c"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_color",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "single_btn_hover_bg_color",
+          "label": "Button background hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Wishlist, Quick view, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons border color",
+          "default": "#eeeeee"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background/border hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "paragraph",
+          "content": "+ Variants color"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "main_packery",
+      "name": "Main product packery",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "+ Product group buttons",
+          "info": "For Add to cart, Quick view, Wishlist, Compare buttons"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_color",
+          "label": "Buttons color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_bg_color",
+          "label": "Buttons background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_color",
+          "label": "Buttons hover color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "color",
+          "id": "group_btn_hover_bg_color",
+          "label": "Buttons background hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "+ Options products infomation on Tablet & Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_atc_mb",
+          "label": "Hidden 'Add to cart' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_qv_mb",
+          "label": "Hidden 'Quick view' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_wishlist_mb",
+          "label": "Hidden 'Add to wishlist' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_compare_mb",
+          "label": "Hidden 'Compare' button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_colors",
+          "label": "Hidden product colors swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_sizes",
+          "label": "Hidden product sizes list",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_pr_countdown",
+          "label": "Hidden product countdown",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "1"
+      },
+      {
+        "type": "2"
+      },
+      {
+        "type": "3"
+      },
+      {
+        "type": "4"
+      },
+      {
+        "type": "5"
+      },
+      {
+        "type": "6"
+      },
+      {
+        "type": "7"
+      },
+      {
+        "type": "8"
+      },
+      {
+        "type": "9"
+      },
+      {
+        "type": "10"
+      },
+      {
+        "type": "11"
+      },
+      {
+        "type": "12"
+      },
+      {
+        "type": "13"
+      },
+      {
+        "type": "14"
+      },
+      {
+        "type": "15"
+      },
+      {
+        "type": "16"
+      },
+      {
+        "type": "17"
+      },
+      {
+        "type": "18"
+      },
+      {
+        "type": "19"
+      },
+      {
+        "type": "20"
+      },
+      {
+        "type": "21"
+      },
+      {
+        "type": "22"
+      },
+      {
+        "type": "packery1"
+      },
+      {
+        "type": "packery2"
+      },
+      {
+        "type": "main_packery"
+      }
+    ]
+  }
+}
+{% endschema %}

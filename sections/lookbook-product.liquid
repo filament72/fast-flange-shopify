@@ -1,0 +1,2063 @@
+<!-- sections/lookbook-product.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-lookbook-product.css' | asset_url | stylesheet_tag }}
+{%- liquid
+	assign sid = section.id
+	
+	
+	assign stt_layout = section.settings.layout
+	assign stt_image_bg = section.settings.image_bg
+	if stt_layout == 't4s-se-container' 
+		assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+	elsif stt_layout == 't4s-container-wrap'
+		assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+	else
+		assign html_layout = '__' | split: '__'
+	endif
+  assign use_button = false
+ -%} 
+{% render 'section_style', sid: sid -%} 
+<div class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2"{% endif %}>
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+    {%- render 'section_tophead' -%}
+		{%- if section.blocks.size > 0 -%}
+			{%- for block in section.blocks -%}
+				
+				{%- case block.type -%}
+          {%- when 'lb1' -%}
+            {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+            <div class="t4s-lb-pr-item t4s-lb-pr__b1" style="--mgb: {{ block.settings.mgb }}px;--mgb-tb: {{ block.settings.mgb_tb }}px;--mgb-mb: {{ block.settings.mgb_mb }}px;">
+              <div class="t4s-row t4s-g-30 t4s-align-items-center t4s_{{ block.settings.image_ratio }} t4s_position_{{ block.settings.image_position }} t4s_{{ block.settings.image_size }}"{% if block.settings.image_ratio == 'ratiocus_this_block' %} style="--t4s-aspect-ratio: 122%"{% endif %}>
+                {%- if block.settings.product != empty -%}
+                  {%- liquid 
+                    assign product = block.settings.product 
+                    assign product_media = product.media
+                    assign pr_des = product.description 
+                    assign description_excerpt = product.metafields.theme.description_excerpt | default: block.settings.text 
+                    assign button_style = block.settings.button_style
+                  -%}
+                  <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                    <div class="t4s-product__single-media-group t4s-pr t4s-lb-pr__1-bg__{{ block.settings.enable_bg_cover }}" style="--bg-before: {{ block.settings.bg_before }};--bg-after: {{ block.settings.bg_after }}" timeline hdt-reveal="slide-in">
+                      <div class="t4s-row t4s-g-0 t4s-pr t4s-slide-eff-{{ block.settings.eff }} t4s-lb-flickity-slider flickityt4s" data-flickityt4s-js='{"arrowIcon": "2","customIcon": "lb","viewBox": "0 0 512 512","imagesLoaded": 10,"adaptiveHeight": 1, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": 1, "autoPlay" : 0, "pauseAutoPlayOnHover" : true }'>
+                        {%- for media in product_media -%}
+                          {%- if media.media_type == 'image' -%} {%- assign image = media.preview_image -%}
+                            <div class="t4s-col-12 t4s-col-item t4s-product__media-item">
+                              <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 1.7777 }}">
+                                <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+                              </div>
+                            </div>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="t4s-col-item t4s-col-md-6 t4s-col-12{% if block.settings.small_space %} t4s-lb-pr-content__small{% endif %}">
+                    <h3 class="t4s-lb-pr__title" timeline hdt-reveal="slide-in"><a href="{{ product.url }}">{{ product.title }}</a></h3> 
+                    {%- if block.settings.enable_price -%}
+                      <div class="t4s-lb-pr__price">{%- if product.compare_at_price > product.price -%} <ins>{{ product.price | money }}</ins> <del>{{ product.compare_at_price | money }}</del>{%- else -%}{{ product.price | money }}{%- endif -%}</div>
+                    {%- endif -%} 
+                    <div class="t4s-lb-pr__description" timeline hdt-reveal="slide-in">
+                      {%- if block.settings.des == '1' -%}
+                        <p>{{- pr_des -}}</p>
+                      {%- elsif description_excerpt != blank -%}
+                        {{- description_excerpt -}}
+                      {%- else -%}
+                        <p>{{- pr_des | strip_html | truncatewords: block.settings.length -}}</p>
+                      {%- endif -%}
+                    </div>  
+                    {%- if block.settings.button_label != blank -%} {%- assign use_button = true -%}
+                      <a timeline hdt-reveal="slide-in" class="t4s-btn t4s-btn-base t4s-btn-style-{{ button_style }} t4s-btn-size-{{ block.settings.btn_size }} t4s-btn-color-{{ block.settings.btn_cl }}{% if button_style == 'default' or button_style == 'outline' %} t4s-btn-effect-{{ block.settings.button_effect }}{% endif %}" href="{{ product.url }}">{{ block.settings.button_label }} {%- if block.settings.btn_icon -%}<svg viewBox="0 0 256 512" class="t4s-btn-icon"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg>{% endif %}</a> 
+                    {%- endif -%}   
+                  </div>
+                {%- else -%}
+                  <div class="t4s-col-12 t4s-col-md-6 t4s-col-item">
+                    <div class="t4s_ratio" style="--aspect-ratioapt: 1.2" timeline hdt-reveal="slide-in">
+                      {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                    </div>
+                  </div>
+                  <div class="t4s-col-12 t4s-col-md-6 t4s-col-item">
+                    <h3 class="t4s-lb-pr__title" timeline hdt-reveal="slide-in">{{ 'onboarding.product_title' | t }}</h3>
+                    <div class="t4s-lb-pr__description" timeline hdt-reveal="slide-in"><p>{{ 'onboarding.product_description' | t }}</p></div>
+                  </div> 
+                {%- endif -%}
+              </div>
+            </div>
+          {%- when 'lb2' -%}
+            <div class="t4s-lb-pr-item t4s-lb-pr__b2" style="--mgb: {{ block.settings.mgb }}px;--mgb-tb: {{ block.settings.mgb_tb }}px;--mgb-mb: {{ block.settings.mgb_mb }}px;">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-20 t4s-g-15 t4s_{{ block.settings.image_ratio }} t4s_position_{{ block.settings.image_position }} t4s_{{ block.settings.image_size }}" {% if block.settings.image_ratio == 'ratiocus_this_block' %} style="--t4s-aspect-ratio: 137.7%"{% endif %}>
+                {%- if block.settings.product != empty -%}
+                  {%- liquid 
+                    assign product = block.settings.product 
+                    assign product_media = product.media    
+                    assign pr_des = product.description 
+                    assign description_excerpt = product.metafields.theme.description_excerpt | default: block.settings.text 
+                    assign button_style = block.settings.button_style
+                 -%}
+                  <div class="t4s-col-item t4s-col-md-5 t4s-col-12 t4s-lb-pr__b2-img2" timeline hdt-reveal="slide-in">
+                    {%- for media in product_media offset: 1 -%}
+                      {%- if media.media_type == 'image' -%} {%- assign image2 = media.preview_image -%}
+                        {%- if image2 != blank -%}
+                          <div class="t4s_ratio t4s-bg-11" style="background: url({{ image2 | image_url: width: 1 }});--aspect-ratioapt: {{ image2.aspect_ratio | default: 1.7777 }}">
+                            <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image2 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image2.width }}" height="{{ image2.height }}" alt="{{ image2.alt | escape }}" loading="lazy">
+                          </div>
+                        {%- endif -%}
+                        {% break %}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                  <div class="t4s-col-item t4s-col-md-7 t4s-col-12 t4s-lb-pr__b2-img1">
+                    {%- assign image = product.featured_image -%}
+                    {%- if image != blank -%}
+                      <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 1.7777 }}" timeline hdt-reveal="slide-in">
+                        <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+                      </div>
+                    {%- else -%}
+                      <div class="t4s_ratio" style="--aspect-ratioapt: 1.7777">
+                        {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                      </div>
+                    {%- endif -%}
+                    <h3 class="t4s-lb-pr__title" timeline hdt-reveal="slide-in"><a href="{{ product.url }}">{{ product.title }}</a></h3>  
+                    <div class="t4s-lb-pr__price" timeline hdt-reveal="slide-in">{%- if product.compare_at_price > product.price -%} <ins>{{ product.price | money }}</ins> <del>{{ product.compare_at_price | money }}</del>{%- else -%}{{ product.price | money }}{%- endif -%}</div>
+                    <div class="t4s-lb-pr__description" timeline hdt-reveal="slide-in">
+                      {%- if block.settings.des == '1' -%}
+                        <p>{{- pr_des -}}</p>
+                      {%- elsif description_excerpt != blank -%}
+                        {{- description_excerpt -}}
+                      {%- else -%}
+                        <p>{{- pr_des | strip_html | truncatewords: block.settings.length -}}</p>
+                      {%- endif -%}
+                    </div>  
+                    {%- if block.settings.button_label != blank -%} {%- assign use_button = true -%}
+                      <a timeline hdt-reveal="slide-in" class="t4s-btn t4s-btn-base t4s-btn-style-{{ button_style }} t4s-btn-size-{{ block.settings.btn_size }} t4s-btn-color-{{ block.settings.btn_cl }}{% if button_style == 'default' or button_style == 'outline' %} t4s-btn-effect-{{ block.settings.button_effect }}{% endif %}" href="{{ product.url }}">{{ block.settings.button_label }} {%- if block.settings.btn_icon -%}<svg viewBox="0 0 256 512" class="t4s-btn-icon"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg>{% endif %}</a> 
+                    {%- endif -%}   
+                  </div>
+               {%- else -%}
+                <div class="t4s-col-item t4s-col-md-5 t4s-col-12 t4s-lb-pr__b2-img2">
+                  <div class="t4s_ratio" style="--aspect-ratioapt: 1.4">
+                    {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                  </div>
+                </div>
+                <div class="t4s-col-item t4s-col-md-7 t4s-col-12">
+                  <div class="t4s_ratio" style="--aspect-ratioapt: 1.2">
+                    {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                  </div>
+                  <h3 class="t4s-lb-pr__title">{{ 'onboarding.product_title' | t }}</h3>
+                  <div class="t4s-lb-pr__price">$605.00</div>
+                  <div class="t4s-lb-pr__description"><p>{{ 'onboarding.product_description' | t }}</p></div>
+                </div>
+               {%- endif -%}
+              </div>
+            </div>
+          {%- when 'lb3' -%}
+            <div class="t4s-lb-pr-item t4s-lb-pr__b3" style="--mgb: {{ block.settings.mgb }}px;--mgb-tb: {{ block.settings.mgb_tb }}px;--mgb-mb: {{ block.settings.mgb_mb }}px;">
+              {%- if block.settings.product != empty -%}
+                {%- liquid 
+                  assign product = block.settings.product 
+                  assign product_media = product.media
+                  assign pr_des = product.description 
+                  assign description_excerpt = product.metafields.theme.description_excerpt | default: block.settings.text 
+                  assign button_style = block.settings.button_style
+                  assign index = 0
+               -%}
+                <div class="t4s-lb-pr__b3-images">
+                  <div class="t4s-row t4s-align-items-center t4s-g-lg-30 t4s-g-md-20 t4s-g-15 t4s_{{ block.settings.image_ratio }} t4s_position_{{ block.settings.image_position }} t4s_{{ block.settings.image_size }}" {% if block.settings.image_ratio == 'ratiocus_this_block' %}style="--t4s-aspect-ratio: 125.7%"{% endif %}>
+                      <div class="t4s-col-item t4s-col-md-6 t4s-col-12 t4s-lb-pr__b3-img1" timeline hdt-reveal="slide-in">
+                        {%- assign image = product.featured_image -%}
+                        {%- if image != blank -%}
+                          <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 1.7777 }}">
+                            <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+                          </div>
+                        {%- else -%}
+                          <div class="t4s_ratio" style="--aspect-ratioapt: 1.7777">
+                            {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                      <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                        <div class="t4s-row t4s-g-lg-30 t4s-g-md-20 t4s-g-15">
+                          {%- for media in product_media offset: 1 -%}
+                            {%- if media.media_type == 'image' -%} {%- assign image = media.preview_image -%} {%- assign index = index | plus: 1 -%}
+                              {%- if image != blank -%}
+                                <div class="t4s-col-item t4s-col-12" {% if index == 1 and block.settings.image_ratio == 'ratiocus_this_block' %}style="--t4s-aspect-ratio: 71.89%"{% endif %}>
+                                  <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 1.7777 }}" timeline hdt-reveal="slide-in">
+                                    <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                              {%- if index == 2 -%} {% break %} {%- endif -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="t4s-lb-pr__b3-infos">
+                  <div class="t4s-row t4s-g-lg-30 t4s-g-md-20 t4s-g-15">
+                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                      <h3 class="t4s-lb-pr__title" timeline hdt-reveal="slide-in"><a href="{{ product.url }}">{{ product.title }}</a></h3>  
+                      <div class="t4s-lb-pr__price" timeline hdt-reveal="slide-in">{%- if product.compare_at_price > product.price -%} <ins>{{ product.price | money }}</ins> <del>{{ product.compare_at_price | money }}</del>{%- else -%}{{ product.price | money }}{%- endif -%}</div>
+                      {%- if block.settings.button_label != blank -%} {%- assign use_button = true -%}
+                        <a timeline hdt-reveal="slide-in" class="t4s-btn t4s-btn-base t4s-btn-style-{{ button_style }} t4s-btn-size-{{ block.settings.btn_size }} t4s-btn-color-{{ block.settings.btn_cl }}{% if button_style == 'default' or button_style == 'outline' %} t4s-btn-effect-{{ block.settings.button_effect }}{% endif %}" href="{{ product.url }}">{{ block.settings.button_label }} {%- if block.settings.btn_icon -%}<svg viewBox="0 0 256 512" class="t4s-btn-icon"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg>{% endif %}</a> 
+                      {%- endif -%} 
+                    </div>
+                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                      <div class="t4s-lb-pr__description" timeline hdt-reveal="slide-in">
+                        {%- if block.settings.des == '1' -%}
+                          <p>{{- pr_des -}}</p>
+                        {%- elsif description_excerpt != blank -%}
+                          {{- description_excerpt -}}
+                        {%- else -%}
+                          <p>{{- pr_des | strip_html | truncatewords: block.settings.length -}}</p>
+                        {%- endif -%}
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+              {%- else -%}
+                <div class="t4s-lb-pr__b3-images">
+                  <div class="t4s-row t4s-align-items-center t4s-g-lg-30 t4s-g-md-20 t4s-g-15 t4s_{{ block.settings.image_ratio }} t4s_position_{{ block.settings.image_position }} t4s_{{ block.settings.image_size }}" {% if block.settings.image_ratio == 'ratiocus_this_block' %}style="--t4s-aspect-ratio: 125.7%"{% endif %}>
+                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                      <div class="t4s_ratio" style="--aspect-ratioapt: 1.2">
+                        {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                      </div>
+                    </div>
+                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                      <div class="t4s-row t4s-g-lg-30 t4s-g-md-20 t4s-g-15">
+                        <div class="t4s-col-item t4s-col-12" style="--t4s-aspect-ratio: 71.89%">
+                          <div class="t4s_ratio" style="--aspect-ratioapt: 1.2">
+                            {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                          </div>
+                        </div>
+                        <div class="t4s-col-item t4s-col-12">
+                          <div class="t4s_ratio" style="--aspect-ratioapt: 1.2">
+                            {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="t4s-lb-pr__b3-infos">
+                  <div class="t4s-row t4s-g-lg-30 t4s-g-md-20 t4s-g-15">
+                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                      <h3 class="t4s-lb-pr__title">{{ 'onboarding.product_title' | t }}</h3>
+                      <div class="t4s-lb-pr__price">$605.00</div>
+                    </div>
+                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                      <div class="t4s-lb-pr__description"><p>{{ 'onboarding.product_description' | t }}</p></div>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- when 'lb4' -%}
+            <div class="t4s-lb-pr-item t4s-lb-pr__b4" style="--mgb: {{ block.settings.mgb }}px;--mgb-tb: {{ block.settings.mgb_tb }}px;--mgb-mb: {{ block.settings.mgb_mb }}px;">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-20 t4s-g-15 t4s_{{ block.settings.image_ratio }} t4s_position_{{ block.settings.image_position }} t4s_{{ block.settings.image_size }}" {% if block.settings.image_ratio == 'ratiocus_this_block' %}style="--t4s-aspect-ratio: 163.96%"{% endif %}>
+                {%- if block.settings.product != empty -%}
+                  {%- liquid 
+                    assign product = block.settings.product 
+                    assign product_media = product.media
+                    assign pr_des = product.description 
+                    assign description_excerpt = product.metafields.theme.description_excerpt | default: block.settings.text 
+                    assign button_style = block.settings.button_style
+                    assign index = 1
+                -%}  
+                  <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                      {%- assign image = product.featured_image -%}
+                      {%- if image != blank -%}
+                        <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 1.7777 }}" timeline hdt-reveal="slide-in">
+                          <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+                        </div>
+                      {%- else -%}
+                        <div class="t4s_ratio" style="--aspect-ratioapt: 1.7777">
+                          {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                        </div>
+                      {%- endif -%}
+                    <div class="t4s-lb-pr__b4-infos">
+                      <h3 class="t4s-lb-pr__title" timeline hdt-reveal="slide-in"><a href="{{ product.url }}">{{ product.title }}</a></h3>  
+                      <div class="t4s-lb-pr__price" timeline hdt-reveal="slide-in">{%- if product.compare_at_price > product.price -%} <ins>{{ product.price | money }}</ins> <del>{{ product.compare_at_price | money }}</del>{%- else -%}{{ product.price | money }}{%- endif -%}</div>
+                      <div class="t4s-lb-pr__description" timeline hdt-reveal="slide-in">
+                        {%- if block.settings.des == '1' -%}
+                          <p>{{- pr_des -}}</p>
+                        {%- elsif description_excerpt != blank -%}
+                          {{- description_excerpt -}}
+                        {%- else -%}
+                          <p>{{- pr_des | strip_html | truncatewords: block.settings.length -}}</p>
+                        {%- endif -%}
+                      </div>  
+                      {%- if block.settings.button_label != blank -%} {%- assign use_button = true -%}
+                        <a timeline hdt-reveal="slide-in" class="t4s-btn t4s-btn-base t4s-btn-style-{{ button_style }} t4s-btn-size-{{ block.settings.btn_size }} t4s-btn-color-{{ block.settings.btn_cl }}{% if button_style == 'default' or button_style == 'outline' %} t4s-btn-effect-{{ block.settings.button_effect }}{% endif %}" href="{{ product.url }}">{{ block.settings.button_label }} {%- if block.settings.btn_icon -%}<svg viewBox="0 0 256 512" class="t4s-btn-icon"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg>{% endif %}</a> 
+                      {%- endif -%} 
+                    </div>
+                  </div>
+                  <div class="t4s-col-item t4s-col-md-6 t4s-col-12" {% if block.settings.image_ratio == 'ratiocus_this_block' %}style="--t4s-aspect-ratio: 125.8%"{% endif %}>
+                    <div class="t4s-row t4s-g-lg-30 t4s-g-md-20 t4s-g-15">
+                      {%- for media in product_media offset: 1 -%}
+                        {%- if media.media_type == 'image' -%} {%- assign image = media.preview_image -%} {%- assign index = index | plus: 1 -%}
+                          {%- if image != blank -%}
+                            <div class="t4s-col-item t4s-col-12 t4s-lb-pr__b4-img{{ index }}">
+                              <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 1.7777 }}" timeline hdt-reveal="slide-in">
+                                <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy"> 
+                              </div>
+                            </div>
+                          {%- endif -%}
+                          {%- if index == 3 -%} {% break %} {%- endif -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- else -%}
+                  <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                    <div class="t4s_ratio" style="--aspect-ratioapt: 1.2">
+                      {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                    </div>
+                    <div class="t4s-lb-pr__b4-infos">
+                      <h3 class="t4s-lb-pr__title">{{ 'onboarding.product_title' | t }}</h3>
+                      <div class="t4s-lb-pr__price">$605.00</div>
+                      <div class="t4s-lb-pr__description"><p>{{ 'onboarding.product_description' | t }}</p></div>
+                    </div>
+                  </div>
+                  <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                    <div class="t4s-row t4s-g-lg-30 t4s-g-md-20 t4s-g-15" {% if block.settings.image_ratio == 'ratiocus_this_block' %}style="--t4s-aspect-ratio: 125.8%"{% endif %}>
+                      <div class="t4s-col-item t4s-col-12 t4s-lb-pr__b4-img2">
+                        <div class="t4s_ratio" style="--aspect-ratioapt: 1.2">
+                          {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                        </div>
+                      </div>
+                      <div class="t4s-col-item t4s-col-12">
+                        <div class="t4s_ratio" style="--aspect-ratioapt: 1.2">
+                          {{ 'product-1' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+        {%- endcase -%}
+			{%- endfor -%}
+		{%- endif -%}
+    {{- html_layout[1] -}}
+</div>
+{%- if use_button -%}
+  {{ 't4s-button-style.css' | asset_url | stylesheet_tag }}
+  <link href="{{ 't4s-custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- endif -%}
+<svg aria-hidden="true" focusable="false" role="presentation" class="t4s-d-none">
+  <symbol id="svg-slider-btn___prev-lb"><svg viewBox="0 0 512 512"><path d="M17 239L0 256l17 17L153 409l17 17L203.9 392l-17-17-95-95L488 280l24 0 0-48-24 0L91.9 232l95-95 17-17L169.9 86.1l-17 17L17 239z"/></svg></symbol>
+  <symbol id="svg-slider-btn___next-lb"><svg viewBox="0 0 512 512"><path d="M495 273l17-17-17-17L359 103l-17-17L308.1 120l17 17 95 95L24 232 0 232l0 48 24 0 396.1 0-95 95-17 17 33.9 33.9 17-17L495 273z"/></svg></symbol>
+</svg>
+{% schema %}
+{
+  "name": "Lookbook product",
+  "tag": "section",
+  "class": "t4s-section t4s-section-all t4s-lookbook-product",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1.Heading options"
+    },
+    {
+      "type": "select",
+      "id": "design_heading",
+      "label": "Heading design",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Design 01"
+        },
+        {
+          "value": "2",
+          "label": "Design 02"
+        },
+        {
+          "value": "3",
+          "label": "Design 03"
+        },
+        {
+          "value": "4",
+          "label": "Design 04 (Working when description has content)"
+        },
+        {
+          "value": "5",
+          "label": "Design 05"
+        },
+        {
+          "value": "6",
+          "label": "Design 06"
+        },
+        {
+          "value": "7",
+          "label": "Design 07"
+        },
+        {
+          "value": "8",
+          "label": "Design 08"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_center",
+      "label": "Center align the heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "top_subheading",
+      "label": "Description"
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "Bottom space (Desktop)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_tb",
+      "label": "Bottom space (Tablet)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_mb",
+      "label": "Bottom space (Mobile)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "2. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lb1",
+      "name": "Lookbook",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "eff",
+          "default": "fade",
+          "label": "Slider effect",
+          "info": "Effect between transitioning slides",
+          "options": [
+            {
+              "value": "slide",
+              "label": "Slide"
+            },
+            {
+              "value": "fade",
+              "label": "Fade"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "small_space",
+          "label": "Enable small spacing content",
+          "info": "Working on large screen"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_price",
+          "label": "Enable price product"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_bg_cover",
+          "label": "Enable background cover",
+          "default": false,
+          "info": "Working on large screen"
+        },
+        {
+          "type": "color",
+          "id": "bg_before",
+          "label": "Background before",
+          "default": "#e9f5f8"
+        },
+        {
+          "type": "color",
+          "id": "bg_after",
+          "label": "Background after",
+          "default": "#fcf1ef"
+        },
+        {
+          "type": "header",
+          "content": "+ Images"
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "label": "Media ratio",
+          "default": "ratiocus_this_block",
+          "info": "Aspect ratio custom will settings in general panel",
+          "options": [
+            {
+              "group": "Natural",
+              "value": "ratioadapt",
+              "label": "Adapt to media"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio2_1",
+              "label": "2: 1"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio16_9",
+              "label": "16: 9"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio8_5",
+              "label": "8: 5"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio3_2",
+              "label": "3: 2"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio4_3",
+              "label": "4: 3"
+            },
+            {
+              "group": "Landscape",
+              "value": "rationt",
+              "label": "Ratio ASOS"
+            },
+            {
+              "group": "Squared",
+              "value": "ratio1_1",
+              "label": "1: 1"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio2_3",
+              "label": "2: 3"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio1_2",
+              "label": "1: 2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus_this_block",
+              "label": "Ratio custom this block"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus1",
+              "label": "Ratio custom 1"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus2",
+              "label": "Ratio custom 2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratio_us3",
+              "label": "Ratio custom 3"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus4",
+              "label": "Ratio custom 4"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "image_size",
+          "label": "Media ratio size",
+          "default": "cover",
+          "info": "This settings apply only if the media ratio is not set to 'Adapt to media'",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Full"
+            },
+            {
+              "value": "contain",
+              "label": "Auto"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Media position",
+          "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the media ratio is not set to 'Adapt to media'",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "1",
+              "label": "Left top"
+            },
+            {
+              "value": "2",
+              "label": "Left center"
+            },
+            {
+              "value": "3",
+              "label": "Left bottom"
+            },
+            {
+              "value": "4",
+              "label": "Right top"
+            },
+            {
+              "value": "5",
+              "label": "Right center"
+            },
+            {
+              "value": "6",
+              "label": "Right bottom"
+            },
+            {
+              "value": "7",
+              "label": "Center top"
+            },
+            {
+              "value": "8",
+              "label": "Center center"
+            },
+            {
+              "value": "9",
+              "label": "Center bottom"
+            }
+          ],
+          "default": "8"
+        },
+        {
+          "type": "header",
+          "content": "+ Description"
+        },
+        {
+          "type": "select",
+          "id": "des",
+          "options": [
+            {
+              "value": "1",
+              "label": "Full description"
+            },
+            {
+              "value": "2",
+              "label": "Short description"
+            }
+          ],
+          "label": "Description mode",
+          "info": "If you want to show full HTML of the Product Description, please select \"Full Description\".",
+          "default": "2"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Short description",
+          "info": "Short description that will be displayed for each product content if you don't set metafield excerpt for each product content."
+        },
+        {
+          "type": "number",
+          "id": "length",
+          "label": "Excerpt length (integer)",
+          "info": "Number of words that will be displayed for each product content if you don't set short description page or set metafield excerpt for each product content.",
+          "default": 31
+        },
+        {
+          "type": "header",
+          "content": "+ Button"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "info": "If set blank will not show",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "checkbox",
+          "id": "btn_icon",
+          "label": "Button icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "default": "link",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Bordered bottom",
+              "value": "bordered"
+            },
+            {
+              "label": "Link",
+              "value": "link"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Button size",
+          "default": "default",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Custom size #1",
+              "value": "1"
+            },
+            {
+              "label": "Custom size #2",
+              "value": "2"
+            },
+            {
+              "label": "Custom size #3",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_cl",
+          "label": "Button color",
+          "default": "primary",
+          "options": [
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            },
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "custom1",
+              "label": "Custom color 1"
+            },
+            {
+              "value": "custom2",
+              "label": "Custom color 2"
+            },
+            {
+              "value": "custom3",
+              "label": "Custom color 3"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "button_effect",
+          "label": "Button hover effect",
+          "default": "default",
+          "info": "Only working button style default, outline",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Fade",
+              "value": "fade"
+            },
+            {
+              "label": "Rectangle out",
+              "value": "rectangle-out"
+            },
+            {
+              "label": "Sweep to right",
+              "value": "sweep-to-right"
+            },
+            {
+              "label": "Sweep to left",
+              "value": "sweep-to-left"
+            },
+            {
+              "label": "Sweep to bottom",
+              "value": "sweep-to-bottom"
+            },
+            {
+              "label": "Sweep to top",
+              "value": "sweep-to-top"
+            },
+            {
+              "label": "Shutter out horizontal",
+              "value": "shutter-out-horizontal"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Shadow",
+              "value": "shadow"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "+ Space"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom on tablet (Unit: px)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile (Unit: px)",
+          "default": 30
+        }
+      ]
+    },
+    {
+      "type": "lb2",
+      "name": "Lookbook 2",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "+ Images"
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "label": "Media ratio",
+          "default": "ratiocus_this_block",
+          "info": "Aspect ratio custom will settings in general panel",
+          "options": [
+            {
+              "group": "Natural",
+              "value": "ratioadapt",
+              "label": "Adapt to media"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio2_1",
+              "label": "2: 1"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio16_9",
+              "label": "16: 9"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio8_5",
+              "label": "8: 5"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio3_2",
+              "label": "3: 2"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio4_3",
+              "label": "4: 3"
+            },
+            {
+              "group": "Landscape",
+              "value": "rationt",
+              "label": "Ratio ASOS"
+            },
+            {
+              "group": "Squared",
+              "value": "ratio1_1",
+              "label": "1: 1"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio2_3",
+              "label": "2: 3"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio1_2",
+              "label": "1: 2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus_this_block",
+              "label": "Ratio custom this block"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus1",
+              "label": "Ratio custom 1"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus2",
+              "label": "Ratio custom 2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratio_us3",
+              "label": "Ratio custom 3"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus4",
+              "label": "Ratio custom 4"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "image_size",
+          "label": "Media ratio size",
+          "default": "cover",
+          "info": "This settings apply only if the media ratio is not set to 'Adapt to media'",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Full"
+            },
+            {
+              "value": "contain",
+              "label": "Auto"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Media position",
+          "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the media ratio is not set to 'Adapt to media'",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "1",
+              "label": "Left top"
+            },
+            {
+              "value": "2",
+              "label": "Left center"
+            },
+            {
+              "value": "3",
+              "label": "Left bottom"
+            },
+            {
+              "value": "4",
+              "label": "Right top"
+            },
+            {
+              "value": "5",
+              "label": "Right center"
+            },
+            {
+              "value": "6",
+              "label": "Right bottom"
+            },
+            {
+              "value": "7",
+              "label": "Center top"
+            },
+            {
+              "value": "8",
+              "label": "Center center"
+            },
+            {
+              "value": "9",
+              "label": "Center bottom"
+            }
+          ],
+          "default": "8"
+        },
+        {
+          "type": "header",
+          "content": "+ Description"
+        },
+        {
+          "type": "select",
+          "id": "des",
+          "options": [
+            {
+              "value": "1",
+              "label": "Full description"
+            },
+            {
+              "value": "2",
+              "label": "Short description"
+            }
+          ],
+          "label": "Description mode",
+          "info": "If you want to show full HTML of the Product Description, please select \"Full Description\".",
+          "default": "2"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Short description",
+          "info": "Short description that will be displayed for each product content if you don't set metafield excerpt for each product content."
+        },
+        {
+          "type": "number",
+          "id": "length",
+          "label": "Excerpt length (integer)",
+          "info": "Number of words that will be displayed for each product content if you don't set short description page or set metafield excerpt for each product content.",
+          "default": 31
+        },
+        {
+          "type": "header",
+          "content": "+ Button"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "info": "If set blank will not show",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "checkbox",
+          "id": "btn_icon",
+          "label": "Button icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "default": "link",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Bordered bottom",
+              "value": "bordered"
+            },
+            {
+              "label": "Link",
+              "value": "link"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Button size",
+          "default": "default",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Custom size #1",
+              "value": "1"
+            },
+            {
+              "label": "Custom size #2",
+              "value": "2"
+            },
+            {
+              "label": "Custom size #3",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_cl",
+          "label": "Button color",
+          "default": "primary",
+          "options": [
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            },
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "custom1",
+              "label": "Custom color 1"
+            },
+            {
+              "value": "custom2",
+              "label": "Custom color 2"
+            },
+            {
+              "value": "custom3",
+              "label": "Custom color 3"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "button_effect",
+          "label": "Button hover effect",
+          "default": "default",
+          "info": "Only working button style default, outline",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Fade",
+              "value": "fade"
+            },
+            {
+              "label": "Rectangle out",
+              "value": "rectangle-out"
+            },
+            {
+              "label": "Sweep to right",
+              "value": "sweep-to-right"
+            },
+            {
+              "label": "Sweep to left",
+              "value": "sweep-to-left"
+            },
+            {
+              "label": "Sweep to bottom",
+              "value": "sweep-to-bottom"
+            },
+            {
+              "label": "Sweep to top",
+              "value": "sweep-to-top"
+            },
+            {
+              "label": "Shutter out horizontal",
+              "value": "shutter-out-horizontal"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Shadow",
+              "value": "shadow"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "+ Space"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom on tablet (Unit: px)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile (Unit: px)",
+          "default": 30
+        }
+      ]
+    },
+    {
+      "type": "lb3",
+      "name": "Lookbook 3",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "+ Images"
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "label": "Media ratio",
+          "default": "ratiocus_this_block",
+          "info": "Aspect ratio custom will settings in general panel",
+          "options": [
+            {
+              "group": "Natural",
+              "value": "ratioadapt",
+              "label": "Adapt to media"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio2_1",
+              "label": "2: 1"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio16_9",
+              "label": "16: 9"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio8_5",
+              "label": "8: 5"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio3_2",
+              "label": "3: 2"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio4_3",
+              "label": "4: 3"
+            },
+            {
+              "group": "Landscape",
+              "value": "rationt",
+              "label": "Ratio ASOS"
+            },
+            {
+              "group": "Squared",
+              "value": "ratio1_1",
+              "label": "1: 1"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio2_3",
+              "label": "2: 3"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio1_2",
+              "label": "1: 2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus_this_block",
+              "label": "Ratio custom this block"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus1",
+              "label": "Ratio custom 1"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus2",
+              "label": "Ratio custom 2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratio_us3",
+              "label": "Ratio custom 3"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus4",
+              "label": "Ratio custom 4"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "image_size",
+          "label": "Media ratio size",
+          "default": "cover",
+          "info": "This settings apply only if the media ratio is not set to 'Adapt to media'",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Full"
+            },
+            {
+              "value": "contain",
+              "label": "Auto"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Media position",
+          "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the media ratio is not set to 'Adapt to media'",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "1",
+              "label": "Left top"
+            },
+            {
+              "value": "2",
+              "label": "Left center"
+            },
+            {
+              "value": "3",
+              "label": "Left bottom"
+            },
+            {
+              "value": "4",
+              "label": "Right top"
+            },
+            {
+              "value": "5",
+              "label": "Right center"
+            },
+            {
+              "value": "6",
+              "label": "Right bottom"
+            },
+            {
+              "value": "7",
+              "label": "Center top"
+            },
+            {
+              "value": "8",
+              "label": "Center center"
+            },
+            {
+              "value": "9",
+              "label": "Center bottom"
+            }
+          ],
+          "default": "8"
+        },
+        {
+          "type": "header",
+          "content": "+ Description"
+        },
+        {
+          "type": "select",
+          "id": "des",
+          "options": [
+            {
+              "value": "1",
+              "label": "Full description"
+            },
+            {
+              "value": "2",
+              "label": "Short description"
+            }
+          ],
+          "label": "Description mode",
+          "info": "If you want to show full HTML of the Product Description, please select \"Full Description\".",
+          "default": "2"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Short description",
+          "info": "Short description that will be displayed for each product content if you don't set metafield excerpt for each product content."
+        },
+        {
+          "type": "number",
+          "id": "length",
+          "label": "Excerpt length (integer)",
+          "info": "Number of words that will be displayed for each product content if you don't set short description page or set metafield excerpt for each product content.",
+          "default": 31
+        },
+        {
+          "type": "header",
+          "content": "+ Button"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "info": "If set blank will not show",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "checkbox",
+          "id": "btn_icon",
+          "label": "Button icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "default": "link",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Bordered bottom",
+              "value": "bordered"
+            },
+            {
+              "label": "Link",
+              "value": "link"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Button size",
+          "default": "default",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Custom size #1",
+              "value": "1"
+            },
+            {
+              "label": "Custom size #2",
+              "value": "2"
+            },
+            {
+              "label": "Custom size #3",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_cl",
+          "label": "Button color",
+          "default": "primary",
+          "options": [
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            },
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "custom1",
+              "label": "Custom color 1"
+            },
+            {
+              "value": "custom2",
+              "label": "Custom color 2"
+            },
+            {
+              "value": "custom3",
+              "label": "Custom color 3"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "button_effect",
+          "label": "Button hover effect",
+          "default": "default",
+          "info": "Only working button style default, outline",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Fade",
+              "value": "fade"
+            },
+            {
+              "label": "Rectangle out",
+              "value": "rectangle-out"
+            },
+            {
+              "label": "Sweep to right",
+              "value": "sweep-to-right"
+            },
+            {
+              "label": "Sweep to left",
+              "value": "sweep-to-left"
+            },
+            {
+              "label": "Sweep to bottom",
+              "value": "sweep-to-bottom"
+            },
+            {
+              "label": "Sweep to top",
+              "value": "sweep-to-top"
+            },
+            {
+              "label": "Shutter out horizontal",
+              "value": "shutter-out-horizontal"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Shadow",
+              "value": "shadow"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "+ Space"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom on tablet (Unit: px)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile (Unit: px)",
+          "default": 30
+        }
+      ]
+    },
+    {
+      "type": "lb4",
+      "name": "Lookbook 4",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "+ Images"
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "label": "Media ratio",
+          "default": "ratiocus_this_block",
+          "info": "Aspect ratio custom will settings in general panel",
+          "options": [
+            {
+              "group": "Natural",
+              "value": "ratioadapt",
+              "label": "Adapt to media"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio2_1",
+              "label": "2: 1"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio16_9",
+              "label": "16: 9"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio8_5",
+              "label": "8: 5"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio3_2",
+              "label": "3: 2"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio4_3",
+              "label": "4: 3"
+            },
+            {
+              "group": "Landscape",
+              "value": "rationt",
+              "label": "Ratio ASOS"
+            },
+            {
+              "group": "Squared",
+              "value": "ratio1_1",
+              "label": "1: 1"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio2_3",
+              "label": "2: 3"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio1_2",
+              "label": "1: 2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus_this_block",
+              "label": "Ratio custom this block"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus1",
+              "label": "Ratio custom 1"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus2",
+              "label": "Ratio custom 2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratio_us3",
+              "label": "Ratio custom 3"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus4",
+              "label": "Ratio custom 4"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "image_size",
+          "label": "Media ratio size",
+          "default": "cover",
+          "info": "This settings apply only if the media ratio is not set to 'Adapt to media'",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Full"
+            },
+            {
+              "value": "contain",
+              "label": "Auto"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Media position",
+          "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the media ratio is not set to 'Adapt to media'",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "1",
+              "label": "Left top"
+            },
+            {
+              "value": "2",
+              "label": "Left center"
+            },
+            {
+              "value": "3",
+              "label": "Left bottom"
+            },
+            {
+              "value": "4",
+              "label": "Right top"
+            },
+            {
+              "value": "5",
+              "label": "Right center"
+            },
+            {
+              "value": "6",
+              "label": "Right bottom"
+            },
+            {
+              "value": "7",
+              "label": "Center top"
+            },
+            {
+              "value": "8",
+              "label": "Center center"
+            },
+            {
+              "value": "9",
+              "label": "Center bottom"
+            }
+          ],
+          "default": "8"
+        },
+        {
+          "type": "header",
+          "content": "+ Description"
+        },
+        {
+          "type": "select",
+          "id": "des",
+          "options": [
+            {
+              "value": "1",
+              "label": "Full description"
+            },
+            {
+              "value": "2",
+              "label": "Short description"
+            }
+          ],
+          "label": "Description mode",
+          "info": "If you want to show full HTML of the Product Description, please select \"Full Description\".",
+          "default": "2"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Short description",
+          "info": "Short description that will be displayed for each product content if you don't set metafield excerpt for each product content."
+        },
+        {
+          "type": "number",
+          "id": "length",
+          "label": "Excerpt length (integer)",
+          "info": "Number of words that will be displayed for each product content if you don't set short description page or set metafield excerpt for each product content.",
+          "default": 31
+        },
+        {
+          "type": "header",
+          "content": "+ Button"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "info": "If set blank will not show",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "checkbox",
+          "id": "btn_icon",
+          "label": "Button icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "default": "link",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Bordered bottom",
+              "value": "bordered"
+            },
+            {
+              "label": "Link",
+              "value": "link"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Button size",
+          "default": "default",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Custom size #1",
+              "value": "1"
+            },
+            {
+              "label": "Custom size #2",
+              "value": "2"
+            },
+            {
+              "label": "Custom size #3",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_cl",
+          "label": "Button color",
+          "default": "primary",
+          "options": [
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            },
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "custom1",
+              "label": "Custom color 1"
+            },
+            {
+              "value": "custom2",
+              "label": "Custom color 2"
+            },
+            {
+              "value": "custom3",
+              "label": "Custom color 3"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "button_effect",
+          "label": "Button hover effect",
+          "default": "default",
+          "info": "Only working button style default, outline",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Fade",
+              "value": "fade"
+            },
+            {
+              "label": "Rectangle out",
+              "value": "rectangle-out"
+            },
+            {
+              "label": "Sweep to right",
+              "value": "sweep-to-right"
+            },
+            {
+              "label": "Sweep to left",
+              "value": "sweep-to-left"
+            },
+            {
+              "label": "Sweep to bottom",
+              "value": "sweep-to-bottom"
+            },
+            {
+              "label": "Sweep to top",
+              "value": "sweep-to-top"
+            },
+            {
+              "label": "Shutter out horizontal",
+              "value": "shutter-out-horizontal"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Shadow",
+              "value": "shadow"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "+ Space"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom on tablet (Unit: px)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile (Unit: px)",
+          "default": 30
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook product",
+      "blocks": [
+        {
+          "type": "lb1"
+        },
+        {
+          "type": "lb2"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

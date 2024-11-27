@@ -1,0 +1,132 @@
+{%-liquid
+	assign aid = article.id
+	assign image = article.image
+	assign article_metafields = article.metafields.theme
+	assign article_url = article.url
+	assign gavatar     = comment.email | remove: ' ' | strip_newlines | downcase | md5
+	assign gavatar_url = 'https://www.gravatar.com/avatar/' | append: gavatar | append: '?d=mm&r=g&s='
+-%}
+
+<article class="t4s-col-item t4s-article-item t4s-article-style3 t4s-article-{{ aid }} {% if packery %} t4s-col-lg-{{ col_dk }} {% endif %}">
+  <div class="t4s-article-inner t4s-pr t4s-oh" timeline hdt-reveal="slide-in">
+    {%- if image != blank -%}
+      <div class="t4s-article-thumb t4s-pr t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }}">
+        <a class="t4s-article-img t4s-d-block" href="{{ article_url }}">
+          <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }}" data-cacl-slide>
+            <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+          </div>
+        </a>
+        {%- if show_blog_title != 'disable' -%}
+          <div class="t4s-article-categories">
+            {%- if show_blog_title == 'blog_current' -%}
+              <a href="{{ blog_url }}">{{ blog_title }}</a>
+            {%- else -%}
+              {%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+              {%- assign blog_tags = article_tags | where: 'blog_' -%}
+              {%- for tag in blog_tags -%}
+                <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove: 'blog_' | strip }}</a>
+                {%- unless forloop.last -%}
+                  <span class="t4s-seperate"></span>
+                {% endunless -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- if article_metafields.video_url != blank or article_metafields.gallery != blank -%}
+          <div class="t4s-article-metafields">
+            {%- if article_metafields.video_url != blank -%}
+              <div data-open-mfp-iframe class="t4s-article-metafields__video" href="{{ article_metafields.video_url }}" data-tooltip="right" title="{{ 'blogs.article.click_video' | t }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path d="M443.9,196.9L141.5,10.5C119.6-3,93.1-3.5,70.7,9c-22.4,12.5-35.8,35.3-35.8,61v371.1c0,38.8,31.3,70.6,69.8,70.8c0.1,0,0.2,0,0.3,0c12,0,24.6-3.8,36.3-10.9c9.4-5.7,12.4-18,6.6-27.4c-5.7-9.4-18-12.4-27.4-6.6c-5.5,3.3-10.8,5.1-15.6,5.1 c-14.5-0.1-30.1-12.5-30.1-30.9V70.1c0-11,5.7-20.8,15.4-26.2c9.6-5.4,21-5.1,30.3,0.6l302.4,186.4c9.1,5.6,14.3,14.9,14.3,25.6 c0,10.7-5.3,20-14.4,25.6L204.1,415.9c-9.4,5.8-12.4,18-6.6,27.5c5.8,9.4,18,12.4,27.5,6.6l218.6-133.9 c20.9-12.8,33.5-35,33.5-59.5C477.2,232.1,464.7,209.8,443.9,196.9z" /></svg>
+              </div>
+            {%- endif -%}
+            {%- if article_metafields.gallery != blank -%}
+              {%- capture gallery_json %}
+                [{%- for image in article_metafields.gallery.value -%}
+                  { "src": {{ image.src | image_url | json }}, "w": {{ image.width }}, "h": {{ image.height }}, "alt": {{ image.alt | json }} }{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}]
+              {% endcapture -%}
+              <div class="t4s-article-metafields__images" data-pswp-images-trigger='{{ gallery_json }}' data-tooltip="right" title="{{ 'blogs.article.click_gallery' | t }}"></div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    <div class="t4s-article-info {{ section.settings.content_align }}">
+      {%- if show_tags -%}
+        {%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+        <div class="t4s-article-tags">
+          {%- for tag in article_tags -%}
+            {%- if tag contains 'blog_' -%}
+              {%- continue -%}{%- endif -%}
+            <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+            {%- unless forloop.last -%}
+              <span class="t4s-seperate"></span>
+            {% endunless -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      <h3 class="t4s-article-title">
+        <a href="{{ article_url }}">{{ article.title }}</a>
+      </h3>
+      {%- if show_content -%}
+        <div class="t4s-article-content t4s-rte">
+          {%- if article.excerpt.size > 0 -%}
+            {{ article.excerpt }}
+          {%- else -%}
+            {{ article.content | strip_html | truncate: 118 }}{%- endif -%}
+        </div>
+      {%- endif -%}
+      <div class="t4s-footer-post {% if section.settings.content_align == "t4s-text-center" %} t4s-justify-content-center {% endif %}">
+        <div class="t4s-avatar_cm">
+          {%- if show_author -%}
+            <img width="120" height="120" data-src="{{ gavatar_url }}120" data-srcset="{{ gavatar_url }}80 80w, {{ gavatar_url }}120 120w, {{ gavatar_url }}160 160w" data-sizes="(min-width: 1025px) 60px, (min-width: 768px) 40px, 40px" class="lazyloadt4s t4s-comment__avatar"
+              src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="comment avatar" loading="lazy">
+          {%- endif -%}
+        </div>
+        {%- if show_author or show_date or show_comment -%}
+          <div class="t4s-article-metas">
+            {%- if show_author -%}
+              <div class="t4s-article-author">
+                <span class="t4s-article-author__by">{{ by_txt }}</span>
+                <span class="t4s-article-author__name">{{ article.author | replace_first: 'ad clnt', 'admin' }}</span>
+              </div>
+            {%- endif -%}
+            <div class="t4s-footer-post-content">
+              {%- if show_date -%}
+                <div class="t4s-article-time">
+                  <time class="t4s-entry-date">
+                    {%- if date_format contains "%" -%}
+                      {{ article.published_at | time_tag: date_format }}
+                    {%- else -%}
+                      {{ article.published_at | time_tag: format: date_format }}{%- endif -%}
+                  </time>
+                </div>
+              {%- endif -%}
+              {%- if show_comment -%}
+                {%- if article.comments_count > 0 %}
+                  {% assign cm_link = '#comments' %}
+                {% else %}
+                  {% assign cm_link = '#CommentForm' %}
+                {% endif -%}
+                <div class="t4s-article-comment">
+                  <a href="{{ article_url }}{{ cm_link }}" class="t4s-commet">
+                    <svg viewBox="0 0 512 512"><path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z" /></svg>
+                    <span class="t4s-article-comment__count">{{ article.comments_count }}</span>
+                  </a>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+      {%- if show_readmore -%}
+        <div class=" t4s-outline-btn_{{ section.settings.show_rm_bt }} t4s-article-btn">
+          <a href="{{ article_url }}" class="t4s-article-readmore">{{ readmore_txt }}</a>
+          {% if show_ic_readmore %}
+            <svg class="t4s-icon-readmore" viewBox="0 0 32 32"><path d="M 21.1875 9.28125 L 19.78125 10.71875 L 24.0625 15 L 4 15 L 4 17 L 24.0625 17 L 19.78125 21.28125 L 21.1875 22.71875 L 27.90625 16 Z" /></svg>
+          {% endif %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

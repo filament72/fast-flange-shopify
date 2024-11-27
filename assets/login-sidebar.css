@@ -1,0 +1,188 @@
+#t4s-login-sidebar .t4s-drawer__header > span,
+.t4s-content-login-sidebar {
+	display: none;
+}
+#t4s-login-sidebar .t4s-drawer__header > span[aria-hidden=false],
+.t4s-content-login-sidebar[aria-hidden=false] {
+	display: block;
+    -webkit-animation: 1.25s t4s-ani-fadeIn;
+    animation: 1.25s t4s-ani-fadeIn;
+}
+.t4s_mb_20 {
+	margin-bottom: 20px;
+}
+.t4s_mb_25 {
+	margin-bottom: 25px;
+}
+/* ------------------------Custom CSS----------------------------- */
+#t4s-login-sidebar label {
+	font-size: 16px;
+	color: var(--text-color);
+	font-weight: 300;
+	display: block;
+	margin-bottom: 5px;
+}
+#t4s-login-sidebar input {
+	width: 100%;
+  color: var(--text-color);
+  background-color: #f9f9f9;
+  font-size: 14px;
+  padding: 0 10px;
+  line-height: 42px;
+  border: solid 1px var(--border-color);
+  height: 44px;
+  border-radius: var(--other-radius);
+}
+#t4s-login-sidebar .t4s_btn_submmit, 
+#t4s-login-sidebar .t4s-next-tab {
+	font-size: 14px;
+	font-weight: 500;
+  height: 44px;
+  line-height: 44px;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 15px;
+  color: var(--t4s-light-color);
+  background-color: var(--t4s-dark-color);
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--btn-radius);
+  letter-spacing: 1px;
+}
+#t4s-login-sidebar .t4s_btn_submmit:hover, 
+#t4s-login-sidebar .t4s-next-tab:hover {
+	color: var(--t4s-light-color);
+  background-color: var(--accent-color);
+}
+#t4s-login-sidebar a {
+	font-size: 16px;
+	color: var(--text-color);
+	font-weight: 300;
+}
+#t4s-login-sidebar a:hover {
+	color: var(--secondary-color);
+}
+
+#t4s-login-sidebar .t4s-drawer__content {
+	padding: 0 15px 20px;
+}
+#t4s-login-sidebar .t4s-drawer__header {
+	line-height: 60px;
+	padding: 0;
+	border: none;
+	color: var(--heading-color);
+}
+#t4s-login-sidebar .t4s-drawer__header > span {
+	font-size: 25px;
+	font-weight: 500;
+	text-align: center;
+	text-transform: none;
+}
+#t4s-login-sidebar button.t4s-drawer__close {
+	position: absolute;
+	right: 0;
+	top: 0;
+	background-color: transparent;
+}
+#t4s-login-sidebar[data-target=recover] .t4s-login-content-bottom,
+#t4s-login-sidebar[data-target=create] .t4s-login-content-bottom {
+	margin-bottom: 0;
+}
+#t4s-login-sidebar .t4s-login-content-bottom {
+	flex-direction: column;
+}
+#t4s-login-sidebar .t4s-login-content-bottom > * {
+	margin-bottom: 20px;
+}
+#t4s-login-sidebar {
+	min-width: 320px;
+}
+.form__message svg {
+	width: 20px;
+	height: 20px;
+}
+@media(min-width: 768px) {
+	#t4s-login-sidebar {
+		min-width: 356px;
+	}
+}
+@media(min-width: 1025px) {
+	#t4s-login-sidebar .t4s-drawer__header {
+		line-height: 80px;
+		padding-top: 18px;
+	}
+	#t4s-login-sidebar .t4s-drawer__content {
+		padding: 0 30px 20px;
+	}
+	#t4s-login-sidebar.t4s-login-popup {
+	  width: 615px;
+	  padding: 0;
+	  left: 30px;
+	  right: 30px;
+	  margin: auto;
+	  top: 30px;
+	  bottom: 30px;
+	  height: auto;
+	  max-height: 455px;
+	}
+	#t4s-login-sidebar .t4s_btn_submmit, 
+	#t4s-login-sidebar .t4s-next-tab {
+		letter-spacing: 1.5px;
+  	max-width: calc(50% - 15px);
+	}
+	#t4s-login-sidebar.t4s-login-popup[data-target=recover] {
+		max-height: 380px;
+	}
+	#t4s-login-sidebar.t4s-login-popup[data-target=create] {
+		max-height: 647px;
+	}
+	#t4s-login-sidebar label {
+		margin-bottom: 12px;
+	}
+	#t4s-login-sidebar input {
+		height: 55px;
+		line-height: 53px;
+		padding: 0 15px;
+	}
+	#t4s-login-sidebar .t4s-login-content-bottom {
+		align-items: center;
+		justify-content: space-between;
+		flex-direction: row;
+	}
+	#t4s-login-sidebar .t4s-login-content-bottom > * {
+	  max-width: calc(50% - 15px);
+	  margin-bottom: 0;
+	}
+	#t4s-login-sidebar .t4s_btn_submmit, 
+	#t4s-login-sidebar .t4s-next-tab {
+		line-height: 55px;
+		height: 55px;
+	}
+}
+@media(min-width: 1281px) {
+	#t4s-login-sidebar .t4s_btn_submmit, 
+	#t4s-login-sidebar .t4s-next-tab {
+		letter-spacing: 2px;
+	}
+}
+@media(min-width: 1441px) {
+	#t4s-login-sidebar .t4s_btn_submmit, 
+	#t4s-login-sidebar .t4s-next-tab {
+		letter-spacing: 2.38px;
+	}
+}
+@media(max-width: 1024px) {
+	#t4s-login-sidebar .t4s-login-content-bottom {
+		margin-bottom: 0;
+	}
+	#t4s-login-sidebar .t4s-login-content-bottom > *:last-child {
+    margin-bottom: 5px;
+  }
+}
+@media(max-width: 767px) {
+	#t4s-login-sidebar .t4s-login-content-bottom {
+		margin-bottom: 0;
+	}
+}

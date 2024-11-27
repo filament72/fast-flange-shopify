@@ -1,0 +1,201 @@
+.t4s-store-locator__sidebar {
+  max-height: 70vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.t4s-store-locator__listings {
+  height: 100%;
+  overflow: auto;
+  border: 1px solid var(--border-color);
+  background-color: #293341;
+  color: #fff;
+}
+.t4s-store-locator__listings .t4s-rte {
+  color: #7c8ba0;
+}
+.t4s-store-locator__listings .t4s-store-locator__item {
+  display: block;
+  padding: 30px 45px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.t4s-store-locator__listings .t4s-store-locator__item:last-child {
+  border-bottom: none;
+}
+.t4s-store-locator__listings
+  .t4s-store-locator__item
+  .t4s-store-locator__title {
+  display: block;
+  color: var(--secondary-color);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 3px;
+  line-height: 25px;
+}
+.t4s-store-locator__listings
+  .t4s-store-locator__item
+  .t4s-store-locator__title
+  i {
+  font-size: 16px;
+  line-height: 30px;
+}
+/*  .t4s-store-locator__listings .t4s-store-locator__item.is--active .t4s-store-locator__title,
+ .t4s-store-locator__listings .t4s-store-locator__item .t4s-store-locator__title:hover {
+   color: var(--accent-color);
+ } */
+.t4s-store-locator__listings .t4s-store-locator__item:hover,
+.t4s-store-locator__listings .t4s-store-locator__item.is--active {
+  background-color: #1c2735;
+}
+.t4s-store-locator__listings .t4s-store-locator__item:hover div.t4s-rte,
+.t4s-store-locator__listings .t4s-store-locator__item.is--active div.t4s-rte {
+  color: #fff;
+}
+.t4s-main-store-locator ::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  border-left: 0;
+  background: rgba(0, 0, 0, 0.1);
+}
+.t4s-main-store-locator ::-webkit-scrollbar-track {
+  background: none;
+}
+.t4s-main-store-locator ::-webkit-scrollbar-thumb {
+  background: var(--color-marker);
+  border-radius: 0;
+}
+
+.t4s-store-locator__marker {
+  border: none;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  color: var(--color-marker);
+}
+.mapboxgl-marker:not(.t4s-store-locator__marker) svg path {
+  fill: var(--color-marker);
+}
+svg.t4s-icon--store-locator {
+  width: 100%;
+  height: 100%;
+  fill: currentcolor;
+}
+.has--custom-img-marker .t4s-store-locator__marker {
+  background-image: var(--marker-img);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  height: 56px;
+  width: 56px;
+}
+/* .has--custom-img-marker svg.t4s-icon--store-locator {
+  display: none !important
+} */
+
+/* Marker tweaks */
+.t4s-main-store-locator .mapboxgl-popup {
+  padding-bottom: 50px;
+}
+
+.t4s-main-store-locator .mapboxgl-popup-close-button {
+  display: none;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  outline: none;
+  color: var(--secondary-color);
+  font-size: 20px;
+  padding: 10px;
+  line-height: 1;
+}
+.t4s-main-store-locator .mapboxgl-popup-content {
+  padding: 25px;
+  width: 280px;
+  font-size: 16px;
+  line-height: 30px;
+  color: #7b7b7b;
+  font-weight: 300;
+}
+.t4s-main-store-locator .mapboxgl-popup-content h3 {
+  background: var(--t4s-body-background);
+  color: var(--secondary-color);
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: 3px;
+  line-height: 25px;
+  font-weight: 500;
+  font-family: var(--font-body-family);
+}
+.t4s-store-locator .mapboxgl-popup-content h3 i {
+  display: none;
+}
+
+.t4s-main-store-locator .mapboxgl-popup-content p {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+.t4s-main-store-locator .mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
+  margin-top: 15px;
+}
+
+.t4s-main-store-locator .mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
+  border-bottom-color: var(--t4s-body-background);
+}
+.t4s-store-locator .mapboxgl-ctrl-logo,
+.t4s-store-locator .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl {
+  display: none !important;
+}
+.t4s-store-locator .mapboxgl-map,
+.t4s-store-locator .mapboxgl-canvas-container {
+  width: 100%;
+  height: 100%;
+}
+.t4s-store-locator .mapboxgl-canvas {
+  display: block !important;
+  height: 100%;
+}
+.t4s-store-locator__content {
+  min-height: 600px;
+}
+.t4s-store-locator__item .t4s-rte > p {
+  margin-bottom: 0;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 300;
+}
+@media (max-width: 767px) {
+  .t4s-store-locator__listings .t4s-store-locator__item {
+    padding: 10px;
+  }
+  .t4s-store-locator__sidebar {
+    max-height: 50vh;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .t4s-store-locator__content {
+    height: 70vh;
+  }
+}
+/* searchbox */
+.t4s-store-locator .mapboxgl-ctrl-geocoder {
+  background: var(--t4s-body-background);
+  color: var(--text-color);
+  font-family: var(--font-body-family);
+}
+.t4s-store-locator .mapboxgl-ctrl-geocoder--input {
+  color: var(--text-color);
+}
+.t4s-store-locator .mapboxgl-ctrl-geocoder .suggestions > li > a {
+  color: var(--secondary-color);
+}
+.t4s-store-locator .mapboxgl-ctrl-geocoder .suggestions > .active > a,
+.t4s-store-locator .mapboxgl-ctrl-geocoder .suggestions > li > a:hover {
+  color: var(--secondary-color);
+  background-color: rgba(var(--text-color-rgb), 0.05);
+}
+.t4s-store-locator .mapboxgl-ctrl-geocoder--icon {
+  fill: var(--secondary-color);
+}

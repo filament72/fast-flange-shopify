@@ -1,0 +1,129 @@
+.t4s-grouped-product-list td {
+	padding: 10px;
+}
+.t4s-grouped-product-list th {
+    background-color: rgba(var(--border-color-rgb),.35);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+.t4s-grouped-pr__img-wrap img {
+    min-width: 50px;
+    max-width: 80px;
+}
+.t4s-grouped-pr__info{margin-inline-start: 10px;}
+.t4s-grouped-pr__link {
+	 color: var(--secondary-color);
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.t4s-grouped-pr__info select {
+    border-radius: 2px;
+    max-width: 200px;
+    display: block;
+    margin-bottom: 10px;
+}
+.t4s-grouped-pr__qty .t4s-quantity-wrapper {
+    display: inline-flex;
+    border-radius: 2px;
+    border: 1px solid rgba(var(--border-color-rgb), 0.9);
+    background-color: rgba(var(--border-color-rgb), 0.35);
+}
+.t4s-grouped-pr__qty .t4s-quantity-wrapper button.t4s-quantity-selector {
+    background-color: transparent;
+    padding: 0;
+    width: 30px;
+    height: 40px;
+    color: var(--t4s-dark-color);
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.t4s-grouped-pr__qty .t4s-quantity-wrapper button.t4s-quantity-selector svg {
+	width: 11px;
+}
+.t4s-grouped-pr__qty input.t4s-quantity-input {
+    width: 35px;
+    border: 0;
+    padding: 0;
+    height: 40px;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--t4s-dark-color);
+    text-align: center;
+    background: transparent;
+}
+.t4s-grouped-pr__price {
+    color: var(--primary-price-color);
+}
+.t4s-grouped__total-price ins,
+.t4s-grouped-pr__price ins{
+    display: inline-block;
+    color: var(--sale-price-color);
+    margin-inline-end: 5px;
+}
+.t4s-grouped-pr__price del{color: var(--secondary-price-color);display: inline-block;}
+.t4s-grouped__total-price del,
+.t4s-grouped-pr__price del {
+    color: var(--secondary-price-color);
+}
+.t4s-grouped__total-price {
+    color: var(--primary-price-color);
+}
+.t4s-grouped-product-list{margin-bottom: 25px;}
+.t4s-grouped__text-total-price {
+    font-size: 20px;
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin-inline-end: 5px;
+    margin-bottom: 25px;
+}
+.t4s-grouped__frm .t4s-product-form__submit{margin-top: 0!important;}
+.t4s-grouped-product-list td {
+    text-align: center;
+}
+
+/* Custom CSS */
+@media (min-width: 1025px) {
+    .t4s-product-form__variants.t4s-grouped-product.is-btn-full-width__false .t4s-product-form__buttons, .t4s-product-form__variants.t4s-grouped-product.is-btn-full-width__false .t4s-product-form__submit {
+        min-width: 230px;
+    }
+    .t4s-grouped-product-list th {
+        padding:20px 18px;
+    }
+    .t4s-grouped-product-list td{
+        padding:23px;
+    }
+    .t4s-grouped-pr__info{margin-inline-start: 23px;}
+    .t4s-grouped-pr__link{font-size: 18px;}
+    .t4s-grouped-pr__price {font-size: 16px;}
+    .t4s-grouped-pr__qty .t4s-quantity-wrapper button.t4s-quantity-selector{
+        width:40px;
+        height: 48px;
+    }
+    .t4s-grouped-pr__qty input.t4s-quantity-input{
+        width: 38px;
+        height: 48px;
+        font-size: 18px;
+    }
+}
+@media (-moz-touch-enabled: 0), (hover: hover) and (min-width: 1025px){
+    .t4s-grouped-pr__qty .t4s-quantity-wrapper button.t4s-quantity-selector:hover,
+    .t4s-grouped-pr__link:hover {
+       color: var(--accent-color); 
+    }
+}
+@media(max-width:767px){
+    .t4s-grouped-pr__info select,
+    .t4s-grouped-pr__price,
+    .t4s-grouped-pr__link{font-size: 12px;}
+    .t4s-grouped-pr__img-wrap img {
+        max-width: 65px;
+    }
+    .t4s-grouped-pr__link{margin-bottom: 6px;}
+    .t4s-grouped-product-list,
+    .t4s-grouped__text-total-price {margin-bottom: 16px;}
+}

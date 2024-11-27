@@ -1,0 +1,58 @@
+{%- if section.settings.top_heading != blank or  section.settings.top_subheading != blank -%}
+	{{ 't4s-top-head.css' | asset_url | stylesheet_tag }}
+	<div class="t4s-top-heading t4s_des_title_{{ section.settings.design_heading }} {% if section.settings.heading_center %}t4s-text-center{% endif %} {% if section.settings.top_subheading != blank %} t4s-has-section-des{% endif %} {% if section.settings.btn_pos == "ontop" or section.settings.btn_pos == "sidetop" %}t4s-top-heading-has-flicky-btns{% endif %} {% if section.settings.btn_pos == "sidetop" %}t4s-flicky-btns-sidetop{% endif %}" {% if get_height %}data-get-height{% endif %} style="--tophead-mb: {{ section.settings.tophead_mb }}px;--tophead-mb-tb: {{ section.settings.tophead_mb_tb }}px;--tophead-mb-mb: {{ section.settings.tophead_mb_mb }}px;">
+		{% if section.settings.design_heading == "6" %}
+		<div class="t4s-top-head-6 t4s-d-flex {% if section.settings.heading_center %} t4s-justify-content-center {% endif %}">
+			<div class="t4s-icon-6">
+				<svg class="t4s-icon-6"  version="1.2" viewBox="0 0 61 54" ><style>.a{fill:#293341}</style><path fill-rule="evenodd" class="a" d="m61 24.1v21.6c0 2-1.6 3.6-3.6 3.6h-10.6l-4.4 4.4c-0.2 0.2-0.5 0.3-0.8 0.3-0.3 0-0.6-0.1-0.9-0.3l-4.4-4.4h-10.6c-1.9 0-3.5-1.6-3.5-3.6v-0.3l-1.9 1.9c-0.3 0.2-0.6 0.3-0.9 0.3-0.3 0-0.6-0.1-0.8-0.3l-4.4-4.4h-10.6c-2 0-3.6-1.6-3.6-3.5v-21.7c0-2 1.6-3.6 3.6-3.6h7.5v-10.6c0-1.9 1.6-3.5 3.6-3.5h31.6c2 0 3.6 1.6 3.6 3.5v17h7.5c2 0 3.6 1.6 3.6 3.6zm-47.5 1.1c0 0.7 0.5 1.2 1.2 1.2h11c0.4 0 0.7 0.1 0.9 0.4l3.9 3.8 3.9-3.8c0.2-0.3 0.5-0.4 0.9-0.4h11c0.7 0 1.2-0.5 1.2-1.2v-21.7c0-0.6-0.5-1.1-1.2-1.1h-31.6c-0.7 0-1.2 0.5-1.2 1.1zm10.7 15.4h11.1c0.6 0 1.2-0.6 1.2-1.2v-10.6h-0.7l-4.5 4.3c-0.2 0.3-0.5 0.4-0.8 0.4-0.3 0-0.6-0.1-0.8-0.4l-4.5-4.3h-10.5c-2 0-3.6-1.6-3.6-3.6v-8.7h-7.5c-0.7 0-1.2 0.5-1.2 1.2v21.7c0 0.6 0.5 1.2 1.2 1.2h11.1c0.3 0 0.6 0.1 0.8 0.3l3.9 3.9 3.9-3.9c0.3-0.2 0.6-0.3 0.9-0.3zm34.4-16.5c0-0.7-0.5-1.2-1.2-1.2h-7.5v2.3c0 2-1.6 3.6-3.6 3.6h-7.5v10.6c0 1.9-1.6 3.5-3.5 3.5h-10.6l-0.2 0.2v2.7c0 0.6 0.6 1.1 1.2 1.1h11.1c0.3 0 0.6 0.2 0.9 0.4l3.9 3.9 3.9-3.9c0.2-0.2 0.5-0.4 0.8-0.4h11.1c0.7 0 1.2-0.5 1.2-1.1zm-15.8-16.3c0 0.6-0.6 1.2-1.2 1.2h-22.2c-0.6 0-1.2-0.6-1.2-1.2 0-0.7 0.6-1.2 1.2-1.2h22.2c0.6 0 1.2 0.5 1.2 1.2zm0 6.6c0 0.3-0.2 0.6-0.4 0.8-0.2 0.2-0.5 0.4-0.8 0.4-0.3 0-0.6-0.2-0.9-0.4-0.2-0.2-0.3-0.5-0.3-0.8 0-0.3 0.1-0.6 0.3-0.9 0.3-0.2 0.6-0.3 0.9-0.3 0.3 0 0.6 0.1 0.8 0.3 0.2 0.3 0.4 0.6 0.4 0.9zm-5.9 0c0 0.6-0.6 1.2-1.2 1.2h-16.3c-0.6 0-1.2-0.6-1.2-1.2 0-0.7 0.6-1.2 1.2-1.2h16.3c0.6 0 1.2 0.5 1.2 1.2zm5.9 6.6c0 0.6-0.6 1.2-1.2 1.2h-16.3c-0.7 0-1.2-0.6-1.2-1.2 0-0.7 0.5-1.2 1.2-1.2h16.3c0.6 0 1.2 0.5 1.2 1.2zm-22.1 0c0 0.6-0.5 1.2-1.2 1.2h-0.1c-0.6 0-1.2-0.6-1.2-1.2 0-0.7 0.6-1.2 1.2-1.2h0.1c0.7 0 1.2 0.5 1.2 1.2z"/></svg>
+			</div>
+		{% endif %}
+		<div class="t4s-heading-reverse">
+			{% if section.settings.design_heading == "9" %}
+			<div >
+			{% endif %}
+			<div class="t4s-top-head ">
+				{%- if section.settings.top_heading != blank -%}
+					<h3 class="t4s-section-heading t4s-section-title t4s-title"><span >{{ section.settings.top_heading | replace: "[", "<span class='t4s-heading-highlight'>" | replace: "]", "</span>" }}</span></h3>
+				{%- endif -%}
+			</div>
+			{%- if section.settings.top_subheading != blank -%}
+				<span class="t4s-section-subheading t4s-subtitle t4s-rte t4s-hidden_mobile_{{ section.settings.hidden_mobile }}">{{ section.settings.top_subheading | replace: "[", "<span class='t4s-heading-highlight'>" | replace: "]", "</span>" }}</span>
+			{%- endif -%}
+			{% if section.settings.design_heading == "9" %}
+			</div>
+			{% endif %}
+			{%- if section.settings.design_heading == "9" -%}
+				{% if section.settings.button_link != blank %}
+				<div class="t4s-bg-inline-t">
+					<div class="t4s-dg-button t4s-dg-button-{{ section.settings.btn_des }}">
+						<a href="{{ section.settings.button_link }}" class="t4s-button-heading">{{ section.settings.bt_lb }}</a>
+						{% if section.settings.show_icon_lb %}
+							<svg viewBox="0 0 32 32"><path d="M 12.96875 4.28125 L 11.53125 5.71875 L 21.8125 16 L 11.53125 26.28125 L 12.96875 27.71875 L 23.96875 16.71875 L 24.65625 16 L 23.96875 15.28125 Z"/></svg>
+						{% endif %}
+					</div>
+				</div>
+				{% endif %}
+			{%- endif -%}
+		</div>
+		{% if section.settings.design_heading == "6" %}
+			</div>
+		{% endif %}
+		{%- if section.settings.layout_des == "2" -%}
+			{%- if section.settings.btn_pos == "ontop" or section.settings.btn_pos == "sidetop" -%}
+				{%- if slider_btns -%}
+					<div class="t4s-flicky-btn__custom t4s-pa t4s-flickity-slider t4s-slider-btn__{{ section.settings.btn_pos }}-content t4s-slider-btn-{{ section.settings.show_btn }} t4s-slider-btn-style-{{ section.settings.btn_owl }} t4s-slider-btn-{{ section.settings.btn_shape }} t4s-slider-btn-{{ section.settings.btn_size }} t4s-slider-btn-cl-{{ section.settings.btn_cl }} t4s-slider-btn-vi-{{ section.settings.btn_vi }}">
+						<button class="flickityt4s-button t4s-pe-auto flickityt4s-prev-next-button previous btn__prev--{{ sid }}" type="button" aria-label="Previous">
+							<svg class="flickityt4s-button-icon" viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 65,95 L 20,50  L 65,5 L 60,0 Z" class="arrow"></path></svg>
+							<span class="t4s-flicky-btn-text">{{ 'general.carousel.previous' | t }}</span>
+						</button>
+						<button class="flickityt4s-button t4s-pe-auto flickityt4s-prev-next-button next btn__next--{{ sid }}" type="button" aria-label="Next">
+							<svg class="flickityt4s-button-icon" viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 65,95 L 20,50  L 65,5 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg>
+							<span class="t4s-flicky-btn-text">{{ 'general.carousel.next' | t }}</span>
+						</button>  
+					</div>
+				{%- endif -%}
+			{%- endif -%}
+		{%- endif -%} 
+	</div>
+{%- endif -%}

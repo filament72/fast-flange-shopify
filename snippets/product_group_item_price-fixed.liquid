@@ -1,0 +1,134 @@
+{%- liquid 
+	assign pr_url = product.url
+	unless placeholder_img
+		assign placeholder_img = settings.placeholder_img
+	endunless
+	assign image = product.featured_media | default: placeholder_img
+-%}
+<div class="t4s-row t4s-product-wrapper">
+	<div class="t4s-col-item t4s-col t4s-product-img t4-pr t4s-oh">
+		{%- if image != blank -%}
+			<a href="{{ pr_url }}">
+				<div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--{{ imgatt }}aspect-ratioapt: {{ image.aspect_ratio | default: 1 }}">
+					<img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,300,400,600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+				</div>
+			</a>
+		{%- endif -%}
+	</div>
+	<div class="t4s-col-item t4s-col t4s-product-info">
+		<h3 class="t4s-widget__pr-title"><a class="t4s-d-block" data-pr-href href="{{ pr_url }}">{{ product.title }}</a></h3>
+
+    {%- liquid
+      if product.title
+        assign price            = product.price
+        assign compare_at_price = product.compare_at_price | default: price
+        assign variant          = product.variants.first
+        assign variant_unit_price_measurement = variant.unit_price_measurement 
+      else
+        assign price            = 1999
+        assign compare_at_price = 1999
+      endif
+      assign cur_code_enabled = settings.currency_code_enabled
+
+      assign price_varies = product.price_varies
+      if price_varies and settings.only_price_varies_stock and product.has_only_default_variant == false and product.available
+          assign variants_price = product.variants | where: 'available', true | map: 'price' | compact | sort | uniq
+          if variants_price.size > 1
+              assign price     = variants_price | first
+              assign price_max = variants_price | last
+          else
+              assign price_varies     = false
+              assign variant          = product.first_available_variant
+              assign price            = variant.price
+              assign compare_at_price = variant.compare_at_price | default: price
+          endif
+      endif
+      assign variant_unit_price_measurement = variant.unit_price_measurement 
+
+      assign on_sale = false 
+      if compare_at_price > price
+        assign on_sale = true 
+      endif
+
+      if cur_code_enabled
+        assign money_price = price | money_with_currency
+        assign money_compare_at_price = compare_at_price | money_with_currency
+      else
+        assign money_price = price | money
+        assign money_compare_at_price = compare_at_price | money
+      endif
+    -%}
+
+    <div class="t4s-product-price"{%- if variant_unit_price_measurement == nil -%} data-pr-price{% endif %}>
+      {%- if variant_unit_price_measurement -%}
+        <span data-pr-price>
+          {%- liquid
+            assign price_unit = variant.unit_price | money
+            if cur_code_enabled
+              assign price_variant = variant.price | money_with_currency
+              assign price_compare = variant.compare_at_price | money_with_currency
+            else
+              assign price_variant = variant.price | money
+              assign price_compare = variant.compare_at_price | money
+            endif
+          -%}
+          {%- if variant.compare_at_price > variant.price -%} <ins>{{ price_variant }}</ins> <del>{{ price_compare }}</del>{%- else -%}{{ price_variant }}{%- endif -%}
+        </span>
+
+        {%- capture unit_price_base_unit -%}
+          <span data-unit-base class="t4s-unit_base"> 
+            {%- if variant_unit_price_measurement -%}
+              {%- if variant_unit_price_measurement.reference_value != 1 -%}
+                {{- variant_unit_price_measurement.reference_value -}}
+              {%- endif -%}
+              {{ variant_unit_price_measurement.reference_unit }}
+            {%- endif -%}
+          </span>
+        {%- endcapture -%}
+        <div class="t4s-price__unit">
+          <span data-unit-price class="t4s-unit_price">{{ price_unit }}</span><span>/</span>{{- unit_price_base_unit -}}
+        </div>
+      
+      {%- elsif price_varies -%}
+
+        {%- if price_varies_style == '1' -%}
+              
+          {%- liquid 
+            if cur_code_enabled
+              assign price_max = price_max | default: product.price_max | money_with_currency
+            else 
+              assign price_max = price_max | default: product.price_max | money
+            endif
+          -%}
+          {%- if on_sale -%}
+            <span class="t4s-price__sale">{{ money_price }} – {{ price_max }}</span>{% else %}{{ money_price }} – {{ price_max }}
+          {%- endif -%}
+        {%- elsif on_sale -%}
+          <ins>{{ 'products.product.from_price_html' | t: price_min: money_price, class: 't4s-price-from' }}</ins> <del>{{ money_compare_at_price }}</del>
+        {%- else -%}
+          {{ 'products.product.from_price_html' | t: price_min: money_price, class: 't4s-price-from' }}
+        {%- endif -%}
+      {%- elsif on_sale -%}
+        <ins>{{ money_price }}</ins> <del>{{ money_compare_at_price }}</del>
+      {%- else -%}
+        {{ money_price }}
+      {%- endif -%}
+      {%- assign money_save = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round -%}
+      {%- if on_sale -%}
+        {% if badge_sale == 1 %}
+          <span class="t4s-badge-item t4s-badge-sale">{{ 'products.badge.on_sale' | t }}</span>
+        {% elsif badge_sale == 2 %}
+            <span class="t4s-badge-item t4s-badge-sale">
+              {{ 'products.badge.save_amount_off' | t: saved_amount: money_save }}
+            </span>
+        {% elsif badge_sale == 3 %}
+          <span class="t4s-price-badge"><span class="t4s-badge-item t4s-badge-sale">
+              {{ 'products.badge.save_amount_2_html' | t: saved_amount: money_save }}</span>
+            </span>
+        {% endif %}
+      {% endif %}
+    </div>
+	</div>
+</div>
+
+ 

@@ -1,0 +1,74 @@
+<div class="t4s-product-rating">
+{%- # theme-check-disable MissingTemplate -%}
+{%- case app_review -%}            
+  {%- when '1' -%}
+    <div class="shopify-product-reviews-badge t4s-grid-rating" data-id="{{ product.id }}"></div>
+  {%- when '2' -%}
+    <div class="ryviu-collection t4s-grid-rating"><ryviu-widget-total collection=1 reviews_data="{{ product.metafields.ryviu.product_reviews_info | escape }}" product_id="{{ product.id }}" handle="{{ product.handle }}"></ryviu-widget-total></div>  
+  {%- when '3' -%}
+    <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} t4s-grid-rating"></div>
+  {%- when '4' -%}
+    <div class="loox-rating t4s-grid-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+  {%- when '5' -%}
+    {%- capture the_snippet_review_avg %}{% render 'ssw-widget-avg-rate-listing', product: product %}{% endcapture -%}
+    {%- unless the_snippet_review_avg contains 'Liquid error' -%}{{ the_snippet_review_avg }}{%- endunless -%}
+  {%- when '7' -%}
+    <!-- Start of Judge.me code --> 
+      <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge'  data-id='{{ product.id }}'>
+        {{- product.metafields.judgeme.badge -}}
+      </div>  
+    <!-- End of Judge.me code -->
+  {%- when '8' -%}
+    <div class="scm-reviews-rate t4s-grid-rating" data-rate-version2={{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json }} data-product-id= {{ product.id }}></div>
+  {%- else -%}
+    <div class="t4s-grid-rating t4s-review__grid-other">{%- render 'review_grid_other', product: product -%}</div>
+{%- endcase -%}
+{%- # theme-check-enable MissingTemplate -%}
+</div>
+
+{%- comment -%}
+  DOCUMENT https://kalles-docs.the4.co/features/custom-review-app#custom-review-apps
+  
+  1. Judge.me Product Reviews 
+  Link app: https://apps.shopify.com/judgeme
+  Link install to theme: https://support.judge.me/support/solutions/articles/44001699621-judge-me-manual-installation-guide
+  
+  Code install:
+  
+  {%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: product -%}
+  
+  2. stamped.io 
+  Link app: https://apps.shopify.com/product-reviews-addon
+  
+  Code install:
+  
+  <span class="stamped-product-reviews-badge" data-product-sku="{{ product.handle }}" data-id="{{ product.id }}" data-product-type="{{product.type}}" data-product-title="{{product.title}}"  style="display:block;">{{ product.metafields.stamped.badge }}</span>
+  
+  3. Yotpo: Photo & Product Reviews 
+  Link app: https://apps.shopify.com/yotpo-social-reviews
+  
+  Code install: 
+  
+  <div class="yotpo bottomLine" style="display:inline-block" data-product-id="{{ product.id }}"> </div>
+  
+  4. rivyo-product-review 
+  Link app: https://apps.shopify.com/rivyo-product-review
+  
+  <div class="wc_product_review_badge" data-handle="{{ product.handle }}" data-product_id="{{ product.id }}"></div>
+  
+  5. aliexpress-reviews-importer
+  Link app:
+  
+  Code install:
+  
+  <div class="shop-booster-content shop-booster-col-rat" id="shop-booster-pid-d-{{ product.id }}" ></div>
+  
+  6. Areviews - Reviews Importer 
+  Link app: https://apps.shopify.com/areviews-aliexpress
+  Link install to theme: https://areviewsapp.com/install/collectionRating
+  
+  Code install:
+  
+  <div class='areviews_product_item areviews_stars{{ product.id }}' data-product-id='{{ product.id }}'></div>
+  
+{%- endcomment -%}

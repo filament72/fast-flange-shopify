@@ -1,0 +1,92 @@
+.t4s-ourteam2 .t4s-member-inner{
+  transition: all .3s ease;
+  text-align:start;
+}
+.t4s-ourteam2 .t4s-member-inner:after{
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60%;
+  background: linear-gradient(0deg,rgba(0,0,0,.5) 0,rgba(0,0,0,0) 100%);
+}
+.t4s-ourteam2 .t4s-member-position{
+  opacity: 0.8;
+  font-size: 14px;
+  letter-spacing: 0px;
+  line-height: 26px;
+  color: var(--t4s-light-color);
+  font-weight: 400;
+}
+.t4s-ourteam2 .t4s-member-name {
+  font-size: 21px;
+  line-height: 32px;
+  color: var(--t4s-light-color);
+  font-weight: 500;
+}
+
+.t4s-ourteam2 .t4s-member-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom:0;
+  padding: 20px 25px;
+  text-align: start;
+  transition: all .3s ease;
+  z-index: 2;
+  transform: translateY(60px);
+}
+.t4s-ourteam2 .t4s-member-info.t4s-member-info-no__socials{
+ bottom:0;
+}
+.t4s-ourteam2 .t4s-member-info.t4s-member-info-no__socials .t4s-member-socials {padding:0}
+.t4s-ourteam2 .t4s-member-socials {
+  padding: 18px 18px 15px;
+  background-color: var(--t4s-light-color);
+  text-align: end;
+  margin: 18px -25px -20px;
+}
+.t4s-ourteam2 .t4s-member-socials a{color:var(--text-color);}
+.t4s-ourteam2 .t4s-member-socials a svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+.t4s-ourteam2 .t4s-member-socials a {
+  margin: 0px 10px;
+}
+@media (-moz-touch-enabled: 0),(hover: hover) and (min-width: 1025px) {
+  .t4s-ourteam2 .t4s-member-inner:hover{box-shadow:0px 10px 25px rgba(0,0,0,0.1);}
+  .t4s-ourteam2 .flickityt4s-enabled .t4s-member-inner:hover{box-shadow: none;}
+  .t4s-ourteam2 .t4s-member-inner:hover .t4s-member-info{transform:translateY(0);}
+  .t4s-ourteam2 .t4s-member-socials a:hover{color:var(--accent-color)}
+}
+@media (max-width:1024px) {
+  .t4s-ourteam2 .t4s-member-info{
+    position: static;
+    background: var(--t4s-light-color);
+    text-align: center;
+    padding:18px 15px;
+    transform: none;
+  }
+  .t4s-ourteam2 .t4s-member-position,
+  .t4s-ourteam2 .t4s-member-name{color:var(--t4s-dark-color)}
+  .t4s-ourteam2 .t4s-member-inner .t4s-member-socials {
+    position: static;
+    text-align: center;
+    margin-top: 0;
+  }
+  .t4s-ourteam2 .t4s-member-inner:after{content:none}
+  .t4s-ourteam2 .t4s-member-name {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+@media (max-width:767px) {
+  .t4s-ourteam2 .t4s-member-info {padding:15px 10px}
+  .t4s-ourteam2 .t4s-member-name {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

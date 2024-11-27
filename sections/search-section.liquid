@@ -1,0 +1,559 @@
+<!-- sections/search-section.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-search-hidden.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign sid = section.id
+  assign stt_layout = section.settings.layout
+  assign stt_image_bg = section.settings.image_bg 
+  
+  if stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif  
+  
+  if settings.suggest_pr_style == "grid"
+    assign limit = 8
+  else
+    assign limit = 6
+  endif
+  
+  assign placeholder_img = settings.placeholder_img
+  assign price_varies_style = settings.price_varies_style
+ -%}
+{%- render 'section_style', sid: sid -%}
+<div
+  class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }} {{ section.settings.line_pos }} ">
+  {{- html_layout[0] -}}
+  {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {%- if stt_image_bg != blank -%} t4s-has-imgbg lazyloadt4s {%- endif -%} "  {%- if stt_image_bg != blank -%}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" {%- endif -%} > {%- endif -%}
+    {%- render 'section_tophead', sid: sid -%}
+    <div class="t4s-search-form t4s-search-style1 t4s-text-{{ section.settings.content_align }}" style="--input-cl:{{ section.settings.input_cl }};--border-cl:{{ section.settings.border_cl }};--bg-cl:{{ section.settings.background_cl }};--btn-cl:{{ section.settings.btn_cl }};--btn-hover-cl:{{ section.settings.btn_hover_cl }};--bg-cl:{{ section.settings.bg_cl }};--form-width:{{ section.settings.form_width }}px;--form-width-tb:{{ section.settings.form_width_tb }}px;--form-width-mb:{{ section.settings.form_width_mb }}px;">
+        <div data-predictive-search data-sid="search-hidden" class="t4s-search__form-wrap t4s-pr">
+          <form data-frm-search action="{{ routes.search_url }}" method="get" class="t4s-search__form t4s-row t4s-g-0 t4s-align-items-center" role="search">
+            <input type="hidden" name="type" value="product">
+            <input type="hidden" name="options[unavailable_products]" value="{{ settings.unavailable_prs }}">
+            <input type="hidden" name="options[prefix]" value="last">
+            <div class="t4s-search-main t4s-pr t4s-d-flex t4s-col t4s-col-item">
+              <input data-input-search class="t4s-search__input t4s-input__currentcolor t4s-text-start" autocomplete="off" type="text" name="q" placeholder="{{ 'search.general.placeholder_products' | t }}">
+              <button class="t4s-search__submit{% if settings.ajax_search %} t4s-pe-none{% endif %}" type="submit">
+                <svg class="t4s-btn-op0" viewBox="0 0 18 19" width="16"><use href="#t4s-icon-search"></use></svg>
+              </button>
+            </div>
+          </form>
+          <div class="t4s-pr">
+            <div class="t4s-pa t4s-frm-search__results t4s_ratio1_1">
+              <div data-skeleton-search class="t4s-skeleton_wrap t4s-dn">
+                <div class="t4s-row t4s-row-products t4s-search-products_{{ settings.suggest_pr_style }} {% if settings.suggest_pr_style == "grid" %}t4s-row-cols-lg-3 t4s-row-cols-md-2 t4s-row-cols-2 t4s-g-lg-30 t4s-gx-md-15 t4s-gy-md-30 t4s-gx-15 t4s-gy-30 {% else %} t4s-row-cols-lg-1 t4s-row-cols-md-1 t4s-row-cols-1 {% endif %}t4s-w-100">
+                  {%- for i in (1..6) -%}
+                    {% if settings.suggest_pr_style == "grid" %}
+                      <div class="t4s-col-item">
+                        <div class="t4s-skeleton_img"></div>
+                        <div class="t4s-skeleton_txt1"></div>
+                        <div class="t4s-skeleton_txt2"></div>
+                      </div>
+                    {% else %}
+                      <div class="t4s-pr-search-item t4s-col-item">
+                        <div class="t4s-row t4s-space-item-inner">
+                          <div class="t4s-col-auto t4s-col-item t4s-widget_img_pr"><div class="t4s-skeleton_img"></div></div>
+                          <div class="t4s-col t4s-col-item t4s-widget_if_pr"><div class="t4s-skeleton_txt1"></div><div class="t4s-skeleton_txt2"></div></div>
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+              <div data-results-search class="t4s-frm-search__content xx t4s_ratioadapt t4s-current-scrollbar"{% if collections[settings.search_prs_suggest] == blank or settings.show_search_suggest == false %} style="display: none;" {% endif %}>
+                <div class="t4s-row t4s-row-products t4s-search-products_{{ settings.suggest_pr_style }} {% if settings.suggest_pr_style == "grid" %}t4s-row-cols-lg-3 t4s-row-cols-md-2 t4s-row-cols-2 t4s-g-lg-30 t4s-gx-md-15 t4s-gy-md-30 t4s-gx-15 t4s-gy-30 {% else %} t4s-row-cols-lg-1 t4s-row-cols-md-1 t4s-row-cols-1 {% endif %}t4s-w-100">
+                  {%- if collections[settings.search_prs_suggest] != blank and settings.show_search_suggest -%}
+                    {% if settings.suggest_pr_style == "grid" %}
+                      {%- for product in collections[settings.search_prs_suggest].products limit: limit -%}
+                        {%- render 'pr-grid-item1', product: product, placeholder_img: placeholder_img, price_varies_style: price_varies_style -%}
+                      {%- endfor -%}
+                    {% else %}
+                      {%- for product in collections[settings.search_prs_suggest].products limit: limit -%}
+                        <div class="t4s-pr-search-item t4s-col-item">
+                          {%- render 'product_group_item', product: product, placeholder_img: placeholder_img, price_varies_style: price_varies_style -%}
+                        </div>
+                      {%- endfor -%}
+                    {% endif %}
+                  {%- else -%}
+                  <p class="t4s-search-error t4s-text-center">{{ 'search.general.no_product_results' | t }}</p>
+                  {%- endif -%}
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div> 
+    </div>
+  {{- html_layout[1] -}}
+</div>
+<style>
+  .t4s-search-form .t4s-search__form-wrap {
+    display: inline-block;
+    max-width: var(--form-width-mb);
+    width: 100%;
+  }
+  .t4s-search-form form {
+    width: 100%;
+    background-color: transparent;
+  }
+  .t4s-search-main {
+    width: 100%;
+    border-bottom: solid 2px var(--border-cl);
+    background-color: var(--bg-cl);
+    justify-content: space-between;
+    align-items: center;
+  }
+  .t4s-search-main .t4s-search__input {
+    color: var(--input-cl);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 30px;
+    padding: 10px 0;
+    height: 48px;
+    background-color: transparent;
+    border: none;
+    width: calc(100% - 30px);
+  }
+  .t4s-search-main .t4s-search__submit {
+    background-color: transparent;
+    color: var(--btn-cl);
+    width: 30px;
+    height: 48px;
+    padding: 0;
+    text-align: right;
+  }
+  .t4s-search-main .t4s-search__submit {
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+  }
+  .t4s-search-main .t4s-search__submit:hover {
+    color: var(--btn-hover-cl);
+  }
+  @media(min-width: 768px) {
+    .t4s-search-form .t4s-search__form-wrap {
+      max-width: var(--form-width-tb);
+    }
+  }
+  @media(min-width: 1025px) {
+    .t4s-search-form .t4s-search__form-wrap {
+      max-width: var(--form-width);
+    }
+  }
+  .t4s-search-form .t4s-frm-search__results {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    width: 1600px;
+    height: auto;
+    background-color: var(--t4s-light-color);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all .1s ease-in-out;
+    max-width: 100%;
+    box-shadow: 0 1px 5px 2px rgba(var(--border-color-rgb),.3);
+  }
+  .t4s-search-form .t4s-search__form-wrap:hover .t4s-frm-search__results {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .t4s-search-form .t4s-frm-search__content {
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px 5px;
+    max-height: 400px;
+  }
+  .t4s-search-form .t4s-frm-search__content .t4s-search-error {
+    margin-bottom: 0;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 30px;
+  }
+  .t4s-search-form .t4s-frm-search__content > .t4s-row-products,
+  .t4s-search-form .t4s-skeleton_wrap > .t4s-row-products,
+  .t4s-search-form .t4s-skeleton_wrap .t4s-row-products .t4s-space-item-inner {
+    margin: 0;
+    text-align: left;
+  }
+  .t4s-search-form .t4s-pr-search-item .t4s-product-img,
+  .t4s-search-form .t4s-skeleton_wrap .t4s-widget_img_pr {
+    max-width: 115px;
+    padding-inline-end: 0;
+  }
+  .t4s-search-form .t4s-skeleton_wrap .t4s-widget_if_pr,
+  .t4s-search-form .t4s-pr-search-item .t4s-product-info {
+    padding-inline-start: 24px;
+    text-align: left;
+  }
+  .t4s-search-form .t4s-pr-search-item {
+    margin-bottom: 25px;
+    width: 100% !important;
+  }
+  .t4s-search-form .t4s-pr-search-item:last-child {
+    margin-bottom: 0;
+  }
+  .t4s-search-form .t4s-product .t4s-product-title,
+  .t4s-search-form .t4s-pr-search-item .t4s-widget__pr-title {
+    color: var(--secondary-color);
+    font-weight: 500;
+    line-height: 1.6666667;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  .t4s-search-form .t4s-product .t4s-product-title {
+    font-size: 16px;
+    line-height: 25px;
+    margin-bottom: 5px;
+  }
+  .t4s-search-form .t4s-product .t4s-product-price,
+  .t4s-search-form .t4s-pr-search-item .t4s-widget__pr-price {
+    color: var(--primary-price-color);
+    font-size: 14px;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    padding-bottom: 3px;
+  }
+  .t4s-search-form .t4s-skeleton_wrap {
+    padding: 20px 5px;
+  }
+  .t4s-search-form .t4s-skeleton_wrap .t4s-pr-search-item {
+    padding: 0;
+  }
+  .t4s-search-form .t4s-pr-search-item .t4s-skeleton_img {
+    width: 100px;
+  }
+  .t4s-search-form .t4s-skeleton_wrap .t4s-skeleton_txt1{
+    height: 10px;
+    width: 100%;
+    background: rgb(225,227,228);
+    margin-bottom: 8px;
+  }
+  .t4s-search-form .t4s-skeleton_wrap .t4s-skeleton_txt2 {
+    height: 10px;
+    width: 40%;
+    background: rgb(225,227,228);
+    margin-bottom: 0;
+  }
+  @media(min-width: 768px) {
+    .t4s-search-form .t4s-row-products > .t4s-product {
+      width: 50%;
+    }
+  }
+  @media(min-width: 1025px) {
+    .t4s-search-form .t4s-row-products > .t4s-product {
+      width: 33.33333%;
+    }
+  }
+  
+</style>
+{% schema %}
+{
+  "name": "Search section",
+  "tag": "section",
+  "class": "t4s-section t4s-search-section",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1. Heading options"
+    },
+    {
+      "type": "select",
+      "id": "design_heading",
+      "label": "Heading design",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Design 01"
+        },
+        {
+          "value": "2",
+          "label": "Design 02"
+        },
+        {
+          "value": "3",
+          "label": "Design 03"
+        },
+        {
+          "value": "4",
+          "label": "Design 04"
+        },
+        {
+          "value": "5",
+          "label": "Design 05"
+        },
+        {
+          "value": "6",
+          "label": "Design 06"
+        },
+        {
+          "value": "7",
+          "label": "Design 07"
+        },
+        {
+          "value": "8",
+          "label": "Design 08"
+        },
+        {
+          "value": "9",
+          "label": "Design 09"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_center",
+      "label": "Center align the heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "top_subheading",
+      "label": "Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "hidden_mobile",
+      "label": "Hidden description on mobile",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "bt_lb",
+      "label": "+ Button label",
+      "info": "Only used for design 9",
+      "default": "Button label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon_lb",
+      "label": "Show button icon",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "Bottom space (Desktop)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_tb",
+      "label": "Bottom space (Tablet)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_mb",
+      "label": "Bottom space (Mobile)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "2. General options"
+    },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Content align",
+      "default": "default",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "input_cl",
+      "label": "Input color",
+      "default": "#7b7b7b"
+    },
+    {
+      "type": "color",
+      "id": "btn_cl",
+      "label": "Button color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_cl",
+      "label": "Button hover color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "border_cl",
+      "label": "Border color",
+      "default": "#ddd"
+    },
+    {
+      "type": "color",
+      "id": "bg_cl",
+      "label": "Search form background color",
+      "default": "transparent"
+    },
+    {
+      "type": "range",
+      "id": "form_width",
+      "label": "Maximum form width",
+      "max": 800,
+      "min": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "form_width_tb",
+      "label": "Maximum form width (Tablet)",
+      "max": 800,
+      "min": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "form_width_mb",
+      "label": "Maximum form width (Mobile)",
+      "max": 500,
+      "min": 250,
+      "step": 5,
+      "unit": "px",
+      "default": 350
+    },
+    {
+      "type": "number",
+      "id": "img_width_mb",
+      "label": "Image width on mobile (Unit: px)",
+      "info": "Set 0 to use width default of image",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Search section",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

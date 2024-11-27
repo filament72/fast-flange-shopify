@@ -1,0 +1,1716 @@
+<!-- sections/comming-soon-split.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign sid = section.id
+    assign stt_layout = section.settings.layout
+    assign stt_image_bg = section.settings.image_bg
+    assign image_mb = section.settings.image_mb
+    assign image = section.settings.image | default: image_mb
+    assign mb_image = image_mb | default: image 
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif
+    assign countdown = false
+    assign general_block = false
+-%}
+{%- capture append_style -%}--aspect-ratio-cus : {{ section.settings.height_dk }}px;--aspect-ratio-custb : {{ section.settings.height_tb }}px;--aspect-ratio-cusmb : {{ section.settings.height_mb }}px;{%- endcapture -%}
+{% render 'section_style', sid: sid, append_style: append_style %}
+<div class="t4s-section-inner t4s_se_{{ sid }} t4s-pr {{ stt_layout }} {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2" {% endif %}>
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2" {% endif %}>{%- endif -%}
+    {%- render 'section_tophead' -%}
+    <div class="t4s-row t4s-g-0{% if section.settings.align_vertical %} t4s-align-items-center{% endif %}">
+      <div class="t4s-col-item t4s-col-12 t4s-col-md-6">
+        <div class="t4s_ratio_mix {{ section.settings.se_height }} t4s_ratio_cuspx_mb_{{ section.settings.custom_mb }} t4s_ratio_cuspx_tb_{{ section.settings.custom_tb }} t4s_ratio_cuspx_{{ section.settings.custom_dk }}">
+          {%- if section.settings.source == "map" -%}
+          {%- style -%}.t4s-cms-map iframe {margin-bottom: 0;padding: 0;display: block;width: 100%;border: none;filter: grayscale({{ section.settings.filter_gray_map }}%);}{%- endstyle -%}
+          <div class="t4s-cms-map__inner t4s-pr t4s-oh t4s_ratio t4s_cover t4s-bg-11" style="--ratioapt: {{ image.aspect_ratio | default: 2 }};--ratioaptmb: {{ mb_image.aspect_ratio | default: 1.5 }}">
+            <div class="t4s-cms-map t4-pr">{{ section.settings.map }}</div>
+          </div>
+          {%- else -%}
+          <div class="t4s-cms-image__inner t4s-pr t4s-oh t4s_ratio t4s_cover t4s-bg-11" style="{%- if image != blank -%}background: url({{ image | image_url: width: 1 }});{%- endif -%}--ratioapt: {{ image.aspect_ratio | default: 2 }};--ratioaptmb: {{ mb_image.aspect_ratio | default: 1.5 }}">
+              {%- if image != blank -%}   
+                  {%- liquid
+                    assign img_url_w     = image | image_url: width: 1904 | split: '1904'
+                    assign img_url_w0    = img_url_w[0]
+                    assign img_url_w1    = img_url_w[1]
+                    assign img_url_w_mb  = mb_image | image_url: width: 1904 | split: '1904'
+                    assign img_url_w_mb0 = img_url_w_mb[0]
+                    assign img_url_w_mb1 = img_url_w_mb[1]  
+                  -%}
+                  <img class="t4s_bg t4s-img-as-bg t4s-d-md-none"
+                  srcset="{{ img_url_w_mb0 }}375{{ img_url_w_mb1 }} 375w, {{ img_url_w_mb0 }}550{{ img_url_w_mb1 }} 550w, {{ img_url_w_mb0 }}750{{ img_url_w_mb1 }} 750w, {{ img_url_w_mb0 }}1100{{ img_url_w_mb1 }} 1100w, {{ img_url_w_mb0 }}1500{{ img_url_w_mb1 }} 1500w, {{ img_url_w_mb0 }}1780{{ img_url_w_mb1 }} 1780w, {{ img_url_w_mb0 }}2000{{ img_url_w_mb1 }} 2000w, {{ img_url_w_mb0 }}3000{{ img_url_w_mb1 }} 3000w,{{ img_url_w_mb0 }}3840{{ img_url_w_mb1 }} 3840w, {{ mb_image | image_url }} {{ mb_image.width }}w"
+                  sizes="100vw" src="{{ img_url_w_mb0 }}1500{{ img_url_w_mb1 }}"
+                  loading="lazy" alt="{{ mb_image.alt | escape }}" width="{{ mb_image.width }}" height="{{ mb_image.height }}">
+                  <img class="t4s_bg t4s-img-as-bg t4s-d-none t4s-d-md-block"
+                  srcset="{{ img_url_w0 }}375{{ img_url_w1 }} 375w, {{ img_url_w0 }}550{{ img_url_w1 }} 550w, {{ img_url_w0 }}750{{ img_url_w1 }} 750w, {{ img_url_w0 }}1100{{ img_url_w1 }} 1100w, {{ img_url_w0 }}1500{{ img_url_w1 }} 1500w, {{ img_url_w0 }}1780{{ img_url_w1 }} 1780w, {{ img_url_w0 }}2000{{ img_url_w1 }} 2000w, {{ img_url_w0 }}3000{{ img_url_w1 }} 3000w,{{ img_url_w0 }}3840{{ img_url_w1 }} 3840w, {{ image | image_url }} {{ image.width }}w"
+                  sizes="100vw" src="{{ img_url_w0 }}1500{{ img_url_w1 }}"
+                  loading="lazy" alt="{{ image.alt | escape }}" width="{{ image.width }}" height="{{ image.height }}">
+              {%- else -%} 
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1' }}  
+              {%- endif -%}
+          </div>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="t4s-col-item t4s-col-12 t4s-col-md-6">
+        <div class="t4s-cms-content{% if section.settings.small_space %} t4s-cms-content-small{% endif %}{% if section.settings.content_center %} t4s-text-center{% endif %}">
+          {%- for block in section.blocks -%} 
+            {%- case block.type -%}
+              {%- when 'custom_text' -%}
+                {%- if block.settings.text != blank -%}
+                  {%- assign general_block = true -%}
+                  <{{ block.settings.tag }} data-lh="{{ block.settings.text_lh_mb }}" data-lh-md="{{ block.settings.text_lh_tb }}" data-lh-lg="{{ block.settings.text_lh }}" class="t4s-text-bl t4s-fnt-fm-{{ block.settings.fontf }} t4s-font-italic-{{ block.settings.font_italic }} t4s-hidden-mobile-{{ block.settings.hidden_mobile }} t4s-hidden-br-mb-{{ block.settings.remove_br_tag }} t4s-text-shadow-{{ block.settings.text_shadow }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'custom_text', block: block, ani_delay: 0 -%}>{{ block.settings.text }}</{{ block.settings.tag }}>
+                {%- endif -%}
+              {%- when 'image' -%}
+                {{ 't4s-icon-link.css' | asset_url | stylesheet_tag }} 
+                {%- liquid 
+                  assign general_block = true
+                  assign image = block.settings.image_child
+                  if block.settings.img_link != blank
+                    assign ARRhtml = 'a,,' | split: ',' 
+                  else
+                    assign ARRhtml = 'div,data-,data-' | split: ',' 
+                  endif 
+                -%}
+                  <div class="t4s-img-child t4s-hidden-mobile-{{ block.settings.hidden_mobile }} t4s-pr" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'image', block: block, ani_delay: 0 -%}>
+                    <{{ ARRhtml[0] }} {{ ARRhtml[1] }}href="{{ block.settings.img_link }}" {{ ARRhtml[2] }}target="{{ block.settings.open_link }}" class="t4s-pr t4s-img-inner t4s-eff-{{ block.settings.b_effect }} t4s-oh t4s-eff-img-{{ block.settings.img_effect }}"> 
+                      {%- if image != blank -%}
+                        <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+                      {%- else -%}
+                        {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1 t4s-obj-eff' }} 
+                      {%- endif -%}
+                    </{{ ARRhtml[0] }}>
+                  </div>
+                {%- when 'skillbar' -%}
+                  {%- if block.settings.text != blank -%}
+                    <div class="t4s-fnt-fm-{{ block.settings.fontf }} t4s-skill-bar" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'custom_text', block: block, ani_delay: 0 -%}>
+                      <div class="t4s-bar-wrap" style="--skill-range: {{ block.settings.skill_bar }}%;--bg-bar: {{ block.settings.bg_cl }};--bg-skill: {{ block.settings.bg_bar_cl }};">
+                        <div class="t4s-title-block t4s-d-flex t4s-justify-content-between t4s-align-items-center" style="margin-bottom:10px;">
+                          <span data-lh="{{ block.settings.text_lh_mb }}" data-lh-md="{{ block.settings.text_lh_tb }}" data-lh-lg="{{ block.settings.text_lh }}" class="t4s-text t4s-text-bl" style="margin-bottom:0;">{{ block.settings.text }}</span>
+                          <span data-lh="{{ block.settings.text_lh_mb }}" data-lh-md="{{ block.settings.text_lh_tb }}" data-lh-lg="{{ block.settings.text_lh }}" class="t4s-percent-skill t4s-text-bl" style="margin-bottom:0;">{{ block.settings.skill_bar }}%</span>
+                        </div>
+                        <div class="t4s-progress-skill_bar t4s-pr t4s-w-100">
+                            <div class="t4s-pa t4s-skill-bar-range"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <style>.t4s-skill-bar { margin-bottom: var(--mgb); } .t4s-bar-wrap .t4s-progress-skill_bar { height: 5px; background-color: var(--bg-bar); } .t4s-bar-wrap .t4s-skill-bar-range { top: 0; bottom: 0; left: 0; width: var(--skill-range); background-color: var(--bg-skill); } @media screen and (min-width: 768px) and (max-width: 1024px) { .t4s-skill-bar { margin-bottom: var(--mgb-tb); } } @media screen and (max-width: 767px) { .t4s-skill-bar { margin-bottom: var(--mgb-mb); } }</style>
+                  {%- endif -%}
+                {%- when 'html' -%}
+                  {% if block.settings.html_content != blank %}
+                    {%- assign general_block = true -%}
+                      <div class=" t4s-raw-html t4s-hidden-mobile-{{ block.settings.hidden_mobile }} t4s-rte--list" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'html', block: block -%}>{{ block.settings.html_content }}</div>
+                    {% endif %}  
+                {%- when 'cus_socials' -%}
+                  {{ 't4s-icon-social.css' | asset_url | stylesheet_tag }}
+                    {%- liquid 
+                      assign pri_cl_lightness       = block.settings.pri_cl | color_extract: 'lightness'
+                      assign pri_hover_cl_lightness       = block.settings.pri_hover_cl | color_extract: 'lightness'
+                      if pri_cl_lightness < 85
+                        assign pri_cl2 = "#fff"
+                      else 
+                        assign pri_cl2 = "#000"
+                      endif
+                      if pri_hover_cl_lightness < 85
+                        assign pri_hover_cl2 = "#fff"
+                      else 
+                        assign pri_hover_cl2 = "#000"
+                      endif
+                    -%}
+                  <div id="b_{{ block.id }}" class="t4s-socials-block social-{{ block.id }}" style="--pri-cl: {{ block.settings.pri_cl }};--pri-cl2: {{ pri_cl2 }};--pri-hover-cl: {{ block.settings.pri_hover_cl }};--pri-hover-cl2: {{ pri_hover_cl2 }};--mgb: {{ block.settings.mgb }}px;--mgb-tb: {{ block.settings.mgb_tb }}px;--mgb-mb: {{ block.settings.mgb_mb }}px; --bd-radius: {{ block.settings.bd_radius }}px;">
+                    {%- if block.settings.title != blank -%}<h3 class="t4s-socials-title t4s-footer-title">{{ block.settings.title }}</h3>{%- endif -%}
+                    <div class="t4s-list-socials">
+                      {%- if block.settings.social_mode == '1' -%}{%- assign follow_social = true -%}{%- else -%}{%- assign share_image = settings.share_image | default: page_image | default: settings.logo -%}{%- endif -%}
+                      {%- render 'social_sharing', style: block.settings.social_style, use_color_set: block.settings.use_color_set, size: block.settings.social_size, space_h_item: block.settings.space_h_item, space_h_item_mb: block.settings.space_h_item_mb, space_v_item: block.settings.space_v_item, space_v_item_mb: block.settings.space_v_item_mb, share_permalink: shop.url, share_title: shop.name, share_image: share_image, follow_social: follow_social -%}
+                    </div>
+                  </div>
+                  {%- when 'countdown' -%}
+                    {%- if block.settings.date != blank -%}
+                      {%- assign countdown = true -%}
+                        <div class="t4s-countdown t4s-countdown-size-{{ block.settings.cdt_size }} t4s-countdown-text-{{ block.settings.cd_txt_ts }} t4s-hidden-mobile-{{ block.settings.hidden_mobile }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'countdown', block: block -%}>
+                          <div class="t4s-time" data-countdown-t4s data-date='{{ block.settings.date }}' data-keyid='#countdown-{{ sid }}'></div>
+                        </div>
+                    {%- endif -%}
+                  {%- when 'newsletter' -%}
+                    {%- assign newsletter = true -%}
+                    {%- assign custom_button = true -%}
+                    <div id="b_{{ block.id }}" class="t4s-newsletter-parent t4s-newsletter-design-{{ block.settings.newsletter_design }} t4s-custom-width-{{ block.settings.custom_width }} t4s_newsletter_se t4s-has-btn-{{ block.settings.source_btn }}" {%- render 'bk_cus_style', type: 'newsletter', block: block -%}>
+                      {%- render 'newsletter' , form_id: block.id, source_btn: block.settings.source_btn, buttonIcon: block.settings.news_icon, btn_content: block.settings.button_content -%}
+                    </div>
+                  {%- when 'copyR' -%}
+                      {%- assign now_y = 'now' | date: '%Y' -%}
+                      <div class="t4s-cms-coppy-right t4s-rte--list" style="--mgb:{{ block.settings.mgb }}px;--mgb-tb:{{ block.settings.mgb_tb }}px;--mgb-mb:{{ block.settings.mgb_mb }}px;">
+                        {{- block.settings.text | replace: "[year]", now_y -}}
+                      </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+    {{- html_layout[1] -}}
+</div>
+{%- if general_block -%}
+  {{ 't4s-general-block.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- if custom_button -%}
+  {{ 't4s-button-style.css' | asset_url | stylesheet_tag }}
+  <link href="{{ 't4s-custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- endif -%}
+{%- if newsletter -%}
+  {{ 't4s-newsletter.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- if countdown -%} 
+    {{ 't4s-countdown.css' | asset_url | stylesheet_tag }}
+  <template id="countdown-{{ sid }}">
+    <span class="t4s-countdown-days">
+      <span class="cd_timet4s t4s-cd-number">%-D</span>
+      <span class="cd_txtt4s t4s-cd-text">%!D:{{ "sections.countdown_text.day" | t }},{{ "sections.countdown_text.day_plural" | t }};</span>
+    </span>
+    <span class="t4s-countdown-hours">
+      <span class="cd_timet4s t4s-cd-number">%H</span> 
+      <span class="cd_txtt4s t4s-cd-text">%!H:{{ "sections.countdown_text.hr" | t }},{{ "sections.countdown_text.hr_plural" | t }};</span>
+    </span>
+    <span class="t4s-countdown-min">
+      <span class="cd_timet4s t4s-cd-number">%M</span> 
+      <span class="cd_txtt4s t4s-cd-text">%!M:{{ "sections.countdown_text.min" | t }},{{ "sections.countdown_text.min_plural" | t }};</span>
+    </span>
+    <span class="t4s-countdown-sec">
+      <span class="cd_timet4s t4s-cd-number">%S</span> 
+      <span class="cd_txtt4s t4s-cd-text">%!S:{{ "sections.countdown_text.sec" | t }},{{ "sections.countdown_text.sec_plural" | t }};</span>
+    </span> 
+  </template>
+{%- endif -%}
+<style>.t4s-cms-content{padding: 15px} .t4s-cms-coppy-right{margin-bottom:var(--mgb)} @media(min-width: 768px) and (max-width: 1024px) { .t4s-cms-coppy-right{margin-bottom:var(--mgb-tb)} } @media(max-width: 767px) { .t4s-cms-coppy-right{margin-bottom:var(--mgb-mb)} } @media (min-width:1025px){ .t4s-cms-content{padding: 25px 30px} .t4s-cms-content-small{max-width:614px} }</style>
+{% schema %}
+{
+  "name": "Comming soon split",
+  "tag": "section",
+  "class": "t4s-section t4s-section-all t4s_tp_cdt t4s-cms",
+  "enabled_on": {
+    "groups": [
+      "custom.password"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1. Heading options"
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "top_subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_center",
+      "label": "Center heading align",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "Bottom space (Desktop)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_tb",
+      "label": "Bottom space (Tablet)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_mb",
+      "label": "Bottom space (Mobile)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "2.General options"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Source visual",
+      "default": "map",
+      "options": [
+        {
+          "value": "use_image",
+          "label": "From image"
+        },
+        {
+          "value": "map",
+          "label": "From map"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "se_height",
+      "label": "Section height",
+      "default": "t4s_ratioadapt_mix",
+      "options": [
+        {
+          "value": "t4s_ratio_fh",
+          "label": "Full screen height"
+        },
+        {
+          "value": "t4s_ratioadapt_mix",
+          "label": "Adapt to image"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_dk",
+      "label": "Use custom height (Desktop)",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "height_dk",
+      "label": "Section height (Desktop)",
+      "default": 600
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_tb",
+      "label": "Use custom height (Tablet)",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "height_tb",
+      "label": "Section height (Tablet)",
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mb",
+      "label": "Use custom height (Mobile)",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "height_mb",
+      "label": "Section height (Mobile)",
+      "default": 250
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Choose Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mb",
+      "label": "Mobile image"
+    },
+    {
+      "type": "header",
+      "content": "+ Options for source map"
+    },
+    {
+      "type": "textarea",
+      "id": "map",
+      "label": "Map",
+      "default": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3154.8939060848147!2d144.81158271584684!3d-37.74563313792195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65fa6debeb781%3A0xe1d23f5d1759961e!2s184%20Main%20Rd%20E%2C%20St%20Albans%20VIC%203021%2C%20%C3%9Ac!5e0!3m2!1svi!2s!4v1618277125252!5m2!1svi!2s\" width=\"100%\" height=\"100%\" style=\"border: 0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>"
+    },
+    {
+      "type": "range",
+      "id": "filter_gray_map",
+      "label": "Filter gray scale source map",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "+ Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "small_space",
+      "label": "Enable small spacing content",
+      "info": "Working on screen Desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "content_center",
+      "label": "Enable content center"
+    },
+    {
+      "type": "checkbox",
+      "id": "align_vertical",
+      "label": "Content align vertical center",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "custom_text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Input text",
+          "default": "Text",
+          "info": "If you want to line break, please add a <br> tag in the text"
+        },
+        {
+          "type": "checkbox",
+          "id": "remove_br_tag",
+          "label": "Remove <br> tag on tablet & mobile",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "tag",
+          "default": "p",
+          "options": [
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            },
+            {
+              "value": "p",
+              "label": "P"
+            },
+            {
+              "value": "div",
+              "label": "DIV"
+            }
+          ],
+          "label": "Html tag"
+        },
+        {
+          "type": "select",
+          "id": "fontf",
+          "default": "inherit",
+          "label": "Font family",
+          "options": [
+            {
+              "label": "Inherit",
+              "value": "inherit"
+            },
+            {
+              "label": "Font family #1",
+              "value": "1"
+            },
+            {
+              "label": "Font family #2",
+              "value": "2"
+            },
+            {
+              "label": "Font family #3",
+              "value": "3"
+            },
+            {
+              "label": "Font family #4 (Custom)",
+              "value": "4"
+            },
+            {
+              "label": "Font family #5 (Custom)",
+              "value": "5"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "text_cl",
+          "label": "Color text",
+          "default": "#222"
+        },
+        {
+          "type": "range",
+          "id": "text_fs",
+          "label": "Font size",
+          "max": 100,
+          "min": 10,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_lh",
+          "label": "Line height",
+          "max": 100,
+          "min": 0,
+          "step": 1,
+          "default": 0,
+          "unit": "px",
+          "info": "Set '0' to use default"
+        },
+        {
+          "type": "range",
+          "id": "text_fw",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "text_ls",
+          "label": "Letter spacing",
+          "max": 5,
+          "min": -5,
+          "default": 0,
+          "step": 0.1,
+          "unit": "px"
+        },
+        {
+          "type": "checkbox",
+          "id": "font_italic",
+          "label": "Enable font italic style",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "text_shadow",
+          "label": "Enable text shadow",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 15
+        },
+        {
+          "type": "header",
+          "content": "+ Option on tablet"
+        },
+        {
+          "type": "range",
+          "id": "text_fs_tb",
+          "label": "Font size (Tablet)",
+          "max": 60,
+          "min": 10,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_lh_tb",
+          "label": "Line height (Tablet)",
+          "max": 70,
+          "min": 0,
+          "step": 1,
+          "default": 0,
+          "unit": "px",
+          "info": "Set '0' to use default"
+        },
+        {
+          "type": "range",
+          "id": "text_ls_tb",
+          "label": "Letter spacing (Tablet)",
+          "max": 5,
+          "min": -5,
+          "default": 0,
+          "step": 0.1,
+          "unit": "px"
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom (Tablet) (Unit: px)",
+          "default": 10
+        },
+        {
+          "type": "header",
+          "content": "+ Option mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_mobile",
+          "label": "Hidden on mobile ",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "text_fs_mb",
+          "label": "Font size (Mobile)",
+          "max": 60,
+          "min": 10,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_lh_mb",
+          "label": "Line height (Mobile)",
+          "max": 70,
+          "min": 0,
+          "step": 1,
+          "default": 0,
+          "unit": "px",
+          "info": "Set '0' to use default"
+        },
+        {
+          "type": "range",
+          "id": "text_ls_mb",
+          "label": "Letter spacing (Mobile)",
+          "max": 5,
+          "min": -5,
+          "default": 0,
+          "step": 0.1,
+          "unit": "px"
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom (Mobile) (Unit: px)",
+          "default": 10
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image (Child)",
+      "settings": [
+        {
+          "type": "header",
+          "content": "1. Image Option"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_child",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "img_link",
+          "label": "Link (optional)"
+        },
+        {
+          "type": "select",
+          "id": "open_link",
+          "info": "Works when the item has a link",
+          "options": [
+            {
+              "value": "_self",
+              "label": "Current window"
+            },
+            {
+              "value": "_blank",
+              "label": "New window"
+            }
+          ],
+          "label": "Open link in",
+          "default": "_self"
+        },
+        {
+          "type": "number",
+          "id": "img_width",
+          "label": "Image width (Unit: px)",
+          "info": "Set 0 to use width default of image",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "img_width_tb",
+          "label": "Image width on tablet (Unit: px)",
+          "info": "Set 0 to use width default of image",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "img_width_mb",
+          "label": "Image width on mobile (Unit: px)",
+          "info": "Set 0 to use width default of image",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "img_effect",
+          "label": "Image effect when hover",
+          "default": "none",
+          "info": "Waring: Hovering effect will resize your images",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "zoom",
+              "label": "Zoom in"
+            },
+            {
+              "value": "rotate",
+              "label": "Rotate"
+            },
+            {
+              "value": "translateToTop",
+              "label": "Translate to top"
+            },
+            {
+              "value": "translateToRight",
+              "label": "Translate to right"
+            },
+            {
+              "value": "translateToBottom",
+              "label": "Translate to bottom"
+            },
+            {
+              "value": "translateToLeft",
+              "label": "Translate to left"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "bounceIn",
+              "label": "BounceIn"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "b_effect",
+          "label": "Image hover effect",
+          "default": "none",
+          "info": "Not working when use text circle",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "border-run",
+              "label": "Border run"
+            },
+            {
+              "value": "pervasive-circle",
+              "label": "Pervasive circle"
+            },
+            {
+              "value": "plus-zoom-overlay",
+              "label": "Plus zoom overlay"
+            },
+            {
+              "value": "dark-overlay",
+              "label": "Dark overlay"
+            },
+            {
+              "value": "light-overlay",
+              "label": "Light overlay"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_mobile",
+          "label": "Hidden on mobile",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "2. Image spacing bottom"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 20
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom on tablet (Unit: px)",
+          "default": 20
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile (Unit: px)",
+          "default": 20
+        }
+      ]
+    },
+    {
+      "type": "skillbar",
+      "name": "Skill bar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Input text",
+          "default": "PROGRESS"
+        },
+        {
+          "type": "select",
+          "id": "fontf",
+          "default": "inherit",
+          "label": "Font family",
+          "options": [
+            {
+              "label": "Inherit",
+              "value": "inherit"
+            },
+            {
+              "label": "Font family #1",
+              "value": "1"
+            },
+            {
+              "label": "Font family #2",
+              "value": "2"
+            },
+            {
+              "label": "Font family #3",
+              "value": "3"
+            },
+            {
+              "label": "Font family #4 (Custom)",
+              "value": "4"
+            },
+            {
+              "label": "Font family #5 (Custom)",
+              "value": "5"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "text_cl",
+          "label": "Color text",
+          "default": "#7b7b7b"
+        },
+        {
+          "type": "color",
+          "id": "bg_cl",
+          "label": "Background progress bar color",
+          "default": "#e7e7e7"
+        },
+        {
+          "type": "color",
+          "id": "bg_bar_cl",
+          "label": "Progress bar color",
+          "default": "#c91f28"
+        },
+        {
+          "type": "range",
+          "id": "skill_bar",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Skill bar",
+          "default": 60
+        },
+        {
+          "type": "range",
+          "id": "text_fs",
+          "label": "Font size",
+          "max": 100,
+          "min": 10,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_lh",
+          "label": "Line height",
+          "max": 100,
+          "min": 0,
+          "step": 1,
+          "default": 0,
+          "unit": "px",
+          "info": "Set '0' to use default"
+        },
+        {
+          "type": "range",
+          "id": "text_fw",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "text_ls",
+          "label": "Letter spacing",
+          "max": 10,
+          "min": 0,
+          "default": 0,
+          "step": 0.1,
+          "unit": "px"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 10
+        },
+        {
+          "type": "header",
+          "content": "+ Option on tablet"
+        },
+        {
+          "type": "range",
+          "id": "text_fs_tb",
+          "label": "Font size (Tablet)",
+          "max": 60,
+          "min": 10,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_lh_tb",
+          "label": "Line height (Tablet)",
+          "max": 70,
+          "min": 0,
+          "step": 1,
+          "default": 0,
+          "unit": "px",
+          "info": "Set '0' to use default"
+        },
+        {
+          "type": "range",
+          "id": "text_ls_tb",
+          "label": "Letter spacing (Tablet)",
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom (Tablet) (Unit: px)",
+          "default": 10
+        },
+        {
+          "type": "header",
+          "content": "+ Option mobile"
+        },
+        {
+          "type": "range",
+          "id": "text_fs_mb",
+          "label": "Font size (Mobile)",
+          "max": 60,
+          "min": 10,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_lh_mb",
+          "label": "Line height (Mobile)",
+          "max": 70,
+          "min": 0,
+          "step": 1,
+          "default": 0,
+          "unit": "px",
+          "info": "Set '0' to use default"
+        },
+        {
+          "type": "range",
+          "id": "text_ls_mb",
+          "label": "Letter spacing (Mobile)",
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom (Mobile) (Unit: px)",
+          "default": 10
+        }
+      ]
+    },
+    {
+      "type": "cus_socials",
+      "name": "Socials",
+      "settings": [
+        {
+          "type": "select",
+          "id": "social_mode",
+          "label": "Socials mode",
+          "options": [
+            {
+              "value": "1",
+              "label": "Follow"
+            },
+            {
+              "value": "2",
+              "label": "Share"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "select",
+          "id": "social_style",
+          "label": "Socials style",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "outline",
+              "label": "Outline"
+            },
+            {
+              "value": "simple",
+              "label": "Simple"
+            }
+          ],
+          "default": "simple"
+        },
+        {
+          "type": "select",
+          "id": "social_size",
+          "label": "Socials size",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "range",
+          "id": "bd_radius",
+          "label": "Border radius",
+          "info": "Not work when socials style is \"Simple\"",
+          "unit": "px",
+          "min": 0,
+          "max": 30,
+          "default": 0,
+          "step": 1
+        },
+        {
+          "type": "checkbox",
+          "id": "use_color_set",
+          "label": "Use color settings",
+          "info": "Default is themes color, tick here if you want custom color for icon socials.",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "only true when check to box Color Settings"
+        },
+        {
+          "type": "color",
+          "id": "pri_cl",
+          "label": "Primary color",
+          "default": "#868686"
+        },
+        {
+          "type": "color",
+          "id": "pri_hover_cl",
+          "label": "Primary hover color",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "space_h_item",
+          "options": [
+            {
+              "value": "0",
+              "label": "0"
+            },
+            {
+              "value": "2",
+              "label": "2px"
+            },
+            {
+              "value": "4",
+              "label": "4px"
+            },
+            {
+              "value": "5",
+              "label": "5px"
+            },
+            {
+              "value": "8",
+              "label": "8px"
+            },
+            {
+              "value": "10",
+              "label": "10px"
+            },
+            {
+              "value": "15",
+              "label": "15px"
+            },
+            {
+              "value": "20",
+              "label": "20px"
+            },
+            {
+              "value": "25",
+              "label": "25px"
+            },
+            {
+              "value": "30",
+              "label": "30px"
+            },
+            {
+              "value": "40",
+              "label": "40px"
+            }
+          ],
+          "label": "Space horizontal items",
+          "default": "5"
+        },
+        {
+          "type": "select",
+          "id": "space_v_item",
+          "options": [
+            {
+              "value": "0",
+              "label": "0"
+            },
+            {
+              "value": "2",
+              "label": "2px"
+            },
+            {
+              "value": "4",
+              "label": "4px"
+            },
+            {
+              "value": "5",
+              "label": "5px"
+            },
+            {
+              "value": "8",
+              "label": "8px"
+            },
+            {
+              "value": "10",
+              "label": "10px"
+            },
+            {
+              "value": "15",
+              "label": "15px"
+            },
+            {
+              "value": "20",
+              "label": "20px"
+            },
+            {
+              "value": "25",
+              "label": "25px"
+            },
+            {
+              "value": "30",
+              "label": "30px"
+            }
+          ],
+          "label": "Space vertical items",
+          "default": "5"
+        },
+        {
+          "type": "select",
+          "id": "space_h_item_mb",
+          "options": [
+            {
+              "value": "0",
+              "label": "0"
+            },
+            {
+              "value": "2",
+              "label": "2px"
+            },
+            {
+              "value": "4",
+              "label": "4px"
+            },
+            {
+              "value": "5",
+              "label": "5px"
+            },
+            {
+              "value": "6",
+              "label": "6px"
+            },
+            {
+              "value": "8",
+              "label": "8px"
+            },
+            {
+              "value": "10",
+              "label": "10px"
+            },
+            {
+              "value": "15",
+              "label": "15px"
+            },
+            {
+              "value": "20",
+              "label": "20px"
+            },
+            {
+              "value": "25",
+              "label": "25px"
+            },
+            {
+              "value": "30",
+              "label": "30px"
+            }
+          ],
+          "label": "Space horizontal items (Mobile)",
+          "default": "2"
+        },
+        {
+          "type": "select",
+          "id": "space_v_item_mb",
+          "options": [
+            {
+              "value": "0",
+              "label": "0"
+            },
+            {
+              "value": "2",
+              "label": "2px"
+            },
+            {
+              "value": "4",
+              "label": "4px"
+            },
+            {
+              "value": "5",
+              "label": "5px"
+            },
+            {
+              "value": "6",
+              "label": "6px"
+            },
+            {
+              "value": "8",
+              "label": "8px"
+            },
+            {
+              "value": "10",
+              "label": "10px"
+            },
+            {
+              "value": "15",
+              "label": "15px"
+            },
+            {
+              "value": "20",
+              "label": "20px"
+            },
+            {
+              "value": "25",
+              "label": "25px"
+            },
+            {
+              "value": "30",
+              "label": "30px"
+            }
+          ],
+          "label": "Space vertical items (Mobile)",
+          "default": "2"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)"
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom on tablet (Unit: px)"
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile (Unit: px)"
+        }
+      ]
+    },
+    {
+      "type": "html",
+      "name": "HTML",
+      "settings": [
+        {
+          "type": "html",
+          "id": "html_content",
+          "label": "Type html"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_mobile",
+          "label": "Hidden on mobile",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "countdown",
+      "name": "Countdown timer",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date countdown",
+          "default": "2023/12/26",
+          "info": "Countdown to the end sale date will be shown"
+        },
+        {
+          "type": "select",
+          "id": "cdt_size",
+          "label": "Countdown size",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "small"
+        },
+        {
+          "type": "select",
+          "id": "cd_txt_ts",
+          "label": "Transform text",
+          "default": "normal",
+          "options": [
+            {
+              "value": "normal",
+              "label": "None"
+            },
+            {
+              "value": "lowercase",
+              "label": "Lowercase"
+            },
+            {
+              "value": "capitalize",
+              "label": "Capitalize"
+            },
+            {
+              "value": "uppercase",
+              "label": "Uppercase"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "space_item",
+          "label": "Space between items",
+          "default": 30,
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "space_item_tb",
+          "label": "Space between items (Tablet)",
+          "default": 30,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "space_item_mb",
+          "label": "Space between items (Mobile)",
+          "default": 20,
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "color",
+          "id": "number_cl",
+          "label": "Number color",
+          "default": "#293341"
+        },
+        {
+          "type": "color",
+          "id": "text_cl",
+          "label": "Text color",
+          "default": "#7b7b7b"
+        },
+        {
+          "type": "color",
+          "id": "separator_cl",
+          "label": "Color separator",
+          "default": "#7b7b7b"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_mobile",
+          "label": "Hidden on mobile ",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom  (Unit: px)",
+          "default": 15
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom on tablet (Unit: px)",
+          "default": 15
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile (Unit: px)",
+          "default": 10
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "newsletter_design",
+          "label": "Design",
+          "default": "1",
+          "options": [
+            {
+              "value": "1",
+              "label": "Design 1"
+            },
+            {
+              "value": "2",
+              "label": "Design 2"
+            },
+            {
+              "value": "3",
+              "label": "Design 3"
+            },
+            {
+              "value": "4",
+              "label": "Design 4"
+            },
+            {
+              "value": "5",
+              "label": "Design 5"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "button_content",
+          "label": "Button label",
+          "default": "Subscribe",
+          "info": "Default is SUBSCRIT4"
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_width",
+          "label": "Enable newsletter custom width",
+          "info": "If you don't tick here, 100% is the default",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "form_width",
+          "label": "Maximum form width",
+          "max": 800,
+          "min": 300,
+          "step": 5,
+          "unit": "px",
+          "default": 500
+        },
+        {
+          "type": "range",
+          "id": "form_width_tb",
+          "label": "Maximum form width (Tablet)",
+          "max": 800,
+          "min": 300,
+          "step": 5,
+          "unit": "px",
+          "default": 500
+        },
+        {
+          "type": "range",
+          "id": "form_width_mb",
+          "label": "Maximum form width (Mobile)",
+          "max": 500,
+          "min": 250,
+          "step": 2.5,
+          "unit": "px",
+          "default": 350
+        },
+        {
+          "type": "select",
+          "id": "news_icon",
+          "label": "Select icon",
+          "default": "plane",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "plane",
+              "label": "Plane"
+            },
+            {
+              "value": "mail",
+              "label": "Mail"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "input_cl",
+          "label": "Input color",
+          "default": "#868686"
+        },
+        {
+          "type": "color",
+          "id": "btn_cl",
+          "label": "Button color",
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_cl",
+          "label": "Button background color",
+          "default": "#293341"
+        },
+        {
+          "type": "color",
+          "id": "btn_hover_cl",
+          "label": "Button hover color",
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_hover_cl",
+          "label": "Button background hover color",
+          "default": "#000"
+        },
+        {
+          "type": "color",
+          "id": "border_cl",
+          "label": "Border color",
+          "default": "#ddd"
+        },
+        {
+          "type": "color",
+          "id": "background_cl",
+          "label": "Background color",
+          "default": "transparent"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom (Tablet)",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom (Mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "copyR",
+      "name": "Copyrights",
+      "settings": [
+        {
+          "type": "html",
+          "id": "text",
+          "label": "Copyrights",
+          "info": "Place here text you want to see in the copyrights area.",
+          "default": "© [year] Ocolus. All rights reserved."
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom on tablet (Unit: px)",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile (Unit: px)",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comming soon split"
+    }
+  ]
+}
+{% endschema %} 

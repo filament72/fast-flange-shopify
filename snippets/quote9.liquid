@@ -1,0 +1,39 @@
+<div class="t4s-testimonial-wrap" timeline hdt-reveal="slide-in"> 
+  <div class="t4s-quote-infors">
+    {%- if block.settings.image_avata != blank -%}
+      {%- assign image = block.settings.image_avata -%} 
+      <div class="t4s-testimonial-avatar lazyloadt4s" data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" style="background-image: url({{ image | image_url: width: 1 }};"></div>
+    {%- endif -%}
+    <div class="t4s-quote-name-rating">
+      {% if block.settings.title != blank %}<div class="t4s-testimonial-name">{{ block.settings.title }}</div>{% endif %}
+      {%- if block.settings.rating >= 1 -%}
+        <div class="t4s-rating t4s-d-flex t4s-rate-{{ block.settings.rating }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+            <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+            <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+            <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+            <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+            <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+          </svg>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+  {% if block.settings.heading != blank %}
+    <h3 class="t4s-testimonial-heading">{{ block.settings.heading }}</h3>
+  {% endif %}
+  {%- if block.settings.content != blank -%}
+    <div class="t4s-testimonial-content t4s-rte t4s-pr">{{ block.settings.content }}</div>
+  {%- endif -%}
+  <div class="t4s-author-metas">
+    {%- if block.settings.pos != blank -%}<div class="t4s-testimonial-position">{{ block.settings.pos }}</div>{%- endif -%} 
+  </div>
+</div> 

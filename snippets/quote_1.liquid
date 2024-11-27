@@ -1,0 +1,42 @@
+<div class="t4s-testimonial-wrap" timeline hdt-reveal="slide-in">
+  <div class="t4s-rating t4s-d-flex t4s-rate-{{ block.settings.rating }} t4s-justify-content-{{ section.settings.testimonial_content }}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+      <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+      <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+      <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+      <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+      <path d="M9 0L11.7255 6.00573L18 6.87539L13.41 11.4568L14.5623 18L9 14.8257L3.43769 18L4.59 11.4568L0 6.87539L6.27447 6.00573L9 0Z"/>
+    </svg>
+  </div>
+  <div class="t4s-testimonial-content t4s-rte t4s-pr">
+    {{ block.settings.content }}
+  </div>
+  <div class="t4s-testimonial-author t4s-d-flex t4s-justify-content-{{ section.settings.testimonial_content }}">
+       {%- assign image = block.settings.image_avata -%} 
+       {% if image != blank %}
+        <div class="t4s-testimonial-avatar lazyloadt4s" data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" style="background-image: url({{ image | image_url: width: 1 }};"></div>
+       {% endif %}
+      <div class="t4s-author-metas">
+        {% if block.settings.title != blank %}<div class="t4s-testimonial-name">{{ block.settings.title }}</div>{% endif %}
+        {%- if block.settings.pos != blank -%}<div class="t4s-testimonial-position">{{ block.settings.pos }}</div>{%- endif -%} 
+        {%- if block.settings.show_verified_buyer -%} <div class="t4s-testimonial-verified"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <g clip-path="url(#clip0_307_1256)">
+            <path d="M7.49996 10.0001L9.16663 11.6667L12.9166 7.91675M14.9176 4.1655C15.0892 4.58052 15.4186 4.91041 15.8333 5.08264L17.2877 5.68506C17.7027 5.85698 18.0324 6.18674 18.2044 6.6018C18.3763 7.01685 18.3763 7.4832 18.2044 7.89825L17.6024 9.35158C17.4304 9.76682 17.4302 10.2336 17.6029 10.6487L18.2039 12.1016C18.2891 12.3071 18.333 12.5275 18.333 12.75C18.333 12.9726 18.2892 13.1929 18.2041 13.3985C18.1189 13.6041 17.9941 13.7909 17.8367 13.9483C17.6793 14.1056 17.4925 14.2304 17.2869 14.3155L15.8336 14.9175C15.4186 15.0891 15.0887 15.4185 14.9165 15.8332L14.3141 17.2876C14.1422 17.7027 13.8124 18.0324 13.3974 18.2043C12.9823 18.3763 12.516 18.3763 12.101 18.2043L10.6477 17.6023C10.2326 17.4308 9.76648 17.4312 9.35169 17.6033L7.89737 18.2049C7.48256 18.3764 7.01663 18.3763 6.60193 18.2045C6.18723 18.0327 5.85767 17.7033 5.68564 17.2887L5.08306 15.8339C4.91146 15.4189 4.58208 15.089 4.16733 14.9168L2.71301 14.3143C2.29815 14.1425 1.96851 13.813 1.79653 13.3981C1.62455 12.9833 1.62432 12.5172 1.79588 12.1022L2.39785 10.6489C2.56934 10.2338 2.56899 9.76762 2.39687 9.35282L1.79577 7.8974C1.71055 7.69183 1.66666 7.47148 1.66663 7.24894C1.66659 7.0264 1.7104 6.80604 1.79556 6.60044C1.88072 6.39484 2.00555 6.20804 2.16293 6.05071C2.32031 5.89338 2.50715 5.7686 2.71276 5.6835L4.16604 5.08151C4.58068 4.91006 4.91036 4.58108 5.08271 4.1668L5.68511 2.71242C5.85703 2.29737 6.18677 1.96761 6.60181 1.79569C7.01685 1.62377 7.48318 1.62377 7.89822 1.79569L9.3515 2.39768C9.76655 2.56918 10.2327 2.56882 10.6475 2.3967L12.1024 1.79662C12.5174 1.6248 12.9837 1.62483 13.3986 1.79672C13.8136 1.96861 14.1433 2.29827 14.3152 2.71322L14.9178 4.16802L14.9176 4.1655Z" stroke="#64B605" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_307_1256">
+              <rect width="20" height="20" fill="currentColor"/>
+            </clipPath>
+          </defs>
+        </svg>{{ 'sections.testimonials.show_virified' | t }} </div>{%- endif -%}
+      </div>
+    </div>
+</div>

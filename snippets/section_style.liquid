@@ -1,0 +1,66 @@
+{%- capture attr -%}
+{%- if section.settings.cl_bg != blank -%}
+  --bg-color: {{ section.settings.cl_bg }};
+{%- endif -%}
+{%- if section.settings.border_cl_top != blank -%}
+--br_color:{{ section.settings.border_cl_top }};
+{%- endif -%}
+{%- if section.settings.cl_bg_gradient != blank -%}
+--bg-gradient: {{ section.settings.cl_bg_gradient }};
+{%- endif -%}
+{%- if section.settings.border_cl != blank -%}
+--border-cl: {{ section.settings.border_cl }};
+{%- endif -%}
+{%- endcapture -%}
+<style type="text/css">
+  {%- liquid
+    assign m_ = "--mt: ,--me: ,--mb: ,--ms: " | split: ","
+    assign p_ = "--pt: ,--pe: ,--pb: ,--ps: " | split: ","
+    echo ".t4s_se_" | append: sid | append: "{"
+    echo attr
+    echo append_style
+    assign m_section = section.settings.mg_mb | default: section.settings.mg | remove: " " | split: ","
+    assign p_section = section.settings.pd_mb | default: section.settings.pd | remove: " " | split: ","
+    for i in (0..4)
+      if m_section[i] != blank
+        echo m_[i] | append: m_section[i] | append: ";"
+      endif
+      if p_section[i] != blank
+        echo p_[i] | append: p_section[i] | append: ";"
+      endif
+    endfor
+    echo "}"
+    if section.settings.mg_tb != '' or section.settings.pd_tb != ''
+      echo "@media (min-width:768px){"
+        echo ".t4s_se_" | append: sid | append: "{"
+          assign m_section = section.settings.mg_tb | remove: " " | split: ","
+          assign p_section = section.settings.pd_tb | remove: " " | split: ","
+          for i in (0..4)
+            if m_section[i] != blank
+              echo m_[i] | append: m_section[i] | append: ";"
+            endif
+            if p_section[i] != blank
+              echo p_[i] | append: p_section[i] | append: ";"
+            endif
+          endfor
+        echo "}"
+      echo "}"
+    endif
+    if section.settings.mg != '' or section.settings.pd != ''
+      echo "@media (min-width:1200px){"
+        echo ".t4s_se_" | append: sid | append: "{"
+          assign m_section = section.settings.mg | remove: " " | split: ","
+          assign p_section = section.settings.pd | remove: " " | split: ","
+          for i in (0..4)
+            if m_section[i] != blank
+              echo m_[i] | append: m_section[i] | append: ";"
+            endif
+            if p_section[i] != blank
+              echo p_[i] | append: p_section[i] | append: ";"
+            endif
+          endfor
+        echo "}"
+      echo "}"
+    endif
+  -%}
+</style>

@@ -1,0 +1,1116 @@
+<!-- sections/featured-collection.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign sid = section.id
+  assign stt_layout = section.settings.layout
+  assign stt_image_bg = section.settings.image_bg
+  
+
+  if stt_layout == 't4s-se-container' 
+   assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+
+  assign layout_des = section.settings.layout_des
+
+  if section.settings.btn_owl == "simple"
+    assign arrow_icon = 1
+  else
+    assign arrow_icon = 2
+  endif
+  assign show_btn = section.settings.show_btn
+  if show_btn != "hidden"
+    assign slider_btns = true
+  else
+    assign slider_btns = false
+  endif
+  assign show_dots = section.settings.show_dots
+  if show_dots != "hidden"
+    assign slider_dots = true
+  else
+    assign slider_dots = false
+  endif
+
+  -%}
+
+{% render 'section_style', sid: sid %}
+<div class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }} {%- if stt_image_bg != blank and stt_layout != 't4s-se-container' -%} t4s-has-imgbg lazyloadt4s {%- endif -%}"  {%- if stt_image_bg != blank and stt_layout != 't4s-se-container' -%}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" {%- endif -%}  >
+  {{- html_layout[0] -}}
+  {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {%- if stt_image_bg != blank -%} t4s-has-imgbg lazyloadt4s {%- endif -%} "  {%- if stt_image_bg != blank -%}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" {%- endif -%} > {%- endif -%}
+    {%- render 'section_tophead', get_height: true, sid: sid, slider_btns: slider_btns -%}
+    {%- if layout_des == "1" -%} 
+      {{ 't4s-button-style.css' | asset_url | stylesheet_tag }}
+      <link href="{{ 't4s-custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+      <div data-collection-url="{{ collection.url }}" data-contentlm-replace class="t4s-section-content t4s_box_pr_grid t4s-products t4s-justify-content-center t4s-border-pr-{{ section.settings.enable_border_pr_item }} t4s-row t4s-row-cols-lg-{{ section.settings.col_dk }} t4s-row-cols-md-{{ section.settings.col_tb }} t4s-row-cols-{{ section.settings.col_mb }} t4s-gx-lg-{{ section.settings.space_h_item }} t4s-gy-lg-{{ section.settings.space_v_item }} t4s-gx-md-{{ section.settings.space_h_item_tb }} t4s-gy-md-{{ section.settings.space_v_item_tb }} t4s-gx-{{ section.settings.space_h_item_mb }} t4s-gy-{{ section.settings.space_v_item_mb }}">
+    {%- else -%} 
+      {%- liquid
+        assign icon_slider = section.settings.icon_slider 
+        case icon_slider
+          when '1'
+            assign view_box = "0 0 22 22"
+          when '2'
+            assign view_box = "0 0 22 22"
+          when '3'
+            assign view_box = "0 0 28 18"
+        endcase
+      -%}
+      <div data-collection-url="{{ collection.url }}" data-t4s-resizeobserver class="t4s-section-content t4s-box-border-{{ section.settings.enable_box_border }} t4s-row t4s-row-cols-lg-{{ section.settings.col_dk }} t4s-row-cols-md-{{ section.settings.col_tb }} t4s-row-cols-{{ section.settings.col_mb }} t4s-gx-lg-{{ section.settings.space_h_item }} t4s-gy-lg-{{ section.settings.space_v_item }} t4s-gx-md-{{ section.settings.space_h_item_tb }} t4s-gy-md-{{ section.settings.space_v_item_tb }} t4s-gx-{{ section.settings.space_h_item_mb }} t4s-gy-{{ section.settings.space_v_item_mb }} {% if slider_btns %} t4s-slider-btn__{{ section.settings.btn_pos }}-content icon_slider-{{ section.settings.icon_slider }} t4s-slider-btn-{{ show_btn }} t4s-slider-btn-style-{{ section.settings.btn_owl }} t4s-slider-btn-{{ section.settings.btn_shape }} t4s-slider-btn-{{ section.settings.btn_size }} t4s-slider-btn-cl-{{ section.settings.btn_cl }} t4s-slider-btn-vi-{{ section.settings.btn_vi }} {% endif %}
+      {% if slider_dots %} t4s-dots-style-{{ section.settings.dot_owl }} t4s-slider-dots-{{ show_dots }} t4s-base-dots-{{ section.settings.dots_pos }} t4s-dots-cl-{{ section.settings.dots_cl }} t4s-dots-round-{{ section.settings.dots_round }} {% endif %} t4s-flickity-slider flickityt4s" data-flickityt4s-js='{"customIcon":{{ icon_slider }}, "viewBox":"{{ view_box }}", "setPrevNextButtons": true,"arrowIcon": "{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 1, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ section.settings.loop }},"prevNextButtons": {{ slider_btns }},"percentPosition": 1,"pageDots": {{ slider_dots }}, "autoPlay" : {{ section.settings.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ section.settings.au_hover }}, "t4sid": "{{ sid }}","navUI": 1,"cellSelector": ".t4s-job-item"}' style="--btn-distance: {{ section.settings.btn_distance }}px;--space-dots: {{ section.settings.dots_space }}px;--dots-bottom-pos: {{ section.settings.dots_bottom_pos }}px;">
+    {%- endif -%}
+      {%- if section.blocks.size > 0 -%} 
+        {%- for block in section.blocks -%}
+          <div class="t4s-col-item t4s-job-item " id="b_{{ block.id }}" data-select-flickity {{ block.shopify_attributes }}>
+            <div class="t4s-job-content t4s-d-flex t4s-align-items-center" timeline hdt-reveal="slide-in">
+              <div class="t4s-job-heading">
+                {% if block.settings.title != blank %}
+                  <h3 class="t4s-job-title">{{ block.settings.title }}</h3>
+                {% endif %}
+                {% if block.settings.description != blank %}
+                  <p class="t4s-job-description">{{ block.settings.description }}</p>
+                {% endif %}
+              </div>
+              {% if block.settings.link != blank %}
+                <a class="t4s-job-btn" href="{{ block.settings.link }}">{{ 'general.aria.view_job' | t }}</a>
+              {% endif %}
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  {{- html_layout[1] -}}
+</div>
+<style>
+  .t4s-job-heading {
+    max-width: 80%;
+  }
+  .t4s-job-content {
+    border: 2px solid var(--border-color);
+    padding: 28px 35px;
+    justify-content: space-between;
+  }
+  .t4s-job-content:hover {
+    border-color: var(--accent-color);
+  }
+  .t4s-job-title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 25px;
+    margin-bottom: 0;
+    color: var(--heading-color);
+  }
+  .t4s-job-description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 25px;
+    margin-bottom: 0;
+    color: var(--text-color);
+  }
+  .t4s-job-btn {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 36px;
+    line-height: 50px;
+    color: var(--t4s-light-color);
+    background-color: var(--t4s-dark-color);
+    letter-spacing: 2.21px;
+    text-transform: uppercase;
+  }
+  .t4s-job-btn:hover {
+    color: var(--t4s-light-color);
+    background-color: var(--accent-color);
+  }
+  @media(max-width: 1024px) {
+    .t4s-job-btn {
+      letter-spacing: 1.5px;
+    }
+    .t4s-job-heading {
+      max-width: 70%;
+    }
+  }
+  @media(max-width: 767px) {
+    .t4s-job-content {
+      padding: 15px;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+    .t4s-job-btn {
+      letter-spacing: 1px;
+    }
+    .t4s-job-heading {
+      max-width: 100%;
+    }
+
+  }
+</style>
+{% schema %}
+{
+  "name": "Job list",
+  "tag": "section",
+  "class": "t4s-section t4s_bk_flickity t4s-section-all t4s-job-list",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1. Heading options"
+    },
+    {
+      "type": "select",
+      "id": "design_heading",
+      "label": "Heading design",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Design 01"
+        },
+        {
+          "value": "2",
+          "label": "Design 02"
+        },
+        {
+          "value": "3",
+          "label": "Design 03"
+        },
+        {
+          "value": "4",
+          "label": "Design 04"
+        },
+        {
+          "value": "5",
+          "label": "Design 05"
+        },
+        {
+          "value": "6",
+          "label": "Design 06"
+        },
+        {
+          "value": "7",
+          "label": "Design 07"
+        },
+        {
+          "value": "8",
+          "label": "Design 08"
+        },
+        {
+          "value": "9",
+          "label": "Design 09"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_center",
+      "label": "Center align the heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading",
+      "default": "Job Opportunities"
+    },
+    {
+      "type": "textarea",
+      "id": "top_subheading",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "bt_lb",
+      "label": "+ Button label",
+      "info": "Only used for design 9",
+      "default": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "Bottom space (Desktop)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_tb",
+      "label": "Bottom space (Tablet)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_mb",
+      "label": "Bottom space (Mobile)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "2. General options"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "label": "Maximum items to show",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "col_dk",
+      "label": "Items per row",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_tb",
+      "label": "Items per row (Tablet)",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_mb",
+      "label": "Items per row (Mobile)",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "space_h_item",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "35",
+          "label": "35px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Space horizontal items",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "35",
+          "label": "35px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Space vertical items",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item_tb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space horizontal items (Tablet)",
+      "default": "15"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item_tb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space vertical items (Tablet)",
+      "default": "15"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item_mb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space horizontal items (Mobile)",
+      "default": "15"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item_mb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space vertical items (Mobile)",
+      "default": "15"
+    },
+    {
+      "type": "header",
+      "content": "--Box options--"
+    },
+    {
+      "type": "select",
+      "id": "layout_des",
+      "options": [
+        {
+          "value": "1",
+          "label": "Grid"
+        },
+        {
+          "value": "2",
+          "label": "Carousel"
+        }
+      ],
+      "label": "Layout design",
+      "default": "2"
+    },
+    {
+      "type": "header",
+      "content": "+Options for carousel layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_box_border",
+      "label": "Enable box border",
+      "info": "Enable border of box carousel",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Enable loop",
+      "info": "At the end of cells, wrap-around to the other end for infinite scrolling",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "au_time",
+      "min": 0,
+      "max": 30,
+      "step": 0.5,
+      "label": "Autoplay speed in second.",
+      "info": "Set is '0' to disable autoplay",
+      "unit": "s",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "au_hover",
+      "label": "Pause autoplay on hover",
+      "info": "Auto-playing will pause when the user hovers over the carousel",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "—————————————————"
+    },
+    {
+      "type": "paragraph",
+      "content": "Prev next button"
+    },
+    {
+      "type": "select",
+      "id": "show_btn",
+      "options": [
+        {
+          "value": "show_all",
+          "label": "Show all screen"
+        },
+        {
+          "value": "show_desktop",
+          "label": "Only show on desktop"
+        },
+        {
+          "value": "show_mobile",
+          "label": "Only show on tablet & mobile"
+        },
+        {
+          "value": "hidden",
+          "label": "Hidden"
+        }
+      ],
+      "label": "Use prev next button",
+      "default": "show_all"
+    },
+    {
+      "type": "select",
+      "id": "btn_pos",
+      "label": "Prev next position",
+      "info": "Working on screen Desktop",
+      "default": "between",
+      "options": [
+        {
+          "label": "Default",
+          "value": "between"
+        },
+        {
+          "label": "In content",
+          "value": "in"
+        },
+        {
+          "label": "Out content",
+          "value": "out"
+        },
+        {
+          "label": "On top heading",
+          "value": "ontop"
+        },
+        {
+          "value": "sidetop",
+          "label": "Both sides on top"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "icon_slider",
+      "label": "Prev next icon",
+      "default": "1",
+      "options": [
+        {
+          "label": "Default",
+          "value": "0"
+        },
+        {
+          "label": "Solid",
+          "value": "1"
+        },
+        {
+          "label": "Long arrow",
+          "value": "2"
+        },
+        {
+          "label": "Long arrow with text",
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "btn_distance",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Distance from buttons to boundary",
+      "info": "Only works when \"Prev next position is In content\". Only works on desktop.",
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "btn_vi",
+      "label": "Visible",
+      "default": "hover",
+      "options": [
+        {
+          "value": "always",
+          "label": "Always"
+        },
+        {
+          "value": "hover",
+          "label": "Only hover"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_owl",
+      "label": "Button style",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        },
+        {
+          "value": "simple",
+          "label": "Simple"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_shape",
+      "label": "Button shape",
+      "info": "Not work for 'Simple' button style",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "round",
+          "label": "Round"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_cl",
+      "label": "Button color",
+      "default": "dark",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "custom1",
+          "label": "Custom color 1"
+        },
+        {
+          "value": "custom2",
+          "label": "Custom color 2"
+        },
+        {
+          "value": "custom3",
+          "label": "Custom color 3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_size",
+      "label": "Buttons size",
+      "default": "small",
+      "info": "Not work when choose long arrow with text",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "—————————————————"
+    },
+    {
+      "type": "paragraph",
+      "content": "Page dots"
+    },
+    {
+      "type": "select",
+      "id": "show_dots",
+      "info": "Creates and show page dots",
+      "options": [
+        {
+          "value": "show_all",
+          "label": "Show all screen"
+        },
+        {
+          "value": "show_desktop",
+          "label": "Only show on desktop"
+        },
+        {
+          "value": "show_mobile",
+          "label": "Only show on tablet & mobile"
+        },
+        {
+          "value": "hidden",
+          "label": "Hidden"
+        }
+      ],
+      "label": "Use carousel's dots",
+      "default": "hidden"
+    },
+    {
+      "type": "select",
+      "id": "dot_owl",
+      "label": "Dots style",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "thin",
+          "label": "Thin full width"
+        },
+        {
+          "value": "elessi_active",
+          "label": "Elessi active"
+        },
+        {
+          "value": "dots_simple",
+          "label": "Dots simple"
+        },
+        {
+          "value": "outline_active",
+          "label": "Outline active"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "dots_cl",
+      "label": "Dots color",
+      "default": "dark",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light (Best on dark background)"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "custom1",
+          "label": "Custom color 1"
+        },
+        {
+          "value": "custom2",
+          "label": "Custom color 2"
+        },
+        {
+          "value": "custom3",
+          "label": "Custom color 3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "dots_pos",
+      "label": "Dots position",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "dots_round",
+      "label": "Enable round dots",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "dots_space",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "label": "Space among dots",
+      "unit": "px",
+      "default": 10,
+      "info": "Not work on Thin style"
+    },
+    {
+      "type": "range",
+      "id": "dots_bottom_pos",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Distance from dots to boundary",
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "job_item",
+      "name": "Job item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Job description"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link "
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop Now",
+          "info": "Not work on design 3,6"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Job list",
+      "category": "group3",
+      "blocks": [
+        {
+          "type": "job_item",
+          "settings": {
+            "title": "DevOps Engineer (Americas)",
+            "description": "Locations: New York, Dallas, Los Angeles, Denver, Chicago, Sao Paulo, San Francisco",
+            "link": "shopify:\/\/pages\/careers-detail",
+            "button_label": "Shop Now"
+          }
+        },
+        {
+          "type": "job_item",
+          "settings": {
+            "title": "DevOps Engineer (Europe)",
+            "description": "Locations: Chicago",
+            "link": "shopify:\/\/pages\/careers-detail",
+            "button_label": "Shop Now"
+          }
+        },
+        {
+          "type": "job_item",
+          "settings": {
+            "title": "Product Manager",
+            "description": "Locations: San Francisco",
+            "link": "shopify:\/\/pages\/careers-detail",
+            "button_label": "Shop Now"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

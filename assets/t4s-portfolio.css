@@ -1,0 +1,80 @@
+.t4s-portfolio .t4s-portfolio-des-1 .t4s-article-info {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  bottom: 25px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: var(--bg-color);
+  opacity: 0;
+  transition: 0.3s linear;
+  -webkit-transition: 0.3s linear;
+  padding: 25px 25px 20px;
+}
+.t4s-portfolio .t4s-article-info {
+  pointer-events: none;
+}
+.t4s-portfolio .t4s-article-info .t4s-article-title,
+.t4s-portfolio .t4s-article-info .t4s-article-categories {
+  pointer-events: auto;
+}
+
+.t4s-portfolio .t4s-portfolio-des-1 .t4s-article-inner:hover .t4s-article-info {
+  opacity: 0.9;
+}
+.t4s-portfolio .t4s-portfolio-des-2 .t4s-article-info {
+  padding: 20px 20px 10px;
+}
+.t4s-portfolio .t4s-article-inner .t4s-article-thumb {
+  margin: 0;
+}
+.t4s-portfolio .t4s-article-info .t4s-article-title {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.t4s-portfolio .t4s-article-info .t4s-article-categories {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.t4s-portfolio .flickityt4s-button {
+  border: none !important;
+}
+.t4s-portfolio .t4s-article-info a {
+  color: var(--text-color);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: unset;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-transform: normal;
+}
+.t4s-portfolio .t4s-article-info .t4s-article-categories a:hover,
+.t4s-portfolio .t4s-article-info .t4s-article-title a:hover {
+  color: var(--text-hover-color);
+}
+.t4s-portfolio .t4s-pagination-wrapper {
+  margin-top: var(--pagination-distance);
+}
+.t4s-portfolio .t4s-has-btn-load-more .t4s-btn-size-default {
+  font-size: 12px;
+  letter-spacing: 2px;
+  line-height: 30px;
+  font-weight: 700;
+}
+@media (max-width: 1024px) {
+  .t4s-portfolio .t4s-portfolio-des-1 .t4s-article-info {
+    padding: 20px 20px;
+    position: unset;
+    opacity: 1;
+    visibility: visible;
+  }
+}

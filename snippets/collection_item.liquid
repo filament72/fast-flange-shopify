@@ -1,0 +1,88 @@
+{%- liquid
+  assign collection = collections[block.settings.collection]
+  assign image = block.settings.image | default: collection.image
+  assign title = block.settings.title | default: collection.title
+  assign collection_link = block.settings.collection_link | default: collection.url
+  assign collection_list = block.settings.collection_list
+ -%}
+<div class="t4s-collection-content t4s-pr t4s-eff-img-{{ img_effect }}">
+  {%- if collection_des == "6" -%}
+        <a class="t4s-collection-title" href="{{ collection_link }}" target="{{ open_link }}" data-lh="{{ section.settings.title_lh_mb }}" data-lh-md="{{ section.settings.title_lh_tb }}" data-lh-lg="{{ section.settings.title_lh }}">
+          <span class="t4s-d-block t4s-text">{{ title }}</span>
+        </a>
+    <div class="t4s-collection-wrap">
+  {%- endif -%}
+  <div class="t4s-coll-img t4s-pr t4s-oh t4s-eff t4s-eff-{{ b_effect }}" data-cacl-slide>
+    <a class="t4s_collection_item_link t4s-img-wrap t4s-d-block t4s-oh" href="{{ collection_link }}" target="{{ open_link }}">
+      <div class="t4s_ratio t4s-bg-11" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1.2 }}; {%- if image != blank -%}background: url({{ image | image_url: width: 1 }}); {%- endif -%}" >
+        {%- if image != blank -%}
+          <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image.presentation.focal_point}}"{% endif %} loading="lazy" class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+        {%- else -%}
+          {{ 'collection-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}  
+        {%- endif -%}
+      </div>
+    </a>
+    {%- if collection_des == "4" -%}
+      {%- if block.settings.button_label != blank -%}
+            <div class="t4s-collection-btn-wrap t4s-pe-none">
+              <a class="t4s-collection-btn t4s-pe-auto" href="{{ collection_link }}" target="{{ open_link }}">
+                <span class="t4s-text">{{ block.settings.button_label }}</span>
+              </a>
+            </div>
+        {%- endif -%}
+    {%- endif -%}
+  </div>
+{%- if collection_des == "6" -%}
+      {%- if collection_list != blank -%}
+          <ul >
+            {%- for cls in collection_list -%}
+              <li>{{ cls.title | link_to: cls.url }}</li>
+            {%- endfor -%}
+          </ul>
+      {%- endif -%}
+    </div>
+{%- endif -%}
+  {%- if title != blank and collection_des != "6" -%}
+    <div class="t4s-collection-wrapper t4s-content-{{ block.settings.content_pos }}">
+        {%- if collection_des == "1" -%}
+          {%
+            assign title_arr = title | split: "|"
+          %}
+          <div class="t4s-title-wrap">
+            <a class="t4s-collection-title_1" href="{{ collection_link }}" target="{{ open_link }}" data-lh="{{ section.settings.title_lh_mb }}" data-lh-md="{{ section.settings.title_lh_tb }}" data-lh-lg="{{ section.settings.title_lh }}">
+            <span class="t4s-d-block t4s-text">{{ title_arr[0] }}</span>
+            </a>
+            {%- if title_arr[1] != blank -%}
+              <a class="t4s-collection-title" href="{{ collection_link }}" target="{{ open_link }}" data-lh="{{ section.settings.title_lh_mb }}" data-lh-md="{{ section.settings.title_lh_tb }}" data-lh-lg="{{ section.settings.title_lh }}">
+              <span class="t4s-d-block t4s-text">{{ title_arr[1] }}</span>
+            </a>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <a class="t4s-collection-title" href="{{ collection_link }}" target="{{ open_link }}" data-lh="{{ section.settings.title_lh_mb }}" data-lh-md="{{ section.settings.title_lh_tb }}" data-lh-lg="{{ section.settings.title_lh }}">
+            <span class="t4s-d-block t4s-text">{{ title }}</span>
+          </a>
+        {%- endif -%}
+        {%- if collection_des == "4" -%}
+            <div class="t4s-collection-title_line"></div>
+        {%- endif -%}
+        {%- if block.settings.description != blank -%}
+            <p class="t4s-collection-description">{{ block.settings.description }}</p>
+          {%- elsif collection.description != blank -%}
+            <p class="t4s-collection-description">{{ collection.description }}</p>
+          {%- endif -%}
+        {%- if collection_des != "4" -%}
+          {%- if block.settings.button_label != blank -%}
+              <a class="t4s-collection-btn " href="{{ collection_link }}" target="{{ open_link }}">
+                <span class="t4s-text">{{ block.settings.button_label }}</span>
+                {%- if collection_des == "1" -%}
+                  <svg version="1.1" x="0px" y="0px" width="12" height="12" fill="currentColor" viewBox="0 0 22 22" style="enable-background:new 0 0 22 22;" xml:space="preserve"><polygon points="6,20 6,2 17,11 "></polygon></svg>
+                {%- elsif collection_des == "5" -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" width="15" height="15"><path d="M440.6 273.4c4.7-4.5 7.4-10.8 7.4-17.4s-2.7-12.8-7.4-17.4l-176-168c-9.6-9.2-24.8-8.8-33.9 .8s-8.8 24.8 .8 33.9L364.1 232 24 232c-13.3 0-24 10.7-24 24s10.7 24 24 24l340.1 0L231.4 406.6c-9.6 9.2-9.9 24.3-.8 33.9s24.3 9.9 33.9 .8l176-168z"/></svg>
+                {%- endif -%}
+              </a>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+  {%- endif -%}
+</div> 

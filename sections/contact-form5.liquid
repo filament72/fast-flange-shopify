@@ -1,0 +1,440 @@
+<!-- sections/contact-form5.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign sid = section.id
+    assign stt_layout = section.settings.layout
+    assign stt_image_bg = section.settings.image_bg
+    assign image_mb = section.settings.image_mb
+    assign image = section.settings.image | default: image_mb
+    assign mb_image = image_mb | default: image 
+    assign se_height = section.settings.se_height
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif
+    assign formId = 'contact_form_page4'
+    assign button_style = section.settings.button_style
+-%}
+{%- capture append_style -%}--aspect-ratio-cus : {{ section.settings.height_dk }}px;--aspect-ratio-custb : {{ section.settings.height_tb }}px;--aspect-ratio-cusmb : {{ section.settings.height_mb }}px;{%- endcapture -%}
+{% render 'section_style', sid: sid, append_style: append_style %}
+<div class="t4s-section-inner t4s_se_{{ sid }} t4s-pr {{ stt_layout }} {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2" {% endif %}>
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2" {% endif %}>{%- endif -%}
+    <div class="t4s-row t4s-g-0 t4s-align-items-center">
+      <div class="t4s-col-item t4s-col-12 t4s-col-lg-6">
+        <div class="t4s_ratio_mix {{ se_height }} t4s_ratio_cuspx_mb_{{ section.settings.custom_mb }} t4s_ratio_cuspx_tb_{{ section.settings.custom_tb }} t4s_ratio_cuspx_{{ section.settings.custom_dk }}">
+          {%- if section.settings.source == "map" -%}
+          {%- style -%}.t4s-contact-form5-map__inner iframe {margin-bottom: 0;padding: 0;display: block;width: 100%;border: none;filter: grayscale({{ section.settings.filter_gray_map }}%);}{%- endstyle -%}
+          <div class="t4s-contact-form5-map__inner t4s-pr t4s-oh t4s_ratio t4s_cover t4s-bg-11" style="--ratioapt: {{ image.aspect_ratio | default: 2 }};--ratioaptmb: {{ mb_image.aspect_ratio | default: 1.5 }}">
+            <div class="t4-pr">{{ section.settings.map }}</div>
+          </div>
+          {%- else -%}
+          <div class="t4s-contact-form5-image__inner t4s-pr t4s-oh t4s_ratio t4s_cover t4s-bg-11" style="{%- if image != blank -%}background: url({{ image | image_url: width: 1 }});{%- endif -%}--ratioapt: {{ image.aspect_ratio | default: 2 }};--ratioaptmb: {{ mb_image.aspect_ratio | default: 1.5 }}">
+              {%- if image != blank -%}   
+                  {%- liquid
+                    assign img_url_w     = image | image_url: width: 1904 | split: '1904'
+                    assign img_url_w0    = img_url_w[0]
+                    assign img_url_w1    = img_url_w[1]
+                    assign img_url_w_mb  = mb_image | image_url: width: 1904 | split: '1904'
+                    assign img_url_w_mb0 = img_url_w_mb[0]
+                    assign img_url_w_mb1 = img_url_w_mb[1]  
+                  -%}
+                  <img class="t4s_bg t4s-img-as-bg t4s-d-md-none" srcset="{{ img_url_w_mb0 }}375{{ img_url_w_mb1 }} 375w, {{ img_url_w_mb0 }}550{{ img_url_w_mb1 }} 550w, {{ img_url_w_mb0 }}750{{ img_url_w_mb1 }} 750w, {{ img_url_w_mb0 }}1100{{ img_url_w_mb1 }} 1100w, {{ img_url_w_mb0 }}1500{{ img_url_w_mb1 }} 1500w, {{ img_url_w_mb0 }}1780{{ img_url_w_mb1 }} 1780w, {{ img_url_w_mb0 }}2000{{ img_url_w_mb1 }} 2000w, {{ img_url_w_mb0 }}3000{{ img_url_w_mb1 }} 3000w,{{ img_url_w_mb0 }}3840{{ img_url_w_mb1 }} 3840w, {{ mb_image | image_url }} {{ mb_image.width }}w" sizes="100vw" src="{{ img_url_w_mb0 }}1500{{ img_url_w_mb1 }}" loading="lazy" alt="{{ mb_image.alt | escape }}" width="{{ mb_image.width }}" height="{{ mb_image.height }}">
+                  <img class="t4s_bg t4s-img-as-bg t4s-d-none t4s-d-md-block" srcset="{{ img_url_w0 }}375{{ img_url_w1 }} 375w, {{ img_url_w0 }}550{{ img_url_w1 }} 550w, {{ img_url_w0 }}750{{ img_url_w1 }} 750w, {{ img_url_w0 }}1100{{ img_url_w1 }} 1100w, {{ img_url_w0 }}1500{{ img_url_w1 }} 1500w, {{ img_url_w0 }}1780{{ img_url_w1 }} 1780w, {{ img_url_w0 }}2000{{ img_url_w1 }} 2000w, {{ img_url_w0 }}3000{{ img_url_w1 }} 3000w,{{ img_url_w0 }}3840{{ img_url_w1 }} 3840w, {{ image | image_url }} {{ image.width }}w" sizes="100vw" src="{{ img_url_w0 }}1500{{ img_url_w1 }}" loading="lazy" alt="{{ image.alt | escape }}" width="{{ image.width }}" height="{{ image.height }}">
+              {%- else -%} 
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1' }}  
+              {%- endif -%}
+          </div>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="t4s-col-item t4s-col-12 t4s-col-lg-6">
+        <div class="t4s-contact-form5__info">
+          {%- form 'contact', id: formId -%}
+            {%- liquid
+              assign name          = 'templates.contact.form.name'
+              assign email         = 'templates.contact.form.email'
+              assign phone         = 'templates.contact.form.phone'
+              assign order         = 'templates.contact.form.order'
+              assign message       = 'templates.contact.form.message'
+            -%}
+            {%- if section.settings.heading != blank -%}<h3 class="t4s-info-heading">{{ section.settings.heading }}</h3>{%- endif -%}
+            {%- if section.settings.text != blank -%}<div class="t4s-info-text">{{ section.settings.text }}</div>{%- endif -%} 
+            {%- if section.settings.html != blank -%}<div class="t4s-info-html">{{ section.settings.html }}</div>{%- endif -%} 
+            {%- render 'form-status', form: form, form_id: formId -%}
+            <div class="t4s-contact-form5__form">
+              <p>
+                <label for="{{ formId }}-name">{{ name | t }}</label>
+                <input required="required" type="text" id="{{ formId }}-name" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+              </p>
+              <p>
+                <label for="{{ formId }}-email">{{ email | t }}</label>
+                <input required="required" type="email" id="{{ formId }}-email" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" aria-required="true" required="required"
+                {%- if form.errors contains 'email' -%}class="t4s-input--error" aria-invalid="true" aria-describedby="{{ formId }}-email-error"{%- endif -%}>
+                {%- if form.errors contains 'email' -%}
+                    <span id="{{ formId }}-email-error" class="t4s-input-error-message"><i class="las la-exclamation-triangle"></i>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                {%- endif -%}
+              </p>
+              {%- if section.settings.enable_phone -%}
+                <p>
+                  <label for="{{ formId }}-phone">{{ phone | t }}</label>
+                  <input required="required" type="tel" id="{{ formId }}-phone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                </p>
+              {%- endif -%}
+              {%- if section.settings.enable_order -%}
+                <p>
+                  <label for="{{ formId }}-order">{{ order | t }}</label>
+                  <input required="required" type="text" id="{{ formId }}-order" name="contact[order]" value="{% if form[order] %}{{ form[order] }}{% elsif customer %}{{ customer.order }}{% endif %}">
+                </p>
+              {%- endif -%}
+              <p>
+                <label for="{{ formId }}-message">{{ message | t }}</label>
+                <textarea rows="20" id="{{ formId }}-message" name="contact[body]" required="required" class="t4s-input-textarea">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+              </p>
+              <p style="margin-bottom:0" class="t4s-contact-form5__submit{% if section.settings.enable_center_btn %} t4s-text-center{% endif %}">
+                <input type="submit" class="t4s-btn t4s-btn-base t4s-btn-style-{{ button_style }} t4s-btn-size-{{ section.settings.btn_size }} t4s-btn-color-{{ section.settings.btn_cl }} t4s-btn-effect-fade t4s-cursor-pointer" value="{{ 'templates.contact.form.submit' | t }}">
+              </p>
+            </div>
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+    {{- html_layout[1] -}}
+</div>
+<style> .t4s-contact-form5 input.t4s-input--error{border-color: var(--t4s-error-color) !important;margin-bottom: 5px}.t4s-contact-form5 label{font-size: 16px;font-weight: 300;margin-bottom: 14px;display: inline-block}.t4s-contact-form5 input:not([type="submit"]):not([type="checkbox"]),.t4s-contact-form5 select,.t4s-contact-form5 textarea{width: 100%;height: 50px;line-height: 20px;font-size: 16px;font-weight: 300;transition: border-color 0.5s;box-shadow: none;border-radius: var(--other-radius);appearance: none;border: 1px solid rgba(var(--border-color-rgb), 0.9);background-color: rgba(var(--border-color-rgb), 0.35)}.t4s-contact-form5 input:not([type="submit"]):not([type="checkbox"]):focus,.t4s-contact-form5 select:focus,.t4s-contact-form5 textarea:focus{border-color: rgba(var(--text-color-rgb), 0.8)}.t4s-contact-form5 .t4s-input-textarea{min-height: 150px;overflow: hidden;padding: 10px 15px}.t4s-contact-form5 .t4s-fine-print{font-style: italic}.t4s-contact-form5 .t4s-input-error-message i{color: var(--t4s-error-color);margin-right: 5px}.t4s-contact-form5 .t4s-form-message ul li{list-style: disc}.t4s-contact-form5 .t4s-form-message--error{color: var(--t4s-error-color);border: 1px solid var(--t4s-error-color);background-color: #fff8f8;padding: 15px 20px;text-align: left;width: 100%;margin: 0 0 27.5px}.t4s-contact-form5 .t4s-form-message__title{font-size: 14px;margin-bottom: 10px}.t4s-contact-form5 .t4s-info-heading{font-size: 50px;line-height: 60px;margin-bottom: 18px}.t4s-contact-form5 .t4s-info-subheading{font-size: 18px;line-height: 30px;margin-bottom: 30px}.t4s-contact-form5 .t4s-info-text{margin-bottom: 20px}.t4s-contact-form5 .t4s-info-text p:last-child{margin-bottom: 0}.t4s-contact-form5 .t4s-btn-style-bordered,.t4s-contact-form5 .t4s-btn-style-link{border-top: none;border-right: none;border-left: none}.t4s-contact-form5 .t4s-btn-style-link{border-bottom: none}.t4s-contact-form5 .t4s-form-message--success{color: var(--t4s-success-color)}.t4s-contact-form5-html__wrap{display: flex;flex-wrap: wrap;row-gap: 5px;column-gap: 20px}@media (min-width: 1400px){.t4s-contact-form5-html__wrap{row-gap: 10px;column-gap: 48px}}@media (min-width: 1025px){.t4s-contact-form5__info{padding: 70px}.t4s-contact-form5__form{max-width: 558px}.t4s-contact-form5 .t4s-info-text{margin-bottom: 50px}.t4s-contact-form5-html__wrap{margin-bottom: 28px}}@media (max-width: 1024px){.t4s-contact-form5 .t4s-info-heading{font-size: 30px;line-height: 40px}.t4s-contact-form5 .t4s-info-subheading{margin-bottom: 15px}.t4s-contact-form5__info{padding: 20px}.t4s-contact-form5-html__wrap{row-gap: 10px;column-gap: 30px}}@media (max-width: 767px){.t4s-contact-form5__info{padding: 15px}.t4s-contact-form5 label{font-size: 14px;margin-bottom: 10px}.t4s-contact-form5 input:not([type="submit"]):not([type="checkbox"]),.t4s-contact-form5 select,.t4s-contact-form5 textarea{font-size: 14px;height: 44px}}</style>
+{% schema %}
+{
+  "name": "Contact form 5",
+  "tag": "section",
+  "class": "t4s-section t4s-section-all t4s_tp_cdt t4s-contact-form5",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1.General options"
+    },
+    {
+      "type": "select",
+      "id": "se_height",
+      "label": "Section height",
+      "default": "t4s_ratio_fh",
+      "options": [
+        {
+          "value": "t4s_ratio_fh",
+          "label": "Full screen height"
+        },
+        {
+          "value": "t4s_ratioadapt_mix",
+          "label": "Adapt to image"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_dk",
+      "label": "Use custom height (Desktop)",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "height_dk",
+      "label": "Section height (Desktop)",
+      "default": 600
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_tb",
+      "label": "Use custom height (Tablet)",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "height_tb",
+      "label": "Section height (Tablet)",
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mb",
+      "label": "Use custom height (Mobile)",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "height_mb",
+      "label": "Section height (Mobile)",
+      "default": 250
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Source visual",
+      "default": "use_image",
+      "options": [
+        {
+          "value": "use_image",
+          "label": "From image"
+        },
+        {
+          "value": "map",
+          "label": "From map"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "+ Options for source image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Choose Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mb",
+      "label": "Mobile image"
+    },
+    {
+      "type": "header",
+      "content": "+ Options for source map"
+    },
+    {
+      "type": "textarea",
+      "id": "map",
+      "label": "Map",
+      "default": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3154.8939060848147!2d144.81158271584684!3d-37.74563313792195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65fa6debeb781%3A0xe1d23f5d1759961e!2s184%20Main%20Rd%20E%2C%20St%20Albans%20VIC%203021%2C%20%C3%9Ac!5e0!3m2!1svi!2s!4v1618277125252!5m2!1svi!2s\" width=\"100%\" height=\"100%\" style=\"border: 0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>"
+    },
+    {
+      "type": "range",
+      "id": "filter_gray_map",
+      "label": "Filter gray scale source map",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "+ Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We work for your successt"
+    },
+    {
+      "type": "html",
+      "id": "text",
+      "label": "Text",
+      "default": "We work with organizations of all sizes, from scrappy start-ups to leading brands, in the private, public, and social sector."
+    },
+    {
+      "type": "html",
+      "id": "html",
+      "label": "Custom html",
+      "default": "<div class=\"t4s-contact-form5-html__wrap\"><div><h3 style=\"font-size:16px;font-weight:500;letter-spacing:3px;margin-bottom:12px\">Address</h3><p>198 West 21th Street, Suite 721<br>New York NY 10010</p></div><div><h3 style=\"font-size:16px;font-weight:500;letter-spacing:3px;margin-bottom:12px\">Email</h3><p>Sales: sales@ocolus.com<br>Office: info@ocolus.com</p></div><div><h3 style=\"font-size:16px;font-weight:500;letter-spacing:3px;margin-bottom:12px\">Phone</h3><p>Sales: sales@ocolus.com<br>Office: info@ocolus.com</p></div></div>"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_phone",
+      "label": "Enable phone",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_order",
+      "label": "Enable order number",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "+ Options button submit"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_center_btn",
+      "label": "Enable center button",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Outline",
+          "value": "outline"
+        },
+        {
+          "label": "Bordered bottom",
+          "value": "bordered"
+        },
+        {
+          "label": "Link",
+          "value": "link"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_size",
+      "label": "Button size",
+      "default": "default",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Custom size #1",
+          "value": "1"
+        },
+        {
+          "label": "Custom size #2",
+          "value": "2"
+        },
+        {
+          "label": "Custom size #3",
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_cl",
+      "label": "Button color",
+      "default": "dark",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "custom1",
+          "label": "Custom color 1"
+        },
+        {
+          "value": "custom2",
+          "label": "Custom color 2"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "2. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-fluid",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form 5",
+      "category": "group8"
+    }
+  ]
+}
+{% endschema %} 

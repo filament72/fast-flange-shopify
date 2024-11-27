@@ -1,0 +1,1120 @@
+<!-- sections/our-team.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign sid = section.id
+  
+  assign stt_layout = section.settings.layout
+  assign stt_image_bg = section.settings.image_bg 
+  if stt_layout == 't4s-se-container' 
+   assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+
+  if section.settings.col_dk == "12" or section.settings.col_dk == "6"
+    assign col_title = "12"
+  elsif section.settings.col_dk == "4"
+    assign col_title = "8"
+  else
+    assign col_title = "6"
+  endif 
+  if section.settings.col_tb == "12" or section.settings.col_tb == "6"
+    assign col_title_tb = "12"
+  else
+    assign col_title_tb = "8"
+  endif 
+  assign col_title_mb = "12"
+  assign bg_content_op  = section.settings.bg_content_op | divided_by: 100.0
+  -%}
+
+{% render 'section_style', sid: sid %}
+<div class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }} {%- if stt_image_bg != blank and stt_layout != 't4s-se-container' -%} t4s-has-imgbg lazyloadt4s {%- endif -%}"  {%- if stt_image_bg != blank and stt_layout != 't4s-se-container' -%}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" {%- endif -%}  >
+  {{- html_layout[0] -}}
+  {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {%- if stt_image_bg != blank -%} t4s-has-imgbg lazyloadt4s {%- endif -%} "  {%- if stt_image_bg != blank -%}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" {%- endif -%} > {%- endif -%}
+  {%- render 'section_tophead', get_height: true, sid: sid -%}
+  <div data-collection-url="{{ collection.url }}" data-t4s-resizeobserver data-contentlm-replace class="t4s-section-content isotopet4s t4s-text-{{ section.settings.content_align }} t4s_{{ section.settings.image_ratio }} t4s_position_{{ section.settings.image_position }} t4s_{{ section.settings.image_size }} t4s-row t4s-gx-lg-{{ section.settings.space_h_item }} t4s-gy-lg-{{ section.settings.space_v_item }} t4s-gx-md-{{ section.settings.space_h_item_tb }} t4s-gy-md-{{ section.settings.space_v_item_tb }} t4s-gx-{{ section.settings.space_h_item_mb }} t4s-gy-{{ section.settings.space_v_item_mb }}" data-isotopet4s-js='{ "itemSelector": ".t4s-our-team-item", "layoutMode": "packery" }' style="--name-cl: {{ section.settings.name_cl }};--competence-cl: {{ section.settings.competence_cl }}; --bg-content-op: {{ section.settings.content_bg | color_modify: 'alpha', bg_content_op }};">
+    {%- if section.blocks.size > 0 -%} 
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'person_item' -%}
+          {%- assign image = block.settings.image -%}
+          <div class="t4s-col-item t4s-our-team-item t4s-col-lg-{{ section.settings.col_dk }} t4s-col-md-{{ section.settings.col_tb }} t4s-col-{{ section.settings.col_mb }}" id="b_{{ block.id }}">
+            <div class="t4s-our-team-inner t4s-pr">
+              <div class="t4s-our-team-avata t4s_ratio" {%- if section.settings.image_ratio == "ratioadapt" -%} style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1.2 }};"{% endif %}>
+                {%- if image != blank -%}
+                  <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image.presentation.focal_point}}"{% endif %} loading="lazy" class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1 t4s-obj-eff' }}
+                {%- endif -%}
+              </div>
+              <div class="t4s-our-team-info t4s-pa">
+                {% if block.settings.competence != blank %} <div class="t4s-competence">{{ block.settings.competence }}</div> {% endif %}
+                {% if block.settings.name != blank %} <div class="t4s-name">{{ block.settings.name }}</div> {% endif %}
+              </div>
+            </div>
+          </div>
+        {% else %}
+          {% if block.settings.heading != blank %}
+            {% assign image_bg = block.settings.image_bg %}
+            <div class="t4s-col-item t4s-our-team-item t4s-heading-item t4s-col-lg-{{ col_title }} t4s-col-md-{{ col_title_tb }} t4s-col-{{ col_title_mb }} t4s_{{ block.settings.image_ratio }} " id="b_{{ block.id }}">
+              <div class="t4s-our-team-inner t4s-pr" style="--heading-cl: {{ block.settings.heading_cl }}; --bg-cl: {{ block.settings.heading_bg }};">
+                <div class="t4s_ratio"{%- if block.settings.image_ratio == "ratioadapt" -%} style="--aspect-ratioapt: {{ image_bg.aspect_ratio | default: 1.2 }};"{% endif %} >
+                  {% if image_bg != blank %}
+                    <img {% if image_bg.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image_bg.presentation.focal_point}}"{% endif %} loading="lazy" class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image_bg | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image_bg.width }}" height="{{ image_bg.height }}" alt="{{ image_bg.alt | escape }}">
+                  {%- endif -%}
+                </div>
+                <div class="t4s-our-team-heading t4s-d-flex t4s-align-items-center t4s-pa">
+                  <h3 class="t4s-our-team-title">{{ block.settings.heading }}</h3>
+                  {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+                    <a href="{{ block.settings.button_link }}" class="t4s-our-team-heading-btn">{{ block.settings.button_label }}</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+  {{- html_layout[1] -}} 
+</div>
+
+<style>
+  .t4s-our-team-heading {
+    justify-content: space-between;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-inline-start: 70px;
+    padding-inline-end: 55px;
+  }
+  .t4s-our-team-heading .t4s-our-team-title {
+    font-size: 50px;
+    line-height: 70px;
+    font-family: var(--font-family-2);
+    color: var(--heading-cl);
+  }
+  .t4s-heading-item .t4s-our-team-inner {
+    background-color: var(--bg-cl);
+  }
+  .t4s-our-team-heading-btn {
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: underline;
+    letter-spacing: 2.72px;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 11px;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 32px;
+    color: var(--heading-cl);
+  }
+  .t4s-our-team-heading-btn:hover {
+    color: var(--heading-cl);
+    text-decoration: underline;
+  }
+  .t4s-our-team-inner::before {
+    content: "";
+    background-color: var(--bg-content-op);
+    position: absolute;
+    z-index: 1;
+    bottom: 13px; 
+    top: 13px;
+    left: 13px;
+    right: 13px; 
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s ease 0.1s;
+  }
+  .t4s-heading-item .t4s-our-team-inner::before {
+    display: none;
+  }
+  .t4s-our-team-info {
+    z-index: 2;
+    left: 43px;
+    right: 43px;
+    bottom: 35px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s ease 0.1s;
+  }
+  .t4s-our-team-info .t4s-name {
+    color: var(--name-cl);
+    font-size: 21px;
+    line-height: 30px;
+    margin: 0;
+    font-weight: 500;
+  }
+  .t4s-our-team-info .t4s-competence {
+    color: var(--competence-cl);
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.35px;
+    margin: 0;
+  }
+  .t4s-our-team-item:hover .t4s-our-team-inner::before,
+  .t4s-our-team-item:hover .t4s-our-team-info {
+    opacity: 1;
+    visibility: visible;
+  }
+  @media(max-width: 1199px) {
+    .t4s-our-team-heading {
+      padding-inline-start: 40px;
+      padding-inline-end: 25px;
+    }
+    .t4s-our-team-heading-btn {
+      letter-spacing: 2px;
+    }
+    .t4s-our-team-info {
+      left: 30px;
+      bottom: 30px;
+    }
+  }
+  @media(max-width: 1024px) {
+    .t4s-our-team-heading .t4s-our-team-title  {
+      font-size: 40px;
+      line-height: 55px;
+      max-width: 70%;
+    }
+    .t4s-our-team-heading .t4s-our-team-title br{
+      display: none;
+    }
+    .t4s-our-team-heading-btn {
+      letter-spacing: 1.5px;
+    }
+     .t4s-our-team-heading {
+      padding-inline-start: 30px;
+      padding-inline-end: 15px;
+    }
+    .t4s-our-team-inner::before  {
+      display: none;
+    }
+    .t4s-our-team-info {
+      left: 15px;
+      bottom: 15px;
+      right: 15px;
+      padding: 10px;
+      background-color: var(--bg-content-op);
+      opacity: 1;
+      visibility: visible;
+    }
+    .t4s-our-team-info .t4s-name {
+      font-size: 17px;
+      line-height: 24px;
+    }
+    .t4s-our-team-info .t4s-competence {
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0;
+    }
+  }
+  @media(max-width: 767px) {
+    .t4s-our-team-heading {
+      padding-inline-start: 15px;
+      padding-inline-end: 15px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .t4s-our-team-heading .t4s-our-team-title  {
+      font-size: 30px;
+      line-height: 40px;
+      max-width: 100%;
+    }
+    .t4s-our-team-heading-btn {
+      letter-spacing: 1px;
+    }
+    .t4s-our-team-info {
+      left: 10px;
+      bottom: 10px;
+      right: 10px;
+      padding: 5px 10px;
+    } 
+    .t4s-our-team-info .t4s-name {
+      font-size: 15px;
+      line-height: 20px;
+    }
+    .t4s-our-team-info .t4s-competence {
+      font-size: 12px;
+    }
+    @media(max-width: 575px) {
+      .t4s-our-team-info {
+        left: 5px;
+        bottom: 5px;
+        right: 5px;
+        padding: 5px;
+      }
+    }
+  }
+</style>
+{% schema %}
+{
+  "name": "Our team",
+  "tag": "section",
+  "class": "t4s-section t4s-section-all t4s-our-team t4s_tp_istope",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1. Heading options"
+    },
+    {
+      "type": "select",
+      "id": "design_heading",
+      "label": "Heading design",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Design 01"
+        },
+        {
+          "value": "2",
+          "label": "Design 02"
+        },
+        {
+          "value": "3",
+          "label": "Design 03"
+        },
+        {
+          "value": "4",
+          "label": "Design 04"
+        },
+        {
+          "value": "5",
+          "label": "Design 05"
+        },
+        {
+          "value": "6",
+          "label": "Design 06"
+        },
+        {
+          "value": "7",
+          "label": "Design 07"
+        },
+        {
+          "value": "8",
+          "label": "Design 08"
+        },
+        {
+          "value": "9",
+          "label": "Design 09"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_center",
+      "label": "Center align the heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "top_subheading",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "bt_lb",
+      "label": "+ Button label",
+      "info": "Only used for design 9",
+      "default": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "Bottom space (Desktop)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_tb",
+      "label": "Bottom space (Tablet)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_mb",
+      "label": "Bottom space (Mobile)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "2. General options"
+    },
+    {
+      "type": "color",
+      "id": "name_cl",
+      "label": "Color name",
+      "default": "#293341"
+    },
+    {
+      "type": "color",
+      "id": "competence_cl",
+      "label": "Color competence",
+      "default": "#293341"
+    },
+    {
+      "type": "color",
+      "id": "content_bg",
+      "label": "Background content items",
+      "default": "#fff"
+    },
+    {
+      "type": "range",
+      "id": "bg_content_op",
+      "label": "Background content opacity",
+      "default": 90,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Content align",
+      "default": "default",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "+ Options image items"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "default": "ratio1_1",
+      "info": "Aspect ratio custom will settings in general panel",
+      "options": [
+        {
+          "group": "Natural",
+          "value": "ratioadapt",
+          "label": "Adapt to image"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio2_1",
+          "label": "2:1"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio16_9",
+          "label": "16:9"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio8_5",
+          "label": "8:5"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio3_2",
+          "label": "3:2"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio4_3",
+          "label": "4:3"
+        },
+        {
+          "group": "Landscape",
+          "value": "rationt",
+          "label": "Ratio ASOS"
+        },
+        {
+          "group": "Squared",
+          "value": "ratio1_1",
+          "label": "1:1"
+        },
+        {
+          "group": "Portrait",
+          "value": "ratio2_3",
+          "label": "2:3"
+        },
+        {
+          "group": "Portrait",
+          "value": "ratio1_2",
+          "label": "1:2"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus1",
+          "label": "Ratio custom 1"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus2",
+          "label": "Ratio custom 2"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus3",
+          "label": "Ratio custom 3"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus4",
+          "label": "Ratio custom 4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "Image size",
+      "default": "cover",
+      "info": "This settings apply only if the image ratio is not set to 'Adapt to image'",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Full"
+        },
+        {
+          "value": "contain",
+          "label": "Auto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "1",
+          "label": "Left top"
+        },
+        {
+          "value": "2",
+          "label": "Left center"
+        },
+        {
+          "value": "3",
+          "label": "Left bottom"
+        },
+        {
+          "value": "4",
+          "label": "Right top"
+        },
+        {
+          "value": "5",
+          "label": "Right center"
+        },
+        {
+          "value": "6",
+          "label": "Right bottom"
+        },
+        {
+          "value": "7",
+          "label": "Center top"
+        },
+        {
+          "value": "8",
+          "label": "Center center"
+        },
+        {
+          "value": "9",
+          "label": "Center bottom"
+        }
+      ],
+      "label": "Image position",
+      "default": "8"
+    },
+    {
+      "type": "select",
+      "id": "col_dk",
+      "label": "Items per row",
+      "default": "4",
+      "options": [
+        {
+          "value": "12",
+          "label": "1"
+        },
+        {
+          "value": "6",
+          "label": "2"
+        },
+        {
+          "value": "4",
+          "label": "3"
+        },
+        {
+          "value": "3",
+          "label": "4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_tb",
+      "label": "Items per row (Tablet)",
+      "default": "4",
+      "options": [
+        {
+          "value": "12",
+          "label": "1"
+        },
+        {
+          "value": "6",
+          "label": "2"
+        },
+        {
+          "value": "4",
+          "label": "3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_mb",
+      "label": "Items per row (Mobile)",
+      "default": "6",
+      "options": [
+        {
+          "value": "12",
+          "label": "1"
+        },
+        {
+          "value": "6",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "space_h_item",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "6",
+          "label": "6px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "35",
+          "label": "35px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Space horizontal items",
+      "default": "6"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "6",
+          "label": "6px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "35",
+          "label": "35px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Space vertical items",
+      "default": "6"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item_tb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "6",
+          "label": "6px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space horizontal items (Tablet)",
+      "default": "6"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item_tb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "6",
+          "label": "6px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space vertical items (Tablet)",
+      "default": "6"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item_mb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "6",
+          "label": "6px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space horizontal items (Mobile)",
+      "default": "6"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item_mb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "6",
+          "label": "6px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        }
+      ],
+      "label": "Space vertical items (Mobile)",
+      "default": "6"
+    },
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading_item",
+      "name": "heading item",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "JOIN NOW"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "color",
+          "id": "heading_cl",
+          "label": "Heading content color",
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "heading_bg",
+          "label": "Heading background color",
+          "default": "#C91F28"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_bg",
+          "label": "Heading background  image"
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "label": "Item ratio",
+          "default": "ratio1_1",
+          "info": "Aspect ratio custom will settings in general panel",
+          "options": [
+            {
+              "group": "Natural",
+              "value": "ratioadapt",
+              "label": "Adapt to image"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio2_1",
+              "label": "2:1"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio16_9",
+              "label": "16:9"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio8_5",
+              "label": "8:5"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio3_2",
+              "label": "3:2"
+            },
+            {
+              "group": "Landscape",
+              "value": "ratio4_3",
+              "label": "4:3"
+            },
+            {
+              "group": "Landscape",
+              "value": "rationt",
+              "label": "Ratio ASOS"
+            },
+            {
+              "group": "Squared",
+              "value": "ratio1_1",
+              "label": "1:1"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio2_3",
+              "label": "2:3"
+            },
+            {
+              "group": "Portrait",
+              "value": "ratio1_2",
+              "label": "1:2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus1",
+              "label": "Ratio custom 1"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus2",
+              "label": "Ratio custom 2"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus3",
+              "label": "Ratio custom 3"
+            },
+            {
+              "group": "Custom",
+              "value": "ratiocus4",
+              "label": "Ratio custom 4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "person_item",
+      "name": "Person item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Avata image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Arthur Hansen"
+        },
+        {
+          "type": "text",
+          "id": "competence",
+          "label": "Competence",
+          "default": "Co-founder & CEO"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our team",
+      "category": "group3",
+      "blocks": [
+        {
+          "type": "person_item"
+        },
+        {
+          "type": "person_item"
+        },
+        {
+          "type": "person_item"
+        },
+        {
+          "type": "person_item"
+        },
+        {
+          "type": "heading_item"
+        },
+        {
+          "type": "person_item"
+        },
+        {
+          "type": "person_item"
+        },
+        {
+          "type": "person_item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

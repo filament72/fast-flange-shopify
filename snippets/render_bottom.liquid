@@ -1,0 +1,550 @@
+{%- liquid
+  assign admin_sp = request.design_mode
+  assign page_type = request.page_type
+  assign enable_quickview = settings.enable_quickview 
+  assign enable_quickshop = settings.enable_quickshop
+  if page_type == 'page' and page.template_suffix == 't4sindex'
+  else
+    assign is_page_index = false
+  endif
+-%}
+
+<svg aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" class="t4s-d-none"><defs>
+  <symbol id="t4s-icon-btn" viewBox="0 0 14 10" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.537.808a.5.5 0 01.817-.162l4 4a.5.5 0 010 .708l-4 4a.5.5 0 11-.708-.708L11.793 5.5H1a.5.5 0 010-1h10.793L8.646 1.354a.5.5 0 01-.109-.546z" fill="currentColor">
+  </path></symbol>
+  <symbol id="t4s-icon-loading" viewBox="0 0 100 100" fill="none">
+    <path xmlns="http://www.w3.org/2000/svg" fill="none" d="M24.3,30C11.4,30,5,43.3,5,50s6.4,20,19.3,20c19.3,0,32.1-40,51.4-40 C88.6,30,95,43.3,95,50s-6.4,20-19.3,20C56.4,70,43.6,30,24.3,30z" stroke="currentColor" stroke-width="2" stroke-dasharray="205.271142578125 51.317785644531256"><animate attributeName="stroke-dashoffset" calcMode="linear" values="0;256.58892822265625" keyTimes="0;1" dur="1" begin="0s" repeatCount="indefinite"/></path>
+  </symbol>
+  <symbol id="t4s-icon-search" viewBox="0 0 18 19" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z" fill="currentColor"></path>
+  </symbol>
+  <symbol id="t4s-icon-close" class="icon icon-close" fill="none" viewBox="0 0 18 17">
+    <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
+  </path></symbol>
+  <symbol id="t4s-icon-atc">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 449 611.97" width="24" height="24"><path d="M205.6,1.6c-44.2,8.8-77,43.9-82.6,88.8-.5,4.4-1,13.3-1,19.8V122H0V612H449V122H327V110.2c0-13.1-1.2-24.9-3.6-33.8-8.5-32.6-34-60.2-65.8-71C242.1.1,220.9-1.5,205.6,1.6Zm31.7,40.9c21.9,4.6,40.6,22.5,46.2,44.2,1,3.8,1.5,10.6,1.5,20.5V122H164V107.2c0-23.2,4.2-34.4,18-48.3A59.05,59.05,0,0,1,237.3,42.5ZM122.2,193.7l.3,30.8h41l.3-30.8L164,163H285l.2,30.7.3,30.8h41l.3-30.8L327,163h81V571H41V163h81Z" transform="translate(0 -0.03)"/></svg>
+  </symbol>
+  <symbol id="t4s-icon-qv">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512" width="24" height="24"><g><path d="M495,466.2L377.2,348.4c29.2-35.6,46.8-81.2,46.8-130.9C424,103.5,331.5,11,217.5,11C103.4,11,11,103.5,11,217.5 S103.4,424,217.5,424c49.7,0,95.2-17.5,130.8-46.7L466.1,495c8,8,20.9,8,28.9,0C503,487.1,503,474.1,495,466.2z M217.5,382.9 C126.2,382.9,52,308.7,52,217.5S126.2,52,217.5,52C308.7,52,383,126.3,383,217.5S308.7,382.9,217.5,382.9z"/></g></svg>
+  </symbol>
+  <symbol id="t4s-icon-cp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 28 28" width="24" height="24" stroke="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M22.735,7H0v-1H22.734l-3.729-3.729,.707-.707,3.829,3.829c.61,.61,.61,1.604,0,2.214l-3.809,3.809-.707-.707,3.709-3.709ZM4.974,13.291l-.707-.707L.458,16.393c-.61,.61-.61,1.604,0,2.214l3.829,3.829,.707-.707-3.729-3.729H24v-1H1.265l3.709-3.709Z"/></svg>
+  </symbol>
+  <symbol id="t4s-icon-cp-added">
+   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+  </symbol>
+  <symbol id="t4s-icon-wis">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+  </symbol>
+  <symbol id="t4s-icon-wis-added">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+  </symbol>
+  <symbol id="t4s-icon-wis-remove">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+  </symbol>
+  <symbol id="t4s-icon-external">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+  </symbol>
+  <symbol id="t4s-icon-link">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link-2"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+  </symbol>
+  <symbol id="t4s-select-arrow"> 
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 12"><polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline></svg>
+  </symbol>
+  <symbol id="t4s-icon-qty-plus">
+   <svg focusable="false" class="icon icon--plus" viewBox="0 0 10 10" role="presentation"><path d="M6 4h4v2H6v4H4V6H0V4h4V0h2v4z" fill="currentColor" fill-rule="evenodd"></path></svg>
+  </symbol>
+  <symbol id="t4s-icon-qty-minus">
+   <svg focusable="false" class="icon icon--minus" viewBox="0 0 10 2" role="presentation"><path d="M10 0v2H0V0z" fill="currentColor"></path></svg>
+  </symbol>
+  {%- assign btn_start = "prev" -%}
+  {%- assign btn_end = "next" -%}
+  {%- if isRTL -%}
+    {%- assign btn_start = "next" -%}
+    {%- assign btn_end = "prev" -%}
+  {%- endif -%}
+  <symbol id="svg-slider-btn___{{ btn_start }}-1" viewBox="0 0 22 22"><svg version="1.1" x="0px" y="0px" width="22px" height="22px" viewBox="0 0 22 22" style="enable-background:new 0 0 22 22;" xml:space="preserve"><polygon points="16,2 16,20 5,11 "></polygon></svg></symbol>
+  <symbol id="svg-slider-btn___{{ btn_end }}-1" viewBox="0 0 22 22"><svg version="1.1" x="0px" y="0px" width="22px" height="22px" viewBox="0 0 22 22" style="enable-background:new 0 0 22 22;" xml:space="preserve"><polygon points="6,20 6,2 17,11 "></polygon></svg></symbol>
+  <symbol id="svg-slider-btn___{{ btn_start }}-2" viewBox="0 0 24 17">
+    <svg xmlns="http://www.w3.org/2000/svg" width="23.969" height="17" viewBox="0 0 24 17" fill="currentColor">
+      <path id="Previous" class="cls-1" d="M982.859,2491.72a0.843,0.843,0,0,0,1.208,0,0.857,0.857,0,0,0,0-1.2l-6.125-6.18h20.211a0.844,0.844,0,0,0,.845-0.85,0.853,0.853,0,0,0-.845-0.86H977.942l6.125-6.17a0.869,0.869,0,0,0,0-1.21,0.826,0.826,0,0,0-1.208,0l-7.574,7.63a0.849,0.849,0,0,0,0,1.21Z" transform="translate(-975.031 -2475)"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-slider-btn___{{ btn_end }}-2" viewBox="0 0 24 17" >
+    <svg xmlns="http://www.w3.org/2000/svg" width="24.03" height="17.03" viewBox="0 0 24 17" fill="currentColor">
+      <path id="Next" class="cls-1" d="M1522.13,2475.21a0.845,0.845,0,0,0-1.21,0,0.863,0.863,0,0,0,0,1.21l6.13,6.19h-20.23a0.843,0.843,0,0,0-.85.85,0.854,0.854,0,0,0,.85.87h20.23l-6.13,6.17a0.875,0.875,0,0,0,0,1.22,0.845,0.845,0,0,0,1.21,0l7.58-7.65a0.845,0.845,0,0,0,0-1.21Z" transform="translate(-1505.97 -2474.97)"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-slider-btn___{{ btn_start }}-3" viewBox="0 0 28 20">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="19.97" viewBox="0 0 28 20" fill="currentColor">
+      <path id="Forma_1" data-name="Forma 1" class="cls-1" d="M307.145,1836.68a0.98,0.98,0,0,0,1.411,0,1.025,1.025,0,0,0,0-1.42L301.4,1828h23.611a0.986,0.986,0,0,0,.988-1,1,1,0,0,0-.988-1.02H301.4l7.155-7.25a1.037,1.037,0,0,0,0-1.43,0.98,0.98,0,0,0-1.411,0l-8.849,8.98a1,1,0,0,0,0,1.42Z" transform="translate(-298 -1817.03)"/>
+    </svg>
+    </symbol>
+  <symbol id="svg-slider-btn___{{ btn_end }}-3" viewBox="0 0 28 20">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20" fill="currentColor">
+      <path id="Forma_1" data-name="Forma 1" class="cls-1" d="M1609.85,1836.68a0.978,0.978,0,0,1-1.41,0,1.027,1.027,0,0,1,0-1.42l7.16-7.27h-23.61a1.015,1.015,0,0,1,0-2.03h23.61l-7.16-7.26a1.039,1.039,0,0,1,0-1.43,0.978,0.978,0,0,1,1.41,0l8.85,8.99a0.99,0.99,0,0,1,0,1.42Z" transform="translate(-1591 -1817)"/>
+      </svg>
+    </symbol>
+  <symbol id="svg-slider-btn___{{ btn_start }}-4" viewBox="0 0 32 32">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 19.03125 4.28125 L 8.03125 15.28125 L 7.34375 16 L 8.03125 16.71875 L 19.03125 27.71875 L 20.46875 26.28125 L 10.1875 16 L 20.46875 5.71875 Z"/></svg>
+  </symbol>
+  <symbol id="svg-slider-btn___{{ btn_end }}-4" viewBox="0 0 32 32">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 12.96875 4.28125 L 11.53125 5.71875 L 21.8125 16 L 11.53125 26.28125 L 12.96875 27.71875 L 23.96875 16.71875 L 24.65625 16 L 23.96875 15.28125 Z"/></svg>
+    </symbol>
+
+  <symbol id="svg-slider-btn___{{ btn_start }}-5" viewBox="0 0 34 18"><svg width="34" height="18"><path d="M33 9H0.999999M0.999999 9L9 1M0.999999 9L9 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></symbol>
+  <symbol id="svg-slider-btn___{{ btn_end }}-5" viewBox="0 0 34 18"><svg width="34" height="18"><path d="M1 9H33M33 9L25 1M33 9L25 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></symbol>
+
+  
+  <symbol id="svg-slider-btn___{{ btn_start }}-10" viewBox="0 0 24 17"><svg width="24" height="17"><path fill-rule="evenodd" d="M7.860,16.744 C8.186,17.085 8.730,17.085 9.068,16.744 C9.394,16.415 9.394,15.868 9.068,15.540 L2.942,9.373 L23.154,9.373 C23.625,9.373 24.000,8.995 24.000,8.521 C24.000,8.046 23.625,7.657 23.154,7.657 L2.942,7.657 L9.068,1.502 C9.394,1.162 9.394,0.614 9.068,0.285 C8.730,-0.054 8.185,-0.054 7.860,0.285 L0.285,7.912 C-0.053,8.241 -0.053,8.788 0.285,9.116 L7.860,16.744 Z"/></svg></symbol>
+  <symbol id="svg-slider-btn___{{ btn_end }}-10" viewBox="0 0 24 17"><svg width="24" height="17"><path fill-rule="evenodd" d="M16.140,0.256 C15.814,-0.085 15.270,-0.085 14.932,0.256 C14.606,0.585 14.606,1.132 14.932,1.460 L21.057,7.627 L0.846,7.627 C0.374,7.627 0.000,8.005 0.000,8.479 C0.000,8.953 0.374,9.343 0.846,9.343 L21.057,9.343 L14.932,15.498 C14.606,15.838 14.606,16.386 14.932,16.715 C15.270,17.054 15.815,17.054 16.140,16.715 L23.715,9.087 C24.053,8.759 24.053,8.212 23.715,7.883 L16.140,0.256 Z"/></svg></symbol>
+
+  
+  <symbol id="icon-h-search" viewBox="0 0 512 512" stroke="currentColor" fill="none">
+    <path d="M495,466.2L377.2,348.4c29.2-35.6,46.8-81.2,46.8-130.9C424,103.5,331.5,11,217.5,11C103.4,11,11,103.5,11,217.5   S103.4,424,217.5,424c49.7,0,95.2-17.5,130.8-46.7L466.1,495c8,8,20.9,8,28.9,0C503,487.1,503,474.1,495,466.2z M217.5,382.9   C126.2,382.9,52,308.7,52,217.5S126.2,52,217.5,52C308.7,52,383,126.3,383,217.5S308.7,382.9,217.5,382.9z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-h-account" viewBox="0 0 480 480" stroke="currentColor" fill="none">
+    <path d="M409.71,310.29a239.06,239.06,0,0,0-91.2-57.2,138.71,138.71,0,0,0,60.24-114.34C378.75,62.24,316.51,0,240,0S101.25,62.24,101.25,138.75A138.7,138.7,0,0,0,161.5,253.09,240.34,240.34,0,0,0,0,480H37.5c0-111.66,90.84-202.5,202.5-202.5S442.5,368.34,442.5,480H480A238.43,238.43,0,0,0,409.71,310.29ZM240,240A101.25,101.25,0,1,1,341.25,138.75,101.36,101.36,0,0,1,240,240Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-h-heart" viewBox="0 0 499.51 439.15" stroke="currentColor" fill="none">
+    <path d="M459.16,40.77a138.31,138.31,0,0,0-195.59.11L249.91,54.54,236,40.66A138.15,138.15,0,1,0,40.66,236L239.54,434.91a14.18,14.18,0,0,0,20.12.11L459,236.46a138.55,138.55,0,0,0,.21-195.69ZM430.59,215.12l-181,176.26L69,214.83a101,101,0,0,1-.11-145.07,106.61,106.61,0,0,1,148.38.1l22.88,22.38a13.86,13.86,0,0,0,19.35,0l22.68-22.18A106.58,106.58,0,0,1,430.59,70a101.19,101.19,0,0,1,0,145.16Z" fill="currentColor"/>
+   </symbol>
+  <symbol id="icon-h-cart" viewBox="0 0 449 611.97" stroke="currentColor" fill="none">
+    <path d="M205.6,1.57c-44.2,8.8-77,43.9-82.6,88.8-.5,4.4-1,13.3-1,19.8V122H0V612H449V122H327v-11.8c0-13.1-1.2-24.9-3.6-33.8-8.5-32.6-34-60.2-65.8-71C242.1.07,220.9-1.53,205.6,1.57Zm31.7,40.9c21.9,4.6,40.6,22.5,46.2,44.2,1,3.8,1.5,10.6,1.5,20.5V122H164v-14.8c0-23.2,4.2-34.4,18-48.3A59.05,59.05,0,0,1,237.3,42.47ZM122.2,193.67l.3,30.8h41l.3-30.8L164,163H285l.2,30.7.3,30.8h41l.3-30.8L327,163h81V571H41V163h81Z" fill="currentColor"/>
+  </symbol>
+
+</defs></svg>
+
+<script>
+  {%- comment -%}
+   - Disable remove unavailable (false), will show all variant unavailable, soldout. Even when soldout remove enable
+  {%- endcomment -%}
+  {%- comment -%}
+  // window.theme = {
+  //   cartCount: {{ cart.item_count | json }},
+  //   moneyFormat: {{ shop.money_format | json }},
+  //   moneyWithCurrencyFormat: {{ shop.money_with_currency_format | json }},
+  //   currencyCodeEnabled: {{ settings.currency_code_enabled | json }},
+  //   showDiscount: {{ settings.show_discount | json }},
+  //   discountMode: {{ settings.discount_mode | json }},
+  //   searchMode: {{ settings.search_mode | json }},
+  //   searchUnavailableProducts: {{ settings.search_unavailable_products | json }},
+  //   cartType: {{ settings.cart_type | json }}
+  // };
+  {%- endcomment -%}
+  window.T4Srequest = {
+    design_mode: {{ admin_sp }},
+    page_type: '{{ page_type }}',
+    path: {{ request.path | json }}
+  };
+  window.T4Sroutes = {
+    root_url: '{{ routes.root_url }}',
+    search_url: '{{ routes.search_url }}',
+    predictive_search_url: '{{ routes.predictive_search_url }}',
+    all_url: '{{ routes.all_products_collection_url }}',
+    cart_url: '{{ routes.cart_url }}',
+    cart_add_url: '{{ routes.cart_add_url }}',
+    cart_change_url: '{{ routes.cart_change_url }}',
+    cart_update_url: '{{ routes.cart_update_url }}'
+  };
+  
+  window.T4sFunc = {
+    psjson_lib: new Array
+  };
+  
+  window.T4SProductStrings = {
+    pleaseChooseOptions: `{{ 'products.product.Please_choose_pr_options' | t }}`,
+    addToCart: `{{ 'products.product.add_to_cart' | t }}`,
+    selectOption: `{{ 'products.product_card.select_option' | t }}`,
+    quickShop: `{{ 'products.product_card.quick_shop' | t }}`,
+    price_template: `<ins>INS</ins><del>DEL</del>`,
+    soldOut: `{{ 'products.product.sold_out' | t }}`,
+    readMore: `{{ 'products.product_card.read_more' | t }}`,
+    preOrder: `{{ 'products.product.pre_order' | t }}`,
+    preView: `{{ 'products.product_card.view' | t }}`,
+    unavailable: `{{ 'products.product.unavailable' | t }}`,
+    replace_qs_atc: `{{ 'products.product_card.quick_shop_text.replace_item_atc' | t }}`,
+    replace_qs_pre: `{{ 'products.product_card.quick_shop_text.replace_item_pre' | t }}`,
+    badgeNew: `{{ 'products.badge.new' | t }}`,
+    badgeSale: `{{ 'products.badge.on_sale' | t }}`,
+    badgepreOrder: `{{ 'products.badge.pre_order' | t }}`,
+    badgeSoldout: `{{ 'products.badge.sold_out' | t }}`,
+    badgeSavePercent: `{{ 'products.badge.save_amount_html' | t: saved_amount: '[sale]' }}`,
+    badgeSaveFixed: `{{ 'products.badge.save_amount_fixed_html' | t: saved_amount: '[sale]' }}`,
+    badgeSavePercent2: `{{ 'products.badge.save_amount_2_html' | t: saved_amount: '[sale]' }}`,
+    badgeSaveFixed2: `{{ 'products.badge.save_amount_fixed_2_html' | t: saved_amount: '[sale]' }}`,
+    swatch_limit: `{{ 'products.product_card.swatch_limit' | t }}`,
+    swatch_limit_less: `{{ 'products.product_card.swatch_limit_less' | t }}`,
+    compare: `{{ 'products.product.compare' | t }}`,
+    added_text_cp: `{{ 'products.product.added_text_compare' | t }}`, 
+    add_to_wishlist: `{{ 'products.product.add_to_wishlist' | t }}`,
+    remove_wishlist: `{{ 'products.product.remove_wishlist' | t }}`,
+    browse_wishlist: `{{ 'products.product.browse_wishlist' | t }}`,
+    order_dayNames  : {{ 'products.product_single.order_dayNames' | t | json }},
+    order_monthNames: {{ 'products.product_single.order_monthNames' | t | json }}
+  }
+  window.T4Sstrings = {
+    mfp_close: `{{ 'general.popup.close_esc' | t }}`,
+    mfp_loading: `{{ 'general.popup.loading' | t }}`,
+    pswp_facebook: `{{ 'general.popup.pswp_facebook' | t }}`,
+    pswp_twitter: `{{ 'general.popup.pswp_twitter' | t }}`,
+    pswp_pinterest: `{{ 'general.popup.pswp_pinterest' | t }}`,
+    btn_next: `{{ 'general.carousel.next' | t }}`,
+    btn_prev: `{{ 'general.carousel.previous' | t }}`,
+    mfp_loading: `{{ 'general.popup.loading' | t }}`,
+    error_exist: `{{ 'sections.newsletter_form.error_exist' | t }}`,
+    agree_checkout: `{{ 'cart.general.agree_checkout' | t }}`,
+    notice_stock_msg: `{{ 'products.product.notice_only_stock' | t: max: '[max]' }}`,
+    frm_contact_ask_success: `{{ 'templates.contact.form.post_success' | t }}`,
+    frm_notify_stock_please: `{{ 'products.notify_stock.please' | t }}`,
+    frm_notify_stock_success: `{{ 'products.notify_stock.success' | t }}`,
+    frm_newsletter_popup_success: `{{ 'sections.newsletter_form.confirmation' | t }}`,
+    item_cart: [`{{ 'cart.general.item_cart' | t: count: 0 }}`, `{{ 'cart.general.item_cart' | t: count: 1 }}`, `{{ 'cart.general.item_cart' | t: count: 2 }}`],
+    item_compare: [`{{ 'compare_popup.count' | t: count: 0 }}`, `{{ 'compare_popup.count' | t: count: 1 }}`, `{{ 'compare_popup.count' | t: count: 2 }}`],
+    recipientFormExpanded: `{{ 'recipient.form.expanded' | t }}`,
+    recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`,
+  };
+  
+  window.T4Sconfigs = {
+    theme: 'ocolus',
+    isPageIndex: {{ is_page_index | json }},
+    cartCurrency: {{ cart.currency.iso_code | json }},
+    moneyFormat: {% if settings.currency_code_enabled %}{{ shop.money_with_currency_format | json }}{% else%}{{ shop.money_format | json }}{% endif %},
+    moneyWithCurrencyFormat: {{ shop.money_with_currency_format | json }},
+    currencyCodeEnabled: {{ settings.currency_code_enabled | json }},
+    within_cat: {{ settings.within_cat }},
+    revealInView: {{ settings.animations_reveal_on_scroll }},
+    //script1: 'https://cdn.polyfill.io/v3/polyfill.min.js?unknown=polyfill&features=fetch%2CResizeObserver%2CIntersectionObserver%2CIntl.DateTimeFormat%2CIntl.DateTimeFormat.prototype.formatToParts%2CIntl.DateTimeFormat.%7EtimeZone.all%2CIntl.DateTimeFormat.%7EtimeZone.golden',
+    script1: '{{ 'polyfill.min.js' | asset_url }}',
+    script2: '{{ 'theme.min.js' | asset_url }}',
+    script3: '{{ 'interactable.min.js' | asset_url }}',
+    script4: '{{ 't4s_thumb.min.js' | asset_url }}',
+    script5: '{{ 't4s_zoom.min.js' | asset_url }}',
+    script6: '{{ 'predictive-search.min.js' | asset_url }}',
+    script7: '{{ 'facets.min.js' | asset_url }}',
+    script8: '{{ 'nouislider.min.js' | asset_url }}',
+    script9: '{{ 'des_adm.min.js' | asset_url }}',
+    script10: '{{ 't4s-instant-page.min.js' | asset_url }}',
+    script11: '{%- if settings.t4s_custom_js %}{{ 'custom.js' | asset_url }}{% else %}none{% endif %}',
+    script12: '{{ 'reviewOther.js' | asset_url }}',
+    script12a: '{{ 't4s-currencies.min.js' | asset_url }}',
+    script12b: '{{ 'threesixty.min.js' | asset_url }}',
+    script12c: '{{ 'hand.min.js' | asset_url }}',
+    script12d: '{{ 'typed.min.js' | asset_url }}',
+    stylesheet1: '{{ 't4s-mini-cart.css' | asset_url }}',
+    stylesheet2: '{{ 'mobile_nav.css' | asset_url }}',
+    stylesheet3: '{{ 'login-sidebar.css' | asset_url }}',
+    stylesheet4: '{{ 'login-sidebar.css' | asset_url }}',
+    timezone: {{ settings.timezone | json }},
+    nowTimestamp: {{ 'now' | date: '%s' }},
+    show_img: {{ settings.show_img }},
+    enable_quickshop: {{ enable_quickshop }},
+    use_sale_badge: {{ settings.use_sale_badge }},
+    label_sale_style: '{{ settings.label_sale_style }}',
+    use_new_badge: {{ settings.use_new_badge }},
+    new_day_int: {{ settings.new_day_added }},
+    use_soldout_badge: {{ settings.use_soldout_badge }},
+    use_custom_badge: {{ settings.use_custom_badge }},
+    use_preorder_badge: {{ settings.use_preorder_badge }},
+    swatch_limit: {{ settings.sw_limit }},
+    swatch_num: {{ settings.sw_num }},
+    swatch_click: {{ settings.sw_click }},
+    sw_item_style: '{{ settings.swatch_item_style }}',
+    show_qty: {{ settings.show_qty }},
+    pr_curent: '{{ settings.pr_curent }}',
+    enableAjaxATC: {{ settings.atc_ajax_enable }},
+    enablePredictiveSearch: {{ settings.predictive_search }},
+    enableAjaxCart: {{ settings.cart_ajax_enable }},
+    app_review: {{ settings.app_review }},
+    enableConfetti: {{ settings.enable_confetti }},
+    cartType: '{{ settings.cart_type }}',
+    afterActionATC: '{{ settings.after_action_atc }}',
+    enableCompePopup: {{ settings.enable_compe_popup | default: false }},
+    compePopupDes: '{{ settings.compe_popup | default: "canvas" }}',
+    preViewBar: 'demo-ocolus',
+    cacheName: '{{ shop.metafields.t4s.ocolus.value | default: 'ocolus' }}{% if customer %}customer{% endif %}{{ theme.id }}',
+    CartAttrHidden : true,
+    timeOutNotices : 4000,
+    autoHideNotices: true,
+    disOnlyStock   : false,{%- comment -%}Disable only stock notice{%- endcomment -%}
+    disATCerror    : false,{%- comment -%}Disable add to cart error notice{%- endcomment -%}
+    onlyClickDropIcon : true,
+    disFlashyApp   : true, 
+    // remove_unavai: false ,
+    enable_compare: {{ settings.enable_compe }},
+    wishlist_mode : {{ settings.wishlist_mode | json }},
+    wis_atc_added : {{ settings.wis_atc_added | json }},
+    platform_email: {{ settings.platform_email | json }},
+    currency_type : {{ settings.currency_type | json }}, auto_currency: {{ settings.auto_currency | json }}, round_currency: {{ settings.round_currency | json }}, hover_currency: {{ settings.hover_currency | json }},
+    img2: `<img data-sizes-scale="1.1" data-src="image_src" data-pr-img2 class="t4s-product-hover-img lazyloadt4s" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-widths="[100,200,360,400,500,600,700,800,900,1000]" data-optimumx="2" data-sizes="auto" alt="image_alt">`,
+    cp_icon : {{ '<svg class="t4s-svg-cp" viewBox="0 0 24 24"><use xlink:href="#t4s-icon-cp"></use></svg>' | json }},
+    cp_icon_added : {{ '<svg class="t4s-svg-cp is-ic--added" viewBox="0 0 24 24"><use xlink:href="#t4s-icon-cp-added"></use></svg>' | json }},
+    wis_icon : {{ '<svg class="t4s-svg-wis" viewBox="0 0 24 24"><use xlink:href="#t4s-icon-wis"></use></svg>' | json }},
+    wis_icon_added: {{ '<svg class="t4s-svg-wis is-ic--added" viewBox="0 0 24 24"><use xlink:href="#t4s-icon-wis-added"></use></svg>' | json }},
+    wis_icon_remove: {{ '<svg class="t4s-svg-wis is-ic--remove" viewBox="0 0 24 24"><use xlink:href="#t4s-icon-wis-remove"></use></svg>' | json }}
+  };
+  !function(){const t=document.documentElement.offsetWidth;t<1025&&[].forEach.call(document.querySelectorAll(".t4s-container-fluid >.t4s-row,.t4s-container >.t4s-row"),function(e){e.offsetWidth>t&&e.classList.add("t4s-fix-overflow")});const e=document.querySelector('#MainContent .t4s-section img[loading="lazy"]'),n=document.querySelector('#MainContent .t4s-section img.t4s-d-none.t4s-d-md-block[loading="lazy"]');function o(t){return!!(t.offsetWidth||t.offsetHeight||t.getClientRects().length)}e&&window.innerWidth<768&&e.setAttribute("loading","eager"),n&&window.innerWidth>767&&n.setAttribute("loading","eager");var i=window.pageXOffset,s=window.pageYOffset,r=window.innerWidth,a=window.innerHeight;function f(t,e=!1){for(var n=t.offsetTop,o=t.offsetLeft,f=t.offsetWidth,d=t.offsetHeight;t.offsetParent;)n+=(t=t.offsetParent).offsetTop,o+=t.offsetLeft;return e?n<s+a&&o<i+r&&n+d>s&&o+f>i:n>=s&&o>=i&&n+d<=s+a&&o+f<=i+r}var d=0,l=document.querySelectorAll("#MainContent .t4s-section");0!=l.length&&[...l].some((t,e)=>{let n=e?f(t):f(t,!0);if(n)++d,t.querySelectorAll("img.lazyloadt4s").forEach(t=>{if(o(t)){let e=JSON.parse(t.getAttribute("data-widths")),n=t.getAttribute("data-src"),o=t.getAttribute("data-sizes-scale")||1,i=window.devicePixelRatio||1,s=function(t,e){for(var n=e[0],o=Math.abs(t-n),i=0;i<e.length;i++){let s=Math.abs(t-e[i]);s<=o&&(o=s,n=e[i])}return n}(t.clientWidth*o*i,e);t.removeAttribute("loading"),t.setAttribute("src",n.replace("width=1","width="+s)),t.classList.add("lazyloadt4s-opt") }});else if(!n&&d>0)return!0})}();
+</script>
+<template id="btns_pr_temp">
+  {%- if enable_quickview %}<a href="#t4s_pr_url" data-tooltip="" data-id="id_nt_94" rel="nofollow" class="t4s-pr-item-btn t4s-pr-quickview" data-action-quickview><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-qv"></use></svg></span><span class="t4s-text-pr">{{ 'products.product_card.quick_view' | t }}</span></a>{% endif %}[split_t4snt]
+  
+  {%- if settings.enable_compe %}<a href="#t4s_pr_url" data-tooltip="" data-id="id_nt_94" data-handle="handle_nt_94" rel="nofollow" class="t4s-pr-item-btn t4s-pr-compare" data-action-compare><span class="t4s-svg-pr-icon"><svg class="t4s-svg-cp" viewBox="0 0 24 24"><use xlink:href="#t4s-icon-cp"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.compare' | t }}</span></a>{% endif %}[split_t4snt]
+  
+  {%- if settings.wishlist_mode == "1" -%}
+    <a href="#t4s_pr_url" data-tooltip="" data-id="id_nt_94" rel="nofollow" class="t4s-pr-item-btn t4s-pr-wishlist" data-action-wishlist><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-wis"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.add_to_wishlist' | t }}</span></a>
+  {%- elsif settings.wishlist_mode == "2" and shop.customer_accounts_enabled -%}
+     {%- if customer -%} 
+     <a href="#t4s_pr_url" data-tooltip="" data-id="id_nt_94" data-handle="handle_nt_94" rel="nofollow" class="t4s-pr-item-btn t4s-pr-wishlist" data-action-wishlist><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-wis"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.add_to_wishlist' | t }}</span></a>
+     {%- else -%}
+     <a href="{{ routes.account_login_url }}" data-tooltip="" data-id="id_nt_94" rel="nofollow" class="t4s-pr-item-btn t4s-pr-wishlist" data-action-wishlist-login><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-wis"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.login_to_wishlist' | t }}</span></a>
+     {%- endif -%}
+  {%- endif -%}[split_t4snt]
+  
+  {%- if settings.enable_atc -%}<a href="#t4s_pr_url" data-atc-selector data-tooltip="" data-id="id_nt_94" rel="nofollow" class="t4s-pr-item-btn t4s-pr-addtocart" dat-qty="1"><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-atc"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.add_to_cart' | t }}</span></a>{% endif %}[split_t4snt]
+  {%- if settings.show_qty -%}
+  <div data-quantity-wrapper class="t4s-quantity-wrapper t4s-quantity-pr-item"> 
+    <button data-quantity-selector data-decrease-qty type="button" class="t4s-quantity-selector is--minus"><svg class="icon" viewBox="0 0 10 2"><use xlink:href="#t4s-icon-qty-minus"></use></svg> </button>
+    <input data-quantity-value type="number" class="t4s-quantity-input" step="1" min="1" max="9999" name="quantity" value="1" size="4" pattern="[0-9]*" inputmode="numeric">
+    <button data-quantity-selector data-increase-qty type="button" class="t4s-quantity-selector is--plus"><svg class="icon" viewBox="0 0 10 10"><use xlink:href="#t4s-icon-qty-plus"></use></svg></button>
+  </div>
+  {%- endif -%}
+</template>
+<template id="t4s_temp_modal">
+  <div class="t4s-modal" aria-hidden="false" tabindex="-1" role="dialog">
+    <div class="t4s-modal__inner">
+      <div class="t4s-modal__content"></div>
+      <button data-t4s-modal-close title="{{ 'general.popup.close' | t }}" type="button" class="t4s-modal-close"><svg class="t4s-modal-icon-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+    </div>
+  </div>
+</template>
+<template id ="photoswipe_template"><div class="pswp pswp__t4s" tabindex="-1" role="dialog" aria-hidden="false"><div class="pswp__bg"></div><div class="pswp__scroll-wrap"><div class="pswp__container"><div class="pswp__item"></div><div class="pswp__item"></div><div class="pswp__item"></div></div><div class="pswp__ui pswp__ui--hidden"><div class="pswp__top-bar"><div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="{{ 'general.popup.close' | t }}"></button> <button class="pswp__button pswp__button--share" title="{{ 'general.popup.pswp_share' | t }}"></button> <button class="pswp__button pswp__button--fs" title="{{ 'general.popup.pswp_fs' | t }}"></button> <button class="pswp__button pswp__button--zoom" title="{{ 'general.popup.pswp_zoom' | t }}"></button><div class="pswp__preloader"><div class="pswp__preloader__icn"><div class="pswp__preloader__cut"><div class="pswp__preloader__donut"></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class="pswp__share-tooltip"></div></div><button class="pswp__button pswp__button--arrow--left" title="{{ 'general.popup.pswp_prev' | t }}"></button> <button class="pswp__button pswp__button--arrow--right" title="{{ 'general.popup.pswp_next' | t }}"></button><div class="pswp__caption"><div class="pswp__caption__center"></div></div></div></div><div class="pswp__thumbnails t4s-current-scrollbar t4s-scheme-light"></div></div></template>
+{%- if settings.wishlist_mode == "2" and customer %}
+  {% assign customer_meta_wis_prs = customer.metafields.ecomrise.wishlist.value.ecomrise_ids -%}
+  {%- if customer.metafields.the4.wishlist.value.the4_ids != blank %}
+    {%- assign customer_meta_wis_prs = customer_meta_wis_prs | concat: customer.metafields.the4.wishlist.value.the4_ids -%}
+  {%- endif -%}
+  <script type="application/json" id="wis_t4s_list">{% if customer_meta_wis_prs != blank %}{{- customer_meta_wis_prs | join: ' ' | strip -}}{% endif %}</script>
+  <script type="application/json" id="wis_t4s_list_old">{% if customer.metafields.the4.wishlist.value.the4_ids != blank %}{{- customer.metafields.the4.wishlist.value.the4_ids | join: ' ' | strip -}}{% endif %}</script>
+{% endif -%}
+
+<template id="t4s-notices__tmp">
+  <div id="t4s-notices__wrapper"><svg class="t4s-svg t4s-svg-circle-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM371.8 211.8C382.7 200.9 382.7 183.1 371.8 172.2C360.9 161.3 343.1 161.3 332.2 172.2L224 280.4L179.8 236.2C168.9 225.3 151.1 225.3 140.2 236.2C129.3 247.1 129.3 264.9 140.2 275.8L204.2 339.8C215.1 350.7 232.9 350.7 243.8 339.8L371.8 211.8z"/></svg><svg class="t4s-svg t4s-svg-triangle-exclamation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg><span class="t4s-notices__mess"></span><button type="button" class="t4s-notices__close"><svg class="t4s-svg t4s-svg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button><div class="t4s-notices__progressbar"><span></span></div></div>
+</template>
+
+{%- comment -%}
+1. Only mobile (basic)
+1. Only mobile
+2. Only categories
+3. Mobile, categories
+4. Categories, mobile
+{%- endcomment -%}
+
+{%- assign mobile_nav_type = settings.mobile_nav_type -%}
+
+<link href="{{ 'mobile_nav.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- if admin_sp -%}
+  <div id="t4s-menu-drawer" class="t4s-drawer t4s-drawer__left t4s-dn{% if is_page_index %} t4s-page-index-{{ page.id }}{% endif %} {% if mobile_nav_type == '1' or mobile_nav_type == '2' %} t4s-menu-mb-simple {% endif %} {% if mobile_nav_type == '0' %}t4s-menu-basic{% endif %}" aria-hidden="true">
+    {%- if mobile_nav_type == '0' -%}      
+      <div data-tab-mb-content id="shopify-mb_nav" class="t4s-mb-tab__content t4s-current-scrollbar is--active">
+        {%- unless is_page_index -%}{%- section 'mb_nav' -%}{%- endunless -%}
+      </div>
+    {%- elsif mobile_nav_type == '1' or mobile_nav_type == '2' -%}
+      <div class="t4s-drawer__header t4s-mb-header">
+        <div data-tab-mb-item class="t4s-mb-header__title t4s-col-item t4s-pr t4s-d-flex t4s-align-items-center t4s-justify-content-center">
+          <span>
+          {% if mobile_nav_type == '1' %}
+            {%- assign navActive = 'is--active' -%}
+            {{ 'general.mobile_menu.menu' | t }}
+          {% else %}
+            {%- assign catActive = 'is--active' -%}
+            {{ 'general.mobile_menu.categories' | t }}
+          {% endif %}
+          </span>
+        </div>
+      </div>
+      <div data-tab-mb-content id="shopify-mb_nav" class="t4s-mb-tab__content t4s-current-scrollbar {{ navActive }}">
+        {%- unless is_page_index -%}{%- section 'mb_nav' -%}{%- endunless -%}
+      </div>
+    {%- elsif mobile_nav_type == '3' or mobile_nav_type == '4' -%}
+      {%- liquid
+        if mobile_nav_type == '3'
+          assign navActive = 'is--active'
+          assign catActive = ''
+        else 
+          assign order1 = 't4s-order-2'
+          assign order2 = 't4s-order-1'
+          assign navActive = ''
+          assign catActive = 'is--active'
+        endif
+      -%}
+      <div data-tab-mb-nav class="t4s-drawer__header t4s-mb-header t4s-mb-nav__tabs t4s-rows t4s-g-0 t4s-row-cols-2 t4s-text-center">
+        <div data-tab-mb-item class="t4s-mb-tab__title t4s-mb-header__title t4s-col-item t4s-pr t4s-d-flex t4s-align-items-center t4s-justify-content-center {{ order1 }} {{ navActive }}" data-id="#shopify-mb_nav"><span class="t4s-d-block t4s-truncate">{{ 'general.mobile_menu.menu' | t }}</span></div>
+        <div data-tab-mb-item class="t4s-mb-tab__title t4s-mb-header__title t4s-col-item t4s-pr t4s-d-flex t4s-align-items-center t4s-justify-content-center {{ order2 }} {{ catActive }}" data-id="#shopify-mb_cat"><span class="t4s-d-block t4s-truncate">{{ 'general.mobile_menu.categories' | t }}</span></div>
+      </div>
+      <div data-tab-mb-content id="shopify-mb_nav" class="t4s-mb-tab__content t4s-current-scrollbar {{ navActive }}">
+        {%- unless is_page_index -%}{%- section 'mb_nav' -%}{%- endunless -%}
+      </div>
+      <div data-tab-mb-content id="shopify-mb_cat" class="t4s-mb-tab__content t4s-current-scrollbar {{ catActive }}">
+        {%- unless is_page_index -%}{%- section 'mb_cat' -%}{%- endunless -%}
+      </div>
+    {%- endif -%}
+  </div>
+  {%- unless mobile_nav_type == '0' -%} 
+    <button class="t4s-drawer-menu__close t4s-pe-none t4s-op-0 t4s-pf" data-drawer-close aria-label="{{ 'general.mobile_menu.close' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+  {%- endunless -%}
+
+  {%- if page_type != 'cart' and settings.cart_type != 'disable' %}{% section 'mini_cart' %}{% endif -%}
+   
+{%- else -%}
+  <div id="t4s-menu-drawer" class="t4s-drawer t4s-drawer__left t4s-current-scrollbar{% if is_page_index %} t4s-page-index-{{ page.id }}{% endif %} {% if mobile_nav_type == '1' or mobile_nav_type == '2' %} t4s-menu-mb-simple {% endif %} {% if mobile_nav_type == '0' %}t4s-menu-basic{% endif %}" aria-hidden="true">
+    <div class="t4s-skeleton-element ske-h-50 ske-mb-20 ske-shine"></div>
+    <div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div><div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div><div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div><div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div><div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div>
+    <div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div><div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div><div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div><div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div><div class="t4s-skeleton-element ske-mrl-20 ske-shine"></div>
+  </div>
+  {%- unless mobile_nav_type == '0' -%} 
+    <button class="t4s-drawer-menu__close t4s-pe-none t4s-op-0 t4s-pf" data-drawer-close aria-label="{{ 'general.mobile_menu.close' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+  {%- endunless -%}
+{%- endif -%}
+
+{%- if admin_sp == false and page_type != 'cart' and settings.cart_type != 'disable' -%}
+<link href="{{ 't4s-mini-cart.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+<div data-cart-wrapper id="t4s-mini_cart" data-ccount="{{ cart.item_count }}" class="t4s-drawer t4s-drawer__right t4s-dn" aria-hidden="true">
+  {%- if cart.item_count > 0 -%}
+    <div class="t4s-skeleton-element ske-h-50 ske-mt-15 ske-mb-20 ske-mrl-15 ske-shine"></div>
+    <div class="t4s-row t4s-g-0 ske-mrl-15 ske-card ske-mb-20">
+      <div class="t4s-col-auto">
+        <div class="t4s-skeleton-element ske-card-img ske-mb-0"></div>
+      </div>
+      <div class="t4s-col ske-card-info">
+        <div class="t4s-skeleton-element ske-shine ske-h-20 ske-mb-10"></div>
+        <div class="t4s-skeleton-element ske-shine ske-h-15 ske-mb-0 ske-w-50"></div>
+      </div>
+    </div>
+    <div class="t4s-row t4s-g-0 ske-mrl-15 ske-card ske-mb-20">
+      <div class="t4s-col-auto">
+        <div class="t4s-skeleton-element ske-card-img ske-mb-0"></div>
+      </div>
+      <div class="t4s-col ske-card-info">
+        <div class="t4s-skeleton-element ske-shine ske-h-20 ske-mb-10"></div>
+        <div class="t4s-skeleton-element ske-shine ske-h-15 ske-mb-0 ske-w-50"></div>
+      </div>
+    </div>
+    <div class="t4s-row t4s-g-0 ske-mrl-15 ske-card ske-mb-20">
+      <div class="t4s-col-auto">
+        <div class="t4s-skeleton-element ske-card-img ske-mb-0"></div>
+      </div>
+      <div class="t4s-col ske-card-info">
+        <div class="t4s-skeleton-element ske-shine ske-h-20 ske-mb-10"></div>
+        <div class="t4s-skeleton-element ske-shine ske-h-15 ske-mb-0 ske-w-50"></div>
+      </div>
+    </div>
+    {%- else -%}
+    <div class="t4s-skeleton-element ske-h-50 ske-mt-15 ske-mb-20 ske-mrl-15 ske-shine"></div>
+    <div class="ske-mb-20"></div><div class="ske-mb-20"></div><div class="ske-mb-20"></div>
+    <div class="t4s-text-center">
+    <div class="t4s-skeleton-element ske-shine ske-w-50 ske-mb-10 ske-h-20 t4s-d-inline-block"></div>
+    <div class="t4s-skeleton-element ske-shine ske-w-50 ske-mb-0 ske-h-40 t4s-d-inline-block"></div>
+    </div>
+  {%- endif -%}
+  <style>
+    @media (min-width: 768px) { #t4s-mini_cart { width: 430px; } }
+  </style>
+</div>
+{%- endif -%}
+
+{%- liquid
+  assign locale_selector = false
+  assign currency_selector = false
+  if shop.enabled_currencies.size > 1
+    assign currency_selector = true
+  endif
+  if shop.published_locales.size > 1
+    assign locale_selector = true
+  endif
+  if settings.lang_pos != '0' and locale_selector
+    render 'languages', is_fixed: true
+  endif
+  if settings.currency_pos != '0' and currency_selector or settings.currency_type == '2'
+    render 'currencies', is_fixed: true
+  endif
+-%}
+
+{%- if currency_selector or locale_selector -%}
+  {%- form 'localization', id: 'CurrencyLangSelector' %}
+    {%- if currency_selector %}<input type="hidden" name="country_code" id="countryMirror" value="{{ localization.country.iso_code }}">{% endif -%}
+    {%- if locale_selector %}<input type="hidden" name="language_code" id="LocaleSelector" value="{{ localization.language.iso_code }}" data-disclosure-input/>{% endif -%}
+    {%- if currency_selector %}<input type="hidden" name="currency_code" id="CurrencySelector" value="{{ form.current_currency.iso_code }}" data-disclosure-input/>{% endif -%}
+  {%- endform -%}
+{%- endif -%}
+
+{%- liquid
+  if admin_sp
+    render 'var_adm'
+    if enable_quickview
+    section 'main-qv'
+    endif
+    if enable_quickshop
+    section 'main-qs'
+    endif
+    unless customer or settings.login_side == false
+      section 'login-sidebar'
+    endunless
+    if page_type == 'collection' or page_type == 'search'
+      section 'facets'
+    endif 
+    if page_type == 'collection'
+      section 'facets_tags'
+    endif
+  endif
+  section 'toolbar_mobile'
+  section 'back_top'
+  if admin_sp
+    section 'popups'
+  endif
+  section 'extras'
+  if template.suffix != 'config' and admin_sp
+    section 'pr_item_config'
+    section 'title_config'
+    section 'btn_config'
+  endif
+  if  template.suffix != 'config'
+    section 'slider_config'
+  endif
+  if admin_sp
+    section 't4s_custom_color'
+  endif
+  echo '<div id="t4s-snow_ef" class="t4s-dn"></div><div id="t4s-assets-pre" class="t4s-d-none"></div><div id="t4s-append-component" class="t4s-d-none"></div>'
+-%}
+
+{%- unless customer or settings.login_side == false or request.page_type contains 'customers' -%}
+  <link href="{{ 'login-sidebar.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+  <div id="t4s-login-sidebar" class="t4s-drawer t4s-drawer__right t4s-login-popup t4s-drawer__bottom-to-top-lg" aria-hidden="true">
+    <div class="t4s-skeleton-element ske-h-50 ske-mt-20 ske-mb-20 ske-shine"></div>
+    <div class="t4s-skeleton-element ske-h-50"></div><div class="t4s-skeleton-element ske-h-50"></div><div class="t4s-skeleton-element ske-h-20"></div>
+    <div class="t4s-skeleton-element ske-h-50 ske-shine"></div><div class="t4s-skeleton-element ske-h-50 ske-shine"></div>
+  </div>
+{%- endunless -%}
+{{ 't4s-collection-products.css' | asset_url | stylesheet_tag }}
+<link href="{{ 't4s-search-hidden.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+<div data-predictive-search data-sid="search-hidden" id="t4s-search-hidden" class="t4s-drawer t4s-drawer__right t4s-current-scrollbar" aria-hidden="true"></div>
+<template id="t4s-style-popup">
+  {%- if enable_quickview -%}
+    {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+    {{ 't4s-main-product.css' | asset_url | stylesheet_tag }}
+    {{ 't4s-qv-product.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  {%- if enable_quickshop %}
+    {{ 'qs-product.css' | asset_url | stylesheet_tag }}
+  {% endif -%}
+</template>
+<link rel="stylesheet" href="{{ 'theme.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 't4s-drawer.min.css' | asset_url }}" media="all">
+<link rel="stylesheet" href="{{ 'line-awesome.min.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- if settings.colors_css -%}
+  <link rel="stylesheet" href="{{ 'colors.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- endif -%}
+{%- if settings.t4s_custom_css %}{{- 'custom.css' | asset_url | stylesheet_tag: preload: true -}}{% endif -%}
+{%- if admin_sp -%}
+  <style>.t4s-section-admn-fixed { position: fixed;top: 100px;pointer-events: none; z-index: -1;opacity: 0; }.t4s-section-admn2-fixed { position: fixed;top: 100px;z-index: 468; }</style>
+{%- endif -%}

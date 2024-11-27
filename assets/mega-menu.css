@@ -1,0 +1,32 @@
+.t4s-navigation .t4s-sub-menu .t4s-menu-item .t4s-menu-heading {
+	font-size: 15px;
+	font-weight: 500;
+	letter-spacing: 2.55px;
+	color: var(--heading-color);
+	margin-bottom: 10px;
+	line-height: 30px;
+}
+.t4s-navigation .t4s-sub-menu ul {
+	padding: 0;
+	margin: 0;
+	text-align: left;
+}
+.t4s-navigation .t4s-type__mega .t4s-sub-menu .t4s-menu-item a {
+	line-height: 24px;
+}
+.t4s-navigation .t4s-type__mega .t4s-sub-menu,
+.t4s-navigation .t4s-type__drop .t4s-sub-menu {
+	background-image: var(--img-url);
+	background-color: var(--menu-item-bg-cl) ;
+	object-position: var(--object-position);
+	padding: 22px 15px;
+}
+.t4s-navigation .t4s-type__mega .t4s-sub-column > .t4s-menu-item {
+	padding: 0;
+}
+.t4s-navigation .t4s-type__mega .t4s-sub-column > .t4s-menu-item:not(:last-child) {
+	margin-bottom: 10px;
+}
+.rtl_true .t4s-navigation .t4s-sub-menu ul {
+	text-align: right;
+}

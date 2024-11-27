@@ -1,0 +1,1595 @@
+{%- comment -%}
+  Comments may not appear right after they are submitted, either to be checked by Shopify's spam filter
+  or to await moderation. When a comment is submitted, the browser is redirected to a page
+  that includes the new comment id in its URL.
+    Example: http://shopname.myshopify.com/blogs/news/2022072-my-post?comment=3721372
+{%- endcomment -%}
+<!-- sections/main-article.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-main-article.css' | asset_url | stylesheet_tag }}
+{{ 't4s-button-style.css' | asset_url | stylesheet_tag }}
+{{ 't4s-general-block.css' | asset_url | stylesheet_tag }}
+{{ 't4s-heading-article.css' | asset_url | stylesheet_tag }}
+{{ 't4s-slider-settings.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickity_custom.css' | asset_url | stylesheet_tag }}
+<link href="{{ 't4s-custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- liquid
+    assign sid = section.id
+        
+    assign stt_layout = section.settings.layout
+    assign stt_image_bg = section.settings.image_bg
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif 
+    assign article_id = article.id
+    assign blog_url = blog.url
+    assign image = article.image 
+    assign article_tags = article.tags
+    assign article_metafields = article.metafields.theme 
+    assign article_url = article.url
+    assign comment_enable = false
+    if comment.status == 'pending'
+        assign number_of_comments = article.comments_count | plus: 1 
+    else 
+        assign number_of_comments = article.comments_count 
+    endif  
+ -%}
+ {%- render 'section_style', sid: sid -%}
+<div class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5"{% endif %}  >
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}
+    <div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5"{% endif %}>{% endif -%}
+        <div class="t4s-row t4s-main-article">
+          <div class="t4s-col-item t4s-main-article-page t4s-main-area" timeline hdt-reveal="slide-in">
+            {%- if section.settings.feature_image -%}
+              <div class=" t4s-feature-image">
+                <div class="t4s-article-image t4s-pr t4s-bg-11" style="max-width:{{ image.width }}px;margin-left: auto;margin-right: auto;background: url({{ image | image_url: width: 1 }});">                 
+                  <img class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+                    {%- if article_metafields.video_url != blank or article_metafields.gallery != blank -%}
+                      <div class="t4s-article-metafields">
+                        {%- if article_metafields.video_url != blank -%}
+                          <div data-open-mfp-iframe class="t4s-article-metafields__video" href="{{ article_metafields.video_url }}" data-tooltip="right" title="{{ 'blogs.article.click_video' | t }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path d="M443.9,196.9L141.5,10.5C119.6-3,93.1-3.5,70.7,9c-22.4,12.5-35.8,35.3-35.8,61v371.1c0,38.8,31.3,70.6,69.8,70.8c0.1,0,0.2,0,0.3,0c12,0,24.6-3.8,36.3-10.9c9.4-5.7,12.4-18,6.6-27.4c-5.7-9.4-18-12.4-27.4-6.6c-5.5,3.3-10.8,5.1-15.6,5.1 c-14.5-0.1-30.1-12.5-30.1-30.9V70.1c0-11,5.7-20.8,15.4-26.2c9.6-5.4,21-5.1,30.3,0.6l302.4,186.4c9.1,5.6,14.3,14.9,14.3,25.6 c0,10.7-5.3,20-14.4,25.6L204.1,415.9c-9.4,5.8-12.4,18-6.6,27.5c5.8,9.4,18,12.4,27.5,6.6l218.6-133.9 c20.9-12.8,33.5-35,33.5-59.5C477.2,232.1,464.7,209.8,443.9,196.9z"/></svg>
+                          </div>
+                        {%- endif -%}
+                        {%- if article_metafields.gallery != blank -%}
+                          {%- capture gallery_json %}[{% for image in article_metafields.gallery.value -%}
+                          { "src": {{ image.src | image_url | json }}, "w": {{ image.width }}, "h": {{ image.height }}, "alt": {{ image.alt | json }} }{% unless forloop.last %},{% endunless -%}
+                          {%- endfor %}]{% endcapture -%}
+                          <div class="t4s-article-metafields__images" data-pswp-images-trigger='{{ gallery_json }}' data-tooltip="right" title="{{ 'blogs.article.click_gallery' | t }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                              <polygon points="480,480 224,480 224,512 512,512 512,224 480,224"/>
+                              <path d="M448,0H0v448h448V0z M416,416H32v-57.4L134.6,256h50.8l64,64h48.5l64-128H416V416z M416,160h-73.9l-64,128h-15.5l-64-64 h-77.2L32,313.4V32h384V160z"/>
+                              <rect x="480" y="160" width="32" height="32"/>
+                              <rect x="160" y="480" width="32" height="32"/>
+                              <path d="M128,192c35.3,0,64-28.7,64-64s-28.7-64-64-64s-64,28.7-64,64S92.7,192,128,192z M128,96c17.7,0,32,14.3,32,32 s-14.3,32-32,32s-32-14.3-32-32S110.3,96,128,96z"/>
+                            </svg>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}            
+                  </div>
+                </div>
+            {%- endif -%}
+								<div class="t4s-main-content-article">
+									{%- for block in section.blocks -%}
+                    {%- case block.type -%}
+                        {%- when 'content' -%}
+															<div class="t4s-article-block t4s-row t4s-article-content t4s-d-flex {% if block.settings.show_socials == true %} t4s-gap-content {% endif %}  t4s-main-area__{{ block.settings.content_width }}" style="--mgb:{{ block.settings.mgb }}px;--mgb-tb:{{ block.settings.mgb_tb }}px;--mgb-mb:{{ block.settings.mgb_mb }}px;">
+                                <div class="t4s-article-social  hiden-socials-{{ block.settings.hiden_socials }} {% if block.settings.show_socials == true %} t4s-col-item t4s-col-lg-1 t4s-col-md-1 {% endif %}">
+																	{% if block.settings.show_socials %}
+                                    {% liquid 
+                                        assign pri_cl_lightness = block.settings.pri_cl | color_extract: 'lightness'
+                                        assign pri_hover_cl_lightness = block.settings.pri_hover_cl | color_extract: 'lightness'
+                                        if pri_cl_lightness < 85
+                                            assign pri_cl2 = "#fff"
+                                        else 
+                                            assign pri_cl2 = "#000"
+                                        endif
+                                        if pri_hover_cl_lightness < 85
+                                            assign pri_hover_cl2 = "#fff"
+                                        else 
+                                            assign pri_hover_cl2 = "#000"
+                                        endif
+                                    -%}
+                                    {{ 't4s-icon-social.css' | asset_url | stylesheet_tag }}
+                                    <div class="t4s-article-socials" style="--pri-cl: {{ block.settings.pri_cl }};--pri-cl2: {{ pri_cl2 }};--pri-hover-cl: {{ block.settings.pri_hover_cl }};--pri-hover-cl2: {{ pri_hover_cl2 }};--border-cl: {{ block.settings.border_cl }};--border-hover-cl: {{ block.settings.border_hover_cl }};--mgb: 0px;--mgb-tb: 0px;--mgb-mb: 0px; --bd-radius: {{ block.settings.bd_radius }}px;">
+                                        {%- if block.settings.social_mode == '1' -%}{%- assign follow_social = true -%} {%- endif -%} 
+                                        {%- render 'social_sharing', bid: block.id, is_social_dropdown: true, style: block.settings.social_style, use_color_set: block.settings.use_color_set, size: block.settings.social_size, space_h_item: block.settings.space_h_item, space_h_item_mb: block.settings.space_h_item_mb, space_v_item: block.settings.space_v_item, space_v_item_mb: block.settings.space_v_item_mb, follow_social: follow_social -%} 
+                                    </div> 
+                                  {% endif %}
+																</div>
+																<div class="t4s-article-main-contents t4s-col-item ">
+                                  <div class="t4s-heading-content t4s-heading-article t4s-show-heading-content_{{ block.settings.show_heading_content }} {{ block.settings.content_align }}">
+                                    <div class="t4s-article-tags t4s-bl-item t4s-animation-none t4s-fnt-fm-{{ block.settings.fontf }} t4s-pe-auto">
+																			{%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+																			{%- for tag in article_tags -%}
+																				{%- if tag contains 'blog_' -%}
+																					<a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove: 'blog_' | strip }}</a>
+																						{%- unless forloop.last -%}
+																							<span class="t4s-seperate"></span>
+																						{% endunless -%}
+																				{%- endif -%}
+																			{%- endfor -%}
+																		</div>
+                                    <h1 class="t4s-bl-item t4s-animation-none t4s-text-bl t4s-uppercase-title ">{{ article.title }}</h1>
+                                    <div class="t4s-article-metas {% if block.settings.content_align == " t4s-text-start" %} t4s-justify-content-start {% elsif block.settings.content_align == "t4s-text-end" %} t4s-justify-content-end {% elsif block.settings.content_align == "t4s-text-center" %} t4s-justify-content-center {% endif %}">
+                                      <div class="t4s-article-author">
+                                        <span class="t4s-article-author__by t4s-article-metas-title">{{ 'blogs.article.by' | t }} </span><span class="t4s-article-author__name"> {{ article.author | replace_first: 'ad clnt', 'admin' }}</span>
+                                      </div>
+                                      <div class="t4s-article-time">
+                                        <span class="t4s-article-metas-title">{{ 'blogs.article.on' | t }} </span>
+                                        <time class="t4s-entry-date">{{ article.published_at | time_tag: format: "abbreviated_date" }}</time>
+                                      </div>
+                                        {%- if article.comments_count > 0 %}{% assign cm_link = '#comments' %}{% else %}{% assign cm_link = '#CommentForm' %}{% endif -%}
+                                          <div class="t4s-article-comment">
+                                            <a href="{{ article_url }}{{ cm_link }}" class="t4s-d-inline-block">
+                                              <span class="t4s-article-comment__icon"></span><span class="t4s-article-comment__count">{{ 'blogs.comments.with_count_html' | t: count: article.comments_count }}</span>
+                                            </a>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <article id="t4s-article-{{ article_id }}" class=" t4s-rte article-{{ article_id }}">
+                                      {{ article.content | replace: '<blockquote>', '<blockquote class="t4s-blockquote"><svg class="t4s-icon t4s-icon--blockquote" aria-hidden="true" focusable="false" role="presentation"><use href="#t4s-icon-blockquote"></use></svg>' }}
+                                    </article>                          
+                                </div>
+                            </div>
+                        {%- when 'tags_socials' -%}
+                          {% if block.settings.show_tags or block.settings.show_socials %}
+                            <div class="t4s-article-block t4s-article-tags-socials t4s-main-area__{{ block.settings.content_width }}" style="--mgb:{{ block.settings.mgb }}px;--mgb-tb:{{ block.settings.mgb_tb }}px;--mgb-mb:{{ block.settings.mgb_mb }}px;">
+                              {% if block.settings.show_tags %}
+                                <div class="t4s-article-tags">
+                                    {%- if article_tags.size > 0 -%}                             
+                                        <ul class="t4s-article-tags__list t4s-article-tags__count-{{ block.settings.tags_count }}">
+                                            {%- for tag in article_tags -%} 
+                                              {%- if tag contains 'category_' -%}{%- continue -%}{%- endif -%}
+                                                <li class="t4s-d-inline-block">
+                                                    <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove : 'category_' | remove : 'blog_' | strip }}</a>{%- unless forloop.last -%} <span class="t4s-seperate"></span> {% endunless -%}
+                                                </li>
+                                            {%- endfor -%}
+                                        </ul>
+                                    {%- endif -%}
+                                </div>  
+                              {%- endif -%}   
+                              {% if block.settings.show_socials %}
+                                {% liquid 
+                                    assign pri_cl_lightness = block.settings.pri_cl | color_extract: 'lightness'
+                                    assign pri_hover_cl_lightness = block.settings.pri_hover_cl | color_extract: 'lightness'
+                                    if pri_cl_lightness < 85
+                                        assign pri_cl2 = "#fff"
+                                    else 
+                                        assign pri_cl2 = "#000"
+                                    endif
+                                    if pri_hover_cl_lightness < 85
+                                        assign pri_hover_cl2 = "#fff"
+                                    else 
+                                        assign pri_hover_cl2 = "#000"
+                                    endif
+                                -%}
+                                {{ 't4s-icon-social.css' | asset_url | stylesheet_tag }}
+                                <div class="t4s-article-socials" style="--pri-cl: {{ block.settings.pri_cl }};--pri-cl2: {{ pri_cl2 }};--pri-hover-cl: {{ block.settings.pri_hover_cl }};--pri-hover-cl2: {{ pri_hover_cl2 }};--mgb: 0px;--mgb-tb: 0px;--mgb-mb: 0px; --bd-radius: {{ block.settings.bd_radius }}px;">
+                                    {%- if block.settings.social_mode == '1' -%}{%- assign follow_social = true -%} {%- endif -%} 
+                                    {%- render 'social_sharing', bid: block.id, is_social_dropdown: true, style: block.settings.social_style, use_color_set: block.settings.use_color_set, size: block.settings.social_size, space_h_item: block.settings.space_h_item, space_h_item_mb: block.settings.space_h_item_mb, space_v_item: block.settings.space_v_item, space_v_item_mb: block.settings.space_v_item_mb, follow_social: follow_social -%} 
+                                </div> 
+                              {% endif %}
+                            </div>
+                          {% endif %}                
+                        {%- when 'navigation' -%}
+                          <div class="t4s-article-block t4s-d-flex t4s-article-navigation t4s-main-area__{{ block.settings.content_width }} t4s_{{ block.settings.image_ratio }} t4s_position_{{ block.settings.image_position }} t4s_{{ block.settings.image_size }}" style="--mgb:{{ block.settings.mgb }}px;--mgb-tb:{{ block.settings.mgb_tb }}px;--mgb-mb:{{ block.settings.mgb_mb }}px;">
+                                <article class="t4s-article-item t4s-article-previous t4s-text-start">
+																	{%- if blog.previous_article -%}
+                                    <div class="t4s-article-inner t4s-pr t4s-oh" style="{%- if blog.previous_article.image != blank -%} background-image: url({{ blog.previous_article.image | image_url }}){%- endif -%}" >
+                                      <div class="t4s-article-info t4s-pa ">
+                                        <div class="t4s-article-content-previous">
+																					<a href="{{ blog.previous_article.url }}" class="t4s-article-nav_btn t4s-article-navigation__previous"><svg width="18px" height="18px" viewBox="0 0 32 32"><path d="M 13.28125 6.78125 L 4.78125 15.28125 L 4.09375 16 L 4.78125 16.71875 L 13.28125 25.21875 L 14.71875 23.78125 L 7.9375 17 L 28 17 L 28 15 L 7.9375 15 L 14.71875 8.21875 Z"/></svg></a>
+																					<div class="t4s-article-meta">
+																						<div class="t4s-article-tags">
+																							{%- assign article_tags = blog.previous_article.tags | join: ';' | split: ';' -%}
+																								{%- assign blog_tags = article_tags | where: 'blog_' -%}
+																								{%- for tag in blog_tags -%}
+																									<a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove: 'blog_' | strip }}</a>
+																									{%- unless forloop.last -%}
+																										<span class="t4s-seperate"></span>
+																									{% endunless -%}
+																								{%- endfor -%}
+																						</div>
+																						<h3 class="t4s-article-title"><a href="{{ blog.previous_article.url }}">{{ blog.previous_article.title }}</a></h3>
+																					</div>
+																				</div>
+                                      </div>
+                                    </div>
+																	{% endif -%}
+                                </article>
+                                  <article class="t4s-article-item t4s-article-next t4s-text-end">
+																		{%- if blog.next_article -%}
+                                      <div class="t4s-article-inner t4s-pr t4s-oh" style="{%- if blog.next_article.image != blank -%} background-image: url({{ blog.next_article.image | image_url }}){%- endif -%}">
+                                        <div class="t4s-article-info t4s-pa">
+                                          <div class="t4s-article-content-next">
+																						<div class="t4s-article-meta">
+																							<div class="t4s-article-tags">
+																								{%- assign article_tags = blog.next_article.tags | join: ';' | split: ';' -%}
+																									{%- assign blog_tags = article_tags | where: 'blog_' -%}
+																									{%- for tag in blog_tags -%}
+																										<a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove: 'blog_' | strip }}</a>
+																										{%- unless forloop.last -%}
+																											<span class="t4s-seperate"></span>
+																										{% endunless -%}
+																									{%- endfor -%}
+																							</div>
+																						<h3 class="t4s-article-title"><a href="{{ blog.next_article.url }}">{{ blog.next_article.title }}</a></h3>
+																						</div>
+                                          	<a href="{{ blog.next_article.url }}" class="t4s-article-nav_btn t4s-article-navigation__next"><svg width="18px" height="18px" viewBox="0 0 32 32"><path d="M 18.71875 6.78125 L 17.28125 8.21875 L 24.0625 15 L 4 15 L 4 17 L 24.0625 17 L 17.28125 23.78125 L 18.71875 25.21875 L 27.21875 16.71875 L 27.90625 16 L 27.21875 15.28125 Z"/></svg></a>
+																					</div>
+                                        </div>
+                                      </div>
+																		{%- endif -%}
+                                  </article>
+                          </div>
+                        {%- when 'navigation_custom' -%}
+                          <div class="t4s-article-block t4s-d-flex t4s-article-navigation_custom t4s-main-area__{{ block.settings.content_width }}" style="--mgb:{{ block.settings.mgb }}px;--mgb-tb:{{ block.settings.mgb_tb }}px;--mgb-mb:{{ block.settings.mgb_mb }}px;">
+                              <article class="t4s-article-item t4s-article-previous t4s-text-start t4s-article-nav-item">
+                              {%- if blog.previous_article -%}
+                                    <div class="t4s-article-inner t4s-oh">
+                                      <div class="t4s-article-info">
+                                        <div class="t4s-article-content-previous t4s-navigation-button t4s-d-flex t4s-align-items-center">
+                                            <a href="{{ blog.previous_article.url }}" class="t4s-article-nav_btn t4s-article-navigation__previous">
+																							<svg fill="currentColor" width="32px" height="32px" viewBox="0 0 32 32"><path d="M 13.28125 6.78125 L 4.78125 15.28125 L 4.09375 16 L 4.78125 16.71875 L 13.28125 25.21875 L 14.71875 23.78125 L 7.9375 17 L 28 17 L 28 15 L 7.9375 15 L 14.71875 8.21875 Z"/></svg>
+																						</a>
+																						<div class="t4s-article-previous-wrap t4s-d-flex t4s-flex-column t4s-align-items-start t4s-justify-content-center">
+																							<p  class="">{{ "blogs.portfolio.navigation_previous" | t }}</p>
+																							<h3 class="t4s-article-title"><a href="{{ blog.previous_article.url }}">{{ blog.previous_article.title }}</a></h3>
+																						</div>
+																				</div>
+                                      </div>
+                                    </div>
+                                  {% endif -%}
+                              </article>
+															<div class="t4s-back-to-blog">
+																<a href="{{ blog.url }}" class="t4s-nav-back" data-tooltip="top"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+           												<span class="t4s-text-blog">{{ 'blogs.portfolio.back_to' | t: title: blog.title }}</span></a>														
+															</div>
+                              <article class="t4s-article-item t4s-article-next t4s-text-end t4s-article-nav-item">
+                                {%- if blog.next_article -%}
+                                  <div class="t4s-article-inner t4s-oh">
+                                    <div class="t4s-article-info">
+                                      <div class="t4s-article-content-next t4s-navigation-button t4s-d-flex t4s-align-items-center t4s-justify-content-end">
+                                        <div class="t4s-article-previous-wrap t4s-d-flex t4s-flex-column t4s-align-items-end t4s-justify-content-center">
+                                          <p class="">{{ "blogs.portfolio.navigation_next" | t }}</p>
+                                          <h3 class="t4s-article-title"><a href="{{ blog.next_article.url }}">{{ blog.next_article.title }}</a></h3>
+                                        </div>
+                                        <a href="{{ blog.next_article.url }}" class="t4s-article-nav_btn t4s-article-navigation__next">
+                                          <svg fill="currentColor" width="32px" height="32px" viewBox="0 0 32 32"><path d="M 18.71875 6.78125 L 17.28125 8.21875 L 24.0625 15 L 4 15 L 4 17 L 24.0625 17 L 17.28125 23.78125 L 18.71875 25.21875 L 27.21875 16.71875 L 27.90625 16 L 27.21875 15.28125 Z"/></svg>
+                                        </a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                {%- endif -%}
+                              </article>
+                          </div>
+                        {%- when 'comments' -%}
+                            {%- assign comment_enable = true -%}
+                            {% unless article.comments_enabled? %}{% continue %}{% endunless -%}
+                            <div class="t4s-article-block t4s-article-comments t4s-oh t4s-main-area__{{ block.settings.content_width }}" style="--mgb:{{ block.settings.mgb }}px;--mgb-tb:{{ block.settings.mgb_tb }}px;--mgb-mb:{{ block.settings.mgb_mb }}px;">
+                                {%- if number_of_comments > 0 -%}
+                                    {%- assign anchorId = '#Comments-' | append: article.id -%}
+                                    {%- paginate article.comments by 5 -%}
+                                        {%- comment -%}#comments is required, it is used as an anchor link by Shopify.{%- endcomment -%}
+                                        <div id="comments">
+                                            <h2 id="Comments-{{ article.id }}" class="t4s-comments-heading">{% if number_of_comments == 1 %} {{ 'blogs.comments.with_count.one' | t }} {%- else -%}{{ 'blogs.comments.with_count.other' | t: count: number_of_comments }}{%- endif -%}</h2>
+                                            <div class="t4s-comment__list">
+                                                {%- if comment.status == 'pending' and comment.content -%}
+                                                    {%- comment -%}If a comment was just submitted with no blank field, show it. {%- endcomment -%}
+                                                    <div id="{{ comment.id }}" class="t4s-comment__item">{%- render 'comment', comment: comment -%}</div>
+                                                {%- endif -%}
+                                                {%- for comment in article.comments -%}
+                                                    <div id="{{ comment.id }}" class="t4s-comment__item">{%- render 'comment', comment: comment -%}</div>
+                                                {%- endfor -%}
+                                                {%- if paginate.pages > 1 -%}
+                                                    <div class="t4s-col-12">{%- render 'pagination', paginate: paginate, anchor: anchorId, ajax: 'false' -%}</div>
+                                                {%- endif -%}
+                                            </div>
+                                        </div>
+                                    {%- endpaginate -%}
+                                {%- endif -%}
+                                <div class="t4s-line-space"></div>
+                                {%- form 'new_comment', article, id: 'CommentForm' -%}
+                                    <h2 class="t4s-comments-form__heading">{{ 'blogs.comments.title' | t }}</h2>
+                                    <p class="t4s-comments-form__notes">{{ 'blogs.comments.comments_note_html' | t }}</p>
+                                    {%- liquid
+                                        assign post_message  = 'blogs.comments.success'
+                                        assign blog_moderate = article.moderated?
+                                        if blog.moderated? and comment.status == 'pending'
+                                            assign post_message = 'blogs.comments.success_moderated'
+                                        elsif comment.status == 'unapproved' or comment.status == 'spam'
+                                            assign post_message = 'blogs.comments.unapproved'
+                                        endif
+                                        assign error_heading = 'blogs.comments.error_heading'
+                                        assign name          = 'blogs.comments.name'
+                                        assign email         = 'blogs.comments.email'
+                                        assign message       = 'blogs.comments.message'
+                                        assign form_errors   = form.errors
+                                        assign form_errors_messages = form_errors.messages
+                                        assign isSuccessfully = form.posted_successfully?
+
+                                        render 'form-status', isSuccessfully: isSuccessfully, form_id: 'CommentForm', success_message: post_message, form_errors: form_errors, form_errors_messages: form_errors_messages, error_heading: error_heading, name: name, email: email, message: message 
+                                    -%}
+
+                                    {%- if blog_moderate -%}<p class="t4s-article-template__comment-warning">{{ 'blogs.comments.moderated' | t }}</p> {%- endif -%}
+                                   
+                                    <div class="t4s-row t4s-comment-form">
+                                        <div class="t4s-col-item t4s-col-12">
+                                            <div class="t4s-form-group t4s-pr">
+                                                <textarea rows="5" name="comment[body]" id="CommentForm-body" class="t4s-field__input {% if form_errors contains 'body' %} t4s-input--error{% endif %}" aria-required="true" {% if form_errors contains 'body' %} aria-invalid="true" aria-describedby="CommentForm-body-error" {% endif %} placeholder="">{{ form.body }}</textarea>
+                                                {%- if form_errors contains 'body' -%}<small id="CommentForm-body-error"><span class="t4s-form__message">{% render 'icon-error' %}{{ message | t }} {{ form_errors_messages['body'] }}.</span></small>{%- endif -%}
+                                            </div>
+                                        </div>
+                                        <div class="t4s-col-item t4s-col-md-6 t4s-input-author">
+                                            <div class="t4s-form-group t4s-pr">
+                                              <p class="t4s-comments-form__notes">{{ 'blogs.comments.name' | t }}</p>
+
+                                                <input type="text" name="comment[author]" id="CommentForm-author" class="t4s-field__input {% if form_errors contains 'author' %}t4s-input--error{% endif %}" autocomplete="name" value="{{ form.author }}" aria-required="true"{% if form_errors contains 'author' %}t4s-input--error aria-invalid="true" aria-describedby="CommentForm-author-error"{% endif %} placeholder="">
+                                            </div>
+                                            {%- if form_errors contains 'author' -%}<small id="CommentForm-author-error"><span class="t4s-form__message">{% render 'icon-error' %}{{ name | t }} {{ form_errors_messages['author'] }}.</span></small>{%- endif -%}
+                                        </div>
+                                        <div class="t4s-col-item t4s-col-md-6">
+                                            <div class="t4s-form-group t4s-pr">
+                                              <p class="t4s-comments-form__notes">{{ 'blogs.comments.email' | t }}</p>
+
+                                                <input type="email" name="comment[email]" id="CommentForm-email" autocomplete="email" class="t4s-field__input {% if form_errors contains 'email' %}t4s-input--error{% endif %}" value="{{ form.email }}" autocorrect="off" autocapitalize="off" aria-required="true" {% if form_errors contains 'email' %} aria-invalid="true" aria-describedby="CommentForm-email-error"{% endif %} placeholder="">
+                                            </div>
+                                            {%- if form_errors contains 'email' -%} <small id="CommentForm-email-error"><span class="t4s-form__message">{% render 'icon-error' %}{{ email | t }} {{ form_errors_messages['email'] }}.</span></small>{%- endif -%}
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="article-comments__submit">
+                                        <input type="submit" class="t4s-btn t4s-btn-base t4s-btn-style-{{ block.settings.button_style }} t4s-btn-size-{{ block.settings.btn_size }} t4s-btn-color-{{ block.settings.btn_cl }} t4s-btn-base t4s-btn-style-{{ block.settings.button_style }} t4s-btn-size-{{ block.settings.btn_size }} t4s-btn-color-{{ block.settings.btn_cl }}{% if block.settings.enable_full_btn %} t4s-w-100{% endif %} t4s-btn-effect-fade t4s-pe-auto" value="{{ 'blogs.comments.post' | t }}">
+                                    </div>
+                                {%- endform -%}
+                            </div>
+                        {%- when '@app' -%}<div class="t4s-page-block--app" {{ block.shopify_attributes }}>{% render block %}</div>
+                        {%- when 'custom_line' -%}
+                          <div class="t4s-article-block t4s-article-line t4s-main-area__{{ block.settings.content_width }} t4s-d-flex {{ block.settings.line_pos }}" style="--mgb:{{ block.settings.mgb }}px;--mgb-tb:{{ block.settings.mgb_tb }}px;--mgb-mb:{{ block.settings.mgb_mb }}px;">
+                            <div class="t4s-custom-line" style="--width: {{ block.settings.line_width }}%;--height: {{ block.settings.line_height }}px;--line-cl: {{ block.settings.line_cl }};--line-style: {{ block.settings.line_style }};"></div>
+                          </div>
+                        {%- when 'html' -%}
+                            <div class="t4s-article-block t4s-article-html t4s-rte--list t4s-main-area__{{ block.settings.content_width }}" style="--mgb:{{ block.settings.mgb }}px;--mgb-tb:{{ block.settings.mgb_tb }}px;--mgb-mb:{{ block.settings.mgb_mb }}px;">{%- if block.settings.html != blank -%}{{ block.settings.html }}{%- endif -%}</div>
+                        {%- when 'custom_liquid' -%}
+                            <div class="t4s-article-custom-liquid t4s-main-area__{{ block.settings.content_width }}">{%- if block.settings.custom_liquid != blank -%}{{ block.settings.custom_liquid }}{%- endif -%}</div>
+
+                        {%- when 'title_sticky' -%}
+                           
+                            <div id="scroll-bar-article" class="scroll-bar-article" style="--progress-cl:{{ block.settings.progress_color }};--bg-cl:{{ block.settings.bg_color }};--border-cl:{{ block.settings.border_color }};--btn-cl:{{ block.settings.btn_color }};--title-cl:{{ block.settings.title_color }};">
+                              <div class="scroll-bar-wrap t4s-container">
+                                <div class="t4s-row">
+                                  <div class="t4s-col-item t4s-col-12">
+                                    <div class="t4s-col-inner scroll-bar-inner" >
+                                      <div class="scroll-heading-wrap">
+                                        <span class="scroll-bar-btn">{{ 'blogs.article.scroll_button' | t }}</span>
+                                        <h2 class="scroll-bar-title">{{ article.title }}</h2>
+                                          
+                                      </div>
+                                        <button id="scroll-bar-comment" class="scroll-bar-comment scroll-enable-{{ article.comments_enabled? }}">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="23" height="25" viewBox="0 0 23 25">
+                                            <defs>
+                                              <style>
+                                                .cls-1 {
+                                                  fill: currentColor;
+                                                  fill-rule: evenodd;
+                                                }
+                                              </style>
+                                            </defs>
+                                            <path id="t4s-Icon_Comment" data-name="Icon Comment" class="cls-1" d="M22.629,21.076a0.371,0.371,0,0,0-.37.372v2.336l-2.95-2.705a0.37,0.37,0,0,0-.25-0.1H9.321A1.516,1.516,0,0,1,7.81,19.463V13.172a0.371,0.371,0,1,0-.741,0v6.291a2.26,2.26,0,0,0,2.252,2.262h9.594L22.38,24.9A0.37,0.37,0,0,0,23,24.628v-3.18A0.371,0.371,0,0,0,22.629,21.076ZM20.748,9.3H16.777a0.372,0.372,0,0,0,0,.744h3.971a1.516,1.516,0,0,1,1.511,1.518v8.648a0.371,0.371,0,1,0,.741,0V11.559A2.26,2.26,0,0,0,20.748,9.3ZM13.679,0H2.252A2.26,2.26,0,0,0,0,2.262V4.07a0.371,0.371,0,1,0,.741,0V2.262A1.516,1.516,0,0,1,2.252.744H13.678A1.516,1.516,0,0,1,15.19,2.262v7.9a1.516,1.516,0,0,1-1.511,1.518H3.941a0.369,0.369,0,0,0-.25.1l-2.95,2.706V5.31A0.371,0.371,0,1,0,0,5.31V15.33a0.372,0.372,0,0,0,.221.34A0.365,0.365,0,0,0,.37,15.7a0.371,0.371,0,0,0,.25-0.1l3.464-3.177h9.594a2.26,2.26,0,0,0,2.252-2.262v-7.9A2.26,2.26,0,0,0,13.679,0ZM13.161,3.375H2.936a0.372,0.372,0,0,0,0,.744H13.161A0.372,0.372,0,0,0,13.161,3.375Zm0,2.5h-2.47a0.372,0.372,0,0,0,0,.744h2.47A0.372,0.372,0,0,0,13.161,5.871Zm-3.7,0H2.936a0.372,0.372,0,0,0,0,.744H9.456A0.372,0.372,0,0,0,9.456,5.871Zm-0.889,2.5H2.936a0.372,0.372,0,0,0,0,.744H8.567A0.372,0.372,0,0,0,8.567,8.366Zm11.58,4.793H9.922a0.372,0.372,0,0,0,0,.744H20.147A0.372,0.372,0,0,0,20.147,13.159Zm0,2.5H13.8a0.372,0.372,0,0,0,0,.744h6.343A0.372,0.372,0,0,0,20.147,15.655Zm-7.579,0H9.922a0.372,0.372,0,0,0,0,.744h2.647A0.372,0.372,0,0,0,12.569,15.655Zm2.985,2.5H9.922a0.372,0.372,0,0,0,0,.745h5.631A0.372,0.372,0,0,0,15.553,18.15Z"/>
+                                          </svg>
+                                        </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div id="article-progress-bar" class="article-progress-bar">
+                              </div>
+                            </div>
+												{%- endcase -%}
+                {%- endfor -%}
+								</div>
+            </div>
+            <aside data-sidebar-content class="t4s-col-item t4s-col-12 t4s-col-lg-3 t4s-sidebar  t4s-sidebar-blog-parent t4s-dn"><div class="t4s-loading--bg"></div></aside>
+        </div>
+    {{- html_layout[0] -}}
+</div>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "articleBody": {{ article.content | strip_html | json }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ shop.url | append: page.url | json }}
+  },
+  "headline": {{ article.title | json }},
+  {%- if article.excerpt != blank -%}
+    "description": {{ article.excerpt | strip_html | json }},
+  {%- endif -%}
+  {%- if article.image -%}
+    "image": [
+      {{ article | image_url: width: article.image.width | prepend: "https:" | json }}
+    ],
+  {%- endif -%}
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    {%- if settings.logo -%}{%- assign image = settings.logo -%}
+      "logo": {
+        "@type": "ImageObject",
+        "height": {{ image.height | json }},
+        "url": {{ image | image_url: width: image.width | prepend: "https:" | json }},
+        "width": {{ image.width | json }}
+      },
+    {%- endif -%}
+    "name": {{ shop.name | json }}
+  }
+}
+</script>
+{% style %}
+.t4s-main-article .t4s-article-social .t4s-socials.t4s-socials-style-outline a{
+	border:1px solid var(--border-cl);
+}
+.t4s-main-article .t4s-article-social .t4s-socials.t4s-socials-style-outline a:hover{
+	border:1px solid var(--border-hover-cl);
+	border-top-width: 1px !important;
+}
+.t4s-main-article .t4s-article-socials{
+	position:sticky;
+	top:100px;
+}
+{% endstyle %}
+{% schema %}
+{
+    "name": "Main article",
+    "tag": "section",
+    "class": "t4s-section t4s-section-main t4s_tp_flickity t4s_tp_mfps t4s-main-article",
+    "settings": [
+      {
+        "type": "header",
+        "content": "1.General options"
+      },
+      {
+        "type": "checkbox",
+        "id": "feature_image",
+        "label": "Enable feature image",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "2.Design options"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "default": "t4s-container-wrap",
+        "label": "Layout",
+        "options": [
+          {
+            "value": "t4s-se-container",
+            "label": "Container"
+          },
+          {
+            "value": "t4s-container-wrap",
+            "label": "Wrapped container"
+          },
+          {
+            "value": "t4s-container-fluid",
+            "label": "Full width"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "cl_bg",
+        "label": "Background"
+      },
+      {
+        "type": "color_background",
+        "id": "cl_bg_gradient",
+        "label": "Background gradient"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "mg",
+        "label": "Margin",
+        "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+        "default": ",,100px,",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "text",
+        "id": "pd",
+        "label": "Padding",
+        "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+        "placeholder": "50px,,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design tablet options"
+      },
+      {
+        "type": "text",
+        "id": "mg_tb",
+        "label": "Margin",
+        "default": ",,50px,",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "text",
+        "id": "pd_tb",
+        "label": "Padding",
+        "placeholder": "50px,,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design mobile options"
+      },
+      {
+        "type": "text",
+        "id": "mg_mb",
+        "label": "Margin",
+        "default": ",,50px,",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "text",
+        "id": "pd_mb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "content",
+        "name": "Article content",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_heading_content",
+            "label": "Show heading article content",
+            "default": false
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "label": "+ Content align",
+            "default": "t4s-text-center",
+            "options": [
+              {
+                "label": "Left",
+                "value": "t4s-text-start"
+              },
+              {
+                "label": "Center",
+                "value": "t4s-text-center"
+              },
+              {
+                "label": "Right",
+                "value": "t4s-text-end"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "+ Options for article socials"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_socials",
+            "label": "Show socials",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "hiden_socials",
+            "label": "Hidden social on mobile",
+            "default": true
+          },
+          {
+            "type": "select",
+            "id": "social_mode",
+            "label": "Socials mode",
+            "options": [
+              {
+                "value": "1",
+                "label": "Follow"
+              },
+              {
+                "value": "2",
+                "label": "Share"
+              }
+            ],
+            "default": "1"
+          },
+          {
+            "type": "select",
+            "id": "social_style",
+            "label": "Socials style",
+            "options": [
+              {
+                "value": "default",
+                "label": "Default"
+              },
+              {
+                "value": "outline",
+                "label": "Outline"
+              },
+              {
+                "value": "simple",
+                "label": "Simple"
+              },
+							{
+								"value":"separate",
+								"label":"Separate color"
+							}
+            ],
+            "default": "outline"
+          },
+          {
+            "type": "select",
+            "id": "social_size",
+            "label": "Socials size",
+            "options": [
+              {
+                "value": "small",
+                "label": "Small"
+              },
+              {
+                "value": "medium",
+                "label": "Medium"
+              },
+              {
+                "value": "large",
+                "label": "Large"
+              }
+            ],
+            "default": "medium"
+          },
+          {
+            "type": "range",
+            "id": "bd_radius",
+            "label": "Border radius",
+            "info": "Not work when socials style is \"Simple\"",
+            "unit": "px",
+            "min": 0,
+            "max": 30,
+            "default": 0,
+            "step": 1
+          },
+          {
+            "type": "checkbox",
+            "id": "use_color_set",
+            "label": "Use color settings",
+            "info": "Default is themes color, tick here if you want custom color for icon socials.",
+            "default": false
+          },
+          {
+            "type": "header",
+            "content": "only true when check to box Color Settings"
+          },
+          {
+            "type": "color",
+            "id": "pri_cl",
+            "label": "Primary color",
+            "default": "#878787"
+          },
+					{
+            "type": "color",
+            "id": "pri_hover_cl",
+            "label": "Primary hover color",
+            "default": "#222222"
+          },
+					{
+            "type": "color",
+            "id": "border_cl",
+            "label": "Border color",
+            "default": "#EDEDED"
+          },
+          {
+            "type": "color",
+            "id": "border_hover_cl",
+            "label": "Border hover color",
+            "default": "#222222"
+          },
+          {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "default": "default",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Boxed",
+                "value": "boxed"
+              },
+              {
+                "label": "One column",
+                "value": "one-column"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "+ Design options"
+          },
+          {
+            "type": "number",
+            "id": "mgb",
+            "label": "Margin bottom (Unit:px) (Desktop)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_tb",
+            "label": "Margin bottom (Unit:px) (Tablet)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_mb",
+            "label": "Margin bottom (Unit:px) (Mobile)",
+            "default": 50
+          }
+        ]
+      },
+      {
+        "type": "tags_socials",
+        "name": "Article tags & socials",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header",
+            "content": "+ Options for article tags"
+          },
+          {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "default": "default",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Boxed",
+                "value": "boxed"
+              },
+              {
+                "label": "One column",
+                "value": "one-column"
+              }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "show_tags",
+            "label": "Show tags",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "tags_count",
+            "label": "Show tags count",
+            "default": false
+          },
+          {
+            "type": "header",
+            "content": "+ Options for article socials"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_socials",
+            "label": "Show socials",
+            "default": true
+          },
+          {
+            "type": "select",
+            "id": "social_mode",
+            "label": "Socials mode",
+            "options": [
+              {
+                "value": "1",
+                "label": "Follow"
+              },
+              {
+                "value": "2",
+                "label": "Share"
+              }
+            ],
+            "default": "1"
+          },
+          {
+            "type": "select",
+            "id": "social_style",
+            "label": "Socials style",
+            "options": [
+              {
+                "value": "default",
+                "label": "Default"
+              },
+              {
+                "value": "outline",
+                "label": "Outline"
+              },
+              {
+                "value": "simple",
+                "label": "Simple"
+              },
+							{
+								"value":"separate",
+								"label":"Separate color"
+							}
+            ],
+            "default": "outline"
+          },
+          {
+            "type": "select",
+            "id": "social_size",
+            "label": "Socials size",
+            "options": [
+              {
+                "value": "small",
+                "label": "Small"
+              },
+              {
+                "value": "medium",
+                "label": "Medium"
+              },
+              {
+                "value": "large",
+                "label": "Large"
+              }
+            ],
+            "default": "medium"
+          },
+          {
+            "type": "range",
+            "id": "bd_radius",
+            "label": "Border radius",
+            "info": "Not work when socials style is \"Simple\"",
+            "unit": "px",
+            "min": 0,
+            "max": 30,
+            "default": 30,
+            "step": 1
+          },
+          {
+            "type": "checkbox",
+            "id": "use_color_set",
+            "label": "Use color settings",
+            "info": "Default is themes color, tick here if you want custom color for icon socials.",
+            "default": false
+          },
+          {
+            "type": "header",
+            "content": "only true when check to box Color Settings"
+          },
+          {
+            "type": "color",
+            "id": "pri_cl",
+            "label": "Primary color",
+            "default": "#878787"
+          },
+          {
+            "type": "color",
+            "id": "pri_hover_cl",
+            "label": "Primary hover color",
+            "default": "#222222"
+          },
+          {
+            "type": "select",
+            "id": "space_h_item",
+            "options": [
+              {
+                "value": "0",
+                "label": "0"
+              },
+              {
+                "value": "2",
+                "label": "2px"
+              },
+              {
+                "value": "5",
+                "label": "5px"
+              },
+              {
+                "value": "10",
+                "label": "10px"
+              },
+              {
+                "value": "12",
+                "label": "12px"
+              },
+              {
+                "value": "15",
+                "label": "15px"
+              },
+              {
+                "value": "20",
+                "label": "20px"
+              },
+              {
+                "value": "25",
+                "label": "25px"
+              },
+              {
+                "value": "30",
+                "label": "30px"
+              }
+            ],
+            "label": "Space horizontal items",
+            "default": "10"
+          },
+          {
+            "type": "select",
+            "id": "space_v_item",
+            "options": [
+              {
+                "value": "0",
+                "label": "0"
+              },
+              {
+                "value": "2",
+                "label": "2px"
+              },
+              {
+                "value": "5",
+                "label": "5px"
+              },
+              {
+                "value": "10",
+                "label": "10px"
+              },
+              {
+                "value": "12",
+                "label": "12px"
+              },
+              {
+                "value": "15",
+                "label": "15px"
+              },
+              {
+                "value": "20",
+                "label": "20px"
+              },
+              {
+                "value": "25",
+                "label": "25px"
+              },
+              {
+                "value": "30",
+                "label": "30px"
+              }
+            ],
+            "label": "Space vertical items",
+            "default": "10"
+          },
+          {
+            "type": "select",
+            "id": "space_h_item_mb",
+            "options": [
+              {
+                "value": "0",
+                "label": "0"
+              },
+              {
+                "value": "2",
+                "label": "2px"
+              },
+              {
+                "value": "5",
+                "label": "5px"
+              },
+              {
+                "value": "10",
+                "label": "10px"
+              },
+              {
+                "value": "12",
+                "label": "12px"
+              },
+              {
+                "value": "15",
+                "label": "15px"
+              },
+              {
+                "value": "20",
+                "label": "20px"
+              },
+              {
+                "value": "25",
+                "label": "25px"
+              },
+              {
+                "value": "30",
+                "label": "30px"
+              }
+            ],
+            "label": "Space horizontal items (Mobile)",
+            "default": "5"
+          },
+          {
+            "type": "select",
+            "id": "space_v_item_mb",
+            "options": [
+              {
+                "value": "0",
+                "label": "0"
+              },
+              {
+                "value": "2",
+                "label": "2px"
+              },
+              {
+                "value": "5",
+                "label": "5px"
+              },
+              {
+                "value": "10",
+                "label": "10px"
+              },
+              {
+                "value": "12",
+                "label": "12px"
+              },
+              {
+                "value": "15",
+                "label": "15px"
+              },
+              {
+                "value": "20",
+                "label": "20px"
+              },
+              {
+                "value": "25",
+                "label": "25px"
+              },
+              {
+                "value": "30",
+                "label": "30px"
+              }
+            ],
+            "label": "Space vertical items (Mobile)",
+            "default": "5"
+          },
+          {
+            "type": "header",
+            "content": "+ Design options"
+          },
+          {
+            "type": "number",
+            "id": "mgb",
+            "label": "Margin bottom (Unit:px) (Desktop)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_tb",
+            "label": "Margin bottom (Unit:px) (Tablet)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_mb",
+            "label": "Margin bottom (Unit:px) (Mobile)",
+            "default": 50
+          }
+        ]
+      },
+      {
+        "type": "@app"
+      },
+      {
+        "type": "comments",
+        "name": "Comments list",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "default": "default",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Boxed",
+                "value": "boxed"
+              },
+              {
+                "label": "One column",
+                "value": "one-column"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "+ Options for button submit"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_full_btn",
+            "label": "Enable button full width",
+            "default": false
+          },
+          {
+            "type": "select",
+            "id": "button_style",
+            "label": "Button style",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Outline",
+                "value": "outline"
+              },
+              {
+                "label": "Border bottom",
+                "value": "bordered"
+              },
+              {
+                "label": "Link",
+                "value": "link"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Button size",
+            "default": "default",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Custom size #1",
+                "value": "1"
+              },
+              {
+                "label": "Custom size #2",
+                "value": "2"
+              },
+              {
+                "label": "Custom size #3",
+                "value": "3"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "btn_cl",
+            "label": "Button color",
+            "default": "dark",
+            "options": [
+              {
+                "value": "light",
+                "label": "Light"
+              },
+              {
+                "value": "dark",
+                "label": "Dark"
+              },
+              {
+                "value": "primary",
+                "label": "Primary"
+              },
+              {
+                "value": "custom1",
+                "label": "Custom color 1"
+              },
+              {
+                "value": "custom2",
+                "label": "Custom color 2"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "+ Design options"
+          },
+          {
+            "type": "number",
+            "id": "mgb",
+            "label": "Margin bottom (Unit:px) (Desktop)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_tb",
+            "label": "Margin bottom (Unit:px) (Tablet)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_mb",
+            "label": "Margin bottom (Unit:px) (Mobile)",
+            "default": 50
+          }
+        ]
+      },
+      {
+        "type": "navigation",
+        "name": "Navigation",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "default": "default",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Boxed",
+                "value": "boxed"
+              },
+              {
+                "label": "One column",
+                "value": "one-column"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "+ Design options"
+          },
+          {
+            "type": "number",
+            "id": "mgb",
+            "label": "Margin bottom (Unit:px) (Desktop)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_tb",
+            "label": "Margin bottom (Unit:px) (Tablet)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_mb",
+            "label": "Margin bottom (Unit:px) (Mobile)",
+            "default": 50
+          }
+        ]
+      },
+      {
+        "type": "navigation_custom",
+        "name": "Navigation 2",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "default": "default",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Boxed",
+                "value": "boxed"
+              }
+              
+            ]
+          },
+          {
+            "type": "header",
+            "content": "+ Design options"
+          },
+          {
+            "type": "number",
+            "id": "mgb",
+            "label": "Margin bottom (Unit:px) (Desktop)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_tb",
+            "label": "Margin bottom (Unit:px) (Tablet)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_mb",
+            "label": "Margin bottom (Unit:px) (Mobile)",
+            "default": 50
+          }
+        ]
+      },
+      {
+        "type": "custom_line",
+        "name": "Custom line",
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "default": "default",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Boxed",
+                "value": "boxed"
+              },
+              {
+                "label": "One column",
+                "value": "one-column"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "line_style",
+            "label": "Line style",
+            "default": "solid",
+            "options": [
+              {
+                "value": "solid",
+                "label": "Solid"
+              },
+              {
+                "value": "dotted",
+                "label": "Dotted"
+              },
+              {
+                "value": "dashed",
+                "label": "Dashed"
+              },
+              {
+                "value": "double",
+                "label": "Double"
+              },
+              {
+                "value": "groove",
+                "label": "Groove"
+              }
+            ]
+          },
+          {
+            "type": "range",
+            "id": "line_width",
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "label": "Line width",
+            "unit": "%",
+            "default": 100
+          },
+          {
+            "type": "range",
+            "id": "line_height",
+            "min": 1,
+            "max": 15,
+            "step": 0.5,
+            "label": "Line height",
+            "unit": "px",
+            "default": 1
+          },
+          {
+            "type": "color",
+            "id": "line_cl",
+            "label": "Line color",
+            "default": "#e6e6e6"
+          },
+          {
+            "type": "select",
+            "id": "line_pos",
+            "label": "Line position",
+            "default": "t4s-text-start",
+            "options": [
+              {
+                "value": "t4s-text-start",
+                "label": "Left"
+              },
+              {
+                "value": "t4s-text-center",
+                "label": "Center"
+              },
+              {
+                "value": "t4s-text-end",
+                "label": "Right"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "+ Design options"
+          },
+          {
+            "type": "number",
+            "id": "mgb",
+            "label": "Margin bottom (Unit:px) (Desktop)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_tb",
+            "label": "Margin bottom (Unit:px) (Tablet)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_mb",
+            "label": "Margin bottom (Unit:px) (Mobile)",
+            "default": 50
+          }
+        ]
+      },
+      {
+        "type": "html",
+        "name": "Custom HTML",
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "default": "default",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Boxed",
+                "value": "boxed"
+              },
+              {
+                "label": "One column",
+                "value": "one-column"
+              }
+            ]
+          },
+          {
+            "type": "html",
+            "id": "html",
+            "label": "Custom HTML",
+            "default": "<div>Custom HTML</div>"
+          },
+          {
+            "type": "header",
+            "content": "+ Design options"
+          },
+          {
+            "type": "number",
+            "id": "mgb",
+            "label": "Margin bottom (Unit:px) (Desktop)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_tb",
+            "label": "Margin bottom (Unit:px) (Tablet)",
+            "default": 50
+          },
+          {
+            "type": "number",
+            "id": "mgb_mb",
+            "label": "Margin bottom (Unit:px) (Mobile)",
+            "default": 50
+          }
+        ]
+      },
+      {
+        "type": "custom_liquid",
+        "name": "Custom liquid",
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "default": "default",
+            "options": [
+              {
+                "label": "Default",
+                "value": "default"
+              },
+              {
+                "label": "Boxed",
+                "value": "boxed"
+              },
+              {
+                "label": "One column",
+                "value": "one-column"
+              }
+            ]
+          },
+          {
+            "type": "liquid",
+            "id": "custom_liquid",
+            "label": "Custom liquid"
+          }
+        ]
+      },
+      {
+        "type": "title_sticky",
+        "name": "Article title sticky",
+        "settings":[
+         {
+          "type": "color",
+          "id": "btn_color",
+          "label": "Button color",
+          "default": "#7b7b7b"
+         },
+         {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#293341"
+         },
+         {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border & icon color",
+          "default": "#eee"
+         },
+         {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#fff"
+         },
+         {
+          "type": "color",
+          "id": "progress_color",
+          "label": "Processing bar color",
+          "default": "#293341"
+         }
+        ]
+
+      }
+    ],
+    "default": {
+      "blocks": [
+        {
+          "type": "content"
+        },
+        {
+          "type": "tags_socials"
+        },
+        {
+          "type": "comments"
+        }
+      ]
+    }
+  }
+{% endschema %}

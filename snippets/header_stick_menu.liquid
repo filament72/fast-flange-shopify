@@ -1,0 +1,55 @@
+<div class="t4s-header-sticky-menu t4s-header-sticky-menu-style{{ section.settings.stick_menu_style }}">
+	<div class="t4s-header-sticky-inner">
+		{% if section.settings.stick_menu_style == "1" %}
+			<div class="t4s-menu-bar t4s-menu-bar-style{{ section.settings.menu_bar }} t4s-site-nav__menu t4s-d-none t4s-d-md-inline-flex">
+	  		{% if section.settings.menu_style != "sidebar_mb" %}
+					<button type="button" class="t4s-pr t4s-menu-bar-button t4s-push-menu-btn t4s-d-inline-flex t4s-dn" data-toggle-class="active" data-toggle-trigger=".t4s-navigation">
+						<span class="t4s-d-inline-flex t4s-menu-bar-icon">
+							{% if section.settings.menu_bar == "5" %}
+								<span class="t4s-menu-text">{{ 'general.mobile_menu.menu' | t }}</span>
+								<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 371.23 371.23" style="enable-background:new 0 0 371.23 371.23;" xml:space="preserve"><polygon points="371.23,21.213 350.018,0 185.615,164.402 21.213,0 0,21.213 164.402,185.615 0,350.018 21.213,371.23 185.615,206.828 350.018,371.23 371.23,350.018 206.828,185.615 "/></svg>
+							{% else %}
+								<span></span> 
+								<span></span>
+								<span></span>
+			  			{% endif %}
+			  		</span>
+			    </button>
+			    <a class="t4s-pr t4s-menu-bar-button t4s-push-menu-btn t4s-d-lg-none" href="{{ routes.root_url }}" data-menu-drawer data-drawer-options='{ "id": "#t4s-menu-drawer" }'>
+			    	<span class="t4s-d-inline-flex t4s-menu-bar-icon">
+							{% if section.settings.menu_bar == "5" %}
+								<span class="t4s-menu-text">{{ 'general.mobile_menu.menu' | t }}</span>
+								<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 371.23 371.23" style="enable-background:new 0 0 371.23 371.23;" xml:space="preserve"><polygon points="371.23,21.213 350.018,0 185.615,164.402 21.213,0 0,21.213 164.402,185.615 0,350.018 21.213,371.23 185.615,206.828 350.018,371.23 371.23,350.018 206.828,185.615 "/></svg>
+							{% else %}
+								<span></span>
+								<span></span>
+								<span></span>
+			  			{% endif %}
+			  		</span>
+			    </a>
+	  		{% else %}
+			    <a class="t4s-pr t4s-menu-bar-button t4s-push-menu-btn" href="{{ routes.root_url }}" data-menu-drawer data-drawer-options='{ "id": "#t4s-menu-drawer" }'>
+			    	<span class="t4s-d-inline-flex t4s-menu-bar-icon">
+							{% if menu_bar == "5" %}
+								<span class="t4s-menu-text">{{ 'general.mobile_menu.menu' | t }}</span>
+								<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 371.23 371.23" style="enable-background:new 0 0 371.23 371.23;" xml:space="preserve"><polygon points="371.23,21.213 350.018,0 185.615,164.402 21.213,0 0,21.213 164.402,185.615 0,350.018 21.213,371.23 185.615,206.828 350.018,371.23 371.23,350.018 206.828,185.615 "/></svg>
+							{% else %}
+								<span></span>
+								<span></span>
+								<span></span>
+			  			{% endif %}
+			  		</span>
+			    </a>
+		    {% endif %}
+		  </div>
+		{% endif %}
+
+    {%- assign llists = linklists[section.settings.stick_menu].links -%}
+    {%- if llists.size == 0 -%}{% continue %}{%- endif -%}
+	  <ul class="t4s-header-sticky-list">
+    	{%- for link in llists -%}
+    		<li class="t4s-menu-item{% if link.active %} is--current{% endif %}"><a href="{{ link.url }}">{%- render 'title_menu2', title: link.title -%}</a></li>
+      {%- endfor -%}
+    </ul>
+	</div>
+</div>

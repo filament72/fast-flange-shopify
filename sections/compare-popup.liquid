@@ -1,0 +1,312 @@
+{%- if search.results_count > 0 -%}
+  {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+  {{ 't4s-loading.css' | asset_url | stylesheet_tag }}
+  {%- liquid
+    assign limit           = 6
+    assign pr_results      = search.results
+    assign placeholder_img = settings.placeholder_img
+    assign routes_search_url = routes.search_url 
+    assign on_sale_txt     = 'products.badge.on_sale' | t
+    assign save_js         = 'products.badge.save_amount_html' | t: saved_amount: 'saved_amount'
+  -%}
+  <style>
+    .t4s_section__compare-popup {
+      z-index: 9999;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      opacity: 1;
+      pointer-events: none;
+      padding: 25px 0;
+      box-shadow: 0 0 9px rgb(0 0 0 / 14%);
+      transition: transform 0.35s;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+    }
+    .t4s_section__compare-popup.is--activate {
+      pointer-events: auto;
+      -webkit-transform: none;
+      transform: none;
+    }
+    .t4s-btn-remove-pr{
+      position: absolute;
+      z-index: 1;
+      right: 1px;
+      left: auto;
+      top: 1px;
+      width: 20px;
+      height: 20px;
+      background-color: var(--t4s-light-color);
+      padding: 0;
+      color: var(--t4s-dark-color);
+    }
+    .rtl_true .t4s-btn-remove-pr{
+      right: auto;
+      left: 1px;
+    }
+    .t4s-btn-remove-pr > svg {
+      width: 12px;
+      height: 12px;
+      transition: 0.5s ease 0s;
+    }
+    .t4s_compare_list-container{
+      padding: 0 25px;
+      margin-inline-end: auto;
+      margin-inline-start: auto;
+    }
+    .t4s_compare_list-wrap .t4s_compare_list-btns {
+      flex: 0 0 15%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .t4s_compare_list-wrap .t4s_compare_list-pr {
+      flex: 1 1 85%;
+      display: flex;
+      overflow-x: auto;
+      justify-content: flex-start;
+      gap:10px;
+      margin-top: 25px;
+      padding-top: 25px;
+      border-top: 1px solid var(--border-color);
+    }
+    .t4s_compare_list-pr > div {
+      flex: 0 0 20%;
+      min-width: 320px;
+    }
+    {% comment %} .t4s_compare_list-head{
+      width:83.5%;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    } {% endcomment %}
+    .t4s_compare_list-head .t4s_compare_list-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--heading-color);
+      display: flex;
+      align-items: center;
+    }
+    .t4s_compare_list-head .t4s_compare_list-title span[data-ttcount-compare]{margin-inline-start:5px;display:inline-block}
+    .t4s_compare_list-head button {
+      border: solid 1px var(--button-background);
+      color: var(--button-background);
+      text-transform: uppercase;
+      font-size: 10px;
+      padding: 0 20px;
+      line-height: 22px;
+      background-color: transparent;
+      border-radius: var(--btn-radius);
+      margin-inline-start:10px;
+    }
+    .t4s_compare_list-wrap .t4s_compare_list-btns a {
+      border: solid 2px var(--secondary-color);
+      color: var(--secondary-color);
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0 20px;
+      line-height: 40px;
+      min-width: 250px;
+      background-color: transparent;
+      text-align: center;
+      border-radius: var(--btn-radius);
+      letter-spacing: 2px;
+      background:transparent;
+      line-height: 55px;
+    }
+    .t4s_compare_list-wrap .t4s_compare_list-btns button{
+         margin: 10px 0 0;
+        margin: 10px 0 0;
+        font-size: 18px;
+        font-weight: 300;
+        color: var(--text-color)!important;
+        background: transparent;
+      }
+      
+    .t4s-compare-item__wrap{display:flex;gap:15px;}
+    .t4s-compare-item__image .t4s_ratio{min-width:120px;max-width:120px;}
+    .t4s_compare_list-wrap{ column-gap: 30px;}
+    a.t4s-compare-item__title{
+      font-size:16px;
+      font-weight:400;
+      color:var(--secondary-color);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .t4s-compare-item__price{
+      font-size:14px;
+      line-height:25px;
+      color: var(--primary-price-color);
+      margin-bottom:0;
+    }
+    .t4s-compare-item__price ins {
+      color: var(--sale-price-color);
+      display: inline-block;
+    }
+    .t4s-compare-item__price del {
+      color: var(--secondary-price-color);
+      margin-inline-start: 5px
+    }
+    .t4s-compare-item__price .t4s_compare_onsale {
+      width: auto;
+      height: auto;
+      color: var(--sale-badge-secondary);
+      background-color: var(--sale-badge-primary);
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 2px;
+      font-size: 10px;
+      line-height: 16px;
+      margin: -3px 5px 0;
+      vertical-align: middle;
+    }
+    @media(max-width:1024px) {
+      .t4s_compare_list-container{padding:0 15px}
+      .t4s-compare-item__image .t4s_ratio { min-width: 100px;max-width: 100px;}
+      .t4s-compare-item__wrap{gap:10px}
+      .t4s_compare_list-head .t4s_compare_list-title{font-size:18px}
+      a.t4s-compare-item__title {font-size:14px;}
+      .t4s-compare-item__price {font-size: 13px;}
+      .t4s_compare_list-wrap .t4s_compare_list-pr {
+        margin-top: 20px;
+        padding-top: 20px;
+      }
+      .t4s_compare_list-parent.t4s-current-scrollbar {
+        max-height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      .t4s_section__compare-popup {
+        padding: 15px 0 0;
+      }
+      .t4s_compare_list-wrap {
+        flex-direction: column;
+        max-height: 100%;
+        overflow-y: auto;
+      }
+      .t4s_compare_list-wrap .t4s_compare_list-btns{margin-top:0}
+      .t4s_compare_list-wrap .t4s_compare_list-btns,
+      .t4s_compare_list-wrap .t4s_compare_list-pr {
+        flex: 0 0 100%;
+        margin-bottom: 12px;
+        align-items: center;
+      }
+      .t4s_compare_list-wrap .t4s_compare_list-pr {
+        width: 100%;
+        overflow-x: auto;
+        max-width: 100%;
+      }
+      .t4s_compare_list-wrap .t4s_compare_list-btns {
+        flex-direction: row;
+      }
+      .t4s_compare_list-wrap .t4s_compare_list-btns button,
+      .t4s_compare_list-wrap .t4s_compare_list-btns a {
+        line-height: 40px;
+        margin: 0 5px;
+        min-width: unset;
+        padding: 0 20px;
+      }
+      .t4s_compare_list-pr > div {
+        flex: 0 0 25%;
+        min-width: 280px;
+      }
+    }
+    @media(max-width:767px) {
+      .t4s-compare-item__image .t4s_ratio { min-width: 65px;max-width: 65px;}
+      .t4s_compare_list-pr > div {
+        flex: 0 0 50%;
+        min-width: 230px;
+      }
+    }
+    @media (-moz-touch-enabled: 0), (hover: hover) and (min-width: 1025px){
+      .t4s_compare_list-wrap .t4s_compare_list-btns a:hover {
+      background-color: var(--button-background-hover);
+      color: var(--button-color-hover);
+      border-color: var(--button-background-hover);
+    }
+    .t4s_compare_list-head button:hover,
+    .t4s_compare_list-wrap .t4s_compare_list-btns button:hover {
+      background-color: var(--button-background-hover);
+      color: var(--button-color-hover);
+      border-color: var(--button-background-hover);s
+    }
+    .t4s_compare_list-wrap .t4s_compare_list-btns button:hover{color:var(--accent-color)!important; background: transparent;}
+    .t4s-btn-remove-pr:hover > svg {
+      transform: rotate(180deg);
+    }
+    .t4s-btn-remove-pr:hover{
+      background-color: var(--t4s-light-color);
+      color: var(--t4s-dark-color);
+    }
+  }
+  </style>
+
+  {%- paginate search.results by limit -%}
+    <div class="t4s_compare_list-parent">
+      <div class="t4s_compare_list-container">
+        <div class="t4s_compare_list-head">
+          <div class="t4s_compare_list-title">{{ 'compare_popup.title' | t }} (<span data-count-compare>{{ search.results_count }}</span> <span data-ttcount-compare>{{ 'compare_popup.count' | t : count: search.results_count }}</span>) <button type="button" data-close-compare>{{ 'compare_popup.close' | t }}</button></div> 
+        </div>
+        <div class="t4s_compare_list-wrap t4s-d-flex t4s-align-items-center">
+          <div class="t4s-current-scrollbar t4s_compare_list-pr t4s-products t4s-text-center t4s_ratioadapt t4s_position_8 t4s_cover t4s-row-cols-lg-6 t4s-row-cols-md-3 t4s-row-cols-3 t4s-gx-md-20 t4s-gx-10">
+  
+            {%- for product in pr_results -%}
+              {%- liquid
+                  assign pr_id = product.id 
+                  assign pr_url = product.url
+                  assign on_sale = false
+                  if product.compare_at_price_min > product.price_min
+                    assign on_sale = true 
+                  endif 
+                  assign image = product.featured_media | default: placeholder_img
+                -%}
+              <div class="t4s-compare-item t4s_compare_id_{{ pr_id }}">
+                {%- if image != blank -%}
+                    <div class="t4s-compare-item__wrap">
+                      <div class="t4s-compare-item__image t4s-pr">
+                        <a class="t4s-d-block t4s-pr t4s-oh t4s_ratio" href="{{ pr_url }}" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1 }}">
+                          <img class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+                          <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>
+                        </a>
+                        <button title="{{ 'compare_popup.remove' | t }}" type="button" data-remove-compare data-id="{{ pr_id }}" data-tooltip="top" class="t4s-btn-remove-pr">
+                          <svg class="t4s-iconsvg-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                            <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="t4s-compare-item__info t4s-text-start">
+                        <a class="t4s-compare-item__title" href="{{ product.url }}">{{ product.title }}</a>
+                        <p class="t4s-compare-item__price">{%- if product.price_varies -%}
+                          {{ product.price_min | money }}–{{ product.price_max | money }}
+                          {%- elsif on_sale -%}<ins>{{ product.price | money }}</ins><del>{{ product.compare_at_price | money }}</del>{%- if settings.label_sale_style == '1' -%}<span class="t4s_compare_onsale is--text">{{ on_sale_txt }}</span>{%- else-%}{%- assign save = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}<span class="t4s_compare_onsale is--percent">{{ save_js | replace: 'saved_amount', save }}</span>{% endif -%}
+                          {%- else -%}
+                          {{ product.price | money }}
+                          {%- endif -%}
+                          </p>
+                      </div>
+                    </div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+          <div class="t4s_compare_list-btns">
+            <a data-link-compare href="{{ routes_search_url }}/?view=compare">{{ 'compare_popup.button' | t }}</a>
+            <button type="button" data-clear-compare>{{ 'compare_popup.clear' | t }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endpaginate -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Compare popup",
+  "class": "t4s_section__compare-popup t4s_bk_flickity t4s-pf t4s-op-0 t4s-pe-none"
+}
+{% endschema %}

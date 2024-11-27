@@ -1,0 +1,89 @@
+{%-liquid
+	assign aid = article.id
+	assign image = article.image
+	assign article_url = article.url
+ -%}
+<article class="t4s-col-item t4s-article-item t4s-article-style6 t4s-article-{{ aid }} {% if packery %} t4s-col-lg-{{ col_dk }} {% endif %}">
+  <div class="t4s-article-inner t4s-pr t4s-oh" timeline hdt-reveal="slide-in">
+    {%- if image != blank -%}
+      <div class="t4s-article-thumb t4s-pr t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }}">
+        <a class="t4s-article-img t4s-d-block" href="{{ article_url }}">
+          <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }}" data-cacl-slide>
+            <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+          </div>
+        </a>
+      </div>
+    {%- endif -%}
+    <div class="t4s-article-info t4s-pa {% if section.settings.text_align == "center" %} t4s-d-flex t4s-flex-column t4s-align-items-center t4s-text-center {% endif %}">
+      {%- if show_date -%}
+        <div class="t4s-article-time">
+          <time class="t4s-entry-date">
+            {%- if date_format contains "%" -%}
+              {{ article.published_at | time_tag: date_format }}
+            {%- else -%}
+              {{ article.published_at | time_tag: format: date_format }}
+            {%- endif -%}
+          </time>
+        </div>
+      {%- endif -%}
+      <h3 class="t4s-article-title">
+        <a href="{{ article_url }}">{{ article.title }}</a>
+      </h3>
+      {%- if show_content -%}
+        <div class="t4s-article-content t4s-rte">
+          {%- if article.excerpt.size > 0 -%}
+            {{ article.excerpt }}
+          {%- else -%}
+            {{ article.content | strip_html | truncate: 118 }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if show_tags -%}
+        {%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+        <div class="t4s-article-tags">
+          {%- for tag in article_tags -%}
+            {%- if tag contains 'blog_' -%}
+              {%- continue -%}{%- endif -%}
+            <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+            {%- unless forloop.last -%}
+              <span class="t4s-seperate"></span>
+            {% endunless -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if show_author or show_date or show_comment -%}
+        <div class="t4s-article-metas">
+          {%- if show_author -%}
+            <div class="t4s-article-author">
+              <span class="t4s-article-author__by">{{ by_txt }}
+              </span>
+              <span class="t4s-article-author__name">
+                {{ article.author | replace_first: 'ad clnt', 'admin' }}</span>
+            </div>
+          {%- endif -%}
+          {%- if show_comment -%}
+            {%- if article.comments_count > 0 %}
+              {% assign cm_link = '#comments' %}
+            {% else %}
+              {% assign cm_link = '#CommentForm' %}
+            {% endif -%}
+            <div class="t4s-article-comment">
+              <a href="{{ article_url }}{{ cm_link }}" class="t4s-d-inline-block">
+                <span class="t4s-article-comment__icon"></span>
+                <span class="t4s-article-comment__count">{{ 'blogs.comments.with_count_html' | t: count: article.comments_count }}</span>
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if show_readmore -%}
+        <div class=" t4s-outline-btn_{{ section.settings.show_rm_bt }} t4s-article-btn">
+          <a href="{{ article_url }}" class="t4s-article-readmore">{{ readmore_txt }}</a>
+          {% if show_ic_readmore %}
+            <svg class="t4s-icon-readmore" viewBox="0 0 32 32"><path d="M 21.1875 9.28125 L 19.78125 10.71875 L 24.0625 15 L 4 15 L 4 17 L 24.0625 17 L 19.78125 21.28125 L 21.1875 22.71875 L 27.90625 16 Z" /></svg>
+          {% endif %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

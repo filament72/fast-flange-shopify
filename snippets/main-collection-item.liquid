@@ -1,0 +1,29 @@
+{%- liquid
+  assign image = block.settings.image | default: collection.image | default: collection.products.first.featured_image
+  assign title = block.settings.title | default: collection.title
+  assign collection_link = block.settings.collection_link | default: collection.url
+  assign all_products_count = collection.all_products_count | default: 0
+ -%}
+<div class="t4s-col-item t4s-main-collection-item t4s-text-center" id="b_{{ block.id }}" data-select-flickity {{ block.shopify_attributes }}>
+	<div class="t4s-collection-content t4s-pr t4s-eff-img-{{ img_effect }}">
+	  <div class="t4s-coll-img t4s-pr t4s-oh" data-cacl-slide>
+	    <a class="t4s_collection_item_link t4s-img-wrap t4s-d-block" href="{{ collection_link }}" target="{{ open_link }}">
+	      <div class="t4s_ratio t4s-bg-11" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1.2 }}; {%- if image != blank -%}background: url({{ image | image_url: width: 1 }}); {%- endif -%}" timeline hdt-reveal="slide-in">
+	        {%- if image != blank -%}
+	          <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image.presentation.focal_point}}"{% endif %} loading="lazy" class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+	        {%- else -%}
+	          {{ 'collection-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}  
+	        {%- endif -%}
+	      </div>
+	    </a>
+	  </div>
+	  {%- if title != blank -%}
+	    <div class="t4s-collection-wrapper" timeline hdt-reveal="slide-in">
+	      <a class="t4s-collection-title t4s-fnt-fm-{{ section.settings.title_fonf }}" href="{{ collection_link }}" target="{{ open_link }}">
+	        <span class="t4s-d-block t4s-text">{{ title }}</span>
+	      </a>
+	      <div class="t4s-collec-pr-count">{{ 'list_collections.pro_count_html' | t: count: all_products_count }}</div>
+	    </div>
+	  {%- endif -%}
+	</div> 
+</div> 

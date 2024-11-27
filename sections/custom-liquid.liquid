@@ -1,0 +1,31 @@
+{%- liquid  
+  assign se_id = section.id
+  assign layout = section.settings.layout
+-%}
+
+<div class="t4s-se-{{ se_id }} {{ layout }}">{{ section.settings.custom_liquid }}</div>
+{% schema %}
+{
+  "name": "Custom Liquid",
+  "tag": "section",
+  "class": "t4s-section t4s-section-all t4s-custom-liquid",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Custom Liquid",
+      "info": "Add app snippets or other Liquid code to create advanced customizations."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Liquid"
+    }
+  ]
+}
+{% endschema %}

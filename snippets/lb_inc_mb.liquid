@@ -1,0 +1,7 @@
+{%- comment -%}title[label_name][icon_name]{%- endcomment -%}
+{%- case arrlt.size -%}
+  {%- when 1 -%}{%- assign icon = 't4s' -%}{%- assign label = 't4s' -%}
+  {%- when 2 -%}{%- if arrlt[1] contains 'label_' -%}{%- assign icon = 't4s' -%}{%- assign label = arrlt[1] | remove: 'label_' | remove: ']' | strip -%}{%- else -%}{%- assign icon = arrlt[1] | remove: 'icon_' | remove: ']' | strip -%}{%- assign label = 't4s' -%}{%- endif -%}
+  {%- else -%}{%- assign label = arrlt[1] | remove: 'label_' | remove: ']' | strip -%}{%- assign icon = arrlt[2] | remove: 'icon_' | remove: ']' | strip -%}
+{%- endcase -%}
+{%- if icon != 't4s' %} {{icon }} {% endif %}{{ arrlt[0] }}{% if label != 't4s' %}<span class="t4s_lb_nav_mb t4s_lb_menu_{{ label | handleize }}">{{label}}</span>{% endif -%}

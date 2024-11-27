@@ -1,0 +1,655 @@
+<!-- sections/heading-article.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-heading-article.css' | asset_url | stylesheet_tag }}
+{{ 't4s-general-block.css' | asset_url | stylesheet_tag }}
+{%-liquid
+    assign sid = section.id
+    
+    
+    assign stt_layout = section.settings.layout
+    assign blog_url = blog.url
+    if article.image != blank and section.settings.use_specify_image 
+        assign image = article.image | default: section.settings.image
+    else 
+        assign image = section.settings.image 
+    endif  
+    assign parallax = section.settings.parallax
+    assign general_block = false
+    assign bg_opacity = section.settings.bg_opacity | divided_by: 100.0
+    assign bg_overlay = section.settings.bg_overlay | color_modify: 'alpha', bg_opacity
+    assign bg_opacity_trans = section.settings.bg_opacity_trans | divided_by: 100.0
+    assign bg_overlay_trans = section.settings.bg_overlay_trans | color_modify: 'alpha', bg_opacity_trans
+    if section.settings.use_border
+        assign br_opacity_trans = section.settings.br_opacity_trans | divided_by: 100.0
+        assign br_bg_trans = section.settings.br_bg_trans | color_modify: 'alpha', br_opacity_trans  
+    endif
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif 
+ -%} 
+{{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}
+    <div class="t4s-container-inner">{% endif -%}
+<div class="t4s-heading-article__wrap t4s_se_{{ sid }} t4s-pr t4s-heading-article__border-{{ section.settings.box_border }} {% if parallax == true %}t4s-parallax t4s-parallax-bg{% endif %} lazyloadt4s" {% if parallax == true %}data-parallax-t4strue{% endif %} {%- if image != blank -%} data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1" {%- endif -%}  style="--space-padding-top-dk: {{ section.settings.padding_top }}px;--space-padding-top-tb: {{ section.settings.padding_top_tb }}px;--space-padding-top-mb: {{ section.settings.padding_top_mb }}px;--space-padding-bottom-dk: {{ section.settings.padding_bottom }}px;--space-padding-bottom-tb: {{ section.settings.padding_bottom_tb }}px;--space-padding-bottom-mb: {{ section.settings.padding_top_mb }}px;--space-mg-dk: {{ section.settings.mg_b }}px;--space-mg-tb: {{ section.settings.mg_btb }}px;--space-mg-mb: {{ section.settings.mg_bmb }}px;--bg-overlay: {{ bg_overlay }};--bg_repeat: {{ section.settings.bg_repeat }};--bg_size: {{ section.settings.bg_size }};--bg_pos: {{ section.settings.bg_pos | replace: '_', ' ' }};">
+    {%- if section.blocks.size > 0 -%}
+        <div class="t4s-heading-article__overlay t4s-oh {{ section.settings.content_align }}"> 
+            <div class="t4s-container t4s-pr t4s-z-100">
+              <div class="t4s-content-heading">
+                {%- for block in section.blocks -%}
+                    {%- case block.type -%}
+                        {%- when 'title' -%}
+                            {%- assign general_block = true -%}
+                            <h1 class="t4s-bl-item t4s-animation-none t4s-text-bl t4s-hidden-mobile-{{ block.settings.hidden_mobile }} t4s-hidden-br-mb-{{ block.settings.remove_br_tag }} t4s-uppercase-{{ block.settings.font_uppercase }} t4s-text-shadow-{{ block.settings.text_shadow }}">{{ article.title }}</h1>
+												{%- when 'blog_title' -%}
+													<div class="t4s-article-tags t4s-bl-item t4s-animation-none t4s-fnt-fm-{{ block.settings.fontf }} t4s-pe-auto">
+															{%- if block.settings.show_blog_tite == 'blog_current' -%}
+																	<a href="{{ blog_url }}">{{ blog.title }}</a>
+															{%- else -%}
+																	{%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+																	{%- assign blog_tags = article_tags | where: 'blog_' -%}
+																	{%- for tag in blog_tags -%}
+																			<a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove : 'blog_' | strip }}</a> {%- unless forloop.last -%} ,  {% endunless -%}
+																	{%- endfor -%}
+															{%- endif -%}
+													</div>
+												{%- when 'article_metas' -%}
+                            {%- liquid
+                                assign show_tags = block.settings.show_tags
+                                assign show_author = block.settings.show_author
+                                assign show_date = block.settings.show_date
+                                assign date_format = block.settings.date  
+    														assign show_comment = block.settings.show_comment
+                            -%}
+                            {%- if show_author or show_date or show_tags or show_comment -%}
+                                <div class="t4s-article-metas {% if section.settings.content_align == "t4s-text-start" %} t4s-justify-content-start {%  elsif section.settings.content_align == "t4s-text-end" %} t4s-justify-content-end{%  elsif section.settings.content_align == "t4s-text-center" %} t4s-justify-content-center {% endif %}">
+                                    {%- if show_author -%}
+                                        <div class="t4s-article-author">
+                                            <span class="t4s-article-author__by t4s-article-metas-title">{{ 'blogs.article.by' | t }} </span><span class="t4s-article-author__name"> {{ article.author | replace_first: 'ad clnt', 'admin' }}</span>
+                                        </div>
+                                    {%- endif -%}
+                                    {%- if show_date -%}<div class="t4s-article-time">
+                                        <span class="t4s-article-metas-title">
+                                        <time class="t4s-entry-date">{%- if date_format contains "%" -%}{{ article.published_at | time_tag: date_format }}{%- else -%}{{ article.published_at | time_tag: format: date_format }}{%- endif -%}</time></div>{%- endif -%}
+                                    {%- if show_tags -%}
+                                        {%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+                                        {% if article_tags.size > 0 %} 
+                                            <div class="t4s-article-tags">
+                                                {%- assign count = 0 -%}
+                                                {%- for tag in article_tags -%}
+                                                    {%- if tag contains 'blog_' -%}{%- continue -%}{%- endif -%}
+                                                    {%- assign count = count | plus: 1 -%}
+                                                {%- endfor -%}
+                                                {% if count > 0 %} <span class="t4s-article-metas-title">{{ 'blogs.article.in' | t }} </span> {% endif %}
+                                                {%- for tag in article_tags -%}
+                                                 {%- assign count = count | plus: 1 -%}
+                                                    {%- if tag contains 'blog_' -%}{%- continue -%}{%- endif -%}
+                                                    <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag }}</a> {%- unless forloop.last -%} <span class="t4s-seperate"></span> {% endunless -%}
+                                                {%- endfor -%}
+                                            </div>
+                                        {% endif %}
+                                    {%- endif -%}
+																		{%- if show_comment -%}
+																			{%- if article.comments_count > 0 %}{% assign cm_link = '#comments' %}{% else %}{% assign cm_link = '#CommentForm' %}{% endif -%}
+																			<div class="t4s-article-comment">
+																				<a href="{{ article.url }}{{ cm_link }}" class="t4s-d-inline-block">
+																					<span class="t4s-article-comment__icon"></span><span class="t4s-article-comment__count">{{ 'blogs.comments.with_count_html' | t: count: article.comments_count }}</span>
+																				</a>
+																			</div>
+																		{%- endif -%}
+                                </div>
+                            {%- endif -%}
+                    {%- endcase -%}
+                {%- endfor -%}
+              </div>
+            </div>
+        </div>
+    {%- endif -%}
+</div>
+{{- html_layout[0] -}}
+{%- if parallax -%}
+    {{ 'parallax.min.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- if general_block -%}
+    {{ 'general-block.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- style -%}
+    .is--header-transparent .t4s-heading-article__wrap{
+        --space-padding-top-dk: {{ section.settings.padding_top_trans }}px !important;
+        --space-padding-top-tb: {{ section.settings.padding_top_tb_trans }}px !important;
+        --space-padding-top-mb: {{ section.settings.padding_top_mb_trans }}px !important;
+        --space-padding-bottom-dk: {{ section.settings.padding_bottom_trans }}px !important;
+        --space-padding-bottom-tb: {{ section.settings.padding_bottom_tb_trans }}px !important;
+        --space-padding-bottom-mb: {{ section.settings.padding_bottom_mb_trans }}px !important;
+        --bg-overlay: {{ bg_overlay_trans }}!important;
+    }
+    {%- if section.settings.use_border -%}
+        .is--header-transparent .t4s-section-header::after {
+            content:"";position: absolute;bottom: 0;left: 0;right: 0;border-bottom: 1px solid {{ br_bg_trans }};
+        }
+    {%- endif -%}
+{%- endstyle -%}
+{% schema %}
+  {
+    "name": "Heading",
+    "tag": "section",
+    "class": "t4s-section t4s-section-all t4s_tp_parallax t4s-heading-article",
+    "settings": [
+        {
+            "type": "header",
+            "content": "1. General options"
+        },
+        {                   
+            "type": "image_picker",
+            "id": "image",
+            "label": "Choose Image"                  
+        }, 
+        {
+            "type": "checkbox",
+            "id": "use_specify_image",
+            "label": "Specify other image for particular page",
+            "info": "Use article image",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "parallax",
+            "label": "Enable parallax scroll",
+            "default": false
+        }, 
+        {
+            "type": "color",
+            "id": "bg_overlay",
+            "label": "Background overlay",
+            "default": "#000"
+        },
+        {
+            "type": "range",
+            "id": "bg_opacity",
+            "label": "Background overlay opacity",
+            "default": 0,
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%"
+        },
+        {
+            "type": "paragraph",
+            "content": "+ Desktop"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding space top",
+            "default": 100,
+            "min": 20,
+            "max": 520,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Padding space bottom",
+            "default": 100,
+            "min": 20,
+            "max": 520,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "paragraph",
+            "content": "+ Tablet"
+        },
+        {
+            "type": "range",
+            "id": "padding_top_tb",
+            "label": "Padding space top",
+            "default": 50,
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom_tb",
+            "label": "Padding space bottom",
+            "default": 50,
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "paragraph",
+            "content": "+ Mobile"
+        },
+        {
+            "type": "range",
+            "id": "padding_top_mb",
+            "label": "Padding space top",
+            "default": 50,
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom_mb",
+            "label": "Padding space bottom",
+            "default": 50,
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "paragraph",
+            "content": "————————————————"
+        },
+        {
+            "type": "select",
+            "id": "box_border",
+            "label": "Border",
+            "default": "top",
+            "options": [
+                {
+                    "label": "None",
+                    "value": "none"
+                },
+                {
+                    "label": "Top",
+                    "value": "top"
+                },
+                {
+                    "label": "Bottom",
+                    "value": "bottom"
+                },
+                {
+                    "label": "Top + Bottom",
+                    "value": "top_bottom"
+                }
+            ]
+        },
+        {
+          "type": "select",
+          "id": "content_align",
+          "label": "+ Content align",
+          "default": "t4s-text-center",
+          "options": [
+            {
+              "label": "Left",
+              "value": "t4s-text-start"
+            },
+            {
+              "label": "Center",
+              "value": "t4s-text-center"
+            },
+            {
+              "label": "Right",
+              "value": "t4s-text-end"
+            }
+          ]
+        },
+        {
+            "type": "header",
+            "content": "+ Background image config"
+        },
+        {
+            "type": "paragraph",
+            "content": "Not active when you enable scroll parallax."
+        },
+        {
+            "type": "select",
+            "id": "bg_pos",
+            "label": "Background image position",
+            "default": "center center",
+            "options": [
+                {
+                    "value": "left top",
+                    "label": "Left Top"
+                },
+                {
+                    "value": "left center",
+                    "label": "Left Center"
+                },
+                {
+                    "value": "left bottom",
+                    "label": "Left Bottom"
+                },
+                {
+                    "value": "center top",
+                    "label": "Center Top"
+                },
+                {
+                    "value": "center center",
+                    "label": "Center Center"
+                },
+                {
+                    "value": "center bottom",
+                    "label": "Center Bottom"
+                },
+                {
+                    "value": "right top",
+                    "label": "Right Top"
+                },
+                {
+                    "value": "right center",
+                    "label": "Right Center"
+                },
+                {
+                    "value": "right bottom",
+                    "label": "Right Bottom"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "bg_repeat",
+            "options": [
+                {
+                    "value": "no-repeat",
+                    "label": "No repeat"
+                },
+                {
+                    "value": "repeat",
+                    "label": "Repeat all"
+                },
+                {
+                    "value": "repeat-x",
+                    "label": "Repeat horizontally"
+                },
+                {
+                    "value": "repeat-y",
+                    "label": "Repeat vertically"
+                },
+                {
+                    "value": "inherit",
+                    "label": "Inherit"
+                }
+            ],
+            "label": "Background repeat",
+            "default": "no-repeat",
+            "info": "[Specifies how to repeat the background images](https:\/\/w3schools.com\/cssref\/pr_background-repeat.asp)"
+        },
+        {
+            "type": "select",
+            "id": "bg_size",
+            "options": [
+            {
+                "value": "auto",
+                "label": "Auto"
+            },
+            {
+                "value": "inherit",
+                "label": "Inherit"
+            },
+            {
+                "value": "cover",
+                "label": "Cover"
+            },
+            {
+                "value": "contain",
+                "label": "Contain"
+            }
+            ], 
+            "label": "Background size",
+            "default": "cover",
+            "info": "[Specifies the size of the background images](https:\/\/w3schools.com\/cssref\/css3_pr_background-size.asp)"
+        },
+        {
+            "type": "header",
+            "content": "+ Design for header transparent"
+        },
+        {
+            "type": "checkbox",
+            "id": "use_border",
+            "label": "Use border",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "br_bg_trans",
+            "label": "Color border",
+            "default": "#fff"
+        },
+        {
+            "type": "range",
+            "id": "br_opacity_trans",
+            "label": "Color border overlay",
+            "default": 15,
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%"
+        },
+        {
+            "type": "color",
+            "id": "bg_overlay_trans",
+            "label": "Background overlay",
+            "default": "#000"
+        },
+        {
+            "type": "range",
+            "id": "bg_opacity_trans",
+            "label": "Background overlay opacity",
+            "default": 0,
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%"
+        },
+        {
+            "type": "paragraph",
+            "content": "+ Desktop"
+        },
+        {
+            "type": "range",
+            "id": "padding_top_trans",
+            "label": "Padding space top",
+            "default": 100,
+            "min": 20,
+            "max": 520,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom_trans",
+            "label": "Padding space bottom",
+            "default": 100,
+            "min": 20,
+            "max": 520,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "paragraph",
+            "content": "+ Tablet"
+        },
+        {
+            "type": "range",
+            "id": "padding_top_tb_trans",
+            "label": "Padding space top",
+            "default": 50,
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom_tb_trans",
+            "label": "Padding space bottom",
+            "default": 50,
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "paragraph",
+            "content": "+ Mobile"
+        },
+        {
+            "type": "range",
+            "id": "padding_top_mb_trans",
+            "label": "Padding space top",
+            "default": 50,
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom_mb_trans",
+            "label": "Padding space bottom",
+            "default": 50,
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "header",
+            "content": "2. Design options"
+        },
+        {
+            "type": "select","id": "layout","default": "t4s-se-container","label": "Layout",
+            "options": [
+                { "value": "t4s-se-container", "label": "Container"},
+                { "value": "t4s-container-fluid", "label": "Full width"}
+            ]
+        },
+        {
+            "type": "range",
+            "id": "mg_b",
+            "label": "Margin space bottom (Desktop)",
+            "default": 50,
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "mg_btb",
+            "label": "Margin space bottom (Tablet)",
+            "default": 50,
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "mg_bmb",
+            "label": "Margin space bottom (Mobile)",
+            "default": 50,
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px"
+        }
+],
+    "blocks": [
+					{
+						"type": "blog_title",
+						"name": "Blog title",
+						"limit": 1,
+						"settings": [
+								{
+                  "type": "select",
+                  "id": "show_blog_tite",
+                  "label": "Show blog title",
+                  "info": "From tags contains 'blog_': will show tags on article current contains 'blog_'",
+                  "default": "blog_current",
+                  "options": [
+                      {
+                          "value": "blog_current",
+                          "label": "From blog current"
+                      },
+                      {
+                          "value": "blog_tags",
+                          "label": "From tags contains 'blog_'"
+                      }
+                  ]
+								}
+						]
+				},
+        {
+            "type": "title",
+            "name": "Title",
+            "limit": 1,
+            "settings": [
+            ]
+        },
+        {
+            "type": "article_metas",
+            "name": "Article metas",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "show_author",
+                    "label": "Show author",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_date",
+                    "label": "Show date",
+                    "default": true
+                },
+                {
+                    "type": "select",
+                    "id": "date",
+                    "options": [
+                        {
+                            "value": "abbreviated_date",
+                            "label": "Apr 19, 1994"
+                        },
+                        {
+                            "value": "basic",
+                            "label": "4/19/1994"
+                        },
+                        {
+                            "value": "date",
+                            "label": "April 19, 1994"
+                        },
+                        {
+                            "value": "%b %d",
+                            "label": "Apr 19"
+                        }
+                    ],
+                    "label": "Date format",
+                    "info": "Different format options display for various languages.",
+                    "default": "%b %d"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_tags",
+                    "label": "Show tags",
+                    "default": false
+                },
+								{
+									"type": "checkbox",
+									"id": "show_comment",
+									"label": "Show comment",
+									"default": true
+								}
+            ]
+        }
+    ],
+    "default": {
+        "blocks": [
+            {"type": "title"},
+            {"type": "article_metas"}
+        ]
+    }
+  }
+{% endschema %}

@@ -1,0 +1,43 @@
+{%- liquid
+   if shop.types.size < 3
+   assign shop_types = shop.types | join: ' ' | remove: ' '
+   else
+   assign shop_types = 'type_t4s'
+   endif -%}
+
+<form action="{{ routes.search_url }}" method="get" role="search" class="t4s-search-form t4s-search-page-form js_frm_search_none">
+  <div class="t4s-search-form-inner">
+    {%- if settings.filter_type_search and shop_types != blank -%}
+      <div data-cat-search class="t4s-mini-search__categories">
+        <div data-cat-search class="t4s-search-header__type t4s-pr">
+           <select data-name="product_type" class="t4s-truncate">
+             <option value="*">{{ 'search.general.all_categories' | t }}</option>
+             {%- for product_type in shop.types -%}{%- if product_type == blank %}{% continue -%}{% endif -%}<option value="{{ product_type }}"{% if search_pr_type == product_type %} selected="selected"{% endif %}>{{ product_type }}</option>{%- endfor -%}
+           </select>
+        </div>
+      </div>
+    {%- endif -%} 
+    <div class="input-group__field input-group__field--connected t4s-search-form__input-wrapper row no-gutters tl">
+      {%- if search_type -%}
+        <div class="frm_search_cat col-auto">
+          <select name="product_type">
+            <option value="*">{{ 'search.general.all_categories' | t }}</option>
+              {%- for product_type in shop.types -%}{%- if product_type == blank %}{% continue -%}{% endif -%}<option value="{{ product_type }}"{% if search_pr_type == product_type %} selected="selected"{% endif %}>{{ product_type }}</option>
+              {%- endfor -%}
+          </select>
+        </div>
+      {%- endif -%}
+         <input type="hidden" name="type" value="product">
+         <input type="hidden" name="options[unavailable_products]" value="{{ settings.unavailable_prs }}">
+         <input type="hidden" name="options[prefix]" value="last">
+         <div class="t4s-pr t4s-input-group"> 
+           <input type="text" name="q" value="{{ search_terms }}" placeholder="{{ 'search.general.placeholder' | t }}" class="t4s-search-form__input t4s-input-type js_iput_search col" />
+           <div class="t4s-line t4s-pa"></div>
+         </div>
+        <button type="reset" class="t4s-search-form__clear-action"><i class="las la-times"></i></button>
+    </div>
+    <button type="submit" class="t4s-search-form-submit js_btn_search">
+      <svg class="t4s-icon t4s-icon--search" aria-hidden="true" focusable="false" role="presentation"><use href="#icon-h-search"></use></svg>
+    </button>
+  </div>
+</form>

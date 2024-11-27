@@ -1,0 +1,181 @@
+<!-- sections/product-pagination.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-product-thumb-pagiation.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign sid = section.id
+  
+  assign ck_next_pr = false
+  if collection != blank 
+    assign ck_next_pr = true 
+  endif 
+  assign stt_layout = section.settings.layout
+  assign stt_image_bg = section.settings.image_bg
+  if stt_layout == 't4s-se-container' 
+      assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+      assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+      assign html_layout = '__' | split: '__'
+  endif
+  assign prev_pr = collection.previous_product 
+  assign image_pr_prev = collection.previous_product.featured_image | default: settings.placeholder_img
+  assign next_pr = collection.next_product
+  assign image_pr_next = collection.next_product.featured_image | default: settings.placeholder_img
+-%} 
+{%- if ck_next_pr -%} 
+{% render 'section_style', sid: sid %}
+<div class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }} t4s-product-pagination__design-{{ section.settings.pr_pag_des }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2" {% endif %}>
+  {{- html_layout[0] -}}  
+  {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2" {% endif %}>{%- endif -%}
+    <div class="t4s-row t4s-g-30 t4s_ratioadapt" style="--bg-info-pr:{{ section.settings.bg_info_pr }}"> 
+      <div class="t4s-col-item t4s-col-md-6 t4s-col-12 t4s t4s-text-start">
+        {%- if prev_pr -%}
+            <a href="{{ prev_pr.url }}" class="t4s-product-pagiation__item t4s-product-pagiation__previous">
+              <div class="t4s-product-pagiation__img t4s-pr">
+                <div class="t4s-pr t4s-oh t4s_ratio t4s-bg-11" style="background: url({{ image_pr_prev | image_url: width: 1 }});--aspect-ratioapt:{{ image_pr_prev.aspect_ratio | default: 1 }}">
+                  <img class="lazyloadt4s" width="100" height="{{ 100 | divided_by: image_pr_prev.aspect_ratio | ceil }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image_pr_prev | image_url: width: 1 }}" data-widths="[80, 100, 120, 240]" data-sizes="auto" alt="{{ image_pr_prev.alt | escape }}" loading="lazy">                </div>
+              </div>
+              <div class="t4s-product-pagiation__info">
+                <span class="t4s-product-pagiation__title">{{ prev_pr.title }}</span>
+                <span class="t4s-product-pagiation__price">{{ prev_pr.price | money }}</span>
+              </div>
+            </a>
+        {%- endif -%}
+      </div>
+      <div class="t4s-col-item t4s-col-md-6 t4s-col-12 t4s-text-start t4s-text-md-end"> 
+        {%- if next_pr -%}
+          <a href="{{ next_pr.url }}" class="t4s-product-pagiation__item t4s-product-pagiation__next">
+            <div class="t4s-product-pagiation__info">
+              <span class="t4s-product-pagiation__title">{{ next_pr.title }}</span>
+              <span class="t4s-product-pagiation__price">{{ next_pr.price | money }}</span>
+            </div>
+            <div class="t4s-product-pagiation__img t4s-pr">
+              <div class="t4s-pr t4s-oh t4s_ratio t4s-bg-11" style="background: url({{ image_pr_next | image_url: width: 1 }});--aspect-ratioapt:{{ image_pr_next.aspect_ratio | default: 1 }}">
+                <img class="lazyloadt4s" width="100" height="{{ 100 | divided_by: image_pr_next.aspect_ratio | ceil }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image_pr_next | image_url: width: 1 }}" data-widths="[80, 100, 120, 240]" data-sizes="auto" alt="{{ image_pr_next.alt | escape }}" loading="lazy">
+              </div>
+            </div>
+          </a>
+        {%- endif -%}
+      </div> 
+    </div>
+  {{- html_layout[1] -}}
+</div>
+{%- endif -%} 
+{% schema %}
+  {
+    "name": "Product pagination",
+    "class": "t4s-section t4s-product-pagination",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Working with link has collection"
+      },
+      {
+        "type": "header",
+        "content": "1. General options"
+      },
+      {
+        "type":"select",
+        "id":"pr_pag_des",
+        "label":"Design",
+        "options":[
+          {
+            "label":"Default",
+            "value":"default"
+          },
+          {
+            "value": "sticky",
+            "label": "Sticky dual screen product view"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "bg_info_pr",
+        "label": "Background info product",
+        "default":"#f9f9f9",
+        "info":"Working on large screens"
+      },
+      {
+        "type": "header",
+        "content": "2. Design options"
+      },
+      {
+          "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+          "options": [
+              { "value": "t4s-se-container", "label": "Container"},
+              { "value": "t4s-container-wrap", "label": "Wrapped container"},
+              { "value": "t4s-container-fluid", "label": "Full width"}
+          ]
+      },
+      {
+          "type": "color",
+          "id": "cl_bg",
+          "label": "Background",
+          "default":"#f9f9f9"
+      },
+      {
+          "type": "color_background",
+          "id": "cl_bg_gradient",
+          "label": "Background gradient"
+      },
+      {
+          "type": "image_picker",
+          "id": "image_bg",
+          "label": "Background image"
+      },
+      {
+          "type": "text",
+          "id": "mg",
+          "label": "Margin",
+          "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+          "default": ",,50px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd",
+          "label": "Padding",
+          "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+          "default":"26px,,26px,",
+          "placeholder": "50px,,50px,"
+      },
+      {
+          "type": "header",
+          "content": "+ Design tablet options"
+      },
+      {
+          "type": "text",
+          "id": "mg_tb",
+          "label": "Margin",
+          "default": ",,50px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd_tb",
+          "label": "Padding",
+          "default":"26px,,26px,",
+          "placeholder": "50px,,50px,"
+      },
+      {
+          "type": "header",
+          "content": "+ Design mobile options"
+      },
+      {
+          "type": "text",
+          "id": "mg_mb",
+          "label": "Margin",
+          "default": ",,30px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd_mb",
+          "label": "Padding",
+          "default":"25px,,25px,",
+          "placeholder": ",,50px,"
+      }
+    ]
+  }
+{% endschema %}

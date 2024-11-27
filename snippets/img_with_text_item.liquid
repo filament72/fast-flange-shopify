@@ -1,0 +1,34 @@
+{% assign image = block.settings.image %}
+<div class="t4s-col-item t4s-img_with_text_item {{ block.settings.title | handle }} t4s-pr">
+  <div class="t4s-item-inner" timeline hdt-reveal="slide-in">
+    <div class="t4s-img">
+      {%- if image != blank -%}
+        <div class="t4s-d-block t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});{{ imgatt }}--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }}">
+          <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" {% if image.presentation.focal_point != '50.0% 50.0%' %}style="object-position: {{ image.presentation.focal_point }};" {% endif %}data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" loading="lazy">
+        </div>
+      {%- else -%}
+        <div class="t4s_ratio" style="--aspect-ratioapt:2">
+          {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="t4s-item-content">
+      <div class="t4s-content-wrap">
+       {% if block.settings.title != blank %}
+          <h3 class="t4s-title">
+            {{ block.settings.title }}
+          </h3>
+       {% endif %}
+       {% if block.settings.text_1 != blank %}
+          <p>{{ block.settings.text_1 }}</p>
+       {% endif %}
+       {% if block.settings.text_2 != blank %}
+          <p>{{ block.settings.text_2 }}</p>
+       {% endif %}
+       {% if block.settings.text_3 != blank %}
+          <p>{{ block.settings.text_3 }}</p>
+       {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

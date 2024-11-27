@@ -1,0 +1,156 @@
+.t4s-price-tables-inner {
+	transition: 0.5s ease 0s;
+  border:1px solid rgba(var(--border-color-rgb),.85);
+  position: relative;
+  background-color: var(--bg-package-item);
+}
+.t4s-price-tables-title {
+	font-size: 20px;
+  line-height: 25px;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+.t4s-price-tables-item.t4s-item-highlights-true .t4s-price-tables-inner {
+  border: 0;
+	/* box-shadow : 0px 1px 20px rgba(41,51,65,0.1); */
+  filter: drop-shadow(0px 1px 20px rgba(41,51,65,0.1));
+}
+.t4s-price-tables-head{
+  border-bottom:1px solid rgba(var(--border-color-rgb),.85);
+  padding: 40px 25px;
+}
+.t4s-price-tables-price-date{color: var(--heading-color);}
+.t4s-price-tables-price-date>div {
+  display: inline-block;
+}
+.t4s-price-tables-unit{
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 25px;
+  padding-inline-end: 3px;
+  vertical-align: top!important;
+  position: relative;
+  top:8px;
+}
+.t4s-price-tables-price {
+  font-size: 55px;
+	font-weight: 600;
+  line-height: 60px;
+}
+.t4s-price-tables-date{
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 30px;
+}
+.t4s-price-tables-des {
+	font-size: 16px;
+  font-weight: 300;
+  margin-top: 10px;
+	margin-bottom: 0;
+}
+.t4s-price-tables-content {
+	list-style: none;
+	padding: 26px 25px 50px;
+  margin-bottom: 0;
+}
+.t4s-price-tables-content li {
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 30px;
+  color: var(--text-color);
+}
+.t4s-price-tables-list.t4s-content-icon-check__false .t4s-price-tables-content li svg{display: none;}
+.t4s-price-tables-content li:first-child svg{
+  margin-inline-end: 6px;
+}
+.t4s-price-tables-content li svg{
+  width: 14px;
+  height: auto;
+  fill: var(--heading-color);
+  margin-inline-end: 4px;
+}
+.t4s-price-tables-content li.t4s-text-line-through {
+	text-decoration: line-through;
+	opacity: 0.6;
+}
+.t4s-price-tables-design1 .t4s-price-tables-button{
+  position: absolute!important;
+  transform: translate(-50%, 50%);
+  bottom: 0;
+  left: 50%;
+}
+.t4s-text-start .t4s-price-tables-button{
+  transform: translate(0%,50%);
+  bottom: 0;
+  margin-inline-start: 25px;
+}
+.t4s-price-tables-button.t4s-btn-base.t4s-btn-style-default,
+.t4s-price-tables-button.t4s-btn-base.t4s-btn-style-outline.t4s-btn-size-default {
+  font-size: 14px;
+  font-weight: 400;
+}
+.t4s-price-tables-button.t4s-btn-base.t4s-btn-style-default.t4s-btn-color-light{
+  border:2px solid rgba(var(--border-color-rgb),.85) !important;
+}
+.t4s-price-tables-design2 .t4s-price-tables-unit{font-size: 55px; line-height: 42px;margin: 0;}
+.t4s-price-tables-design2 .t4s-price-tables-title{letter-spacing: 3px;}
+.t4s-price-tables-design2 .t4s-price-tables-content{
+  padding: 20px 25px;
+}
+.t4s-price-tables-design2 .t4s-price-tables-button{margin-bottom: 35px;transform: none;}
+
+.t4s-price-tables-icon {
+  margin-bottom: 10px;
+}
+.t4s-price-tables-icon__themes svg{
+  height: 51px;
+  width: auto;
+  fill: var(--heading-color);
+}
+.t4s-item-highlights-true .t4s-price-tables-icon__themes svg{fill: var(--accent-color);}
+.t4s-item-highlights-true .t4s-price-tables-icon__awesome i{color: var(--accent-color);}
+.t4s-price-tables-icon__img{
+  width: 51px;
+  height: 51px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.t4s-text-center .t4s-price-tables-icon__img{margin: 0 auto;}
+.t4s-price-tables-icon__awesome i{
+  font-size: 34px;
+  color: var(--heading-color);
+}
+@media (min-width:768px){
+  .t4s-price-tables .t4s-g-lg-40,
+  .t4s-price-tables .t4s-gx-lg-40,
+  .t4s-price-tables .t4s-px-lg-40 {
+    --ts-gutter-x: 40px;
+  }
+
+  .t4s-price-tables .t4s-g-lg-40,
+  .t4s-price-tables .t4s-gy-lg-40 {
+    --ts-gutter-y: 40px;
+  }
+}
+@media (min-width:1025px){
+  .t4s-price-tables .t4s-g-lg-50,
+  .t4s-price-tables .t4s-gx-lg-50,
+  .t4s-price-tables .t4s-px-lg-50 {
+    --ts-gutter-x: 50px;
+  }
+
+  .t4s-price-tables .t4s-g-lg-50,
+  .t4s-price-tables .t4s-gy-lg-50 {
+    --ts-gutter-y: 50px;
+  }
+}
+@media (-moz-touch-enabled: 0), (hover: hover) and (min-width: 1025px){
+	/* .t4s-price-tables-item .t4s-price-tables-inner:hover{
+		transform: translateY(-10px);
+	} */
+  .t4s-price-tables-button.t4s-btn-base.t4s-btn-style-default.t4s-btn-color-light:hover{
+    border-color: var(--accent-color)!important;
+  }
+}

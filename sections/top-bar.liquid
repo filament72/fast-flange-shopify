@@ -1,0 +1,1873 @@
+
+  <!-- sections/top-bar.liquid -->
+  {%- liquid
+    assign sid = section.id    
+    assign topbar_transparent = section.settings.topbar_transparent
+    if request.page_type != 'index' 
+      assign topbar_transparent = false 
+    endif 
+    assign padding_section = section.settings.pd | remove: ' ' | split: ','
+    assign search_url = routes.search_url 
+  -%}
+
+  {%- style -%} 
+
+    {%- if topbar_transparent -%}
+      {%- assign bg_op_tr = section.settings.bg_op_tr | divided_by: 100.0 -%}
+      .is--header-transparent .t4s-top-bar {
+        --tb-color: {{ section.settings.cl_tr }}; --tb-background: {{ section.settings.bg_tr | color_modify: 'alpha', bg_op_tr }};
+        --tb-border: {{ section.settings.bd_cl_tr }};
+        --tb-color-a-hover: {{ section.settings.cl_a_hover_tr }};
+      }
+      .is--header-transparent .t4s-top-bar-section {
+        position: relative;
+        z-index: 461;
+      }
+      .is--header-transparent .t4s-top-bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        top: calc(var(--topbar-height) * -1);
+        transition: top .268s ease 0s;
+        z-index:1; 
+      }
+      .is--header-transparent .t4s-announcement-bar-section:not([aria-hidden="true"]) + .t4s-top-bar-section .t4s-top-bar {
+        top: 0;
+      }
+      .is--header-transparent .t4s-section-header {
+        margin-top: calc(var(--topbar-height) + var(--h-space-tr));
+        margin-bottom: calc(-1 * (var(--header-height) + var(--topbar-height) + var(--h-space-tr)));
+      }
+      .is--header-transparent #t4s-hsticky__sentinel {
+        top: var(--topbar-height);
+        width: 100%;
+        position: absolute;
+      }
+    {%- endif -%}
+    {%- assign bg_op = section.settings.bg_op | divided_by: 100.0 -%}
+    .t4s-top-bar {
+      --tb-color: {{ section.settings.cl }}; --tb-background: {{ section.settings.bg | color_modify: 'alpha', bg_op }};
+      --tb-border: {{ section.settings.bd_cl }};
+      --tb-color-a-hover: {{ section.settings.cl_a_hover }};
+    }
+    .t4s-top-bar {
+      font-size:{{ section.settings.fontsize }}px;
+      font-weight:{{ section.settings.fontweight }};
+      letter-spacing:{{ section.settings.ls }}px;
+      background-color: var(--tb-background);
+      color:var(--tb-color);
+      text-transform:{{ section.settings.txt_transform }};
+    }
+    .t4s-top-bar.t4s-top-bar-border__fullwidth{
+      border-bottom: 1px solid var(--tb-border);
+    }
+    .t4s-top-bar.t4s-top-bar-border__container > .t4s-container{position:relative}
+    .t4s-top-bar.t4s-top-bar-border__container > .t4s-container:after{
+      border-bottom: solid 1px var(--tb-border);
+      content: "";
+      position: absolute;
+      z-index: 5;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: calc(100% - 30px);
+      bottom: 0;
+      pointer-events: none;
+    }
+    {%- if section.settings.full_w_topbar -%} .t4s-top-bar.t4s-top-bar-border__container > .t4s-container:after{width:100%}{%- endif -%}
+    .t4s-top-bar__wrap {padding: 10px 0; min-height:{{ section.settings.height }}px;}
+    .t4s-top-bar a { color:var(--tb-color) }
+    .t4s-top-bar .t4s-top-bar-text__item a { color: var(--tb-color-link); }
+    .t4s-top-bar a:hover { color:var(--tb-color-a-hover) }
+    .t4s-top-bar-text__item strong { font-weight: var(--tb-fw-bold); color: var(--tb-color-bold); }
+    .t4s-top-bar-text__item p {margin-bottom:0}
+    .t4s-top-bar .ml__15 { margin-inline-start: 15px; }
+    .t4s-top-bar__html i {font-size: 16px;vertical-align: middle;}
+    .t4s-top-bar__html svg{width:calc({{ section.settings.fontsize }}px + 1px);height: calc({{ section.settings.fontsize }}px + 1px);vertical-align: middle;display: inline-block;fill: currentColor;position: relative;top: -1px;}
+    .t4s-top-bar .t4s-countdown-enabled {display: inline-block;}
+
+    .t4s-top-linklist {margin: 0;padding: 0;}
+    .t4s-top-linklist li {display: inline-block;padding-inline-end:22px;margin-inline-end: 22px;position: relative;}
+    .t4s-top-linklist li:last-child{padding-inline-end: 0;margin-inline-end: 0;}
+    .t4s-top-linklist li a.t4s-top-link-active{color:var(--accent-color)}
+    .t4s-top-menu-border__true li:not(:last-child)::after{content: '';position: absolute;z-index: 1;top: 0;bottom: 0;height: 11px;border-inline-end: 2px solid;margin: auto;right: 0;opacity: 0.3;}
+  
+    .t4s-top-linklist2 {margin: 0;padding: 0;}
+    .t4s-top-linklist2 li {display: inline-flex;align-items: center;padding-inline-end:30px;margin-inline-end: 30px;position: relative;}
+    .t4s-top-linklist2 li:last-child{padding-inline-end: 0;margin-inline-end: 0;}
+    .t4s-top-linklist2 li a.t4s-top-link-active{color:var(--accent-color);}
+    .t4s-top-linklist2 svg{position:relative;top:0;}
+    .t4s-top-menu-border__true.t4s-top-linklist2 li:not(:last-child)::after{content: '';position: absolute;z-index: 1;top: 0;bottom: 0;height: 20px;border-inline-end: 1px solid;margin: auto;right: 0;opacity: 0.3;}
+
+    .t4s-header__currencies{padding-inline-end: calc(var(--space-item)/2);}
+    .t4s-cur-menu__true .t4s-header__currencies{padding-inline-start:var(--space-item)}
+
+    .t4s-header__languages{padding-inline-start:calc(var(--space-item)/2);padding-inline-end: calc(var(--space-item)/2);}
+    .t4s-header__currencies button,.t4s-header__languages button{background: transparent;color: var(--tb-color);display: flex;padding: 0;align-items: center;line-height: 22px;font-size: 100%;}
+    .t4s-header__currencies button img+span,.t4s-header__languages button img+span{padding-inline-start: 7px;margin-bottom: 5px;margin-top: 5px;}
+    .t4s-header__currencies .t4s-dropdown__wrapper button img {border: 1px solid #EEEEEE;}    
+    .t4s-header__currencies button:hover,.t4s-header__languages button:hover{background: transparent;color: var(--tb-color-a-hover);}
+    .t4s-header__currencies button svg,.t4s-header__languages button svg{width: 8px;margin-inline-start: 6px;}
+    .t4s-header__currencies .t4s-dropdown__wrapper,.t4s-header__languages .t4s-dropdown__wrapper {background: var(--t4s-body-background );padding: 15px;}
+    .t4s-header__currencies .t4s-drop-arrow, .t4s-header__languages .t4s-drop-arrow {background-color: var(--t4s-body-background );}
+    .t4s-header__currencies button.is--selected, .t4s-header__languages button.is--selected{color: var(--tb-color-a-hover);}
+    .t4s-header__currencies button[data-flagst4="md"]:not(:last-child), .t4s-header__languages button[data-flagst4="md"]:not(:last-child){margin-bottom: 7px;}
+    .t4s-header__currencies .t4s-dropdown__wrapper button,.t4s-header__languages .t4s-dropdown__wrapper button {color: var(--text-color);text-transform: capitalize;}
+    .t4s-top-bar .t4s-header__currencies button,
+    .t4s-top-bar .t4s-header__languages button{text-transform: inherit;}
+
+    .t4s-top-bar-cur_wrap .t4s-header__languages{padding-inline-end:0}
+    .t4s-header__currencies .t4s-dropdown__wrapper button.is--selected, .t4s-header__languages .t4s-dropdown__wrapper button.is--selected {
+      color: var(--link-color-hover);
+    } 
+    .t4s-cur-linklist{margin:0;padding:0;display:inline-block}
+    .t4s-cur-linklist li{display:inline-block}
+    .t4s-cur-linklist li a{padding-inline-start:calc(var(--space-item)/2);padding-inline-end: calc(var(--space-item)/2);}
+    .t4s-cur-linklist li a i{margin-inline-end:5px}
+    .t4s-cur-linklist li:first-child a{padding-inline-start:0}
+    .t4s-cur-linklist li:last-child a{padding-inline-end:0}
+
+    .t4s-top-bar-wis-acc>div{display: inline-flex;align-items:center;}
+    .t4s-top-bar-wis-acc a{position: relative;padding: 0 18px;display: inline-flex;align-items: center;justify-content: center;gap: 0 5px;}
+    .t4s-top-bar-wis-acc>div:last-child a{padding-inline-end:0}
+    .t4s-top-bar-wis-acc svg {
+      height: {{ section.settings.fontsize }}px;
+      width: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      fill:currentColor;
+    }
+    .t4s-top-bar-wis-acc-icon__false svg{display:none} 
+    /* block socials */
+    .t4s-top-bar__social-email >a{display:inline-flex;align-items:center;}
+    .t4s-top-bar__social-email svg{width:calc({{ section.settings.fontsize }}px + 1px);fill: currentColor;margin-inline-end: 5px;}
+    /* block cur_search */
+    .t4s-top-bar-cur_search-hidden{display: inline-flex;align-items: center;justify-content: center;min-width:40px}
+    .t4s-top-bar-cur_search-hidden a{display:flex;align-items:center;padding:5px 10px}
+    .t4s-top-bar-cur_search-hidden button.t4s-drawer__close{color: var(--tb-color);width: 36px;height: 36px;background: transparent;line-height: 36px;position: absolute;margin: auto;}
+    .t4s-top-bar-cur_search-hidden svg{height:16px;width:16px;fill:currentColor}
+    .t4s-top-bar-cur_search-hidden button.t4s-drawer__close{opacity: 0;visibility: hidden;transform: scale(0);display: none;}
+    body.show-search .t4s-top-bar-cur_search-hidden .t4s-drawer__close{ opacity: 1;visibility: visible;transform: scale(1);display:inline-flex;}
+    body.show-search .t4s-top-bar-cur_search-hidden a{ opacity: 0;visibility: hidden;transform: scale(0);}
+    .t4s-top-bar-cur_search{display:flex;justify-content:space-between;align-items:center;width:100%;}
+    .t4s-top-bar-cur_search .t4s-header__currencies,
+    .t4s-top-bar-cur_search .t4s-header__languages{margin-inline-end:20px;padding-inline-end:20px;}
+    /* responsive */
+    @media (max-width:1024px){
+      .t4s-top-bar-wis-acc a {padding: 0 10px;}
+      .t4s-top-linklist li,
+      .t4s-top-linklist2 li{padding-inline-end:15px;margin-inline-end: 15px;}
+      .t4s-top-bar-show__desktop{display:none}
+      .t4s-top-bar__wrap {padding: 8px 0;}
+    }
+
+    @media (max-width: 767px) {  
+      .t4s-header__currencies .t4s-dropdown__wrapper.is-style-mb--false,
+      .t4s-header__languages .t4s-dropdown__wrapper.is-style-mb--false {min-width: 100px;max-width:300px;width: auto;}
+    }
+    @media(min-width: 768px){
+      .t4sp-hover .t4s-header__currencies .t4s-dropdown__wrapper button:hover, .t4sp-hover .t4s-header__languages .t4s-dropdown__wrapper button:hover {color: var(--link-color-hover); }
+      .t4s-header__currencies .t4s-dropdown__wrapper,.t4s-header__languages .t4s-dropdown__wrapper {min-width: 100px;max-width:300px;width: auto;}      
+      .t4s-header__currencies .t4s-dropdown__wrapper.t4s-currency_type_1 {min-width: 205px;}
+    }
+    @media (min-width:1025px){
+      {%- if section.settings.full_w_topbar -%}
+      .t4s-top-bar >.t4s-container{max-width:100%;}
+      {%- endif -%}
+      .t4s-top-bar >.t4s-container{
+        padding-top: var(--pd-top);
+        padding-right: var(--pd-right);
+        padding-bottom: var(--pd-bottom);
+        padding-left: var(--pd-left);
+      }
+      .t4s-top-bar-show__tablet_mobile{display:none}
+      
+      .t4s-border-withhin__true >div:not(:last-child) {position: relative;}
+      .t4s-border-withhin__true >div:not(:last-child):after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        bottom: 0;
+        height: {{ section.settings.height }}px;;
+        border-inline-end: 1px solid var(--tb-border);
+        margin: auto;
+        right: 0;
+      }
+    }
+    @media (-moz-touch-enabled: 0), (hover: hover) and (min-width: 1025px) {
+      .t4s-top-bar-cur_search-hidden button.t4s-drawer__close:hover{background:transparent;color:var(--accent-color);}
+    }
+
+  {%- endstyle -%}
+  <div data-topbar-options='{ "isTransparent": {{ topbar_transparent }} }' id="t4s-top-bar-main" class="t4s-top-bar t4s-top-bar-show__{{ section.settings.show_topbar }} t4s-top-bar-border__{{ section.settings.border_bottom }}" style="--pd-top: {{ padding_section[0] | default: "0px" }};--pd-right: {{ padding_section[1] | default: "15px" }};--pd-bottom: {{ padding_section[2] | default: "0px" }};--pd-left: {{ padding_section[3] | default: "15px" }};">
+    <div class="t4s-container">
+       <div class="t4s-row t4s-top-bar__wrap t4s-align-items-center t4s-border-withhin__{{ section.settings.show_border_b }}">
+
+          {%- if section.blocks.size > 0 -%}
+             {%- for block in section.blocks -%}
+                <div {{ block.shopify_attributes }} id="b_{{ block.id }}" class="t4s-top-bar__{{ block.type }} {% if block.settings.top_menu_link != blank %} t4s-cur-menu__true {% endif %} t4s-col-item t4s-col-12 t4s-text-center t4s-col-lg-{{ block.settings.col }} t4s-text-lg-{{ block.settings.text_align }} {% if block.settings.hide %} t4s-d-none t4s-d-md-none t4s-d-lg-block{% endif %}" {% if block.settings.col == 'custom' %} style="--t4s-cus-col-lg:{{ block.settings.col_w | remove: ' ' }}%;"{% endif %}>
+                {%- case block.type -%}
+                  {%- when 'cur' -%}
+                    <div class="t4s-top-bar-cur_wrap" style="--space-item:{{ block.settings.space_h_item }}px">
+                      {%- if block.settings.html != blank -%}<div class="t4s-top-bar__html svg t4s-d-inline-block">{{ block.settings.html }}</div>{%- endif -%}
+                      {%- if block.settings.top_menu_link != blank -%}
+                        <div class="t4s-cur-menu t4s-d-inline-block">  
+                          <ul class="t4s-cur-linklist">
+                            {%- for link in block.settings.top_menu_link.links -%}
+                              <li>
+                                <a href="{{ link.url }}" class="t4s-top-link {% if link.current %}t4s-top-link-active{% endif %}" {% if link.current %}  aria-current="page" {% endif %}>
+                                  {%- render 'title_menu2', title: link.title -%}
+                                </a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        </div>
+                      {%- endif -%}
+                      
+                      {%- if block.settings.show_currency -%}
+                        <link rel="stylesheet" href="{{ 'base_drop.min.css' | asset_url }}" media="all">
+                        {%- render 'currencies', sid: sid, class_mb: 'is-style-mb--false' -%}
+                      {%- endif -%}
+                      {%- if block.settings.show_language and shop.published_locales.size > 1 -%}
+                        <link rel="stylesheet" href="{{ 'base_drop.min.css' | asset_url }}" media="all">
+                        {%- render 'languages', sid: sid, class_mb: 'is-style-mb--false' -%}
+                      {%- endif -%}
+
+                    </div>
+                  {%- when 'cur_search' -%}
+                    <div class="t4s-top-bar-cur_search">
+                      <div class="t4s-w-100 t4s-text-start t4s-pr">
+                        {%- if block.settings.show_language and shop.published_locales.size > 1 -%}
+                          <link rel="stylesheet" href="{{ 'base_drop.min.css' | asset_url }}" media="all">
+                          {%- render 'languages', sid: sid, class_mb: 'is-style-mb--false', data_custom_position: 'bottom-start' -%}
+                        {%- endif -%}
+                        {%- if block.settings.show_currency -%}
+                          <link rel="stylesheet" href="{{ 'base_drop.min.css' | asset_url }}" media="all">
+                          {%- render 'currencies', sid: sid, class_mb: 'is-style-mb--false', data_custom_position: 'bottom-start' -%}
+                        {%- endif -%}
+                      </div>
+                      <div class="t4s-top-bar-cur_search-hidden">
+                        <a href="{{ routes.search_url }}" data-drawer-delay- data-drawer-options='{ "id": "#t4s-search-hidden" }' data-toggle-class="show-search" data-toggle-trigger="body">
+				                  <svg class="t4s-icon t4s-icon--search" aria-hidden="true" focusable="false" role="presentation"><use href="#icon-h-search"></use></svg>
+                        </a>
+                        <button class="t4s-drawer__close" data-drawer-close="" aria-label="Close Search" data-toggle-class="show-search" data-toggle-trigger="body">
+                          <svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14" width="20" height="20"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                  {%- when 'text' -%}
+                      {%- capture cap_date %}{% assign se_dayx = block.settings.dayx %}<span data-refresh-owl data-countdown-t4s data-loop="{% if se_dayx > 0 %}true{% else %}false{% endif %}" data-date="{{ block.settings.countdown }}" data-dayl="{{ se_dayx }}">%D {{ block.settings.txt_day }} %H:%M:%S</span>{% endcapture -%}
+                      {%- assign array_txt = block.settings.text | remove: '<p>' | remove: '</p>' | split: ';;;' | compact -%}
+                      
+                      {%- if array_txt.size > 1 -%}
+                          {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+                          <div class="t4s-top-bar-text__slider t4s-row t4s-row-cols-1 t4s-g-0 flickityt4s{% if block.settings.effect == '1' %} t4s-slide-eff-fade{% endif %}" data-flickityt4s-js='{ "cellAlign": "center","imagesLoaded": 0,"lazyLoad": 0,"freeScroll": 0,"wrapAround": true,"autoPlay" : {{ block.settings.au_time | times: 1000 }},"pauseAutoPlayOnHover" : true, "prevNextButtons": false,"pageDots": false, "contain" : 1,"adaptiveHeight" : 1,"dragThreshold" : 5,"percentPosition": 1 }'>
+                            {%- for txt in array_txt -%}<div class="t4s-top-bar-text__item t4s-col-item">{{- txt | replace: '[countdown]', cap_date -}}</div>{%- endfor -%}
+                          </div>
+                         
+                      {%- else -%}
+                          <div class="t4s-top-bar-text__item">{{ block.settings.text | replace: '[countdown]', cap_date }}</div>
+                      {%- endif -%}
+                      {%- style -%}
+                        .t4s-top-bar {
+                          --tb-fw-bold:{{ block.settings.fw_bold }};
+                          --tb-color-link: {{ block.settings.cl_a }}; --tb-color-bold: {{ block.settings.cl_bold }};
+                        }
+                        {%- if topbar_transparent %}.is--header-transparent .t4s-top-bar {--tb-color-link: {{ block.settings.cl_a_tr }}; --tb-color-bold: {{ block.settings.cl_bold_tr }};}{%- endif -%}
+                      {%- endstyle -%}
+
+                  {%- when 'social' -%}
+                    <ul class="t4s-top-linklist2 t4s-top-menu-border__{{ block.settings.show_border_w }}">
+                    {%- if block.settings.enable_email -%}
+                      <li class="t4s-top-bar__social-email">
+                        <a href="mailto:{{ block.settings.txt_email }}">
+                          <svg viewBox="0 0 512 512"><path d="M64 80c-26.5 0-48 21.5-48 48v28.2L220.8 321.4c20.5 16.5 49.8 16.5 70.3 0L496 156.2V128c0-26.5-21.5-48-48-48H64zM16 176.7V384c0 26.5 21.5 48 48 48H448c26.5 0 48-21.5 48-48V176.7L301.2 333.8c-26.4 21.3-64 21.3-90.4 0L16 176.7zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"/></svg>
+                          <span>{{ block.settings.txt_email }}</span>
+                        </a>
+                      </li>
+                    {%- endif -%}
+                    {% liquid 
+                      assign pri_cl_lightness       = block.settings.pri_cl | color_extract: 'lightness'
+                      assign pri_hover_cl_lightness       = block.settings.pri_hover_cl | color_extract: 'lightness'
+                      if pri_cl_lightness < 85
+                        assign pri_cl2 = "#fff"
+                      else 
+                        assign pri_cl2 = "#000"
+                      endif
+                      if pri_hover_cl_lightness < 85
+                        assign pri_hover_cl2 = "#fff"
+                      else 
+                        assign pri_hover_cl2 = "#000"
+                      endif
+                    -%}
+                    {%- if block.settings.social == '2' -%}{%- assign follow_social = true -%} {%- else -%} {%- assign share_image = settings.share_image | default: page_image | default: settings.logo -%} {%- endif -%} 
+                    <li>
+                      <div class="t4s-socials-block" style="--pri-cl: {{ block.settings.pri_cl }};--pri-cl2: {{ pri_cl2 }};--pri-hover-cl: {{ block.settings.pri_hover_cl }};--pri-hover-cl2: {{ pri_hover_cl2 }};--mgb: {{ block.settings.mgb }}px;--mgb-tb: {{ block.settings.mgb_tb }}px;--mgb-mb: {{ block.settings.mgb_mb }}px; --bd-radius: {{ block.settings.bd_radius }}px;">
+                        {%- render 'social_sharing', style: block.settings.social_style, use_color_set: block.settings.use_color_set, size: block.settings.social_size, space_h_item: block.settings.space_h_item, space_h_item_mb: block.settings.space_h_item_mb, space_v_item: block.settings.space_v_item, space_v_item_mb: block.settings.space_v_item_mb, share_permalink: shop.url, share_title: shop.name, share_image: share_image, follow_social: follow_social -%} 
+                      </div>
+                    </li>
+                  </ul>
+                  {%- when 'link_list' -%} 
+                    <div class="t4s-top-menu t4s-d-block t4s-top-menu-border__{{ block.settings.show_border_w }}"> 
+                      <ul class="t4s-top-linklist">
+                        {%- for link in block.settings.top_menu_link.links -%}
+                          <li>
+                            <a href="{{ link.url }}" class="t4s-top-link{% if link.current %} t4s-top-link-active{% endif %}" {% if link.current %}  aria-current="page" {% endif %}>
+                              {%- render 'title_menu2', title: link.title -%}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                    {%- when 'wis_acc' -%}
+                      <div class="t4s-top-bar-wis-acc t4s-d-inline-block t4s-top-bar-wis-acc-icon__{{ block.settings.enable_icon }}">
+                        {%- if block.settings.enable_wis and settings.wishlist_mode != '0' -%}
+                          <div class="t4s-top-bar__wislist">
+                              <a data-link-wishlist href="{% if settings.wishlist_mode != '3' %}{{ search_url }}/?view=wishlist{%- else -%}/pages/wishlist{%- endif -%}">
+                                <svg viewBox="0 0 512 512"><path d="M64 288L39.8 263.8C14.3 238.3 0 203.8 0 167.8C0 92.8 60.8 32 135.8 32c36 0 70.5 14.3 96 39.8L256 96l24.2-24.2c25.5-25.5 60-39.8 96-39.8C451.2 32 512 92.8 512 167.8c0 36-14.3 70.5-39.8 96L448 288 256 480 64 288z"/></svg>
+                                <span>{{ 'customer.account.wishlist' | t }}</span>
+                              </a>
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.enable_track_order or block.settings.url_track_order != blank -%}
+                          <div class="t4s-top-bar__track-order">
+                              <a href="{{ block.settings.url_track_order | default: "/" }}">
+                                <svg viewBox="0 0 384 512"><path d="M192 512s192-208 192-320C384 86 298 0 192 0S0 86 0 192C0 304 192 512 192 512zm0-384a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
+                                <span>{{ block.settings.label_track_order }}</span>
+                              </a>
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.enable_location or block.settings.url_location != blank -%}
+                          <div class="t4s-top-bar__location">
+                              <a href="{{ block.settings.url_location | default: "/" }}">
+                                <svg viewBox="0 0 576 512"><path d="M0 96V480l160-64V32L0 96zm416 0V480l160-64V32L416 96zM384 480V96L192 32V416l192 64z"/></svg>
+                                <span>{{ block.settings.label_location }}</span>
+                              </a>
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.enable_acc and shop.customer_accounts_enabled -%}
+                          <div class="t4s-top-bar__account t4s-pr"> 
+                            <a href="{{ routes.account_url }}" {% unless customer or settings.login_side == false or request.page_type contains 'customers' %} data-drawer-options='{ "id": "#t4s-login-sidebar" }' {% endunless %}>
+                              <svg viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+                              <span>{{ 'customer.account.account' | t }}</span>
+                            </a>
+                            {%- if customer -%}
+                              <ul class="t4s-my-account">
+                                <li><a class="t4s-d-block" href="{{ routes.account_url }}">{{ 'customer.account.dashboard' | t }}</a></li>
+                                <li><a class="t4s-d-block" href="{{ routes.account_addresses_url }}">{{ 'customer.menu.addresses' | t }}</a></li>
+                                <li><a class="t4s-d-block" href="{{ routes.account_logout_url }}" data-no-instant>{{ 'customer.account.log_out' | t }}</a></li>
+                              </ul>
+                              {%- style -%}.t4s-top-bar__account .t4s-my-account{position: absolute;top: 100%;z-index: 380;background-color: var(--t4s-body-background);box-shadow: 0 0 3px rgb(0 0 0 / 15%);list-style: none;right: 0;padding: 10px 0;line-height: 1.4;margin-top: 12px;border-radius: 3px;transform: translateY(15px) translateZ(0);visibility: hidden;transition: opacity .2s,visibility .2s,transform .2s;opacity: 0;text-align: start;min-width: 120px;max-width: 200px;width: auto;margin-bottom: 0}.t4s-top-bar__account .t4s-my-account::after{content: "";position: absolute;top: auto;right: 0;bottom: 100%;left: 0;width: auto;height: 12px}.t4s-top-bar__account .t4s-my-account a{padding: 8px 16px!important;color:var(--text-color)}.rtl_true .t4s-top-bar__account .t4s-my-account{left:0;right:auto}@media (-moz-touch-enabled: 0), (hover: hover) and (min-width: 1025px){.t4s-top-bar__account:hover .t4s-my-account{pointer-events: auto;visibility: visible;opacity: 1;transform: none}.t4s-top-bar__account .t4s-my-account a:hover{color: var(--accent-color)!important}}{%- endstyle -%}
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.enable_cart -%}
+                          <div class="t4s-top-bar__cart">
+                            <a href="{{ routes.cart_url }}"{% if request.page_type != 'cart' and settings.cart_type != 'disable' %} data-drawer-delay- data-drawer-options='{ "id": "#t4s-mini_cart" }'{% endif %}>
+                              <svg viewBox="0 0 449 611.97"><path d="M205.6,1.57c-44.2,8.8-77,43.9-82.6,88.8-.5,4.4-1,13.3-1,19.8V122H0V612H449V122H327v-11.8c0-13.1-1.2-24.9-3.6-33.8-8.5-32.6-34-60.2-65.8-71C242.1.07,220.9-1.53,205.6,1.57Zm31.7,40.9c21.9,4.6,40.6,22.5,46.2,44.2,1,3.8,1.5,10.6,1.5,20.5V122H164v-14.8c0-23.2,4.2-34.4,18-48.3A59.05,59.05,0,0,1,237.3,42.47ZM122.2,193.67l.3,30.8h41l.3-30.8L164,163H285l.2,30.7.3,30.8h41l.3-30.8L327,163h81V571H41V163h81Z"/></svg>
+                              <span>{{ 'cart.general.your_cart' | t }}</span>
+                            </a>
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.enable_cart_count -%}
+                          <div class="t4s-top-bar__cart-count">
+                            <a href="{{ routes.cart_url }}"{% if request.page_type != 'cart' and settings.cart_type != 'disable' %} data-drawer-delay- data-drawer-options='{ "id":"#t4s-mini_cart" }'{% endif %}>
+                              <svg viewBox="0 0 449 611.97"><path d="M205.6,1.57c-44.2,8.8-77,43.9-82.6,88.8-.5,4.4-1,13.3-1,19.8V122H0V612H449V122H327v-11.8c0-13.1-1.2-24.9-3.6-33.8-8.5-32.6-34-60.2-65.8-71C242.1.07,220.9-1.53,205.6,1.57Zm31.7,40.9c21.9,4.6,40.6,22.5,46.2,44.2,1,3.8,1.5,10.6,1.5,20.5V122H164v-14.8c0-23.2,4.2-34.4,18-48.3A59.05,59.05,0,0,1,237.3,42.47ZM122.2,193.67l.3,30.8h41l.3-30.8L164,163H285l.2,30.7.3,30.8h41l.3-30.8L327,163h81V571H41V163h81Z"></path></svg>
+                              <span data-cart-count>{{ cart.item_count }}</span>{% if block.settings.label_count != blank %}<span> {{ block.settings.label_count }}</span>{% endif %} 
+                            </a>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                  {%- else -%}{{ block.settings.html }}
+                {%- endcase %}
+                </div>
+             {%- endfor -%}
+
+            {%- endif -%}
+
+          
+       </div>
+    </div> 
+  </div>
+{%- if topbar_transparent -%}
+<script>
+document.documentElement.classList.add('is--topbar-transparent');
+document.documentElement.style.setProperty('--topbar-height', document.getElementById('t4s-top-bar-main').offsetHeight + 'px');
+setTimeout(function(){ document.documentElement.style.setProperty('--topbar-height', document.getElementById('t4s-top-bar-main').offsetHeight + 'px'); }, 300);
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Top bar",
+  "class": "t4s-section t4s_tp_flickity t4s_tp_cd t4s-pr t4s-top-bar-section",
+  "limit": 1,
+  "max_blocks": 3,
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "show_topbar",
+      "options": [
+        {
+          "value": "all",
+          "label": "Show all screen"
+        },
+        {
+          "value": "desktop",
+          "label": "Only show on desktop"
+        },
+        {
+          "value": "tablet_mobile",
+          "label": "Only show on tablet & mobile"
+        }
+      ],
+      "label": "Show top bar",
+      "default": "all"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_w_topbar",
+      "label": "Enable top bar full width",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "topbar_transparent",
+      "label": "Enable top bar transparent",
+      "info": "Top bar transparent only active when header transparent active",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Min height",
+      "default": 41,
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "fontsize",
+      "label": "Font size",
+      "default": 12,
+      "min": 12,
+      "max": 15,
+      "step": 0.5,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "fontweight",
+      "label": "Font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "ls",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "label": "Letter spacing",
+      "info": "set is '0' use to default",
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "txt_transform",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "label": "Text transform "
+    },
+    {
+      "type": "color",
+      "id": "cl",
+      "label": "Text color",
+      "default": "#878787"
+    },
+    {
+      "type": "color",
+      "id": "cl_a_hover",
+      "label": "Link hover color",
+      "default": "#c91f28"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background color",
+      "default": "#f6f6f8"
+    },
+    {
+      "type": "range",
+      "id": "bg_op",
+      "label": "Background opacity",
+      "default": 100,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "border_bottom",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "container",
+          "label": "In container"
+        },
+        {
+          "value": "fullwidth",
+          "label": "Full width"
+        }
+      ],
+      "label": "Border bottom",
+      "default": "none"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border_b",
+      "label": "Show border within block",
+      "info": "Working on screen Desktop",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bd_cl",
+      "label": "Border color",
+      "default": "#eee"
+    },
+    {
+      "type": "header",
+      "content": "+ Top bar transparent color"
+    },
+    {
+      "type": "color",
+      "id": "cl_tr",
+      "label": "Text color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "cl_a_hover_tr",
+      "label": "Link hover color",
+      "default": "#c91f28"
+    },
+    {
+      "type": "color",
+      "id": "bg_tr",
+      "label": "Background color",
+      "default": "#000"
+    },
+    {
+      "type": "range",
+      "id": "bg_op_tr",
+      "label": "Background opacity",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border_tr",
+      "label": "Show border bottom",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bd_cl_tr",
+      "label": "Border color",
+      "default": "#ddd"
+    },
+    {
+      "type": "header",
+      "content": "+ Design options",
+      "info": "Only work on desktop"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding-top, padding-right, padding-bottom, padding-left. If you are not using it please leave it blank.",
+      "default": ",15px,,15px",
+      "placeholder": ",15px,,15px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "html",
+      "name": "Custom html",
+      "settings": [
+        {
+          "type": "html",
+          "id": "html",
+          "label": "Text",
+          "info": "Place here text you want to see.",
+          "default": "Summer sale discount off <span class=\"cr\">50%</span>! <a href=\"/shop\">Shop Now</a>"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide",
+          "label": "Hide on tablet, mobile",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text align",
+          "default": "start",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "col",
+          "label": "Width col",
+          "default": "4",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12 (8.333333%)"
+            },
+            {
+              "value": "2",
+              "label": "2/12 (16.666667%)"
+            },
+            {
+              "value": "3",
+              "label": "3/12 (25%)"
+            },
+            {
+              "value": "4",
+              "label": "4/12 (33.333333%)"
+            },
+            {
+              "value": "6",
+              "label": "6/12 (50%)"
+            },
+            {
+              "value": "7",
+              "label": "7/12 (58.333333%)"
+            },
+            {
+              "value": "8",
+              "label": "8/12 (66.666667%)"
+            },
+            {
+              "value": "9",
+              "label": "9/12 (75%)"
+            },
+            {
+              "value": "10",
+              "label": "10/12 (83.333333%)"
+            },
+            {
+              "value": "11",
+              "label": "11/12 (91.666667%)"
+            },
+            {
+              "value": "12",
+              "label": "12/12 (100%)"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "col_w",
+          "label": "Custom width",
+          "info": "The value of the unit is '%'",
+          "default": "33.33333"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Rich text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Content",
+          "default": "<p>Welcome customers to your store.;;; Welcome customers to your store 2.;;; Welcome customers to your store 3.</p>",
+          "info": "Use ';;;' to creat a text slider. You can use shortocdes: [countdown]"
+        },
+        {
+          "type": "text",
+          "id": "countdown",
+          "label": "Date countdown",
+          "default": "2023/12/26",
+          "info": "Use shortocdes: [countdown]. Countdown to the end sale date will be shown.( 2023/12/26 or 2023/12/26 20:00:30 )"
+        },
+        {
+          "type": "text",
+          "id": "txt_day",
+          "label": "Text day countdown",
+          "default": "days"
+        },
+        {
+          "type": "range",
+          "id": "dayx",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "Reset countdown every x days from an initial date.",
+          "info": "Set is '0' to disable reset countdown.",
+          "unit": "day",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "effect",
+          "label": "Effect slider",
+          "default": "1",
+          "options": [
+            {
+              "value": "1",
+              "label": "Fade"
+            },
+            {
+              "value": "0",
+              "label": "Slide"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "au_time",
+          "min": 0,
+          "max": 30,
+          "step": 0.5,
+          "label": "Set is '0' to disable autoplay.",
+          "unit": "sec",
+          "default": 3.5
+        },
+        {
+          "type": "range",
+          "id": "fw_bold",
+          "min": 300,
+          "max": 800,
+          "step": 100,
+          "label": "Font weight tag 'Bold'",
+          "default": 400
+        },
+        {
+          "type": "header",
+          "content": "+ Color"
+        },
+        {
+          "type": "color",
+          "id": "cl_a",
+          "label": "Link Color",
+          "default": "#222"
+        },
+        {
+          "type": "color",
+          "id": "cl_bold",
+          "label": "Color tag 'Bold'",
+          "default": "#ec0101"
+        },
+        {
+          "type": "header",
+          "content": "+ Transparent color"
+        },
+        {
+          "type": "color",
+          "id": "cl_a_tr",
+          "label": "Link Color",
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "cl_bold_tr",
+          "label": "Color tag 'Bold'",
+          "default": "#ec0101"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide",
+          "label": "Hide on tablet, mobile",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text align",
+          "default": "start",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "col",
+          "label": "Width col",
+          "default": "4",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12 (8.333333%)"
+            },
+            {
+              "value": "2",
+              "label": "2/12 (16.666667%)"
+            },
+            {
+              "value": "3",
+              "label": "3/12 (25%)"
+            },
+            {
+              "value": "4",
+              "label": "4/12 (33.333333%)"
+            },
+            {
+              "value": "6",
+              "label": "6/12 (50%)"
+            },
+            {
+              "value": "7",
+              "label": "7/12 (58.333333%)"
+            },
+            {
+              "value": "8",
+              "label": "8/12 (66.666667%)"
+            },
+            {
+              "value": "9",
+              "label": "9/12 (75%)"
+            },
+            {
+              "value": "10",
+              "label": "10/12 (83.333333%)"
+            },
+            {
+              "value": "11",
+              "label": "11/12 (91.666667%)"
+            },
+            {
+              "value": "12",
+              "label": "12/12 (100%)"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "col_w",
+          "label": "Custom width",
+          "info": "The value of the unit is '%'",
+          "default": "33.33333"
+        }
+      ]
+    },
+    {
+      "type": "cur",
+      "name": "Currency, Language,...",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "html",
+          "label": "Html",
+          "info": "Place here text you want to see.",
+          "default": "<a href=\"tel:+84 1900 1800\" class=\"t4s-d-inline-block\" style=\"margin-inline-end:var(--space-item,30px)\"><span><i class=\"fa-regular fa-tablet\"></i></span> Hotline: +84 1900 1800 </a>"
+        },
+        {
+          "type": "link_list",
+          "id": "top_menu_link",
+          "label": "Top menu link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_language",
+          "label": "Show language selector",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_currency",
+          "label": "Show currency selector",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "hide",
+          "label": "Hide on tablet, mobile",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text align",
+          "default": "start",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "space_h_item",
+          "options": [
+            {
+              "value": "15",
+              "label": "15px"
+            },
+            {
+              "value": "20",
+              "label": "20px"
+            },
+            {
+              "value": "25",
+              "label": "25px"
+            },
+            {
+              "value": "30",
+              "label": "30px"
+            },
+            {
+              "value": "35",
+              "label": "35px"
+            },
+            {
+              "value": "40",
+              "label": "40px"
+            }
+          ],
+          "label": "Space horizontal items",
+          "default": "30"
+        },
+        {
+          "type": "select",
+          "id": "col",
+          "label": "Width col",
+          "default": "4",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12 (8.333333%)"
+            },
+            {
+              "value": "2",
+              "label": "2/12 (16.666667%)"
+            },
+            {
+              "value": "3",
+              "label": "3/12 (25%)"
+            },
+            {
+              "value": "4",
+              "label": "4/12 (33.333333%)"
+            },
+            {
+              "value": "6",
+              "label": "6/12 (50%)"
+            },
+            {
+              "value": "7",
+              "label": "7/12 (58.333333%)"
+            },
+            {
+              "value": "8",
+              "label": "8/12 (66.666667%)"
+            },
+            {
+              "value": "9",
+              "label": "9/12 (75%)"
+            },
+            {
+              "value": "10",
+              "label": "10/12 (83.333333%)"
+            },
+            {
+              "value": "11",
+              "label": "11/12 (91.666667%)"
+            },
+            {
+              "value": "12",
+              "label": "12/12 (100%)"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "col_w",
+          "label": "Custom width",
+          "info": "The value of the unit is '%'",
+          "default": "33.33333"
+        }
+      ]
+    },
+    {
+      "type": "cur_search",
+      "name": "Cur, Lang, Search hidden",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_language",
+          "label": "Show language selector",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_currency",
+          "label": "Show currency selector",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "hide",
+          "label": "Hide on tablet, mobile",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "col",
+          "label": "Width col",
+          "default": "4",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12 (8.333333%)"
+            },
+            {
+              "value": "2",
+              "label": "2/12 (16.666667%)"
+            },
+            {
+              "value": "3",
+              "label": "3/12 (25%)"
+            },
+            {
+              "value": "4",
+              "label": "4/12 (33.333333%)"
+            },
+            {
+              "value": "6",
+              "label": "6/12 (50%)"
+            },
+            {
+              "value": "7",
+              "label": "7/12 (58.333333%)"
+            },
+            {
+              "value": "8",
+              "label": "8/12 (66.666667%)"
+            },
+            {
+              "value": "9",
+              "label": "9/12 (75%)"
+            },
+            {
+              "value": "10",
+              "label": "10/12 (83.333333%)"
+            },
+            {
+              "value": "11",
+              "label": "11/12 (91.666667%)"
+            },
+            {
+              "value": "12",
+              "label": "12/12 (100%)"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "col_w",
+          "label": "Custom width",
+          "info": "The value of the unit is '%'",
+          "default": "33.33333"
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Email, social",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_email",
+          "label": "Enable email",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "txt_email",
+          "label": "Text/url email",
+          "default": "info@ocolus.com"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_border_w",
+          "label": "Show border within email & socials",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "social",
+          "options": [
+            {
+              "value": "1",
+              "label": "Share"
+            },
+            {
+              "value": "2",
+              "label": "Follow"
+            }
+          ],
+          "label": "Type",
+          "default": "2"
+        },
+        {
+          "type": "select",
+          "id": "social_style",
+          "label": "Socials style",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "outline",
+              "label": "Outline"
+            },
+            {
+              "value": "simple",
+              "label": "Simple"
+            }
+          ],
+          "default": "simple"
+        },
+        {
+          "type": "select",
+          "id": "social_size",
+          "label": "Socials size",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "range",
+          "id": "bd_radius",
+          "label": "Border radius",
+          "info": "Not work when socials style is \"Simple\"",
+          "unit": "px",
+          "min": 0,
+          "max": 30,
+          "default": 0,
+          "step": 1
+        },
+        {
+          "type": "checkbox",
+          "id": "use_color_set",
+          "label": "Use color settings",
+          "info": "Default is themes color, tick here if you want custom color for icon socials.",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "only true when check to box Color Settings"
+        },
+        {
+          "type": "color",
+          "id": "pri_cl",
+          "label": "Primary color",
+          "default": "#7b7b7b"
+        },
+        {
+          "type": "color",
+          "id": "pri_hover_cl",
+          "label": "Primary hover color",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "space_h_item",
+          "options": [
+            {
+              "value": "0",
+              "label": "0"
+            },
+            {
+              "value": "2",
+              "label": "2px"
+            },
+            {
+              "value": "4",
+              "label": "4px"
+            },
+            {
+              "value": "5",
+              "label": "5px"
+            },
+            {
+              "value": "8",
+              "label": "8px"
+            },
+            {
+              "value": "10",
+              "label": "10px"
+            },
+            {
+              "value": "15",
+              "label": "15px"
+            },
+            {
+              "value": "20",
+              "label": "20px"
+            },
+            {
+              "value": "25",
+              "label": "25px"
+            },
+            {
+              "value": "30",
+              "label": "30px"
+            },
+            {
+              "value": "40",
+              "label": "40px"
+            }
+          ],
+          "label": "Space horizontal items",
+          "default": "20"
+        },
+        {
+          "type": "select",
+          "id": "space_v_item",
+          "options": [
+            {
+              "value": "0",
+              "label": "0"
+            },
+            {
+              "value": "2",
+              "label": "2px"
+            },
+            {
+              "value": "4",
+              "label": "4px"
+            },
+            {
+              "value": "5",
+              "label": "5px"
+            },
+            {
+              "value": "8",
+              "label": "8px"
+            },
+            {
+              "value": "10",
+              "label": "10px"
+            },
+            {
+              "value": "15",
+              "label": "15px"
+            },
+            {
+              "value": "20",
+              "label": "20px"
+            },
+            {
+              "value": "25",
+              "label": "25px"
+            },
+            {
+              "value": "30",
+              "label": "30px"
+            }
+          ],
+          "label": "Space vertical items",
+          "default": "0"
+        },
+        {
+          "type": "select",
+          "id": "space_h_item_mb",
+          "options": [
+            {
+              "value": "0",
+              "label": "0"
+            },
+            {
+              "value": "2",
+              "label": "2px"
+            },
+            {
+              "value": "4",
+              "label": "4px"
+            },
+            {
+              "value": "5",
+              "label": "5px"
+            },
+            {
+              "value": "6",
+              "label": "6px"
+            },
+            {
+              "value": "8",
+              "label": "8px"
+            },
+            {
+              "value": "10",
+              "label": "10px"
+            },
+            {
+              "value": "15",
+              "label": "15px"
+            },
+            {
+              "value": "20",
+              "label": "20px"
+            },
+            {
+              "value": "25",
+              "label": "25px"
+            },
+            {
+              "value": "30",
+              "label": "30px"
+            }
+          ],
+          "label": "Space horizontal items (Mobile)",
+          "default": "10"
+        },
+        {
+          "type": "select",
+          "id": "space_v_item_mb",
+          "options": [
+            {
+              "value": "0",
+              "label": "0"
+            },
+            {
+              "value": "2",
+              "label": "2px"
+            },
+            {
+              "value": "4",
+              "label": "4px"
+            },
+            {
+              "value": "5",
+              "label": "5px"
+            },
+            {
+              "value": "6",
+              "label": "6px"
+            },
+            {
+              "value": "8",
+              "label": "8px"
+            },
+            {
+              "value": "10",
+              "label": "10px"
+            },
+            {
+              "value": "15",
+              "label": "15px"
+            },
+            {
+              "value": "20",
+              "label": "20px"
+            },
+            {
+              "value": "25",
+              "label": "25px"
+            },
+            {
+              "value": "30",
+              "label": "30px"
+            }
+          ],
+          "label": "Space vertical items (Mobile)",
+          "default": "0"
+        },
+        {
+          "type": "paragraph",
+          "content": "————————————————"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide",
+          "label": "Hide on tablet, mobile",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text align",
+          "default": "start",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "col",
+          "label": "Width col",
+          "default": "4",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12 (8.333333%)"
+            },
+            {
+              "value": "2",
+              "label": "2/12 (16.666667%)"
+            },
+            {
+              "value": "3",
+              "label": "3/12 (25%)"
+            },
+            {
+              "value": "4",
+              "label": "4/12 (33.333333%)"
+            },
+            {
+              "value": "6",
+              "label": "6/12 (50%)"
+            },
+            {
+              "value": "7",
+              "label": "7/12 (58.333333%)"
+            },
+            {
+              "value": "8",
+              "label": "8/12 (66.666667%)"
+            },
+            {
+              "value": "9",
+              "label": "9/12 (75%)"
+            },
+            {
+              "value": "10",
+              "label": "10/12 (83.333333%)"
+            },
+            {
+              "value": "11",
+              "label": "11/12 (91.666667%)"
+            },
+            {
+              "value": "12",
+              "label": "12/12 (100%)"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "col_w",
+          "label": "Custom width",
+          "info": "The value of the unit is '%'",
+          "default": "33.33333"
+        }
+      ]
+    },
+    {
+      "type": "link_list",
+      "name": "Menu",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "top_menu_link",
+          "label": "Top menu link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_border_w",
+          "label": "Show border within link",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hide",
+          "label": "Hide on tablet, mobile",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text align",
+          "default": "start",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "col",
+          "label": "Width col",
+          "default": "4",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12 (8.333333%)"
+            },
+            {
+              "value": "2",
+              "label": "2/12 (16.666667%)"
+            },
+            {
+              "value": "3",
+              "label": "3/12 (25%)"
+            },
+            {
+              "value": "4",
+              "label": "4/12 (33.333333%)"
+            },
+            {
+              "value": "6",
+              "label": "6/12 (50%)"
+            },
+            {
+              "value": "7",
+              "label": "7/12 (58.333333%)"
+            },
+            {
+              "value": "8",
+              "label": "8/12 (66.666667%)"
+            },
+            {
+              "value": "9",
+              "label": "9/12 (75%)"
+            },
+            {
+              "value": "10",
+              "label": "10/12 (83.333333%)"
+            },
+            {
+              "value": "11",
+              "label": "11/12 (91.666667%)"
+            },
+            {
+              "value": "12",
+              "label": "12/12 (100%)"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "col_w",
+          "label": "Custom width",
+          "info": "The value of the unit is '%'",
+          "default": "33.33333"
+        }
+      ]
+    },
+    {
+      "type": "wis_acc",
+      "name": "Wislist,account,...",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_icon",
+          "label": "Enable icon",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_wis",
+          "label": "Enable wishlist",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_track_order",
+          "label": "Enable track order",
+          "default": true
+        },
+        {
+          "type": "url",
+          "id": "url_track_order",
+          "label": "Link track order"
+        },
+        {
+          "type": "text",
+          "id": "label_track_order",
+          "label": "Label track order",
+          "default": "Track order"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_location",
+          "label": "Enable location",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "url_location",
+          "label": "Link location"
+        },
+        {
+          "type": "text",
+          "id": "label_location",
+          "label": "Label location",
+          "default": "Location"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_acc",
+          "label": "Enable account",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_cart",
+          "label": "Enable cart",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_cart_count",
+          "label": "Enable cart count",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "label_count",
+          "label": "Label count",
+          "default": "items"
+        },
+        {
+          "type": "paragraph",
+          "content": "————————————————"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide",
+          "label": "Hide on tablet, mobile",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text align",
+          "default": "start",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "col",
+          "label": "Width col",
+          "default": "4",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12 (8.333333%)"
+            },
+            {
+              "value": "2",
+              "label": "2/12 (16.666667%)"
+            },
+            {
+              "value": "3",
+              "label": "3/12 (25%)"
+            },
+            {
+              "value": "4",
+              "label": "4/12 (33.333333%)"
+            },
+            {
+              "value": "6",
+              "label": "6/12 (50%)"
+            },
+            {
+              "value": "7",
+              "label": "7/12 (58.333333%)"
+            },
+            {
+              "value": "8",
+              "label": "8/12 (66.666667%)"
+            },
+            {
+              "value": "9",
+              "label": "9/12 (75%)"
+            },
+            {
+              "value": "10",
+              "label": "10/12 (83.333333%)"
+            },
+            {
+              "value": "11",
+              "label": "11/12 (91.666667%)"
+            },
+            {
+              "value": "12",
+              "label": "12/12 (100%)"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "col_w",
+          "label": "Custom width",
+          "info": "The value of the unit is '%'",
+          "default": "33.33333"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top bar",
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "col": "12",
+            "text_align": "center",
+            "text": "<p>Welcome customers to your store.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

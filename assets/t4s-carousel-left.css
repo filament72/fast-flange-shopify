@@ -1,0 +1,71 @@
+@media (max-width: 767px) {
+  .t4s-row-cols-1.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-1.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 70%;
+  }
+
+  .t4s-row-cols-2.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-2.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 40%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .t4s-row-cols-md-1.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-md-1.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 70%;
+  }
+
+  .t4s-row-cols-md-2.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-md-2.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 40%;
+  }
+
+  .t4s-row-cols-md-3.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-md-3.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 38%;
+  }
+
+  .t4s-row-cols-md-4.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-md-4.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 28%;
+  }
+
+  .t4s-row-cols-md-5.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-md-5.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 22%;
+  }
+  .t4s-row-cols-md-6.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-md-6.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 18%;
+  }
+}
+@media (min-width: 1025px) {
+  .t4s-row-cols-lg-1.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-lg-1.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 70%;
+  }
+
+  .t4s-row-cols-lg-2.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-lg-2.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 40%;
+  }
+
+  .t4s-row-cols-lg-3.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-lg-3.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 38%;
+  }
+
+  .t4s-row-cols-lg-4.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-lg-4.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 28%;
+  }
+
+  .t4s-row-cols-lg-5.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-lg-5.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 22%;
+  }
+  .t4s-row-cols-lg-6.is-carousel-left > .t4s-col-item,
+  .t4s-row-cols-lg-6.is-carousel-left .flickityt4s-slider > .t4s-col-item {
+    width: 18%;
+  }
+}

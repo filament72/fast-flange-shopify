@@ -1,0 +1,75 @@
+{%- comment -%}
+menu_blocks
+menu_splits
+block.settings.lazy_mn and admin_sp == false
+{%- endcomment -%}
+
+{%- liquid
+  assign root_url = routes.root_url
+  assign showArrow = section.settings.arrow
+  assign request_path = request.path
+  assign placement = block.settings.pos_sub | default: placement
+  if section.settings.menu_style == "sidebar"
+    assign placement = placement
+  endif 
+-%}
+{% if section.settings.menu_style != "disable" %}
+  <nav class="t4s-navigation t4s-text-{{ section.settings.align }} t4s-nav-arrow__{{ section.settings.arrow }} {% if checkmenu and section.settings.menu_bar != "0" %}t4s-hidden-first{% endif %} t4s-navigation-{{ section.settings.menu_style }}">
+    {% if section.settings.menu_style == "sidebar2" %}
+      <div class="t4s-menu-sidebar-head">
+        <button type="button" class="t4s-pr t4s-menu-bar-button t4s-close-menu active" data-toggle-class="active" data-toggle-trigger=".t4s-navigation">
+          <?xml version="1.0" encoding="iso-8859-1"?>
+          <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 477.175 477.175" style="enable-background:new 0 0 477.175 477.175;" xml:space="preserve">
+          <path d="M145.188,238.575l215.5-215.5c5.3-5.3,5.3-13.8,0-19.1s-13.8-5.3-19.1,0l-225.1,225.1c-5.3,5.3-5.3,13.8,0,19.1l225.1,225 c2.6,2.6,6.1,4,9.5,4s6.9-1.3,9.5-4c5.3-5.3,5.3-13.8,0-19.1L145.188,238.575z"/></svg>
+        </button>
+        <h3 class="t4s-menu-title">{{ 'general.mobile_menu.menu' | t }}</h3>
+      </div>
+    {% endif %}
+    <ul data-menu-nav id="t4s-nav-ul" class="t4s-nav__ul t4s-d-inline-flex t4s-flex-wrap t4s-align-items-center">
+      {%- for block in section.blocks -%}
+        {%- liquid 
+            assign blockID = block.id
+            assign bk_link = block.settings.url
+            if bk_link == '/' or bk_link == blank
+               assign bk_link = root_url
+            endif
+            assign bk_link_split = bk_link | split: '?' | first
+            if request_path == bk_link_split
+            	assign class_active = 'is--nav__active'
+            else
+            	assign class_active = ''
+            endif -%}
+        {%- case block.type -%}
+      		{%- when 'mega' -%}
+            {%- assign menu_item_bg_img  = block.settings.menu_item_bg_img -%}
+            {%- assign menu_item_bg_cl_op  = block.settings.menu_item_bg_op | divided_by: 100.0 -%}
+            <li id="item_{{ blockID }}" data-placement="{{placement}}" class="t4s-type__{{ block.type }} menu-width__{{ block.settings.wid }} t4s-menu-item has--children menu-has__offsets {{ class_active }}" {{ block.shopify_attributes }} style="{% if menu_item_bg_img != blank %} --img-url: url('{{ menu_item_bg_img | image_url }}'); {% if menu_item_bg_img.presentation.focal_point != '50.0% 50.0%' %}--object-position: {{ menu_item_bg_img.presentation.focal_point}} ; {% endif %}{% else %} --menu-item-bg-cl: {{ block.settings.menu_item_bg_cl | color_modify: 'alpha', menu_item_bg_cl_op }};{% endif %}">
+               <a class="t4s-lh-1 t4s-d-flex t4s-align-items-center t4s-pr" href="{{ bk_link }}" target="{{ block.settings.open_link }}"{% if block.settings.cus_cl %} style="color:{{ block.settings.cl }}"{% endif %}>{%- render 'title_menu', block: block, showArrow: showArrow -%}</a>
+               <div id="content_{{ blockID }}" class="t4s-sub-menu t4s-pa t4s-op-0 t4s-pe-none t4s-current-scrollbar {% if menu_item_bg_img != blank %} lazyloadt4s t4s_submenu_bg_image {% endif %}" {% if menu_item_bg_img != blank %} data-optimumx="1.5" data-ratio="{{ menu_item_bg_img.aspect_ratio }}" data-sizes="auto" {% endif %}>
+               	<div class="t4s-container"{% if  block.settings.wid != 'full nav_t4scnt' %} style="width:{{ block.settings.cus_wid }}px"{% endif %}>
+                   <div class="t4s-row t4s-lazy_menu{% if block.settings.enable_packery %} isotopet4s isotopet4s-later{% endif %}" data-id="{{ block.settings.id }}" data-isotopet4s-js='{ "itemSelector": ".t4s-sub-column-item", "layoutMode": "packery","gutter": 0 }'><div class="t4s-loading--bg"></div></div>
+                </div>
+               </div>
+            </li>
+      		{%- when 'drop' -%}
+            {%- assign menu_item_bg_img  = block.settings.menu_item_bg_img -%}
+            {%- assign menu_item_bg_cl_op  = block.settings.menu_item_bg_op | divided_by: 100.0 -%}
+            <li id="item_{{ blockID }}" data-placement="{{placement}}" class="t4s-type__{{ block.type }} t4s-menu-item has--children menu-has__offsets menu-pos__{{ block.settings.pos }} {{ class_active }}" {{ block.shopify_attributes }} style="{% if menu_item_bg_img != blank %} --img-url: url('{{ menu_item_bg_img | image_url }}'); {% if menu_item_bg_img.presentation.focal_point != '50.0% 50.0%' %}--object-position: {{ menu_item_bg_img.presentation.focal_point}} ; {% endif %}{% else %} --menu-item-bg-cl: {{ block.settings.menu_item_bg_cl | color_modify: 'alpha', menu_item_bg_cl_op }};{% endif %}">
+               <a class="t4s-lh-1 t4s-d-flex t4s-align-items-center t4s-pr" href="{{ bk_link }}" target="{{ block.settings.open_link }}"{% if block.settings.cus_cl %} style="color:{{ block.settings.cl }}"{% endif %}>{%- render 'title_menu', block: block, showArrow: showArrow -%}</a>
+               {%- if linklists[block.settings.menu].links.size > 0 -%}
+               <div id="content_{{ blockID }}" class="t4s-sub-menu t4s-pa t4s-op-0 t4s-pe-none {% if menu_item_bg_img != blank %} lazyloadt4s t4s_submenu_bg_image {% endif %}" {% if menu_item_bg_img != blank %} data-optimumx="1.5" data-ratio="{{ menu_item_bg_img.aspect_ratio }}" data-sizes="auto" {% endif %}>
+                  {%- if admin_sp == false -%}
+                     <div class="t4s-lazy_menu" data-handle="{{ block.settings.menu }}"><div class="t4s-loading--bg"></div></div>
+                  {%- else -%}
+                     <div class="t4s-lazy_menu">{%- render 'menu_dropdown', handle_menu: block.settings.menu -%}</div>
+                  {%- endif -%}
+               </div>
+              {%- endif -%}
+            </li>
+      		{%- else -%}
+      		  <li id="item_{{ blockID }}" class="t4s-type__simple t4s-menu-item {{ class_active }}" {{ block.shopify_attributes }}><a class="t4s-lh-1 t4s-d-flex t4s-align-items-center t4s-pr" href="{{ bk_link }} " target="{{ block.settings.open_link }}"{% if block.settings.cus_cl %} style="color:{{ block.settings.cl }}"{% endif %}>{%- render 'title_menu', block: block, showArrow: false -%}</a></li>
+      	{%- endcase -%}
+      {%- endfor -%}
+    </ul>
+  </nav>
+{% endif %}

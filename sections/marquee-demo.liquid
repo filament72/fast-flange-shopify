@@ -1,0 +1,110 @@
+{{ 'marquee.css' | asset_url | stylesheet_tag }}
+<div class="t4s-marquee t4s-marquee--{{ section.settings.direction }} t4s-marquee--pause{{ section.settings.pause_when_hover }}" style="--marquee-delay:{{ section.settings.speed }}s">
+  <div class="t4s-marquee__item">{{ section.settings.text }}</div>
+</div>
+
+
+{%- liquid  
+  assign limit = 5 | plus: 1
+  assign tmore = 'View more' | escape
+  assign tless = 'View less' | escape
+-%}
+{%- capture btn_html -%}
+  <button data-btn-toogle class="t4s-btn-toogle">{{ tmore }}</button>
+{%- endcapture -%}
+
+<style>
+  .t4s-test ul li:nth-child(n + {{ limit }}) {
+    display: none;
+  }
+</style>
+<div class="t4s-container">
+  <div class="t4s-row t4s-row-cols-4 t4s-test isotopet4s" data-isotopet4s-js='{ "itemSelector": ".t4s-filter-item", "layoutMode": "masonry","masonry":{"horizontalOrder":{{ section.settings.horizontalOrder }} } }' data-wrap-toogle data-slector="li:nth-child(n+{{ limit }})" data-tmore="{{ tmore }}" data-tless="{{ tless }}">
+    {%- for i in (1..10) -%}
+      {%- capture xyz -%}
+        {%- cycle 1, 2, 10, 3, 6, 7, 9, 5 -%}
+      {%- endcapture -%}
+      {%- assign xyz_num = xyz | plus: 0 -%}
+      <div class="t4s-col-item t4s-filter-item">
+        <h4>Heading #{{ i }}</h4>
+        <ul data-toogle-list>
+          {%- for i in (1..xyz_num) -%}
+            <li>
+              <a href="">item #{{ i }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+        {%- if xyz_num > limit %}
+          {{- btn_html -}}{% endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+<button data-href="#section-{{ section.id }}-end">click</button>
+<button data-go-id="#section-{{ section.id }}-end" data-offset="1">click 2</button>
+<span id="section-{{ section.id }}-end" class="t4s-anchor"></span>
+{% schema %}
+{
+  "name": "Marquee Demo",
+  "tag": "section",
+  "class": "t4s-section t4s-section-main t4s_tp_marquee t4s_tp_btn_toogle",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "default": "I'm marquee, hello world.",
+      "label": "Text"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 0.5,
+      "max": 50,
+      "step": 0.5,
+      "unit": "s",
+      "default": 20,
+      "label": "Marquee speed"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_when_hover",
+      "default": false,
+      "label": "Pause when hover"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "default": "ltr",
+      "label": "Marquee direction",
+      "options": [
+        {
+          "value": "rtl",
+          "label": "Right to left"
+        },
+        {
+          "value": "ltr",
+          "label": "Left to right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "horizontalOrder",
+      "default": true,
+      "label": "Horizontal order",
+      "info": "Lays out items to (mostly) maintain horizontal left-to-right order."
+    }
+  ]/*,
+  "presets": [
+    {
+      "name": "Marquee Demo",
+      "category": "A"
+    }
+  ]*/
+}
+{% endschema %}

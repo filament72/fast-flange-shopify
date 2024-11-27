@@ -1,0 +1,1585 @@
+<!-- sections/instagram.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-instagram.css' | asset_url | stylesheet_tag }}
+{{ 't4s-button-style.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+    assign sid = section.id
+    assign stt_layout = section.settings.layout
+    assign stt_image_bg = section.settings.image_bg
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif
+    
+    assign ARRhtml1 = 'a,,' | split: ','
+    assign ARRhtml2 = 'div,data-,data-' | split: ','
+    assign b_effect = section.settings.b_effect
+    assign img_effect = section.settings.img_effect
+
+    if section.settings.btn_owl == "simple"
+      assign arrow_icon = 1
+    else
+      assign arrow_icon = 2
+    endif
+    assign show_btn = section.settings.show_btn
+    if show_btn != "hidden"
+      assign slider_btns = true
+    else
+      assign slider_btns = false
+    endif
+    assign show_dots = section.settings.show_dots
+    if show_dots != "hidden"
+      assign slider_dots = true
+    else
+      assign slider_dots = false
+    endif
+ -%}   
+{%- if section.settings.layout_des == "2" -%}
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+{{ 't4s-slider-settings.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickity_custom.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- if b_effect != "none" or img_effect != "nome" -%}
+{{ 't4s-custom-effect.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+{% render 'section_style', sid: sid -%} 
+<div class="t4s-section-inner {{ sid }} t4s_se_{{ sid }} t4s-pr ins-is--loaded {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5"{% endif %} >
+  {{- html_layout[0] -}}
+  {%- if stt_layout == 't4s-se-container' -%}
+    <div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5"{% endif %}>{% endif -%}
+    {%- render 'section_tophead', get_height: true, sid: sid -%}
+  {%- if section.settings.layout_des == "1" -%}
+    <div class="t4s-align-items-center t4s-justify-content-center t4s-pr t4s-row t4s_{{ section.settings.image_size }} t4s_{{ section.settings.image_ratio }} t4s_position_{{ section.settings.image_position }} t4s-row-cols-lg-{{ section.settings.col_dk }} t4s-row-cols-md-{{ section.settings.col_tb }} t4s-row-cols-{{ section.settings.col_mb }} t4s-gx-lg-{{ section.settings.space_item }} t4s-gy-lg-{{ section.settings.space_item }} t4s-gx-md-{{ section.settings.space_item_tb }} t4s-gy-md-{{ section.settings.space_item_tb }} t4s-gx-{{ section.settings.space_item_mb }} t4s-gy-{{ section.settings.space_item_mb }}" id="b_{{ block.id }}" data-select-flickity {{ block.shopify_attributes }}>
+  {%- else -%}
+    <div class="t4s-flickity-slider t4s-base-slider t4s-row t4s_{{ section.settings.image_size }} t4s_{{ section.settings.image_ratio }} t4s_position_{{ section.settings.image_position }} t4s-row-cols-lg-{{ section.settings.col_dk }} t4s-row-cols-md-{{ section.settings.col_tb }} t4s-row-cols-{{ section.settings.col_mb }} t4s-gx-lg-{{ section.settings.space_item }} t4s-gy-lg-{{ section.settings.space_item }} t4s-gx-md-{{ section.settings.space_item_tb }} t4s-gy-md-{{ section.settings.space_item_tb }} t4s-gx-{{ section.settings.space_item_mb }} t4s-gy-{{ section.settings.space_item_mb }} {% if slider_btns %} t4s-slider-btn__{{ section.settings.btn_pos }}-content t4s-slider-btn-{{ show_btn }} t4s-slider-btn-style-{{ section.settings.btn_owl }} t4s-slider-btn-{{ section.settings.btn_shape }} t4s-slider-btn-{{ section.settings.btn_size }} t4s-slider-btn-cl-{{ section.settings.btn_cl }} t4s-slider-btn-vi-{{ section.settings.btn_vi }} {% endif %}
+      {% if slider_dots %} t4s-dots-style-{{ section.settings.dot_owl }} t4s-slider-dots-{{ show_dots }} t4s-dots-cl-{{ section.settings.dots_cl }} t4s-dots-round-{{ section.settings.dots_round }} {% endif %} t4s-base-dots-{{ section.settings.dots_pos }} t4s-flickity-slider flickityt4s" data-flickityt4s-js='{"setPrevNextButtons": true,"arrowIcon": "{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ section.settings.loop }},"prevNextButtons": {{ slider_btns }},"percentPosition": 1,"pageDots":  {{ slider_dots }}, "autoPlay" : {{ section.settings.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ section.settings.au_hover }}, "cellSelector": ".t4s-instagram-item" }' style="--btn-distance: {{ section.settings.btn_distance }}px;--space-dots: {{ section.settings.dots_space }}px;--dots-bottom-pos: {{ section.settings.dots_bottom_pos }}px;">
+  {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign bl_type = block.type -%}
+        {%- case bl_type -%}
+          {%- when 'img' -%}
+            {%- liquid
+              assign image = block.settings.image 
+              assign url = block.settings.url
+              if url == blank 
+                assign ARRhtml = ARRhtml2
+              else 
+                assign ARRhtml = ARRhtml1 
+              endif 
+            -%}
+            <div class="t4s-col-item t4s-instagram-item t4s-col-ins" id="b_{{ block.id }}" data-select-flickity {{ block.shopify_attributes }} >
+              <{{ ARRhtml[0] }} {{ ARRhtml[1] }}href="{{ url }}" {{ ARRhtml[2] }}target="_blank" class="t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }}">   
+                  {%- if image != blank -%}
+                    <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 1.7776 }}" data-cacl-slide>
+                      <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" loading="lazy" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                    </div>
+                  {%- else -%}
+                    <div class="t4s_ratio" style="--aspect-ratioapt: 1.77776">{{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }} </div>
+                  {%- endif -%}  
+                  <div class="t4s-ins-info">
+                    <div class="t4s-ins-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="22" height="22" fill="currentColor" stroke="currentColor" ><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+                    </div>
+                  </div>  
+              </{{ ARRhtml[0] }}> 
+            </div>
+        {%- when 'custom_button' -%}
+          {%- if block.settings.button_link != blank and block.settings.button_text != blank -%}
+            {%- assign custom_button = true -%}
+            {%- assign  button_style = block.settings.button_style -%}
+            <div class="t4s-btn-position t4s-pa t4s-pe-none" style="--btn-pos-x: {{ block.settings.btn_pos_x }}%;--btn-pos-y:{{ block.settings.btn_pos_y }}%">
+              <a href="{{ block.settings.button_link }}" target="{{ block.settings.target_link }}" class="t4s-bl-item t4s-btn t4s-btn-custom t4s-animation-none t4s-pe-auto t4s-fnt-fm-{{ block.settings.fontf }} t4s-hidden-mobile-{{ block.settings.hidden_mobile }} t4s-btn-style-{{ button_style }} {% if button_style == 'default' or button_style == 'outline' %}t4s-btn-effect-{{ block.settings.button_effect }}{% endif %}" id="b_{{ block.id }}" {{ block.shopify_attributes }} {%- render 'bk_cus_style', type: 'custom_button', block: block -%}>{{ block.settings.button_text }}
+              {%- if block.settings.button_icon_w > 0 -%}
+                {%- if block.settings.icon_style == "1" -%}
+                  {% comment %} <svg class="t4s-btn-icon"  width="16" height="11" viewBox="0 0 16 11" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect y="4" width="12" height="3" />
+                    <path d="M15.0434 5.50985L11.3245 9.44864L11.2626 1.63039L15.0434 5.50985Z"/>
+                  </svg> {% endcomment %}
+                  <svg class="t4s-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18"><path d="M 21.1875 9.28125 L 19.78125 10.71875 L 24.0625 15 L 4 15 L 4 17 L 24.0625 17 L 19.78125 21.28125 L 21.1875 22.71875 L 27.90625 16 Z"/></svg>
+                {%- elsif block.settings.icon_style == "2" -%}
+                  <svg class="t4s-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"/></svg>   
+                {% else %}
+                  <svg class="t4s-btn-icon" version="1.1" x="0px" y="0px" width="22px" height="22px" viewBox="0 0 22 22" style="enable-background:new 0 0 22 22;" xml:space="preserve"><polygon points="6,20 6,2 17,11 "></polygon></svg>  
+                {%- endif -%}
+            {%- endif -%}
+              </a>
+            </div>
+          {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+  {{- html_layout[1] -}}
+</div>
+{%- if custom_button -%}
+  {{ 't4s-button-style.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- style -%}
+  .t4s-instagrams .t4s-col-ins>*{border-radius: {{ section.settings.round }}%;} 
+  .{{ sid }} .t4s-btn-position{
+    top: var(--btn-pos-x);
+    left: var(--btn-pos-y);
+    transform: translateX(calc(var(--btn-pos-x) * -1)) translateY(calc(var(--btn-pos-y) * -1));
+    z-index: 50;
+  }
+  @media (max-width: 767px){
+    .{{ sid }} .t4s-hidden-mobile-true{
+      display: none;
+    }
+  }
+{%- endstyle -%}
+{% schema %}
+{
+  "name": "Instagram",
+  "tag": "section",
+  "class": "t4s-section t4s-section-all t4s_bk_flickity t4s-instagrams",
+  "disabled_on": {
+    "groups": ["*"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1. Heading options"
+    },
+    {
+      "type": "select",
+      "id": "design_heading",
+      "label": "Heading design",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Design 01"
+        },
+        {
+          "value": "2",
+          "label": "Design 02"
+        },
+        {
+          "value": "3",
+          "label": "Design 03"
+        },
+        {
+          "value": "4",
+          "label": "Design 04 (Working when description has content)"
+        },
+        {
+          "value": "5",
+          "label": "Design 05"
+        },
+        {
+          "value": "6",
+          "label": "Design 06"
+        },
+        {
+          "value": "7",
+          "label": "Design 07"
+        },
+        {
+          "value": "8",
+          "label": "Design 08"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading",
+      "default": "Trending right now"
+    },
+    {
+      "type": "richtext",
+      "id": "top_subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_center",
+      "label": "Center heading align",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "Bottom space (Desktop)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_tb",
+      "label": "Bottom space (Tablet)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_mb",
+      "label": "Bottom space (Mobile)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "2. General options"
+    },
+    {
+      "type": "select",
+      "id": "layout_des",
+      "options": [
+        {
+          "value": "1",
+          "label": "Grid"
+        },
+        {
+          "value": "2",
+          "label": "Carousel"
+        }
+      ],
+      "label": "Layout design",
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Aspect ratio",
+      "default": "ratio1_1",
+      "info": "Aspect ratio custom will settings in general panel.",
+      "options": [
+        {
+          "group": "Auto",
+          "value": "ratioadapt",
+          "label": "Adapt to image"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio2_1",
+          "label": "2:1"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio16_9",
+          "label": "16:9"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio8_5",
+          "label": "8:5"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio3_2",
+          "label": "3:2"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio4_3",
+          "label": "4:3"
+        },
+        {
+          "group": "Landscape",
+          "value": "rationt",
+          "label": "Ratio ASOS"
+        },
+        {
+          "group": "Squared",
+          "value": "ratio1_1",
+          "label": "1:1"
+        },
+        {
+          "group": "Portrait",
+          "value": "ratio2_3",
+          "label": "2:3"
+        },
+        {
+          "group": "Portrait",
+          "value": "ratio1_2",
+          "label": "1:2"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus1",
+          "label": "Ratio custom 1"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus2",
+          "label": "Ratio custom 2"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus3",
+          "label": "Ratio custom 3"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus4",
+          "label": "Ratio custom 4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'.",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "1",
+          "label": "Left top"
+        },
+        {
+          "value": "2",
+          "label": "Left center"
+        },
+        {
+          "value": "3",
+          "label": "Left bottom"
+        },
+        {
+          "value": "4",
+          "label": "Right top"
+        },
+        {
+          "value": "5",
+          "label": "Right center"
+        },
+        {
+          "value": "6",
+          "label": "Right bottom"
+        },
+        {
+          "value": "7",
+          "label": "Center top"
+        },
+        {
+          "value": "8",
+          "label": "Center center"
+        },
+        {
+          "value": "9",
+          "label": "Center bottom"
+        }
+      ],
+      "label": "Image position",
+      "default": "8"
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "Image size",
+      "default": "cover",
+      "info": "This settings apply only if the image ratio is not set to 'Adapt to image'.",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Full"
+        },
+        {
+          "value": "contain",
+          "label": "Auto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "img_effect",
+      "label": "Photos effect when hover ",
+      "default": "zoom",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "zoom",
+          "label": "Zoom in"
+        },
+        {
+          "value": "filter",
+          "label": "Filter"
+        },
+        {
+          "value": "bounceIn",
+          "label": "BounceIn"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "b_effect",
+      "label": "Photos effect",
+      "default": "dark-overlay",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "border-run",
+          "label": "Border run"
+        },
+        {
+          "value": "pervasive-circle",
+          "label": "Pervasive circle"
+        },
+        {
+          "value": "plus-zoom-overlay",
+          "label": "Plus zoom overlay"
+        },
+        {
+          "value": "dark-overlay",
+          "label": "Dark overlay"
+        },
+        {
+          "value": "light-overlay",
+          "label": "Light overlay"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_dk",
+      "label": "Photos per row",
+      "default": "6",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_tb",
+      "label": "Photos per row (Tablet)",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_mb",
+      "label": "Photos per row (Mobile)",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "space_item",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "2",
+          "label": "2px"
+        },
+        {
+          "value": "3",
+          "label": "3px"
+        },
+        {
+          "value": "4",
+          "label": "4px"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "6",
+          "label": "6px"
+        },
+        {
+          "value": "8",
+          "label": "8px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Spaces between photos",
+      "default": "0"
+    },
+    {
+      "type": "select",
+      "id": "space_item_tb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "2",
+          "label": "2px"
+        },
+        {
+          "value": "3",
+          "label": "3px"
+        },
+        {
+          "value": "4",
+          "label": "4px"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "6",
+          "label": "6px"
+        },
+        {
+          "value": "8",
+          "label": "8px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Spaces between photos (Tablet)",
+      "default": "0"
+    },
+    {
+      "type": "select",
+      "id": "space_item_mb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "2",
+          "label": "2px"
+        },
+        {
+          "value": "3",
+          "label": "3px"
+        },
+        {
+          "value": "4",
+          "label": "4px"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "6",
+          "label": "6px"
+        },
+        {
+          "value": "8",
+          "label": "8px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        }
+      ],
+      "label": "Spaces between photos (Mobile)",
+      "default": "0"
+    },
+    {
+      "type": "header",
+      "content": "+ OPTIONS FOR CAROUSEL LAYOUT"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Enable loop",
+      "info": "At the end of cells, wrap-around to the other end for infinite scrolling",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "au_time",
+      "min": 0,
+      "max": 30,
+      "step": 0.5,
+      "label": "Autoplay speed in second.",
+      "info": "Set is '0' to disable autoplay",
+      "unit": "s",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "au_hover",
+      "label": "Pause autoplay on hover",
+      "info": "Auto-playing will pause when the user hovers over the carousel",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "—————————————————"
+    },
+    {
+      "type": "paragraph",
+      "content": "Prev next button"
+    },
+    {
+      "type": "select",
+      "id": "show_btn",
+      "options": [
+        {
+          "value": "show_all",
+          "label": "Show all screen"
+        },
+        {
+          "value": "show_desktop",
+          "label": "Only show on desktop"
+        },
+        {
+          "value": "show_mobile",
+          "label": "Only show on tablet & mobile"
+        },
+        {
+          "value": "hidden",
+          "label": "Hidden"
+        }
+      ],
+      "label": "Use prev next button",
+      "default": "show_all"
+    },
+    {
+      "type": "select",
+      "id": "btn_pos",
+      "label": "Prev next position",
+      "info": "Working on screen Desktop",
+      "default": "in",
+      "options": [
+        {
+          "label": "In content",
+          "value": "in"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "btn_distance",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Distance from buttons to boundary",
+      "info": "Only works when \"Prev next position is In content\". Only works on desktop.",
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "btn_vi",
+      "label": "Visible",
+      "default": "hover",
+      "options": [
+        {
+          "value": "always",
+          "label": "Always"
+        },
+        {
+          "value": "hover",
+          "label": "Only hover"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_owl",
+      "label": "Button style",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        },
+        {
+          "value": "simple",
+          "label": "Simple"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_shape",
+      "label": "Button shape",
+      "info": "Not work for 'Simple' button style",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "round",
+          "label": "Round"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_cl",
+      "label": "Button color",
+      "default": "dark",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "custom1",
+          "label": "Custom color 1"
+        },
+        {
+          "value": "custom2",
+          "label": "Custom color 2"
+        },
+        {
+          "value": "custom3",
+          "label": "Custom color 3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_size",
+      "label": "Buttons size",
+      "default": "small",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "—————————————————"
+    },
+    {
+      "type": "paragraph",
+      "content": "Page dots"
+    },
+    {
+      "type": "select",
+      "id": "show_dots",
+      "info": "Creates and show page dots",
+      "options": [
+        {
+          "value": "show_all",
+          "label": "Show all screen"
+        },
+        {
+          "value": "show_desktop",
+          "label": "Only show on desktop"
+        },
+        {
+          "value": "show_mobile",
+          "label": "Only show on tablet & mobile"
+        },
+        {
+          "value": "hidden",
+          "label": "Hidden"
+        }
+      ],
+      "label": "Use carousel's dots",
+      "default": "hidden"
+    },
+    {
+      "type": "select",
+      "id": "dot_owl",
+      "label": "Dots style",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "thin",
+          "label": "Thin full width"
+        },
+        {
+          "value": "elessi_active",
+          "label": "Elessi active"
+        },
+        {
+          "value": "dots_simple",
+          "label": "Dots simple"
+        },
+        {
+          "value": "outline_active",
+          "label": "Outline active"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "dots_cl",
+      "label": "Dots color",
+      "default": "dark",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light (Best on dark background)"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "custom1",
+          "label": "Custom color 1"
+        },
+        {
+          "value": "custom2",
+          "label": "Custom color 2"
+        },
+        {
+          "value": "custom3",
+          "label": "Custom color 3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "dots_pos",
+      "label": "Dots position",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "dots_round",
+      "label": "Enable round dots",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "dots_space",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "label": "Space among dots",
+      "unit": "px",
+      "default": 10,
+      "info": "Not work on Thin style"
+    },
+    {
+      "type": "range",
+      "id": "dots_bottom_pos",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Distance from dots to boundary",
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-fluid",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "img",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Instagram image",
+          "info": "1080 x 1080px .jpg recommend"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link to"
+        }
+      ]
+    },
+    {
+      "type": "custom_button",
+      "name": "Button banner",
+      "limit":1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "btn_pos_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Button position hoziontal",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "btn_pos_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Button postion vertical",
+          "default": 50
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button label",
+          "default": "Shop Now",
+          "info": "If set blank will not show"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link",
+          "info": "If set blank will not show"
+        },
+        {
+          "type": "select",
+          "id": "target_link",
+          "label": "Open link in",
+          "default": "_self",
+          "options": [
+            {
+              "value": "_self",
+              "label": "Current window"
+            },
+            {
+              "value": "_blank",
+              "label": "New window"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label":"Ovic",
+              "value":"ovic"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Border bottom",
+              "value": "bordered"
+            },
+            {
+              "label": "Link",
+              "value": "link"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "icon_style",
+          "default": "1",
+          "label": "Icon style",
+          "options": [
+            {
+              "label": "Arrow",
+              "value": "2"
+            },
+            {
+              "label": "Long arrow",
+              "value": "1"
+            },
+            {
+              "label": "Solid",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "button_icon_w",
+          "label": "Button icon width",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "border_w",
+          "label": "Border width",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "button_effect",
+          "label": "Hover button effect",
+          "default": "default",
+          "info": "Only working button style default, outline",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Fade",
+              "value": "fade"
+            },
+            {
+              "label": "Rectangle out",
+              "value": "rectangle-out"
+            },
+            {
+              "label": "Sweep to right",
+              "value": "sweep-to-right"
+            },
+            {
+              "label": "Sweep to left",
+              "value": "sweep-to-left"
+            },
+            {
+              "label": "Sweep to bottom",
+              "value": "sweep-to-bottom"
+            },
+            {
+              "label": "Sweep to top",
+              "value": "sweep-to-top"
+            },
+            {
+              "label": "Shutter out horizontal",
+              "value": "shutter-out-horizontal"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Shadow",
+              "value": "shadow"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "pri_cl",
+          "label": "Primary color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "second_cl",
+          "label": "Secondary color",
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "pri_cl_hover",
+          "label": "Primary hover color",
+          "default": "#C91F28"
+        },
+        {
+          "type": "color",
+          "id": "second_cl_hover",
+          "label": "Secondary hover color",
+          "info": "Only working button style default, outline",
+          "default": "#fff"
+        },
+        {
+          "type": "select",
+          "id": "fontf",
+          "default": "inherit",
+          "label": "Font family",
+          "options": [
+            {
+              "label": "Inherit",
+              "value": "inherit"
+            },
+            {
+              "label": "Font family #1",
+              "value": "1"
+            },
+            {
+              "label": "Font family #2",
+              "value": "2"
+            },
+            {
+              "label": "Font family #3",
+              "value": "3"
+            },
+            {
+              "label": "Font family #4 (Custom)",
+              "value": "4"
+            },
+            {
+              "label": "Font family #5 (Custom)",
+              "value": "5"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "fsbutton",
+          "label": "Font size",
+          "max": 50,
+          "min": 10,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "fwbutton",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "button_ls",
+          "label": "Letter spacing",
+          "max": 5,
+          "min": -5,
+          "step": 0.1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_mh",
+          "label": "Min height",
+          "min": 20,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 42,
+          "info": "Not works when button style link"
+        },
+        {
+          "type": "range",
+          "id": "button_bdr",
+          "label": "Border radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 0,
+          "info": "Only working button style default, outline"
+        },
+        {
+          "type": "range",
+          "id": "button_pd_lr",
+          "label": "Padding left/right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 30,
+          "info": "Only working button style default, outline"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "+ Option tablet"
+        },
+        {
+          "type": "range",
+          "id": "fsbutton_tb",
+          "label": "Font size (Tablet)",
+          "max": 50,
+          "min": 0,
+          "step": 1,
+          "unit": "px",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "button_icon_w_tb",
+          "label": "Button icon width (Tablet)",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_mh_tb",
+          "label": "Min height (Tablet)",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "default": 36,
+          "info": "Not works when button style link"
+        },
+        {
+          "type": "range",
+          "id": "button_pd_lr_tb",
+          "label": "Padding left/right (Tablet)",
+          "min": 0,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "default": 15,
+          "info": "Only working button style default, outline"
+        },
+        {
+          "type": "range",
+          "id": "button_ls_tb",
+          "label": "Letter spacing (Tablet)",
+          "min": -5,
+          "max": 5,
+          "step": 0.1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom (Tablet)",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "+ Option mobile"
+        },
+        {
+          "type": "range",
+          "id": "fsbutton_mb",
+          "label": "Font size (Mobile)",
+          "max": 50,
+          "min": 0,
+          "step": 1,
+          "unit": "px",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "button_icon_w_mb",
+          "label": "Button icon width (Mobile)",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_mh_mb",
+          "label": "Min height (Mobile)",
+          "min": 10,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 36,
+          "info": "Not works when button style link"
+        },
+        {
+          "type": "range",
+          "id": "button_pd_lr_mb",
+          "label": "Padding left/right (Mobile)",
+          "min": 0,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "default": 15,
+          "info": "Only working button style default, outline"
+        },
+        {
+          "type": "range",
+          "id": "button_ls_mb",
+          "label": "Letter spacing (Mobile)",
+          "min": -5,
+          "max": 5,
+          "step": 0.1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_mobile",
+          "label": "Hidden on mobile ",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "————————————————"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram",
+      "category": "homepage",
+      "blocks": [
+        {
+          "type": "img"
+        },
+        {
+          "type": "img"
+        },
+        {
+          "type": "img"
+        },
+        {
+          "type": "img"
+        },
+        {
+          "type": "img"
+        },
+        {
+          "type": "img"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

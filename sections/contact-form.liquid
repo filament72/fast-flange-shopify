@@ -1,0 +1,328 @@
+<!-- sections/contact-form.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-button-style.css' | asset_url | stylesheet_tag }}
+<link href="{{ 't4s-custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%-liquid
+  assign sid = section.id
+  assign stt_layout = section.settings.layout
+  assign stt_image_bg = section.settings.image_bg
+  if stt_layout == 't4s-se-container' 
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif  
+  assign formId = 'contact_form_page'
+-%}
+{% render 'section_style', sid: sid -%} 
+<div class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>
+  {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}
+    <div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+        <div class="t4s-row t4s-g-30 t4s-justify-content-center">
+          {%- for block in section.blocks -%}
+            {%- assign button_style = block.settings.button_style -%}
+            {%- case block.type -%}
+              {%- when 'bl_form' -%}
+                <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                    {%- form 'contact', id: formId -%}
+                        {%- liquid
+                            assign name          = 'templates.contact.form.name'
+                            assign email         = 'templates.contact.form.email'
+                            assign phone         = 'templates.contact.form.phone'
+                            assign order         = 'templates.contact.form.order'
+                            assign message       = 'templates.contact.form.message'
+
+                            render 'form-status', form: form, form_id: formId
+                        -%}
+                        <p>
+                          <label for="{{ formId }}-name">{{ name | t }}</label>
+                          <input required="required" type="text" id="{{ formId }}-name" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                        </p>
+                        <p>
+                          <label for="{{ formId }}-email">{{ email | t }}</label>
+                          <input required="required" type="email" id="{{ formId }}-email" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" aria-required="true" required="required"
+                          {%- if form.errors contains 'email' -%}class="t4s-input--error" aria-invalid="true" aria-describedby="{{ formId }}-email-error"{%- endif -%}>
+                          {%- if form.errors contains 'email' -%}
+                              <span id="{{ formId }}-email-error" class="t4s-input-error-message"><i class="las la-exclamation-triangle"></i>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                          {%- endif -%}
+                        </p>
+                        {%- if block.settings.enable_phone -%}
+                          <p>
+                            <label for="{{ formId }}-phone">{{ phone | t }}</label>
+                            <input required="required" type="tel" id="{{ formId }}-phone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                          </p>
+                        {%- endif -%}
+                        {%- if block.settings.enable_order -%}
+                          <p>
+                            <label for="{{ formId }}-order">{{ order | t }}</label>
+                            <input required="required" type="text" id="{{ formId }}-order" name="contact[order]" value="{% if form[order] %}{{ form[order] }}{% elsif customer %}{{ customer.order }}{% endif %}">
+                          </p>
+                        {%- endif -%}
+                        <p>
+                          <label for="{{ formId }}-message">{{ message | t }}</label>
+                          <textarea rows="20" id="{{ formId }}-message" name="contact[body]" required="required" class="t4s-input-textarea">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                        </p>
+                        <input type="submit" class="t4s-btn t4s-btn-base t4s-btn-style-{{ button_style }} t4s-btn-size-{{ block.settings.btn_size }} t4s-btn-color-{{ block.settings.btn_cl }}{% if block.settings.enable_full_btn %} t4s-w-100 t4s-justify-content-center{% endif %} t4s-btn-effect-fade t4s-cursor-pointer" value="{{ 'templates.contact.form.submit' | t }}">
+                    {%- endform -%}
+                </div>
+              {%- else -%}
+                <div class="t4s-col-item t4s-contact-info t4s-col-md-6 t4s-col-12 t4s-rte--list{% if section.blocks.first.type == 'bl_info' %} t4s-contact-info-start{% else %} t4s-contact-info-end{% endif %}">
+                  {%- if block.settings.heading != blank -%}<h3 class="t4s-info-heading">{{ block.settings.heading }}</h3>{%- endif -%}
+                  {%- if block.settings.sub_heading != blank -%}<h5 class="t4s-info-subheading">{{ block.settings.sub_heading }}</h5>{%- endif -%}
+                  {%- if block.settings.text != blank -%}<div class="t4s-info-text">{{ block.settings.text }}</div>{%- endif -%}
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+      </div>
+  {{- html_layout[1] -}}
+</div>
+<style>.t4s-contact-form input.t4s-input--error{border-color: var(--t4s-error-color) !important;margin-bottom: 5px}.t4s-contact-form label{font-size: 16px;font-weight: 300;margin-bottom: 14px;display: inline-block}.t4s-contact-form input:not([type="submit"]):not([type="checkbox"]),.t4s-contact-form select,.t4s-contact-form textarea{width: 100%;height: 50px;line-height: 20px;font-size: 16px;font-weight: 300;transition: border-color 0.5s;box-shadow: none;border-radius: var(--other-radius);appearance: none;border: 1px solid rgba(var(--border-color-rgb), 0.9);background-color: rgba(var(--border-color-rgb), 0.35)}.t4s-contact-form input:not([type="submit"]):not([type="checkbox"]):focus,.t4s-contact-form select:focus,.t4s-contact-form textarea:focus{border-color: rgba(var(--text-color-rgb), 0.8)}.t4s-contact-form .t4s-input-textarea{min-height: 150px;overflow: hidden;padding: 10px 15px}.t4s-contact-form .t4s-fine-print{font-style: italic}.t4s-contact-form .t4s-input-error-message i{color: var(--t4s-error-color);margin-right: 5px}.t4s-contact-form .t4s-form-message ul li{list-style: disc}.t4s-contact-form .t4s-form-message--error{color: var(--t4s-error-color);border: 1px solid var(--t4s-error-color);background-color: #fff8f8;padding: 15px 20px;text-align: left;width: 100%;margin: 0 0 27.5px}.t4s-contact-form .t4s-form-message__title{font-size: 14px;margin-bottom: 10px}.t4s-contact-form .t4s-info-heading{font-size: 50px;line-height: 60px;margin-bottom: 18px}.t4s-contact-form .t4s-info-subheading{font-size: 18px;line-height: 30px;margin-bottom: 30px}.t4s-contact-form .t4s-info-text p:last-child{margin-bottom: 0}.t4s-contact-form .t4s-btn-style-bordered,.t4s-contact-form .t4s-btn-style-link{border-top: none;border-right: none;border-left: none}.t4s-contact-form .t4s-btn-style-link{border-bottom: none}.t4s-contact-form .t4s-form-message--success{color: var(--t4s-success-color)}@media (min-width: 1025px){.t4s-contact-form .t4s-contact-info-start{padding-inline-end: 100px}.t4s-contact-form .t4s-contact-info-end{padding-inline-start: 100px}.t4s-contact-form .t4s-info-text{font-size:18px;line-height:30px}}@media (max-width: 1024px){.t4s-contact-form .t4s-info-heading{font-size: 30px;line-height: 40px}.t4s-contact-form .t4s-info-subheading{margin-bottom: 15px}}@media (max-width: 767px){.t4s-contact-form label{font-size: 14px;margin-bottom: 10px}.t4s-contact-form input:not([type="submit"]):not([type="checkbox"]),.t4s-contact-form select,.t4s-contact-form textarea{font-size: 14px;height: 44px}}</style>
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": "section",
+  "class": "t4s-section t4s-section-main t4s-contact-form",
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "1.General options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Contact form",
+      "type": "bl_form",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_phone",
+          "label": "Enable phone",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_order",
+          "label": "Enable order number",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "+ Options button submit"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_full_btn",
+          "label": "Enable button full width",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Bordered bottom",
+              "value": "bordered"
+            },
+            {
+              "label": "Link",
+              "value": "link"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Button size",
+          "default": "default",
+          "options": [
+            {
+              "label": "Default",
+              "value": "default"
+            },
+            {
+              "label": "Custom size #1",
+              "value": "1"
+            },
+            {
+              "label": "Custom size #2",
+              "value": "2"
+            },
+            {
+              "label": "Custom size #3",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_cl",
+          "label": "Button color",
+          "default": "dark",
+          "options": [
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            },
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "custom1",
+              "label": "Custom color 1"
+            },
+            {
+              "value": "custom2",
+              "label": "Custom color 2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Contact Infomation",
+      "type": "bl_info",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "We work for <br> your success"
+        },
+        {
+          "type": "text",
+          "id": "sub_heading",
+          "label": "Sub heading",
+          "default": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh."
+        },
+        {
+          "type": "html",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>We love to hear from you on our customer service, merchandise, website or any topics you want to share with us. Your comments and suggestions will be appreciated. Please complete the form below.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form",
+      "category": "group8",
+      "blocks": [
+        {
+          "type": "bl_info"
+        },
+        {
+          "type": "bl_form"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

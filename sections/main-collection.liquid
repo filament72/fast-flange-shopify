@@ -1,0 +1,2110 @@
+<!-- sections/main-collection.liquid -->
+{{ 't4s-section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-collection-products.css' | asset_url | stylesheet_tag }}
+{{ 't4s-collection-pages.css' | asset_url | stylesheet_tag }}
+{{ 't4s-pagination.css' | asset_url | stylesheet_tag }}
+{{ 't4s-button-style.css' | asset_url | stylesheet_tag }}
+<link href="{{ 't4s-custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="{{ 't4s-loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- liquid 
+  assign sid = section.id
+  assign stt_layout = section.settings.layout
+  assign stt_image_bg = section.settings.image_bg
+  if stt_layout == 't4s-se-container' 
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+  assign layout_des = section.settings.layout_des
+  assign image_ratio = section.settings.image_ratio
+  if image_ratio == "ratioadapt"
+    assign imgatt = ''
+   else 
+    assign imgatt = 'data-'
+  endif
+  assign use_pagination = section.settings.use_pagination
+  assign show_vendor = section.settings.show_vendor
+  assign use_link_vendor = settings.use_link_vendor
+  assign enable_rating = settings.enable_rating
+  assign limit = section.settings.limit
+  assign product_des = section.settings.product_des
+  assign placeholder_img = settings.placeholder_img
+  
+  assign show_img = settings.show_img
+  assign isGrowaveWishlist = false
+  if settings.wishlist_mode == "3" and shop.customer_accounts_enabled
+    assign isGrowaveWishlist = true
+  endif
+  assign enable_pr_size = settings.enable_pr_size
+  assign show_size_type = settings.show_size_type
+  assign size_ck = settings.size_ck | append: ',size,sizes,Größe' 
+  assign get_size = size_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+  assign enable_pr_color = settings.enable_pr_color
+  assign show_cl_type = settings.show_color_type
+  assign color_ck = settings.color_ck | append: ',color,colors,couleur,colour'
+  assign get_color = color_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+  assign price_varies_style = settings.price_varies_style
+  assign app_review = settings.app_review
+  assign use_countdown = section.settings.use_cdt
+  
+  assign results_count = collection.products_count
+
+  assign isLoadmore = false
+  if layout_des != "2"
+    if use_pagination == "load-more"  or use_pagination == "infinite" 
+      assign isLoadmore = true
+      assign typeAjax = 'LmDefault'
+    else
+      assign typeAjax = 'AjaxDefault'
+    endif
+  else
+     if use_pagination == "load-more" or use_pagination == "infinite" 
+      assign isLoadmore = true
+      assign typeAjax = 'LmIsotope'
+    else
+      assign typeAjax = 'AjaxIsotope'
+    endif
+  endif
+-%}
+{%- liquid
+  assign enable_listing = section.settings.enable_listing
+  assign enable_listing_default = section.settings.enable_listing_default
+
+  assign show_list_btns = false
+  if enable_listing and settings.enable_atc or settings.enable_quickview 
+  assign show_list_btns = true
+  endif
+  
+  assign col_mobile = section.settings.col_mb
+  assign col_tablet = section.settings.col_tb
+  assign col_desktop = section.settings.col_dk 
+  if enable_listing and enable_listing_default
+    assign class_listview = 'is--listview'
+    assign col_mobile = '1'
+    assign col_tablet = '1'
+    assign col_desktop = '1'
+  endif
+  assign cart_collection_items_per_row = cart.attributes.collection_items_per_row
+  if cart_collection_items_per_row != blank
+    assign cart__items_per_row = cart_collection_items_per_row | replace: 'list_t4s', '1' | split: '.'
+    assign col_mobile = cart__items_per_row[0]
+    assign col_tablet = cart__items_per_row[1]
+    assign col_desktop = cart__items_per_row[2]
+  endif  
+  assign collection_items_per_row = cart_collection_items_per_row | split: '.'
+  unless cart_collection_items_per_row contains 'list_t4s'
+    assign grid_active = "is--active"
+  endunless
+  if cart_collection_items_per_row contains 'list_t4s'
+    assign list_active = "is--active"
+  endif
+  if enable_listing and enable_listing_default and cart_collection_items_per_row == blank
+    assign grid_active = ""
+    assign list_active = "is--active"
+  endif
+  
+-%}
+
+{%- liquid
+  assign type_filters = section.settings.type_filters
+  assign filter_block = section.blocks | where: 'type', 'filter' | first
+  assign show_filter = false
+  if filter_block
+    assign style_filters = filter_block.settings.style_filters
+    if type_filters == 'facets' and collection.filters.size > 0
+      assign show_filter = true
+    elsif type_filters == 'facets_tags' and collection.all_tags.size > 0
+      assign show_filter = true
+      if request.design_mode
+        assign id_se = '#shopify-section-facets_tags '
+      endif
+      echo '<style>button.t4s-btn-filter {opacity: 0 !important; pointer-events: none !important; }.t4s-toolbart-filter.t4s-toolbar-item{ display: none !important;}</style>'
+    endif
+  endif
+-%}
+
+{%- paginate collection.products by limit -%}
+  {% render 'section_style', sid: sid %}
+
+  <div class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }} {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="1.5"{% endif %}>
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}
+      <div class="t4s-container-inner {% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="1.5"{% endif %}>
+      {%- endif -%}
+      <div class="t4s-row">
+        <div {% if show_filter %} data-has-filters {% endif %} data-ntajax-options='{"id": "{{ sid }}", "type": "{{ typeAjax }}", "typeFilters": "{{ type_filters }}","isProduct":true,"updateURL":true,"updateURLPrev":true,"sort_by":"{{ collection.sort_by | default: collection.default_sort_by }}"}' {% unless collection.current_type or collection.current_vendor %} data-collection-url="{{ collection.url }}"{% endunless %} class="t4s-col-item t4s-col-12 t4s-main-area t4s-main-collection-page">
+          {%- if collection.products.size == 0 -%}
+            <div class="t4s-coll-empty t4s-align-items-center">
+                <div class="t4s-no-result-product t4s-d-flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18" height="18"><path d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"></path> </svg>
+                {{ 'collections.general.no_matches' | t }}
+              </div>
+            </div>
+          {%- else -%}
+            {%- if section.blocks.size > 0 -%}
+              {%- for block in section.blocks -%}
+                {% if block.type == "banner_group" %}
+                  {{ 't4s-content-position.css' | asset_url | stylesheet_tag }}
+                  {{ 't4s-banner.css' | asset_url | stylesheet_tag }}
+                  {%- liquid 
+                    assign image_mb1 = block.settings.image_mb1
+                    assign image1 = block.settings.image1 | default: image_mb1
+                    assign image_mb1 = image_mb1 | default: image1
+                    assign b_link1 = block.settings.b_link1
+
+                    assign image_mb2 = block.settings.image_mb2
+                    assign image2 = block.settings.image2 | default: image_mb2
+                    assign image_mb2 = image_mb2 | default: image2
+                    assign b_link2 = block.settings.b_link2
+
+                    assign image_mb3 = block.settings.image_mb3
+                    assign image3 = block.settings.image3 | default: image_mb3
+                    assign image_mb3 = image_mb3 | default: image3
+                    assign b_link3 = block.settings.b_link3
+                    if b_link1 != blank 
+                      assign ARRhtml = 'a,,' | split: ','
+                    else
+                      assign ARRhtml = 'div,data-,data-' | split: ','
+                    endif
+                    if b_link2 != blank 
+                      assign ARRhtml2 = 'a,,' | split: ','
+                    else
+                      assign ARRhtml2 = 'div,data-,data-' | split: ','
+                    endif
+                    if b_link3 != blank 
+                      assign ARRhtml3 = 'a,,' | split: ','
+                    else
+                      assign ARRhtml3 = 'div,data-,data-' | split: ','
+                    endif
+                  -%}
+                  <div class="t4s-banners-collection t4s-banner-holder isotopet4s t4s-row t4s-gx-lg-30 t4s-gy-lg-30 t4s-gx-15 t4s-gy-15" data-isotopet4s-js='{ "itemSelector": ".t4s-banner-wrap", "layoutMode": "packery" }' style="--mbg: {{ block.settings.mgb }}px;--mbg-tb: {{ block.settings.mgb_tb }}px;--mbg-mb: {{ block.settings.mgb_mb }}px;">
+                    <div class="t4s-isotopet4s-item t4s-banner-collection1 t4s-col-item t4s-banner-wrap t4s_cover bl-{{ block.id }}" style="--text-cl: {{ block.settings.text-color1 }};{{ block.settings.quick_options1 }}">
+                      <div data-t4s-animate class="t4s-banner-item t4s-eff t4s-eff-img-zoom t4s_ratio_mix t4s_ratio_cuspx_mb_true t4s_ratio_cuspx_tb_true t4s_ratio_cuspx_true" style="--ratioapt: {{ image1.aspect_ratio | default: 1.5 }};--ratioaptmb: {{ image_mb1.aspect_ratio | default: 1.5 }};--aspect-ratio-cus : {{ block.settings.height_dk1 }}px;--aspect-ratio-custb : {{ block.settings.height_tb1 }}px;--aspect-ratio-cusmb : {{ block.settings.height_mb1 }}px;">
+                        <div class="t4s-banner-inner">
+                          <{{ ARRhtml[0] }} {{ ARRhtml[1] }}href="{{ block.settings.b_link1 }}"{{ ARRhtml[2] }}target="_blank"class="t4s-d-block t4s_ratio t4s_ratio_hasmb t4s-bg-pos-cener">
+                            {%- if image1 != blank -%}
+                              <img {% if image_mb1.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image_mb1.presentation.focal_point }};" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-md-none" data-src="{{ image_mb1 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image_mb1.width }}" height="{{ image_mb1.height }}" alt="{{ image_mb1.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: url({{ image_mb1 | image_url: width: 1 }})"></span>
+                              <img {% if image1.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image1.presentation.focal_point }};" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-none t4s-d-md-block" data-src="{{ image1 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image1.width }}" height="{{ image1.height }}" alt="{{ image1.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-none t4s-d-md-block" style="background: url({{ image1 | image_url: width: 1 }})"></span>
+                            {%- else -%}
+                              {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1 t4s-obj-eff' }}
+                            {%- endif -%}
+                          </{{ ARRhtml[0] }}>
+                          <div class="t4s-banner-content t4s-content-position t4s-pa t4s-bg-content-true ">
+                            {% if block.settings.title1 != blank %}
+                              <h5 class="title">
+                                {{ block.settings.title1 }}
+                              </h5>
+                            {% endif %}
+                            {% if block.settings.subtitle1 != blank %}
+                              <h3 class="subtitle">
+                                {{ block.settings.subtitle1 }}
+                              </h5>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="t4s-isotopet4s-item t4s-banner-collection2 t4s-col-item t4s-banner-wrap t4s_cover bl-{{ block.id }}" style="--text-cl: {{ block.settings.text-color2 }};{{ block.settings.quick_options2 }}">
+                      <div data-t4s-animate class="t4s-banner-item t4s-eff t4s-eff-img-zoom t4s_ratio_mix t4s_ratio_cuspx_mb_true t4s_ratio_cuspx_tb_true t4s_ratio_cuspx_true" style="--ratioapt: {{ image2.aspect_ratio | default: 1.5 }};--ratioaptmb: {{ image_mb2.aspect_ratio | default: 1.5 }};--aspect-ratio-cus : {{ block.settings.height_dk2 }}px;--aspect-ratio-custb : {{ block.settings.height_tb2 }}px;--aspect-ratio-cusmb : {{ block.settings.height_mb2 }}px;">
+                        <div class="t4s-banner-inner">
+                          <{{ ARRhtml2[0] }} {{ ARRhtml2[1] }}href="{{ block.settings.b_link2 }}"{{ ARRhtml2[2] }}target="_blank"class="t4s-d-block t4s_ratio t4s_ratio_hasmb t4s-bg-pos-cener">
+                            {%- if image2 != blank -%}
+                              <img {% if image_mb2.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image_mb2.presentation.focal_point}}" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-md-none" data-src="{{ image_mb2 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image_mb2.width }}" height="{{ image_mb2.height }}" alt="{{ image_mb2.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: url({{ image_mb2 | image_url: width: 1 }})"></span>
+                              <img {% if image2.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image2.presentation.focal_point}}" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-none t4s-d-md-block" data-src="{{ image2 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image2.width }}" height="{{ image2.height }}" alt="{{ image2.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-none t4s-d-md-block" style="background: url({{ image2 | image_url: width: 1 }})"></span>
+                            {%- else -%}
+                              {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1 t4s-obj-eff' }}
+                            {%- endif -%}
+                          </{{ ARRhtml2[0] }}>
+                          <div class="t4s-banner-content t4s-content-position t4s-pa t4s-bg-content-true ">
+                            {% if block.settings.title2 != blank %}
+                              <h5 class="title">
+                                {{ block.settings.title2 }}
+                              </h5>
+                            {% endif %}
+                            {% if block.settings.button_label2 != blank and block.settings.b_link2 != blank %}
+                              <a class="t4s-banner-btn" href="{{ block.settings.b_link2 }}">
+                                {{ block.settings.button_label2 }} <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 31.49 31.49" style="enable-background:new 0 0 31.49 31.49;" xml:space="preserve"><path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" /></svg>
+                              </a>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="t4s-isotopet4s-item t4s-banner-collection3 t4s-col-item t4s-banner-wrap t4s_cover bl-{{ block.id }}" style="--text-cl: {{ block.settings.text-color3 }};{{ block.settings.quick_options3 }}">
+                      <div data-t4s-animate class="t4s-banner-item t4s-eff t4s-eff-img-zoom t4s_ratio_mix t4s_ratio_cuspx_mb_true t4s_ratio_cuspx_tb_true t4s_ratio_cuspx_true" style="--ratioapt: {{ image3.aspect_ratio | default: 1.5 }};--ratioaptmb: {{ image_mb3.aspect_ratio | default: 1.5 }};--aspect-ratio-cus : {{ block.settings.height_dk3 }}px;--aspect-ratio-custb : {{ block.settings.height_tb3 }}px;--aspect-ratio-cusmb : {{ block.settings.height_mb3 }}px;">
+                        <div class="t4s-banner-inner">
+                          <{{ ARRhtml3[0] }} {{ ARRhtml3[1] }}href="{{ block.settings.b_link3 }}"{{ ARRhtml3[2] }}target="_blank"class="t4s-d-block t4s_ratio t4s_ratio_hasmb t4s-bg-pos-cener">
+                            {%- if image3 != blank -%}
+                              <img {% if image_mb3.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image_mb3.presentation.focal_point}}" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-md-none" data-src="{{ image_mb3 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image_mb3.width }}" height="{{ image_mb3.height }}" alt="{{ image_mb3.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: url({{ image_mb3 | image_url: width: 1 }})"></span>
+                              <img {% if image3.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image3.presentation.focal_point}}" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-none t4s-d-md-block" data-src="{{ image3 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image3.width }}" height="{{ image3.height }}" alt="{{ image3.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-none t4s-d-md-block" style="background: url({{ image3 | image_url: width: 1 }})"></span>
+                            {%- else -%}
+                              {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1 t4s-obj-eff' }}
+                            {%- endif -%}
+                          </{{ ARRhtml3[0] }}>
+                          <div class="t4s-banner-content t4s-content-position t4s-pa t4s-bg-content-true ">
+                            {% if block.settings.title3 != blank %}
+                              <h5 class="title">
+                                {{ block.settings.title3 }}
+                              </h5>
+                            {% endif %}
+                            {% if block.settings.button_label3 != blank and block.settings.b_link3 != blank %}
+                              <a class="t4s-banner-btn" href="{{ block.settings.b_link3 }}">
+                                {{ block.settings.button_label3 }} <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 31.49 31.49" style="enable-background:new 0 0 31.49 31.49;" xml:space="preserve"><path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" /></svg>
+                              </a>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+                {% if block.type == "banner_slider" %}
+                  {{ 't4s-content-position.css' | asset_url | stylesheet_tag }}
+                  {{ 't4s-banner.css' | asset_url | stylesheet_tag }}
+                  {{ 't4s-slider-settings.css' | asset_url | stylesheet_tag }}
+                  {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+                  <link href="{{ 't4s-loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                  {%- liquid 
+                     
+                    assign image_mb1 = block.settings.image_mb1
+                    assign image1 = block.settings.image1 | default: image_mb1
+                    assign image_mb1 = image_mb1 | default: image1
+                    assign b_link1 = block.settings.b_link1
+
+                    assign image_mb2 = block.settings.image_mb2
+                    assign image2 = block.settings.image2 | default: image_mb2
+                    assign image_mb2 = image_mb2 | default: image2
+                    assign b_link2 = block.settings.b_link2
+
+                    if b_link1 != blank 
+                      assign ARRhtml = 'a,,' | split: ','
+                    else
+                      assign ARRhtml = 'div,data-,data-' | split: ','
+                    endif
+                    if b_link2 != blank 
+                      assign ARRhtml2 = 'a,,' | split: ','
+                    else
+                      assign ARRhtml2 = 'div,data-,data-' | split: ','
+                    endif
+                  -%}
+                  <div class="t4s-banners-slider t4s-row t4s-gx-0 t4s-gy-0 t4s-flickity-slider flickityt4s" data-flickityt4s-js='{"setPrevNextButtons": true,"arrowIcon": "1","imagesLoaded": 0,"adaptiveHeight": 1, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": 1,"pageDots": false, "autoPlay" : {{ section.settings.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : true, "t4sid": "{{ sid }}","navUI": 1,"cellSelector": ".t4s-banner-slider-item"}' style="--btn-distance: 0px;--space-dots: 0px;--dots-bottom-pos: 0px;--mbg: {{ block.settings.mgb }}px;--mbg-tb: {{ block.settings.mgb_tb }}px;--mbg-mb: {{ block.settings.mgb_mb }}px;">
+                    <div class="t4s-banner-slider-item t4s-banner-slider1 t4s-col-item t4s-col-12 t4s_cover bl-{{ block.id }}" style="--text-cl: {{ block.settings.text-color1 }};{{ block.settings.quick_options1 }}">
+                      <div data-t4s-animate class="t4s-banner-item t4s-eff t4s-eff-img-zoom t4s_ratio_mix t4s_ratio_cuspx_mb_true t4s_ratio_cuspx_tb_true t4s_ratio_cuspx_true" style="--ratioapt: {{ image1.aspect_ratio | default: 1.5 }};--ratioaptmb: {{ image_mb1.aspect_ratio | default: 1.5 }};--aspect-ratio-cus : {{ block.settings.slide_height_dk }}px;--aspect-ratio-custb : {{ block.settings.slide_height_tb }}px;--aspect-ratio-cusmb : {{ block.settings.slide_height_mb }}px;">
+                        <div class="t4s-banner-inner">
+                          <{{ ARRhtml[0] }} {{ ARRhtml[1] }}href="{{ block.settings.b_link1 }}"{{ ARRhtml[2] }}target="_blank"class="t4s-d-block t4s_ratio t4s_ratio_hasmb t4s-bg-pos-cener">
+                            {%- if image1 != blank -%}
+                              <img {% if image_mb1.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image_mb1.presentation.focal_point }};" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-md-none" data-src="{{ image_mb1 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image_mb1.width }}" height="{{ image_mb1.height }}" alt="{{ image_mb1.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: url({{ image_mb1 | image_url: width: 1 }})"></span>
+                              <img {% if image1.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image1.presentation.focal_point }};" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-none t4s-d-md-block" data-src="{{ image1 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image1.width }}" height="{{ image1.height }}" alt="{{ image1.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-none t4s-d-md-block" style="background: url({{ image1 | image_url: width: 1 }})"></span>
+                            {%- else -%}
+                              {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1 t4s-obj-eff' }}
+                            {%- endif -%}
+                          </{{ ARRhtml[0] }}>
+                          <div class="t4s-banner-content t4s-content-position t4s-pa t4s-bg-content-true ">
+                            {% if block.settings.title1 != blank %}
+                              <h5 class="title">
+                                {{ block.settings.title1 }}
+                              </h5>
+                            {% endif %}
+                            {% if block.settings.subtitle1 != blank %}
+                              <h3 class="subtitle">
+                                {{ block.settings.subtitle1 }}
+                              </h5>
+                            {% endif %}
+                            {% if block.settings.button_label1 != blank and block.settings.b_link1 != blank %}
+                              <a class="t4s-banner-btn" href="{{ block.settings.b_link1 }}">
+                                {{ block.settings.button_label1 }}
+                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 31.49 31.49" style="enable-background:new 0 0 31.49 31.49;" xml:space="preserve"><path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" /></svg>
+                              </a>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="t4s-banner-slider-item t4s-banner-slider2 t4s-col-item t4s-col-12 t4s_cover bl-{{ block.id }}" style="--text-cl: {{ block.settings.text-color2 }};{{ block.settings.quick_options2 }}">
+                      <div data-t4s-animate class="t4s-banner-item t4s-eff t4s-eff-img-zoom t4s_ratio_mix t4s_ratio_cuspx_mb_true t4s_ratio_cuspx_tb_true t4s_ratio_cuspx_true" style="--ratioapt: {{ image2.aspect_ratio | default: 1.5 }};--ratioaptmb: {{ image_mb2.aspect_ratio | default: 1.5 }};--aspect-ratio-cus : {{ block.settings.slide_height_dk }}px;--aspect-ratio-custb : {{ block.settings.slide_height_tb }}px;--aspect-ratio-cusmb : {{ block.settings.slide_height_mb }}px;">
+                        <div class="t4s-banner-inner">
+                          <{{ ARRhtml2[0] }} {{ ARRhtml2[1] }}href="{{ block.settings.b_link2 }}"{{ ARRhtml2[2] }}target="_blank"class="t4s-d-block t4s_ratio t4s_ratio_hasmb t4s-bg-pos-cener">
+                            {%- if image2 != blank -%}
+                              <img {% if image_mb2.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image_mb2.presentation.focal_point}}" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-md-none" data-src="{{ image_mb2 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image_mb2.width }}" height="{{ image_mb2.height }}" alt="{{ image_mb2.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: url({{ image_mb2 | image_url: width: 1 }})"></span>
+                              <img {% if image2.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{image2.presentation.focal_point}}" {% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff t4s-d-none t4s-d-md-block" data-src="{{ image2 | image_url: width: 1 }}" data-widths="[400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image2.width }}" height="{{ image2.height }}" alt="{{ image2.alt | escape }}" loading="lazy">
+                              <span class="lazyloadt4s-loader is-bg-img t4s-d-none t4s-d-md-block" style="background: url({{ image2 | image_url: width: 1 }})"></span>
+                            {%- else -%}
+                              {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1 t4s-obj-eff' }}
+                            {%- endif -%}
+                          </{{ ARRhtml[0] }}>
+                          <div class="t4s-banner-content t4s-content-position t4s-pa t4s-bg-content-true ">
+                            {% if block.settings.title2 != blank %}
+                              <h5 class="title">
+                                {{ block.settings.title2 }}
+                              </h5>
+                            {% endif %}
+                            {% if block.settings.subtitle2 != blank %}
+                              <h3 class="subtitle">
+                                {{ block.settings.subtitle2 }}
+                              </h5>
+                            {% endif %}
+                            {% if block.settings.button_label2 != blank and block.settings.b_link2 != blank %}
+                              <a class="t4s-banner-btn" href="{{ block.settings.b_link2 }}">
+                                {{ block.settings.button_label2 }} <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 31.49 31.49" style="enable-background:new 0 0 31.49 31.49;" xml:space="preserve"><path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" /></svg>
+                              </a>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {%- endfor -%}
+              <div class="t4s-collection-top-control t4s-d-flex t4s-align-items-center">
+                {%- for block in section.blocks -%}                  
+                  {%- case block.type -%}
+                    {%- when 'sortby' -%}
+                      <div class="t4s-dropdown t4s-dropdown__sortby hidden-mb-{{ block.settings.hidden_mb }}">
+                        <link rel="stylesheet" href="{{ 'base_drop.min.css' | asset_url }}" media="all">
+                        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                        {%- assign option_selected = collection.sort_options | where: "value", sort_by | first -%}
+                        <button data-dropdown-open data-position="bottom-end" data-id="t4s__sortby">
+                          <span class="t4s-d-none t4s-d-md-block">{{ option_selected.name | escape }}</span>
+                          <span data-not-change-txt class="t4s-d-md-none">{{ 'collections.general.sort_button' | t }}</span>
+                          <svg class="t4s-icon-select-arrow" role="presentation" viewBox="0 0 19 12" width="10" height="10"> <use xlink:href="#t4s-select-arrow"></use> </svg>
+                        </button>
+                        <div data-dropdown-wrapper class="t4s-dropdown__wrapper" id="t4s__sortby">
+                          <div class="t4s-drop-arrow"></div>
+                          <div class="t4s-dropdown__header">
+                            <span class="t4s-dropdown__title">{{ 'collections.general.sort_by_label' | t }}</span>
+                            <button data-dropdown-close aria-label="{{ 'general.aria.close' | t }}">
+                              <svg role="presentation" class="t4s-iconsvg-close" viewBox="0 0 16 14" width="16" height="16"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path> </svg>
+                          </button>
+                        </div>
+                        <div class="t4s-dropdown__content">
+                          {%- for option in collection.sort_options -%}
+                            <button data-dropdown-item data-sortby-item data-value="{{ option.value | escape }}" {% if option.value == sort_by %} class="is--selected" {% endif %}>{{ option.name | escape }}</button>
+                          {%- endfor -%}
+                          </div>
+                        </div>
+                      </div>
+                    {%- when 'layout' -%}
+                      {%- if enable_listing -%}
+                      <div data-layout-switch="" data-load="true" data-grid-default="{{ section.settings.col_mb }}.{{ section.settings.col_tb }}.{{ section.settings.col_dk }}"{% if request.design_mode and cart.attributes.collection_items_per_row %} data-remove-cart-attr{% endif %} data-items="{{ cart_collection_items_per_row }}" class="t4s-layout-switch-wrapper hidden-mb-{{ block.settings.hidden_mb }} {% if enable_listing %} has-list-view {% endif %}">
+                        <div class="t4s-layout__switch t4s-d-flex">
+                          <div class="is--mobile t4s-d-flex t4s-d-md-none">
+                            <button class="{{ grid_active }}" data-btn-as-a="" data-breakpoint="mobile" data-col="{{ section.settings.col_mb }}">
+                              <span class="t4s_icon_view{{ section.settings.col_mb }}">
+                                <svg x="0px" y="0px" width="17" height="17" viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve"><rect width="211.692" height="211.692" /><rect x="260.923" width="211.692" height="211.692" /><rect y="260.923" width="211.692" height="211.692" /><rect x="260.923" y="260.923" width="211.692" height="211.692" /></svg>
+                              </span>
+                            </button>
+                            <button class="{{ list_active }}" data-btn-as-a="" data-breakpoint="mobile" data-col="list_t4s">
+                              <span class="t4s_icon_viewlist">
+                                <svg x="0px" y="0px" width="17" height="17" viewBox="0 0 344.339 344.339" style="enable-background:new 0 0 344.339 344.339;" xml:space="preserve"><rect y="46.06" width="344.339" height="29.52" /><rect y="156.506" width="344.339" height="29.52" /><rect y="268.748" width="344.339" height="29.531" /></svg>
+                              </span>
+                            </button>
+                          </div>
+                          <div class="is--tablet t4s-d-none t4s-d-md-flex t4s-d-lg-none"> 
+                            <button class="{{ grid_active }}" data-btn-as-a="" data-breakpoint="tablet" data-col="{{ section.settings.col_tb }}">
+                              <span class="t4s_icon_view{{ section.settings.col_tb }}">
+                                <svg x="0px" y="0px" width="17" height="17" viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve"><rect width="211.692" height="211.692" /><rect x="260.923" width="211.692" height="211.692" /><rect y="260.923" width="211.692" height="211.692" /><rect x="260.923" y="260.923" width="211.692" height="211.692" /></svg>
+                              </span>
+                            </button>
+                            <button class="{{ list_active }}" data-btn-as-a="" data-breakpoint="tablet" data-col="list_t4s">
+                              <span class="t4s_icon_viewlist">
+                                <svg x="0px" y="0px" width="17" height="17" viewBox="0 0 344.339 344.339" style="enable-background:new 0 0 344.339 344.339;" xml:space="preserve"><rect y="46.06" width="344.339" height="29.52" /><rect y="156.506" width="344.339" height="29.52" /><rect y="268.748" width="344.339" height="29.531" /></svg>
+                              </span>
+                            </button>
+                          </div>
+                          <div class="is--desktop t4s-d-none t4s-d-lg-flex">
+                            <button class="{{ grid_active }}" data-btn-as-a="" data-breakpoint="desktop" data-col="{{ section.settings.col_dk }}">
+                              <span class="t4s_icon_view{{ section.settings.col_dk }}">
+                                <svg x="0px" y="0px" width="17" height="17" viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve"><rect width="211.692" height="211.692" /><rect x="260.923" width="211.692" height="211.692" /><rect y="260.923" width="211.692" height="211.692" /><rect x="260.923" y="260.923" width="211.692" height="211.692" /></svg>
+                              </span>
+                            </button>
+                            <button class="{{ list_active }}" data-btn-as-a="" data-breakpoint="desktop" data-col="list_t4s">
+                              <span class="t4s_icon_viewlist">
+                                <svg x="0px" y="0px" width="17" height="17" viewBox="0 0 344.339 344.339" style="enable-background:new 0 0 344.339 344.339;" xml:space="preserve"><rect y="46.06" width="344.339" height="29.52" /><rect y="156.506" width="344.339" height="29.52" /><rect y="268.748" width="344.339" height="29.531" /></svg>
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      {%- endif -%}
+                    {%- when 'filter' -%}
+                      {%- if show_filter %}
+                        <div class="t4s-btn-filter-wrapper hidden-mb-{{ block.settings.hidden_mb }}">
+                          <button data-btn-as-a class="t4s-btn-filter" data-drawer-delay data-drawer-options='{ "id":"{{ id_se }}#t4s-filter-hidden" }' aria-label="Show filters">
+                            <svg width="17" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z" /></svg>
+                            {{ 'collections.general.filter_button' | t }}
+                          </button>
+                        </div>
+                      {% endif -%}
+                    {%- when 'products_count' -%}
+                      <div data-result-count class="t4s-collection-products-count hidden-mb-{{ block.settings.hidden_mb }}">{{ 'products.facets.results_with_count_html' | t: count: results_count }}</div>
+                  {%- endcase -%}
+                {%- endfor -%} 
+              </div>
+              {%- if show_filter and style_filters == 'area' %}
+                <div class="t4s-filter-area" data-filter-area></div>
+              {% endif -%}
+            {%- endif -%}
+            {%- if section.settings.position_desc == '1' and section.settings.show_desc -%}
+              <div id="t4s-desc-collection" class="t4s-desc-collection t4s-desc-before">{{ collection.description }}</div>
+            {%- endif -%}
+            <div data-ntajax-container>
+              {%- assign total_active_values = 0 -%}
+              {%- capture filters__active -%}
+                <div class="t4s-active-filters__count t4s-d-md-none">{{ 'products.facets.results_with_count_html' | t: count: collection.products_count }}</div>
+                <div class="t4s-filter-results t4s-d-inline-block">{{ 'products.facets.result_filter' | t }}</div>
+                <span>
+                  {%- for filter in collection.filters -%}
+                    {%- if filter.type == "price_range" -%}
+                      {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                        {%- assign total_active_values = total_active_values | plus: 1 -%}
+                        <a class="t4s-active-filters__remove-filter" href="{{ filter.url_to_remove }}">
+                          {%- assign min_value = filter.min_value.value | default: 0 -%}
+                          {%- assign max_value = filter.max_value.value | default: filter.range_max -%}
+                          {{ min_value | money }} - {{ max_value | money }}
+                        </a>
+                      {%- endif -%}
+                    {%- else -%}
+                      {%- for filter_value in filter.active_values -%}
+                        {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
+                        <a class="t4s-active-filters__remove-filter" href="{{ filter_value.url_to_remove }}">{{ filter_value.label }}</a>
+                      {%- endfor -%}
+                    {%- endif- %}
+                  {%- endfor -%}
+                </span>
+                {%- if total_active_values > 1 %}
+                  <a href="{{ collection.url }}{% if collection.sort_by != blank %}?sort_by={{ collection.sort_by }}{% endif %}" class="t4s-active-filters__clear">{{ 'products.facets.clear_all' | t }}</a>
+                {% endif -%}
+              {%- endcapture -%}
+              {%- if total_active_values > 0 %}
+                <div class="t4s-active-filters">{{- filters__active -}}</div>
+                <style type="text/css">.t4s-collection-products-count {display: inline-flex !important; }</style>
+              {% endif -%}
+              {%- if current_tags.size > 0 and type_filters == 'facets_tags' -%}
+                <div class="t4s-active-filters">
+                  <div class="t4s-active-filters__count t4s-d-md-none">{{ 'products.facets.results_with_count_html' | t: count: collection.products_count }}</div>
+                  <div class="t4s-filter-results t4s-d-inline-block">{{ 'products.facets.result_filter' | t }}</div>
+                  <span>
+                  {%- if current_tags.size > 0 -%}
+                    {%- for tag in current_tags -%}
+                      {%- assign txt_tag = tag | replace: '-', ' ' | replace: '_', ' ' -%}{{ txt_tag | link_to_remove_tag: tag | replace: 'title=', 'class="t4s-active-filters__remove-filter" aria-label=' }}{%- endfor -%}
+                  {%- endif -%}
+                  {%- if current_tags.size > 1 -%}
+                    <a class="t4s-active-filters__clear" href="{{ collection.url }}{% if collection.sort_by != blank %}?sort_by={{ collection.sort_by }}{% endif %}">{{ 'products.facets.clear_all' | t }}</a>
+                  {%- endif -%}
+                  </span>
+                </div>
+              {%- endif -%}
+
+              
+              {%- if paginate.previous.is_link and isLoadmore -%}
+                <div data-wrap-lm-prev class="t4s-pagination-wrapper t4s-prs-head t4s-has-btn-{{ use_pagination }} {{ section.settings.pagination_pos }} t4s-w-100" style="--pagination-distance:{{ section.settings.pagination_distance }}px;">
+                  <a data-load-more data-is-prev href="{{ paginate.previous.url }}" class="t4s-pr t4s-loadmore-btn t4s-btn t4s-btn-loading__svg t4s-btn-base t4s-btn-style-{{ section.settings.button_style }} t4s-btn-size-{{ section.settings.btns_size }} t4s-btn-icon-{{ section.settings.btn_icon }} t4s-btn-color-{{ section.settings.btns_cl }} {% if section.settings.button_style == 'default' or section.settings.button_style == 'outline' %}t4s-btn-effect-{{ section.settings.button_effect }}{% endif %}">
+                    <span class="t4s-btn-atc_text">{{ 'collections.pagination.load_prev' | t }}</span>
+                    {% if section.settings.btn_icon %}
+                      <svg class="t4s-btn-icon" viewBox="0 0 32 32"><path d="M 15 4 L 15 24.0625 L 8.21875 17.28125 L 6.78125 18.71875 L 15.28125 27.21875 L 16 27.90625 L 16.71875 27.21875 L 25.21875 18.71875 L 23.78125 17.28125 L 17 24.0625 L 17 4 Z" /></svg>
+                    {% endif %}
+                    <div class="t4s-loading__spinner t4s-dn">
+                      <svg aria-hidden="true" focusable="false" role="presentation" fill="none" class="t4s-svg__spinner" width="38" height="38" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 496 496" xml:space="preserve"> <circle style="fill:#383A39;" cx="248" cy="24" r="24" /> <circle style="fill:#ECEEEE;" cx="248" cy="472" r="24" /> <circle style="fill:#77807F;" cx="136" cy="53.6" r="24" /> <path style="fill:#F2F4F4;" d="M380.8,430.4c6.4,11.2,2.4,25.6-8.8,32.8c-11.2,6.4-25.6,2.4-32.8-8.8c-6.4-11.2-2.4-25.6,8.8-32.8 C359.2,415.2,374.4,419.2,380.8,430.4z" /> <path style="fill:#9FAAA9;" d="M65.6,115.2c11.2,6.4,15.2,20.8,8.8,32.8c-6.4,11.2-20.8,15.2-32.8,8.8c-11.2-6.4-15.2-20.8-8.8-32.8 S54.4,108.8,65.6,115.2z" /> <path style="fill:#F2F7F7;" d="M454.4,339.2c11.2,6.4,15.2,20.8,8.8,32.8c-6.4,11.2-20.8,15.2-32.8,8.8 c-11.2-6.4-15.2-20.8-8.8-32.8C428,336.8,442.4,332.8,454.4,339.2z" /> <circle style="fill:#B2BBBA;" cx="24" cy="248" r="24" /> <circle style="fill:#FFFFFF;" cx="472" cy="248" r="24" /> <path style="fill:#C5CCCB;" d="M41.6,339.2c11.2-6.4,25.6-2.4,32.8,8.8c6.4,11.2,2.4,25.6-8.8,32.8c-11.2,6.4-25.6,2.4-32.8-8.8 S30.4,346.4,41.6,339.2z" /> <path d="M430.4,115.2c11.2-6.4,25.6-2.4,32.8,8.8c6.4,11.2,2.4,25.6-8.8,32.8c-11.2,6.4-25.6,2.4-32.8-8.8 C415.2,136.8,419.2,121.6,430.4,115.2z" /> <path style="fill:#D9DDDD;" d="M115.2,430.4c6.4-11.2,20.8-15.2,32.8-8.8c11.2,6.4,15.2,20.8,8.8,32.8c-6.4,11.2-20.8,15.2-32.8,8.8 C112.8,456,108.8,441.6,115.2,430.4z" /> <path style="fill:#111111;" d="M339.2,41.6c6.4-11.2,20.8-15.2,32.8-8.8c11.2,6.4,15.2,20.8,8.8,32.8c-6.4,11.2-20.8,15.2-32.8,8.8 C336.8,68,332.8,53.6,339.2,41.6z" /> </svg>
+                    </div>
+                  </a>
+                </div>
+              {%- endif -%}
+              {%- if layout_des == "1" -%}
+                <div data-contentlm-replace class="t4s_box_pr_grid t4s-products {{ class_listview }} t4s-text-{{ section.settings.content_align }} t4s_{{ image_ratio }} t4s_position_{{ section.settings.image_position }} t4s_{{ section.settings.image_size }} t4s-row t4s-justify-content-center t4s-row-cols-{{ col_mobile }} t4s-row-cols-md-{{ col_tablet }} t4s-row-cols-lg-{{ col_desktop }} t4s-gx-lg-{{ section.settings.space_h_item }} t4s-gy-lg-{{ section.settings.space_v_item }} t4s-gx-md-{{ section.settings.space_h_item_tb }} t4s-gy-md-{{ section.settings.space_v_item_tb }} t4s-gx-{{ section.settings.space_h_item_mb }} t4s-gy-{{ section.settings.space_v_item_mb }}">
+              {%- else -%}
+                <div data-contentlm-replace class="isotopet4s t4s_box_pr_masonry t4s-products {{ class_listview }} t4s-text-{{ section.settings.content_align }} t4s_{{ image_ratio }} t4s_position_{{ section.settings.image_position }} t4s_{{ section.settings.image_size }} t4s-row t4s-row-cols-{{ col_mobile }} t4s-row-cols-md-{{ col_tablet }} t4s-row-cols-lg-{{ col_desktop }} t4s-gx-lg-{{ section.settings.space_h_item }} t4s-gy-lg-{{ section.settings.space_v_item }} t4s-gx-md-{{ section.settings.space_h_item_tb }} t4s-gy-md-{{ section.settings.space_v_item_tb }} t4s-gx-{{ section.settings.space_h_item_mb }} t4s-gy-{{ section.settings.space_v_item_mb }}" data-isotopet4s-js='{ "itemSelector": ".t4s-product", "layoutMode": "masonry" }'>
+              {%- endif -%}
+                {%- if enable_listing and enable_listing_default and cart_collection_items_per_row == blank -%}
+                  {%- render 'pr-list-item' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: true, placeholder_img: placeholder_img -%}
+                {%- elsif cart_collection_items_per_row contains 'list_t4s' -%}
+                  {%- render 'pr-list-item' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: true, placeholder_img: placeholder_img -%}
+                {% else %}
+                  {%- liquid 
+                    case product_des
+                      when '1'
+                        render 'pr-grid-item1' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '2'
+                        render 'pr-grid-item2' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '3'
+                        render 'pr-grid-item3' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '4'
+                        render 'pr-grid-item4' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '5'
+                        render 'pr-grid-item5' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '6'
+                        render 'pr-grid-item6' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '7'
+                        render 'pr-grid-item7' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '8'
+                        render 'pr-grid-item8' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '9'
+                        render 'pr-grid-item9' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '10'
+                        render 'pr-grid-item10' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '11'
+                        render 'pr-grid-item11' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '12'
+                        render 'pr-grid-item12' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '13'
+                        render 'pr-grid-item13' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '14'
+                        render 'pr-grid-item14' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '15'
+                        render 'pr-grid-item15' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '16'
+                        render 'pr-grid-item16' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '17'
+                        render 'pr-grid-item17' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '18'
+                        render 'pr-grid-item18' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '19'
+                        render 'pr-grid-item19' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '20'
+                        render 'pr-grid-item20' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '21'
+                        render 'pr-grid-item21' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                      when '22'
+                        render 'pr-grid-item22' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                    endcase
+                  -%}
+                {%- endif -%}
+                </div>
+                {%- if section.settings.position_desc == '2' and section.settings.show_desc -%}
+                  <div id="t4s-desc-collection" class="t4s-desc-collection t4s-desc-after">{{ collection.description }}</div>
+                {%- endif -%}
+              {%- if paginate.pages > 1 -%}
+                {%- liquid
+                assign pt_loadmore = 0
+                if section.settings.pagination_distance < 50
+                  assign pt_loadmore = 50
+                endif
+                -%}
+                <div class="t4s-row t4s-prs-footer t4s-has-btn-{{ use_pagination }} {{ section.settings.pagination_pos }}" style="--pagination-distance:{{ section.settings.pagination_distance }}px;;--pt-loadmore:{{ pt_loadmore }}px">
+                  {%- if use_pagination == 'default' -%}
+                    {%- render 'pagination', paginate: paginate, anchor: '' -%}
+                  {%- elsif paginate.next.is_link -%}
+
+                    <div data-wrap-lm class="t4s-pagination-wrapper t4s-w-100">
+                      <a data-load-more {% if use_pagination == 'infinite' %} data-load-onscroll {% endif %} href="{{ paginate.next.url }}" class="t4s-pr t4s-loadmore-btn t4s-btn-loading__svg t4s-btn t4s-btn-base t4s-btn-style-{{ section.settings.button_style }} t4s-btn-size-{{ section.settings.btns_size }} t4s-btn-icon-{{ section.settings.btn_icon }} t4s-btn-color-{{ section.settings.btns_cl }} {% if section.settings.button_style == 'default' or section.settings.button_style == 'outline' %}t4s-btn-effect-{{ section.settings.button_effect }}{% endif %}">
+                        <span class="t4s-btn-atc_text">{% assign load_more_df = 'collections.pagination.load_more' | t %}{{ section.settings.btn_replace | default: load_more_df | escape }}</span>
+                        {% if section.settings.btn_icon %}
+                          <svg class="t4s-btn-icon" viewBox="0 0 32 32"><path d="M 15 4 L 15 24.0625 L 8.21875 17.28125 L 6.78125 18.71875 L 15.28125 27.21875 L 16 27.90625 L 16.71875 27.21875 L 25.21875 18.71875 L 23.78125 17.28125 L 17 24.0625 L 17 4 Z" /></svg>
+                        {% endif %}
+                        <div class="t4s-loading__spinner t4s-dn">
+                          <svg aria-hidden="true" focusable="false" role="presentation" fill="none" class="t4s-svg__spinner" width="38" height="38" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 496 496" xml:space="preserve"> <circle style="fill:#383A39;" cx="248" cy="24" r="24" /> <circle style="fill:#ECEEEE;" cx="248" cy="472" r="24" /> <circle style="fill:#77807F;" cx="136" cy="53.6" r="24" /> <path style="fill:#F2F4F4;" d="M380.8,430.4c6.4,11.2,2.4,25.6-8.8,32.8c-11.2,6.4-25.6,2.4-32.8-8.8c-6.4-11.2-2.4-25.6,8.8-32.8 C359.2,415.2,374.4,419.2,380.8,430.4z" /> <path style="fill:#9FAAA9;" d="M65.6,115.2c11.2,6.4,15.2,20.8,8.8,32.8c-6.4,11.2-20.8,15.2-32.8,8.8c-11.2-6.4-15.2-20.8-8.8-32.8 S54.4,108.8,65.6,115.2z" /> <path style="fill:#F2F7F7;" d="M454.4,339.2c11.2,6.4,15.2,20.8,8.8,32.8c-6.4,11.2-20.8,15.2-32.8,8.8 c-11.2-6.4-15.2-20.8-8.8-32.8C428,336.8,442.4,332.8,454.4,339.2z" /> <circle style="fill:#B2BBBA;" cx="24" cy="248" r="24" /> <circle style="fill:#FFFFFF;" cx="472" cy="248" r="24" /> <path style="fill:#C5CCCB;" d="M41.6,339.2c11.2-6.4,25.6-2.4,32.8,8.8c6.4,11.2,2.4,25.6-8.8,32.8c-11.2,6.4-25.6,2.4-32.8-8.8 S30.4,346.4,41.6,339.2z" /> <path d="M430.4,115.2c11.2-6.4,25.6-2.4,32.8,8.8c6.4,11.2,2.4,25.6-8.8,32.8c-11.2,6.4-25.6,2.4-32.8-8.8 C415.2,136.8,419.2,121.6,430.4,115.2z" /> <path style="fill:#D9DDDD;" d="M115.2,430.4c6.4-11.2,20.8-15.2,32.8-8.8c11.2,6.4,15.2,20.8,8.8,32.8c-6.4,11.2-20.8,15.2-32.8,8.8 C112.8,456,108.8,441.6,115.2,430.4z" /> <path style="fill:#111111;" d="M339.2,41.6c6.4-11.2,20.8-15.2,32.8-8.8c11.2,6.4,15.2,20.8,8.8,32.8c-6.4,11.2-20.8,15.2-32.8,8.8 C336.8,68,332.8,53.6,339.2,41.6z" /> </svg>
+                        </div>
+                      </a>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+        <aside data-sidebar-content class="t4s-col-item t4s-col-12 t4s-col-lg-3 t4s-sidebar t4s-dn">
+          <div class="t4s-loading--bg"></div>
+        </aside>
+    </div>
+    {{- html_layout[1] -}}
+  </div>
+{%- endpaginate -%}
+{%- comment -%}
+{%- if enable_listing and cart_collection_items_per_row contains 'list_t4s' -%}
+  {%- comment -%}  list_t4s.2.5 is--listview t4s-row-cols-list_t4s t4s-row-cols-md-2 t4s-row-cols-lg-5 {%- endcomment -%}
+  <script>
+    (function() {
+      var windowWidth = window.innerWidth,
+        onlistview = {{ collection_items_per_row | json }},
+        producSelector = document.querySelectorAll('#shopify-section-  {{ section.id }} .t4s-products')[0],
+        classListview = 'is--listview on--list-',
+        classListview2 = classListview;
+
+      if (windowWidth < 768 && onlistview[0] == 'list_t4s') {
+        classListview = classListview + 'mobile';
+      } else if (windowWidth > 767 && windowWidth < 1025 && onlistview[1] == 'list_t4s') {
+        classListview = classListview + 'tablet';
+      } else if (windowWidth > 1024 && onlistview[2] == 'list_t4s') {
+        classListview = classListview + 'desktop';
+      }
+      if (classListview != classListview2) 
+        producSelector.className += ' ' + classListview;   
+    }());
+  </script>
+{%- endif -%}
+{%- endcomment -%}
+{% schema %}
+{
+  "name": "Main collection",
+  "tag": "section",
+  "class": "t4s-section t4s-section-main t4s-collection-page t4s_bk_flickity t4s_tp_istope t4s_tp_countdown",
+  "settings": [
+    {
+      "type": "header",
+      "content": "1. General options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desc",
+      "label": "Show description collection",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "position_desc",
+      "options": [
+        {
+          "value": "1",
+          "label": "Before main collection"
+        },
+        {
+          "value": "2",
+          "label": "After main collection"
+        }
+      ],
+      "label": "Position description collection",
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "product_des",
+      "options": [
+        {
+          "value": "1",
+          "label": "Design 1"
+        },
+        {
+          "value": "2",
+          "label": "Design 2"
+        },
+        {
+          "value": "3",
+          "label": "Design 3"
+        },
+        {
+          "value": "4",
+          "label": "Design 4"
+        },
+        {
+          "value": "5",
+          "label": "Design 5"
+        },
+        {
+          "value": "6",
+          "label": "Design 6"
+        },
+        {
+          "value": "7",
+          "label": "Design 7"
+        },
+        {
+          "value": "8",
+          "label": "Design 8"
+        },
+        {
+          "value": "9",
+          "label": "Design 9"
+        },
+        {
+          "value": "10",
+          "label": "Design 10"
+        },
+        {
+          "value": "11",
+          "label": "Design 11"
+        },
+        {
+          "value": "12",
+          "label": "Design 12"
+        },
+        {
+          "value": "13",
+          "label": "Design 13"
+        },
+        {
+          "value": "14",
+          "label": "Design 14"
+        },
+        {
+          "value": "15",
+          "label": "Design 15"
+        },
+        {
+          "value": "16",
+          "label": "Design 16"
+        },
+        {
+          "value": "17",
+          "label": "Design 17"
+        },
+        {
+          "value": "18",
+          "label": "Design 18"
+        },
+        {
+          "value": "19",
+          "label": "Design 19"
+        },
+        {
+          "value": "20",
+          "label": "Design 20"
+        },
+        {
+          "value": "21",
+          "label": "Design 21"
+        },
+        {
+          "value": "22",
+          "label": "Design 22"
+        }
+      ],
+      "label": "Product item design",
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show product vendors",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "use_cdt",
+      "label": "Show product countdown",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "+ Options image products"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "default": "rationt",
+      "info": "Aspect ratio custom will settings in general panel",
+      "options": [
+        {
+          "group": "Natural",
+          "value": "ratioadapt",
+          "label": "Adapt to image"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio2_1",
+          "label": "2:1"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio16_9",
+          "label": "16:9"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio8_5",
+          "label": "8:5"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio3_2",
+          "label": "3:2"
+        },
+        {
+          "group": "Landscape",
+          "value": "ratio4_3",
+          "label": "4:3"
+        },
+        {
+          "group": "Landscape",
+          "value": "rationt",
+          "label": "Ratio ASOS"
+        },
+        {
+          "group": "Squared",
+          "value": "ratio1_1",
+          "label": "1:1"
+        },
+        {
+          "group": "Portrait",
+          "value": "ratio2_3",
+          "label": "2:3"
+        },
+        {
+          "group": "Portrait",
+          "value": "ratio1_2",
+          "label": "1:2"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus1",
+          "label": "Ratio custom 1"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus2",
+          "label": "Ratio custom 2"
+        },
+        {
+          "group": "Custom",
+          "value": "ratio_us3",
+          "label": "Ratio custom 3"
+        },
+        {
+          "group": "Custom",
+          "value": "ratiocus4",
+          "label": "Ratio custom 4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "Image size",
+      "default": "cover",
+      "info": "This settings apply only if the image ratio is not set to 'Adapt to image'",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Full"
+        },
+        {
+          "value": "contain",
+          "label": "Auto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "1",
+          "label": "Left top"
+        },
+        {
+          "value": "2",
+          "label": "Left center"
+        },
+        {
+          "value": "3",
+          "label": "Left bottom"
+        },
+        {
+          "value": "4",
+          "label": "Right top"
+        },
+        {
+          "value": "5",
+          "label": "Right center"
+        },
+        {
+          "value": "6",
+          "label": "Right bottom"
+        },
+        {
+          "value": "7",
+          "label": "Center top"
+        },
+        {
+          "value": "8",
+          "label": "Center center"
+        },
+        {
+          "value": "9",
+          "label": "Center bottom"
+        }
+      ],
+      "label": "Image position",
+      "default": "8"
+    },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Product content align",
+      "default": "default",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "label": "Maximum products to show",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_listing",
+      "label": "Enable list switch",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_listing_default",
+      "label": "Set list view as default",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "col_dk",
+      "label": "Items per row",
+      "default": "4",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_tb",
+      "label": "Items per row (Tablet)",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "col_mb",
+      "label": "Items per row (Mobile)",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "space_h_item",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        },
+        {
+          "value": "50",
+          "label": "50px"
+        },
+        {
+          "value": "60",
+          "label": "60px"
+        },
+        {
+          "value": "70",
+          "label": "70px"
+        }
+      ],
+      "label": "Space horizontal items",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        },
+        {
+          "value": "50",
+          "label": "50px"
+        },
+        {
+          "value": "60",
+          "label": "60px"
+        },
+        {
+          "value": "70",
+          "label": "70px"
+        }
+      ],
+      "label": "Space vertical items",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item_tb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        },
+        {
+          "value": "50",
+          "label": "50px"
+        }
+      ],
+      "label": "Space horizontal items (Tablet)",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item_tb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        },
+        {
+          "value": "50",
+          "label": "50px"
+        }
+      ],
+      "label": "Space vertical items (Tablet)",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item_mb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        },
+        {
+          "value": "50",
+          "label": "50px"
+        }
+      ],
+      "label": "Space horizontal items (Mobile)",
+      "default": "10"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item_mb",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "5",
+          "label": "5px"
+        },
+        {
+          "value": "10",
+          "label": "10px"
+        },
+        {
+          "value": "15",
+          "label": "15px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        },
+        {
+          "value": "25",
+          "label": "25px"
+        },
+        {
+          "value": "30",
+          "label": "30px"
+        },
+        {
+          "value": "40",
+          "label": "40px"
+        },
+        {
+          "value": "50",
+          "label": "50px"
+        }
+      ],
+      "label": "Space vertical items (Mobile)",
+      "default": "10"
+    },
+    {
+      "type": "select",
+      "id": "layout_des",
+      "options": [
+        {
+          "value": "1",
+          "label": "Grid"
+        },
+        {
+          "value": "2",
+          "label": "Masonry"
+        }
+      ],
+      "label": "Layout design",
+      "default": "1"
+    },
+    {
+      "type": "header",
+      "content": "Pagination options"
+    },
+    {
+      "type": "select",
+      "id": "use_pagination",
+      "label": "Pagination",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "load-more",
+          "label": "'Load more' button"
+        },
+        {
+          "value": "infinite",
+          "label": "Infinite scrolling"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "btn_replace",
+      "label": "Title of the replace button",
+      "info": "Leave empty to use 'View all' or 'Load more' default."
+    },
+    {
+      "type": "paragraph",
+      "content": "Page-loading speed is everything for good user experience. Multiple researches have shown that slow load times result in people leaving your site or delete your app which result in low conversion rates. And that’s bad news for those who use an infinite-scrolling. The more users scroll down a page, more content has to load on the same page. As a result, the page performance will increasingly slow down."
+    },
+    {
+      "type": "paragraph",
+      "content": "Another problem is limited resources of the user’s device. On many infinite scrolling sites, especially those with many images, devices with limited resources (such as mobile devices or tablets with dated hardware) can start slowing down because of the sheer number of assets it has loaded."
+    },
+    {
+      "type": "paragraph",
+      "content": "Therefore, we recommend that you only use 'Load more', 'Infinite scrolling' for when your collection is less than or equal to 400 products"
+    },
+    {
+      "type": "checkbox",
+      "id": "btn_icon",
+      "label": "Enable button icon",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Ovic",
+          "value": "ovic"
+        },
+        {
+          "label": "Outline",
+          "value": "outline"
+        },
+        {
+          "label": "Border bottom",
+          "value": "bordered"
+        },
+        {
+          "label": "Link",
+          "value": "link"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btns_size",
+      "label": "Button size",
+      "default": "default",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Custom size #1",
+          "value": "1"
+        },
+        {
+          "label": "Custom size #2",
+          "value": "2"
+        },
+        {
+          "label": "Custom size #3",
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btns_cl",
+      "label": "Button color",
+      "default": "dark",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "custom1",
+          "label": "Custom color 1"
+        },
+        {
+          "value": "custom2",
+          "label": "Custom color 2"
+        },
+        {
+          "value": "custom3",
+          "label": "Custom color 3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "button_effect",
+      "label": "Hover button effect",
+      "default": "default",
+      "info": "Only working button style default, outline",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Fade",
+          "value": "fade"
+        },
+        {
+          "label": "Rectangle out",
+          "value": "rectangle-out"
+        },
+        {
+          "label": "Sweep to right",
+          "value": "sweep-to-right"
+        },
+        {
+          "label": "Sweep to left",
+          "value": "sweep-to-left"
+        },
+        {
+          "label": "Sweep to bottom",
+          "value": "sweep-to-bottom"
+        },
+        {
+          "label": "Sweep to top",
+          "value": "sweep-to-top"
+        },
+        {
+          "label": "Shutter out horizontal",
+          "value": "shutter-out-horizontal"
+        },
+        {
+          "label": "Outline",
+          "value": "outline"
+        },
+        {
+          "label": "Shadow",
+          "value": "shadow"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "pagination_pos",
+      "label": "Pagination position",
+      "default": "t4s-text-center",
+      "options": [
+        {
+          "value": "t4s-text-start",
+          "label": "Left"
+        },
+        {
+          "value": "t4s-text-center",
+          "label": "Center"
+        },
+        {
+          "value": "t4s-text-end",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "pagination_distance",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Distance from pagination to boundary",
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "+ Collection filter"
+    },
+    {
+      "type": "select",
+      "id": "type_filters",
+      "label": "Filters type",
+      "default": "facets",
+      "options": [
+        {
+          "value": "facets_tags",
+          "label": "Filter by tags"
+        },
+        {
+          "value": "facets",
+          "label": "Filter by product options"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "2. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "t4s-se-container",
+          "label": "Container"
+        },
+        {
+          "value": "t4s-container-wrap",
+          "label": "Wrapped container"
+        },
+        {
+          "value": "t4s-container-fluid",
+          "label": "Full width"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sortby",
+      "name": "Sortby",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "hidden_mb",
+          "label": "Hidden on mobile",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "layout",
+      "name": "Layout switch",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Not working with layout masonry"
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_mb",
+          "label": "Hidden on mobile",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "filter",
+      "name": "Filter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "style_filters",
+          "label": "Filter style will show after click button filter ( desktop )",
+          "default": "sidebar",
+          "options": [
+            {
+              "value": "sidebar",
+              "label": "Hidden sidebar"
+            },
+            {
+              "value": "area",
+              "label": "Filters area"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "hidden_mb",
+          "label": "Hidden on mobile",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "On mobile always use hidden sidebar"
+        }
+      ]
+    },
+    {
+      "type": "products_count",
+      "name": "Products count",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "hidden_mb",
+          "label": "Hidden on mobile",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "banner_group",
+      "name": "Banner group",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Banner item 1"
+        },
+        {
+          "type": "number",
+          "id": "height_dk1",
+          "label": "Banner item 1 height (Desktop)",
+          "default": 300
+        },
+        {
+          "type": "number",
+          "id": "height_tb1",
+          "label": "Banner item 1 height (Tablet)",
+          "default": 300
+        },
+        {
+          "type": "number",
+          "id": "height_mb1",
+          "label": "Banner item 1 height (Mobile)",
+          "default": 300
+        },
+        {
+          "type": "image_picker",
+          "id": "image1",
+          "label": "Image banner item 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mb1",
+          "label": "Image banner item 1 (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "title1",
+          "label": "Title banner 1",
+          "default": "LOOKBOOK 2023"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle1",
+          "label": "Subtitle banner 1",
+          "default": "Ready to Wear"
+        },
+        {
+          "type": "url",
+          "id": "b_link1",
+          "label": "Banner item 1 link"
+        },
+        {
+          "type": "color",
+          "id": "text-color1",
+          "label": "Content banner 1 color",
+          "default": "#293341"
+        },
+        {
+          "type": "textarea",
+          "id": "quick_options1",
+          "label": "Quick option for banner 1",
+          "info": "Write optional variables for a complete banner, eg: --width-dk: 100%; --width-tb: 100%; --width-mb: 100%; content align, content position...",
+          "default": "--width-dk: 100%; --width-tb: 100%; --width-mb: 100%;--p-right: 45px;--p-hx: 0; --p-top: 50%;--p-vy: -50%;--p-right-tb: 40px;--p-hx-tb: 0;--p-top-tb: 50%;--p-vy-tb: -50%;--bg-content: rgba(255, 255, 255, 0.8);text-align: left;--content-pd: 30px 30px;--content-pd-mb: 15px 15px;--p-right-mb: 30px;--p-hx-mb: 0;--p-top-mb: 50%;--p-vy-mb: -50%;"
+        },
+        {
+          "type": "header",
+          "content": "Banner item 2"
+        },
+        {
+          "type": "number",
+          "id": "height_dk2",
+          "label": "Banner item 2 height (Desktop)",
+          "default": 240
+        },
+        {
+          "type": "number",
+          "id": "height_tb2",
+          "label": "Banner item 2 height (Tablet)",
+          "default": 240
+        },
+        {
+          "type": "number",
+          "id": "height_mb2",
+          "label": "Banner item 2 height (Mobile)",
+          "default": 240
+        },
+        {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Image banner item 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mb2",
+          "label": "Image banner item 2 (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "title2",
+          "label": "Title banner 2",
+          "default": "Men’s Outerwear <br> and Blazers"
+        },
+        {
+          "type": "text",
+          "id": "button_label2",
+          "label": "Button label banner 2",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "b_link2",
+          "label": "Banner item 2 link"
+        },
+        {
+          "type": "color",
+          "id": "text-color2",
+          "label": "Content banner 2 color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "textarea",
+          "id": "quick_options2",
+          "label": "Quick option for banner 2",
+          "info": "Write optional variables for a complete banner, eg: --width-dk: 50%; --width-tb: 50%; --width-mb: 100%; content align, content position...",
+          "default": "--width-dk: 100%; --width-tb: 100%; --width-mb: 100%;--p-right: 45px;--p-hx: 0; --p-top: 50%;--p-vy: -50%;--p-right-tb: 40px;--p-hx-tb: 0;--p-top-tb: 50%;--p-vy-tb: -50%;--bg-content: rgba(255, 255, 255, 0.8);text-align: left;--content-pd: 30px 30px;--content-pd-mb: 15px 15px;--p-right-mb: 30px;--p-hx-mb: 0;--p-top-mb: 50%;--p-vy-mb: -50%;"
+        },
+        {
+          "type": "header",
+          "content": "Banner item 3"
+        },
+        {
+          "type": "number",
+          "id": "height_dk3",
+          "label": "Banner item 3 height (Desktop)",
+          "default": 240
+        },
+        {
+          "type": "number",
+          "id": "height_tb3",
+          "label": "Banner item 3 height (Tablet)",
+          "default": 240
+        },
+        {
+          "type": "number",
+          "id": "height_mb3",
+          "label": "Banner item 3 height (Mobile)",
+          "default": 240
+        },
+        {
+          "type": "image_picker",
+          "id": "image3",
+          "label": "Image banner item 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mb3",
+          "label": "Image banner item 3 (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "title3",
+          "label": "Title banner 3",
+          "default": "Printed long <br> sleeve T-shirt"
+        },
+        {
+          "type": "text",
+          "id": "button_label3",
+          "label": "Button label banner 3",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "b_link3",
+          "label": "Banner item 3 link"
+        },
+        {
+          "type": "color",
+          "id": "text-color3",
+          "label": "Content banner 3 color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "textarea",
+          "id": "quick_options3",
+          "label": "Quick option for banner 3",
+          "info": "Write optional variables for a complete banner, eg: --width-dk: 50%; --width-tb: 50%; --width-mb: 100%; content align, content position...",
+          "default": "--width-dk: 100%; --width-tb: 100%; --width-mb: 100%;--p-right: 45px;--p-hx: 0; --p-top: 50%;--p-vy: -50%;--p-right-tb: 40px;--p-hx-tb: 0;--p-top-tb: 50%;--p-vy-tb: -50%;--bg-content: rgba(255, 255, 255, 0.8);text-align: left;--content-pd: 30px 30px;--content-pd-mb: 15px 15px;--p-right-mb: 30px;--p-hx-mb: 0;--p-top-mb: 50%;--p-vy-mb: -50%;"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Desktop)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom (Tablet)",
+          "default": 40
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom (Mobile)",
+          "default": 30
+        }
+      ]
+    },
+    {
+      "type": "banner_slider",
+      "name": "Banner slider",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "slide_height_dk",
+          "label": "Slider height (Desktop)",
+          "default": 400
+        },
+        {
+          "type": "number",
+          "id": "slide_height_tb",
+          "label": "Slider height (Tablet)",
+          "default": 350
+        },
+        {
+          "type": "number",
+          "id": "slide_height_mb",
+          "label": "Slider height (Mobile)",
+          "default": 300
+        },
+        {
+          "type": "header",
+          "content": "Slider item 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image1",
+          "label": "Image slider item 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mb1",
+          "label": "Image slider item 1 (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "title1",
+          "label": "Title banner 1",
+          "default": "JACKET COLLECTION"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle1",
+          "label": "Subtitle banner 1",
+          "default": "Hit the road <br> in new brands"
+        },
+        {
+          "type": "text",
+          "id": "button_label1",
+          "label": "Button label slider 1",
+          "default": "DISCOVER NOW"
+        },
+        {
+          "type": "url",
+          "id": "b_link1",
+          "label": "Banner item 1 link"
+        },
+        {
+          "type": "color",
+          "id": "text-color1",
+          "label": "Content banner 1 color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "textarea",
+          "id": "quick_options1",
+          "label": "Quick option for banner 1",
+          "info": "Write optional variables for a complete banner, eg: content align, content position...",
+          "default": "--p-left: 50px;--p-hx: 0; --p-top: 50%;--p-vy: -50%;--p-left-tb: 40px;--p-hx-tb: 0;--p-top-tb: 50%;--p-vy-tb: -50%;--p-left-mb: 30px;--p-hx-mb: 0;--p-top-mb: 50%;--p-vy-mb: -50%;"
+        },
+        {
+          "type": "header",
+          "content": "Slider item 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Image slider item 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mb2",
+          "label": "Image slider item 2 (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "title2",
+          "label": "Title banner 2",
+          "default": "UP TO 40% OFF"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle2",
+          "label": "Subtitle banner 2",
+          "default": "The New <br> Spring Collection"
+        },
+        {
+          "type": "text",
+          "id": "button_label2",
+          "label": "Button label slider 2",
+          "default": "DISCOVER NOW"
+        },
+        {
+          "type": "url",
+          "id": "b_link2",
+          "label": "Banner item 2 link"
+        },
+        {
+          "type": "color",
+          "id": "text-color2",
+          "label": "Content banner 2 color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "textarea",
+          "id": "quick_options2",
+          "label": "Quick option for banner 2",
+          "info": "Write optional variables for a complete banner, eg: content align, content position...",
+          "default": "--p-left: 50px;--p-hx: 0; --p-top: 50%;--p-vy: -50%;--p-left-tb: 40px;--p-hx-tb: 0;--p-top-tb: 50%;--p-vy-tb: -50%;--p-left-mb: 30px;--p-hx-mb: 0;--p-top-mb: 50%;--p-vy-mb: -50%;"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Desktop)",
+          "default": 50
+        },
+        {
+          "type": "number",
+          "id": "mgb_tb",
+          "label": "Margin bottom (Tablet)",
+          "default": 40
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom (Mobile)",
+          "default": 30
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "filter"
+      },
+      {
+        "type": "products_count"
+      },
+      {
+        "type": "sortby"
+      },
+      {
+        "type": "layout"
+      }
+    ]
+  }
+}
+{% endschema %}

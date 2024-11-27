@@ -1,0 +1,80 @@
+.t4s-pagination .t4s-pagination__list {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	margin: 0;
+	padding: 0;
+}
+.t4s-pagination .t4s-pagination__list li > * {
+	min-width: 50px;
+	height: 50px;
+	border: solid 1px var(--border-color);
+	text-align: center;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 16px;
+	font-weight: 500;
+	color: var(--secondary-color);
+}
+.t4s-pagination .t4s-pagination__list li > a:hover {
+	background-color: var(--accent-color);
+	color: var(--t4s-light-color);
+}
+.t4s-pagination .t4s-pagination__list li > span.pagination__item--current:hover{
+	background-color: var(--accent-color);
+	border: unset
+}
+.t4s-pagination .t4s-pagination__list li > span.pagination__item--current {
+	color: var(--t4s-light-color);
+	background-color: var(--secondary-color);
+	border-color: var(--secondary-color);
+}
+.t4s-pagination .t4s-pagination__list li .pagination__item-arrow {
+	font-size: 0;
+}
+.t4s-pagination .t4s-pagination__list li .pagination__item-arrow svg {
+	fill: currentcolor;
+	width: 18px;
+}
+.rtl_true .t4s-pagination .t4s-pagination__list li .pagination__item-arrow svg {
+	transform: rotate(180deg);
+}
+.t4s-pagination .t4s-pagination__list li .pagination__item-arrow[disabled]{
+	pointer-events: none;
+	display: none;
+}
+.t4s-pagination .t4s-pagination__list li .pagination__item-arrow[disabled] svg{
+	opacity: .3;
+}
+.t4s-pagination-wrapper {
+	padding-top: var(--pagination-distance);
+}
+.t4s-pagination-wrapper.t4s-prs-head {
+	padding-top: 0;
+	padding-bottom: var(--pagination-distance);
+}
+@media(max-width: 1024px) {
+	.t4s-pagination .t4s-pagination__list {
+		gap: 15px;
+	}
+	.t4s-pagination .t4s-pagination__list li > * {
+		min-width: 40px;
+		height: 40px;
+		font-size: 14px;
+	}
+	.t4s-pagination .t4s-pagination__list li .pagination__item-arrow svg {
+		width: 16px;
+	}
+}
+@media(max-width: 767px) {
+	.t4s-pagination .t4s-pagination__list {
+		display: block;
+	}
+	.t4s-pagination .t4s-pagination__list > li {
+		display: inline-block;
+		vertical-align: middle;
+		margin: 5px;
+	}
+}

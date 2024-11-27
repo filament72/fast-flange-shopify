@@ -1,0 +1,15 @@
+{%- liquid
+	assign gavatar     = comment.email | remove: ' ' | strip_newlines | downcase | md5
+	assign gavatar_url = 'https://www.gravatar.com/avatar/' | append: gavatar | append: '?d=mm&r=g&s='
+-%}
+
+<div class="t4s-row t4s-align-items-center">
+	<div class="t4s-col-auto t4s-col_avatar_cm">
+		<img width="160" height="160" data-src="{{ gavatar_url }}120" data-srcset="{{ gavatar_url }}80 80w, {{ gavatar_url }}120 120w, {{ gavatar_url }}160 160w" data-sizes="(min-width: 1025px) 120px, (min-width: 768px) 80px, 80px" class="lazyloadt4s t4s-comment__avatar" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="comment avatar" loading="lazy">
+	</div>
+	<div class="t4s-col t4s-comment-content">
+		<h5 class="t4s-comment__author">{{ comment.author }}</h5>
+		<div class="t4s-comment__content t4s-rte">{{ comment.content }}</div>
+		<div class="t4s-comment__date">{{ comment.created_at | date: '%B %e, %Y at %R%P' }}</div>
+	</div>
+</div>

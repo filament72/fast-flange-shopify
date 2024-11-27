@@ -1,0 +1,133 @@
+/* before after img */
+.t4s-image_ba_wrap {
+  padding: calc(var(--padding) * 0.5);
+  background-color: var(--background-color);
+  margin-bottom: var(--mgb-mb);
+}
+.t4s-beafimg-inner img {
+  width: 100%;
+  display: block;
+  pointer-events: none;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+.t4s-beafimg-inner .t4s-resizebeaf img {
+  width: auto;
+  height: 100%;
+  max-width: none;
+}
+.t4s-resizebeaf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+}
+.t4s-handlebeaf {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-inline-start: -1px;
+  background: #fff;
+  cursor: grab;
+}
+.t4s-handlebeaf > span {
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+  border: 4px solid #f1f5ed;
+  border-radius: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+}
+
+.t4s-handlebeaf > span:after,
+.t4s-handlebeaf > span:before {
+  width: 0;
+  height: 0;
+  border: 4px inset transparent;
+  position: absolute;
+  top: 50%;
+  content: "";
+  display: block;
+}
+.t4s-handlebeaf > span:before {
+  border-left: 4px solid #759b49;
+
+  left: 50%;
+  transform: translate(50%, -50%);
+}
+.t4s-handlebeaf > span:after {
+  border-right: 4px solid #759b49;
+  right: 50%;
+  transform: translate(-50%, -50%);
+}
+.before_after_desc p {
+  margin-bottom: 0.5em;
+}
+.before_after_desc strong {
+  color: #333;
+  font-size: 17px;
+}
+.rtl_true .t4s-resizebeaf {
+  right: 0;
+  left: auto;
+}
+.rtl_true .t4s-handlebeaf {
+  right: 50%;
+  left: auto;
+}
+.rtl_true .type_banner_collection2 .ml__30 {
+  margin-inline-start: 0;
+  margin-inline-end: 30px;
+}
+.rtl_true .type_banner_collection2 .mr__30 {
+  margin-inline-end: 0;
+  margin-inline-start: 30px;
+}
+.rtl_true .t4s-handlebeaf > span {
+  transform: translate(50%, -50%);
+}
+@media (min-width: 768px) {
+  .t4s-image_ba_wrap {
+    padding: calc(var(--padding) * 0.75);
+    margin-bottom: var(--mgb-tb);
+  }
+  .t4s-handlebeaf > span {
+    width: 52px;
+    height: 52px;
+    margin-inline-start: 2px;
+  }
+  .t4s-handlebeaf > span:after,
+  .t4s-handlebeaf > span:before {
+    border: 6px inset transparent;
+  }
+  .t4s-handlebeaf > span:before {
+    border-left: 6px solid #759b49;
+  }
+  .t4s-handlebeaf > span:after {
+    border-right: 6px solid #759b49;
+  }
+  .t4s-handlebeaf {
+    width: 4px;
+  }
+}
+@media (min-width: 1025px) {
+  .t4s-image_ba_wrap {
+    padding: calc(var(--padding));
+    margin-bottom: var(--mgb);
+  }
+}
+/* end before after img */

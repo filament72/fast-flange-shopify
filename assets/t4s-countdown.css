@@ -1,0 +1,151 @@
+.t4s-countdown {
+	margin-bottom: var(--mgb);
+}
+.t4s-countdown .t4s-time {
+	display: inline-flex;
+	opacity: 0;
+}
+.t4s-countdown .t4s-time.t4s-countdown-enabled,
+.t4s-countdown-enabled .t4s-time {
+	opacity: 1;
+}
+.t4s-countdown .t4s-time.t4s-countdown-enabled.expired_cdt4s{
+	display: none;
+}
+.t4s-text-start .t4s-countdown .t4s-time{
+	justify-content: flex-start;
+}
+.t4s-text-center .t4s-countdown .t4s-time{
+	justify-content: center;
+} 
+.t4s-text-end .t4s-countdown .t4s-time{
+	justify-content: flex-end;
+} 
+.t4s-countdown .t4s-time > span {
+  margin: 0 calc(var(--space-item)/2);
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 50px;
+}
+.t4s-countdown-size-medium .t4s-time > span {
+  min-width: 80px;
+}
+.t4s-countdown-size-large .t4s-time > span {
+  min-width:110px;
+}
+.t4s-countdown .t4s-time > span:first-child {
+	margin-inline-start: 0 !important;
+}
+.t4s-countdown .t4s-time > span:last-child {
+	margin-inline-end: 0 !important;
+}
+.t4s-countdown .t4s-time > span:not(:last-child):after {
+  content: ":";
+  display: inline-flex;
+  position: absolute;
+  left: calc(100% + var(--space-item)/2);
+  margin: auto;
+  color: var(--separator-cl);
+  font-size: 25px;
+  font-weight: 600;
+}
+.t4s-countdown .t4s-time > span .t4s-cd-number {
+	color: var(--number-cl);
+	font-size: 35px;
+	line-height: 1;
+	padding: 0;
+}
+.t4s-countdown .t4s-time > span .t4s-cd-text {
+	display: block;
+	color: var(--text-cl);
+	margin-top: 7px;
+	font-size: 12px;
+	line-height: 1;
+  font-weight: 400;
+}
+
+.t4s-countdown-text-lowercase .t4s-cd-text{ text-transform: lowercase ;}
+.t4s-countdown-text-capitalize .t4s-cd-text{ text-transform: capitalize ;}
+.t4s-countdown-text-uppercase .t4s-cd-text{ text-transform: uppercase ;}
+
+.t4s-countdown-size-medium .t4s-time > span .t4s-cd-number {font-size: 50px;}
+.t4s-countdown-size-medium .t4s-time > span .t4s-cd-text {font-size: 20px;}
+
+.t4s-countdown-size-large .t4s-time > span .t4s-cd-number {font-size: 60px;}
+.t4s-countdown-size-large .t4s-time > span .t4s-cd-text {font-size: 30px;}
+
+@media(min-width: 768px) and (max-width: 1024px){
+  .t4s-countdown{
+		margin-bottom: var(--mgb-tb);
+  }
+  .t4s-text-md-start .t4s-countdown .t4s-time {
+		justify-content: flex-start;
+	}
+	.t4s-text-md-center .t4s-countdown .t4s-time {
+		justify-content: center;
+	}
+	.t4s-text-md-end .t4s-countdown .t4s-time {
+		justify-content: flex-end;
+	}
+	.t4s-countdown .t4s-time > span {
+    margin: 0 calc(var(--space-item-tb)/2);
+  }
+  .t4s-countdown .t4s-time > span:not(:last-child):after {
+    font-size: 20px;
+    left: calc(100% + var(--space-item-tb)/2);
+  }
+  .t4s-countdown .t4s-time > span .t4s-cd-number {font-size: 30px;}
+
+  .t4s-countdown-size-medium .t4s-time > span .t4s-cd-number {font-size: 36px;}
+  .t4s-countdown-size-medium .t4s-time > span .t4s-cd-text {font-size: 16px;}
+
+  .t4s-countdown-size-large .t4s-time > span .t4s-cd-number {font-size: 46px;}
+  .t4s-countdown-size-large .t4s-time > span .t4s-cd-text {font-size: 25px;}
+  .t4s-countdown-size-medium .t4s-time > span {
+    min-width: 70px;
+  }
+  .t4s-countdown-size-large .t4s-time > span {
+    min-width: 90px;
+  }
+}
+@media(max-width: 767px) {
+	.t4s-countdown{
+		margin-bottom: var(--mgb-mb);
+	}
+  .t4s-countdown .t4s-time > span {
+    margin: 0 calc(var(--space-item-mb)/2);
+  }
+  .t4s-countdown .t4s-time > span:not(:last-child):after {
+    font-size: 15px;
+    left: calc(100% + var(--space-item-mb)/2);
+  }
+  .t4s-countdown .t4s-time > span .t4s-cd-number {font-size: 24px;}
+
+  .t4s-countdown-size-medium .t4s-time > span .t4s-cd-number {font-size: 26px;}
+  .t4s-countdown-size-medium .t4s-time > span .t4s-cd-text {font-size: 14px;}
+
+  .t4s-countdown-size-large .t4s-time > span .t4s-cd-number {font-size: 32px;}
+  .t4s-countdown-size-large .t4s-time > span .t4s-cd-text {font-size: 16px;}
+
+  .t4s-countdown-size-medium .t4s-time > span {
+    min-width: 55px;
+  }
+  .t4s-countdown-size-large .t4s-time > span {
+    min-width: 60px;
+  }
+}
+@media(min-width: 1025px) {
+  .t4s-text-lg-start .t4s-countdown .t4s-time {
+		justify-content: flex-start;
+	}
+	.t4s-text-lg-center .t4s-countdown .t4s-time {
+		justify-content: center;
+	}
+	.t4s-text-lg-end .t4s-countdown .t4s-time {
+		justify-content: flex-end;
+	}
+}
