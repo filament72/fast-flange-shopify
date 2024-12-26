@@ -71,8 +71,48 @@
         "mgb_mb": 0
       }
     },
+    "contact_form_pVWQW9": {
+      "type": "contact-form",
+      "blocks": {
+        "bl_info_MJeUAp": {
+          "type": "bl_info",
+          "settings": {
+            "heading": "We work for  your success",
+            "sub_heading": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh.",
+            "text": "<p>We love to hear from you on our customer service, merchandise, website or any topics you want to share with us. Your comments and suggestions will be appreciated.</p>"
+          }
+        },
+        "bl_form_JfT3NR": {
+          "type": "bl_form",
+          "settings": {
+            "enable_phone": true,
+            "enable_order": true,
+            "enable_full_btn": false,
+            "button_style": "default",
+            "btn_size": "1",
+            "btn_cl": "dark"
+          }
+        }
+      },
+      "block_order": [
+        "bl_info_MJeUAp",
+        "bl_form_JfT3NR"
+      ],
+      "settings": {
+        "layout": "t4s-se-container",
+        "cl_bg": "#fff",
+        "cl_bg_gradient": "",
+        "mg": "0px,,0px,",
+        "pd": "50px, 15%,50px,15%",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": "",
+        "pd_mb": "20px, 20px,20px,20px"
+      }
+    },
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "layout": "t4s-se-container",
         "cl_bg": "#ffffff",
@@ -88,6 +128,7 @@
   },
   "order": [
     "heading",
+    "contact_form_pVWQW9",
     "main"
   ]
 }
