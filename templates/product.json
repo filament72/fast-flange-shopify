@@ -60,12 +60,6 @@
             "custom_liquid": "{% for variant in product.variants %}\n{% if product.selected_or_first_available_variant.id  == variant.id %}\n{% if variant.metafields.custom.variant_description != blank %}\n<h4 id=\"variant_description\">{{variant.metafields.custom.variant_description}}</h4>\n{% endif %}\n{% endif %}\n{% endfor %}"
           }
         },
-        "text_MbPMDV": {
-          "type": "text",
-          "settings": {
-            "text": "<p><strong>Buy More and Save!</strong> Discounts are reflected in the cart.</p>"
-          }
-        },
         "custom_liquid_7Nq8rg": {
           "type": "custom_liquid",
           "settings": {
@@ -92,6 +86,12 @@
             "length": 31,
             "readm": false,
             "readm_txt": "Read more"
+          }
+        },
+        "text_MbPMDV": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Buy More and Save!</strong> Discounts are reflected in the cart.</p>"
           }
         },
         "form": {
@@ -227,11 +227,11 @@
         "title",
         "c56bcbfd-608c-4bad-ae67-b95910f78ebe",
         "custom_liquid_b4bq78",
-        "text_MbPMDV",
         "custom_liquid_7Nq8rg",
         "custom_liquid_egWXBX",
         "custom_liquid_Xq7mXc",
         "description",
+        "text_MbPMDV",
         "form",
         "daffa30d-b8c4-4638-b717-db06e6ff429b",
         "8706b66f-5af2-4c70-a804-e8771986119f",
