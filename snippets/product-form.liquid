@@ -155,7 +155,7 @@
                 <div data-swatch-list class="t4s-swatch__list">
                   {%- if color_mode != 'dropdown' -%}
                     {%- for value in option.values -%}
-                    <div data-swatch-item data-tooltip{{ show_tooltip }}="top" title="{{ value | escape }}" class="t4s-swatch__item {{ color_swatch }}bg_color_{{ value | handle }} lazyloadt4s{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value }}
+                    <div data-swatch-item data-tooltip{{ show_tooltip }}="top" title="{{ value | escape }}" class="t4s-swatch__item {{ color_swatch }}bg_color_{{ value | handle }} lazyloadt4s{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value | escape }}
                       <svg class="t4s-dn icon-swatch-item" viewBox="0 0 17.837 17.837"><path d="M16.145,2.571c-0.272-0.273-0.718-0.273-0.99,0L6.92,10.804l-4.241-4.27 c-0.272-0.274-0.715-0.274-0.989,0L0.204,8.019c-0.272,0.271-0.272,0.717,0,0.99l6.217,6.258c0.272,0.271,0.715,0.271,0.99,0 L17.63,5.047c0.276-0.273,0.276-0.72,0-0.994L16.145,2.571z"/></svg>
                     </div>
                     {%- endfor -%}
@@ -170,7 +170,7 @@
                       </div>
                       <div class="t4s-dropdown__content">
                         {%- for value in option.values -%}
-                        <div data-swatch-item data-dropdown-off class="t4s-swatch__item t4s-truncate {{ color_swatch }}bg_color_{{ value | handle }} lazyloadt4s{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value }}</div>
+                        <div data-swatch-item data-dropdown-off class="t4s-swatch__item t4s-truncate {{ color_swatch }}bg_color_{{ value | handle }} lazyloadt4s{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value | escape }}</div>
                         {%- endfor -%}
                       </div>
                     </div>
@@ -185,7 +185,7 @@
                 <div class="t4s-swatch__list">
                   {%- if selector_mode != 'dropdown' -%}
                     {%- for value in option.values -%}
-                    <div data-swatch-item class="t4s-swatch__item{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value }}</div>
+                    <div data-swatch-item class="t4s-swatch__item{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value | escape }}</div>
                     {%- endfor -%}
 
                   {%- else -%}
@@ -198,7 +198,7 @@
                       </div>
                       <div class="t4s-dropdown__content">
                         {%- for value in option.values -%}
-                        <div data-swatch-item data-dropdown-off class="t4s-swatch__item t4s-truncate{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value }}</div>
+                        <div data-swatch-item data-dropdown-off class="t4s-swatch__item t4s-truncate{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value | escape }}</div>
                         {%- endfor -%}
                       </div>
                     </div>
