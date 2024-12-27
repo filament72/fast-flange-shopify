@@ -135,34 +135,10 @@
         "btn_cl2": "dark",
         "button_effect2": "default"
       }
-    },
-    "173524248223f53d08": {
-      "type": "apps",
-      "blocks": {
-        "easy_purchase_orders_po_button_LjCQqJ": {
-          "type": "shopify://apps/easy-purchase-orders/blocks/po-button/195d0725-dce2-4fa7-9490-36903545f059",
-          "settings": {
-            "title": "Purchase Order",
-            "btn_classes": "",
-            "btn_width": "",
-            "button_color": "#000000",
-            "text_color": "#ffffff",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        }
-      },
-      "block_order": [
-        "easy_purchase_orders_po_button_LjCQqJ"
-      ],
-      "settings": {
-        "include_margins": true
-      }
     }
   },
   "order": [
     "heading",
-    "main",
-    "173524248223f53d08"
+    "main"
   ]
 }
