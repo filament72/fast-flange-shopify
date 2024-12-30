@@ -245,7 +245,7 @@
       ],
       "settings": {
         "pr_layout": "default",
-        "enable_sticky_info": true,
+        "enable_sticky_info": false,
         "enable_center_info": false,
         "media_layout": "thumbnails_bottom",
         "media_size": "medium",
