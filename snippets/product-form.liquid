@@ -185,7 +185,7 @@
                 <div class="t4s-swatch__list">
                   {%- if selector_mode != 'dropdown' -%}
                     {%- for value in option.values -%}
-                    <div data-swatch-item class="t4s-swatch__item{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value }}</div>
+                    <div data-swatch-item class="t4s-swatch__item{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value | escape }}</div>
                     {%- endfor -%}
 
                   {%- else -%}
