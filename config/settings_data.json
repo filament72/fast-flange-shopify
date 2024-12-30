@@ -238,8 +238,8 @@
           "00928cb6-25d5-40f3-91e9-c73bec32dce3": {
             "type": "cat",
             "settings": {
-              "cat": "clothing-jewelry",
-              "title": "Grocery",
+              "cat": "flange-bolt",
+              "title": "FLANGE BOLTS",
               "url": "",
               "menu": "",
               "lb": "",
@@ -251,8 +251,8 @@
           "e793a139-c917-42ef-9caa-4682de9830f2": {
             "type": "cat",
             "settings": {
-              "cat": "cosmetic-beauty",
-              "title": "Household Supplies",
+              "cat": "flange-nut",
+              "title": "FLANGE NUTS",
               "url": "",
               "menu": "",
               "lb": "",
@@ -264,8 +264,8 @@
           "23e24d02-4975-4bda-9dde-5eee3b500081": {
             "type": "cat",
             "settings": {
-              "cat": "cosmetic",
-              "title": "Health & Beauty",
+              "cat": "socket-cap-screw",
+              "title": "SOCKET CAP SCREWS",
               "url": "",
               "menu": "",
               "lb": "",
@@ -277,112 +277,8 @@
           "1e80a434-0330-47c8-8d10-54e748a48c31": {
             "type": "cat",
             "settings": {
-              "cat": "gaming-laptops",
-              "title": "Electronics & Computers",
-              "url": "",
-              "menu": "",
-              "lb": "",
-              "lb_cl": "#e91e63",
-              "icons_op": "2",
-              "icon": ""
-            }
-          },
-          "071a2b47-c8cf-408e-b933-2518952b57b2": {
-            "type": "cat",
-            "settings": {
-              "cat": "playstation-4-consoles",
-              "title": "Video Games & Consoles",
-              "url": "",
-              "menu": "",
-              "lb": "",
-              "lb_cl": "#e91e63",
-              "icons_op": "2",
-              "icon": ""
-            }
-          },
-          "7a804247-b7c3-44f1-8f87-faa3136e7361": {
-            "type": "cat",
-            "settings": {
-              "cat": "frontpage",
-              "title": "Furniture",
-              "url": "",
-              "menu": "",
-              "lb": "",
-              "lb_cl": "#e91e63",
-              "icons_op": "2",
-              "icon": ""
-            }
-          },
-          "552e33db-c44c-4e3f-8f64-a056b3f5889d": {
-            "type": "cat",
-            "settings": {
-              "cat": "fashion",
-              "title": "Women's Fashion",
-              "url": "",
-              "menu": "",
-              "lb": "",
-              "lb_cl": "#e91e63",
-              "icons_op": "2",
-              "icon": ""
-            }
-          },
-          "d7acebb9-452d-4bb5-a281-a30df9d302e9": {
-            "type": "cat",
-            "settings": {
-              "cat": "fashion-17",
-              "title": "Baby",
-              "url": "",
-              "menu": "",
-              "lb": "",
-              "lb_cl": "#e91e63",
-              "icons_op": "2",
-              "icon": ""
-            }
-          },
-          "89aa7cf8-e4a2-403b-bfa4-d2fa773c990d": {
-            "type": "cat",
-            "settings": {
-              "cat": "furniture-home-11",
-              "title": "Pet Supplies",
-              "url": "",
-              "menu": "",
-              "lb": "",
-              "lb_cl": "#e91e63",
-              "icons_op": "2",
-              "icon": ""
-            }
-          },
-          "376d9197-b1b0-4b03-96d8-fb672e4a7c8d": {
-            "type": "cat",
-            "settings": {
-              "cat": "electronics-17",
-              "title": "Appliances",
-              "url": "",
-              "menu": "",
-              "lb": "",
-              "lb_cl": "#e91e63",
-              "icons_op": "2",
-              "icon": ""
-            }
-          },
-          "30d51df8-5064-4950-b977-4246eaf68958": {
-            "type": "cat",
-            "settings": {
-              "cat": "shose",
-              "title": "Sports, Fitness & Outdoors",
-              "url": "",
-              "menu": "",
-              "lb": "",
-              "lb_cl": "#e91e63",
-              "icons_op": "2",
-              "icon": ""
-            }
-          },
-          "433b5b8a-ba14-41d2-806b-87df39aae83f": {
-            "type": "cat",
-            "settings": {
-              "cat": "kitchen-dining",
-              "title": "Books, Music & Movies",
+              "cat": "avada-best-sellers",
+              "title": "BEST SELLERS",
               "url": "",
               "menu": "",
               "lb": "",
@@ -396,15 +292,7 @@
           "00928cb6-25d5-40f3-91e9-c73bec32dce3",
           "e793a139-c917-42ef-9caa-4682de9830f2",
           "23e24d02-4975-4bda-9dde-5eee3b500081",
-          "1e80a434-0330-47c8-8d10-54e748a48c31",
-          "071a2b47-c8cf-408e-b933-2518952b57b2",
-          "7a804247-b7c3-44f1-8f87-faa3136e7361",
-          "552e33db-c44c-4e3f-8f64-a056b3f5889d",
-          "d7acebb9-452d-4bb5-a281-a30df9d302e9",
-          "89aa7cf8-e4a2-403b-bfa4-d2fa773c990d",
-          "376d9197-b1b0-4b03-96d8-fb672e4a7c8d",
-          "30d51df8-5064-4950-b977-4246eaf68958",
-          "433b5b8a-ba14-41d2-806b-87df39aae83f"
+          "1e80a434-0330-47c8-8d10-54e748a48c31"
         ],
         "settings": {}
       },
