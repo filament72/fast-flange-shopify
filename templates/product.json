@@ -57,7 +57,7 @@
         "custom_liquid_b4bq78": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% for variant in product.variants %}\n{% if product.selected_or_first_available_variant.id  == variant.id %}\n{% if variant.metafields.custom.variant_description != blank %}\n<h4 id=\"variant_description\">{{variant.metafields.custom.variant_description}}</h4>\n{% endif %}\n{% endif %}\n{% endfor %}"
+            "custom_liquid": "{% for variant in product.variants %}\n{% if product.selected_or_first_available_variant.id  == variant.id %}\n{% if variant.metafields.custom.variant_description != blank %}\n<h4 id=\"variant_description\">{{variant.metafields.custom.variant_description | escape }}</h4>\n{% endif %}\n{% endif %}\n{% endfor %}"
           }
         },
         "custom_liquid_7Nq8rg": {
