@@ -69,7 +69,7 @@
         "custom_liquid_egWXBX": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% for variant in product.variants %}\n{% if product.selected_or_first_available_variant.id  == variant.id %}\n<strong>Weight Each:</strong> <span id=\"weight_each\">{{variant.metafields.custom.weight_per}}</span> lb<br>\n<strong>Weight /1000pcs:</strong> <span id=\"weight_1000\">{{variant.metafields.custom.weight_1000}}</span> lb<br>\n<strong>Weight /Carton:</strong> <span id=\"weight_carton\">{{variant.metafields.custom.weight_carton}}lb</span> lb\n{% endif %}\n{% endfor %}"
+            "custom_liquid": "{% for variant in product.variants %}\n{% if product.selected_or_first_available_variant.id  == variant.id %}\n<strong>Weight Each:</strong> <span id=\"weight_each\">{{variant.metafields.custom.weight_per}}</span> lb<br>\n<strong>Weight /Pack:</strong> <span id=\"weight_1000\">{{variant.metafields.custom.weight_1000}}</span> lb<br>\n<strong>Weight /Carton:</strong> <span id=\"weight_carton\">{{variant.metafields.custom.weight_carton}}lb</span> lb\n{% endif %}\n{% endfor %}"
           }
         },
         "custom_liquid_Xq7mXc": {
