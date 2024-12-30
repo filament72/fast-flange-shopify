@@ -285,12 +285,12 @@
         "bg": "#f9f9f9",
         "bg_mb": "#f9f9f9",
         "product_list": [],
-        "sticky_mode": "2",
+        "sticky_mode": "0",
         "sticky_show": "2",
         "sticky_layout_mb": "minimal",
-        "sticky_atc_top": true,
+        "sticky_atc_top": false,
         "enable_img_sticky": false,
-        "enable_select": true,
+        "enable_select": false,
         "ani": "none",
         "time": 6
       }
