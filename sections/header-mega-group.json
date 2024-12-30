@@ -390,7 +390,6 @@
         "7cd7074d-7bbd-4f2a-b9bb-bdcbc1fe10e1",
         "db2c0bf8-3c09-4e96-ae6c-91217ebfdd5f"
       ],
-      "disabled": true,
       "settings": {}
     },
     "header-categories": {
@@ -568,7 +567,6 @@
         "38b7df4a-3602-4a98-82f3-d86054c3bb60",
         "2b2fe98c-3eae-411d-a1d5-c45b3003f9d5"
       ],
-      "disabled": true,
       "settings": {
         "arrow": true
       }
