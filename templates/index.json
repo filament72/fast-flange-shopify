@@ -12,6 +12,122 @@
     "e10c341f-aa23-4128-9c82-c81241c20b41": {
       "type": "slideshow",
       "blocks": {
+        "image_parent_TmWP3j": {
+          "type": "image_parent",
+          "settings": {
+            "image": "shopify://shop_images/warehouse_57b73205-9102-4940-b328-bbb7f9a575f6.jpg",
+            "image_position": "8",
+            "cl_img": "",
+            "link_img1": "",
+            "open_link": "_blank",
+            "animate_slide": "none",
+            "text_align": "center",
+            "text_align_tb": "center",
+            "text_align_mb": "center",
+            "content_width": "container",
+            "cv_pos": 50,
+            "ch_pos": 50,
+            "cv_pos_tb": 50,
+            "ch_pos_tb": 50,
+            "cv_pos_mb": 50,
+            "ch_pos_mb": 50,
+            "bg_overlay": "#000",
+            "bg_opacity": 0,
+            "bg_content_cl": "#fff",
+            "bg_content_op": 0,
+            "content_pd_tb": 15,
+            "content_pd_lr": 15,
+            "content_pd_tb_tb": 15,
+            "content_pd_lr_tb": 15,
+            "content_pd_tb_mb": 10,
+            "content_pd_lr_mb": 10,
+            "border_bl": false,
+            "br_color": "#222",
+            "br_bg": "#fff",
+            "br_opacity": 50,
+            "br_style": "solid",
+            "br_pd": 20,
+            "br_pd_tb": 15,
+            "br_pd_mb": 10,
+            "label_nav": "Season Sale",
+            "time_animation": 1,
+            "animation_delay": 40
+          }
+        },
+        "298e0e28-0bfd-4e94-9a65-cd3b20be1b20": {
+          "type": "custom_label",
+          "settings": {
+            "text": "STOCK UP",
+            "label_cl": "#293341",
+            "label_bg_cl": "#ffffff",
+            "fontf": "1",
+            "text_fs": 16,
+            "text_lh": 38,
+            "text_fw": 600,
+            "text_ls": 0,
+            "pd_lr": 25,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 15,
+            "mgb_tb": 10,
+            "mgb_mb": 10,
+            "animation": "fadeInLeft"
+          }
+        },
+        "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-1": {
+          "type": "custom_text",
+          "settings": {
+            "text": "BUY MORE<br>\nAND SAVE<br>",
+            "remove_br_tag": true,
+            "tag": "h3",
+            "fontf": "3",
+            "text_cl": "#ffffff",
+            "text_fs": 70,
+            "text_lh": 70,
+            "text_fw": 900,
+            "text_ls": 0,
+            "mgb": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_fs_tb": 50,
+            "text_lh_tb": 60,
+            "text_ls_tb": 0,
+            "mgb_tb": 0,
+            "hidden_mobile": false,
+            "text_fs_mb": 30,
+            "text_lh_mb": 36,
+            "text_ls_mb": 0,
+            "mgb_mb": 0,
+            "animation": "fadeInUp"
+          }
+        },
+        "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-2": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Discounts Reflected in Cart",
+            "remove_br_tag": true,
+            "tag": "h5",
+            "fontf": "1",
+            "text_cl": "#ffffff",
+            "text_fs": 28,
+            "text_lh": 28,
+            "text_fw": 400,
+            "text_ls": 0,
+            "mgb": 25,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_fs_tb": 18,
+            "text_lh_tb": 22,
+            "text_ls_tb": 0,
+            "mgb_tb": 10,
+            "hidden_mobile": true,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "mgb_mb": 10,
+            "animation": "fadeInUp"
+          }
+        },
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-0": {
           "type": "image_parent",
           "settings": {
@@ -54,7 +170,7 @@
             "animation_delay": 40
           }
         },
-        "298e0e28-0bfd-4e94-9a65-cd3b20be1b20": {
+        "custom_label_ntVyz4": {
           "type": "custom_label",
           "settings": {
             "text": "FEATURED",
@@ -74,7 +190,7 @@
             "animation": "fadeInLeft"
           }
         },
-        "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-1": {
+        "custom_text_bTU3Cw": {
           "type": "custom_text",
           "settings": {
             "text": "SUSTAINABLY<br>\nSOURCED<br>\nFASTENERS",
@@ -101,7 +217,7 @@
             "animation": "fadeInUp"
           }
         },
-        "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-2": {
+        "custom_text_PbkhtG": {
           "type": "custom_text",
           "disabled": true,
           "settings": {
@@ -307,10 +423,14 @@
         }
       },
       "block_order": [
-        "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-0",
+        "image_parent_TmWP3j",
         "298e0e28-0bfd-4e94-9a65-cd3b20be1b20",
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-1",
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-2",
+        "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-0",
+        "custom_label_ntVyz4",
+        "custom_text_bTU3Cw",
+        "custom_text_PbkhtG",
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-3",
         "e4e0d48a-ad03-4858-9581-0fe4b8e54e1a",
         "82f183c9-1af5-40f2-83a5-d32fc080f22e",
@@ -524,6 +644,7 @@
         "template--18492613886273__b84cd7e0-9b8c-476f-85eb-a2d3755c6686-1681960292a9c4901d-0",
         "template--18492613886273__b84cd7e0-9b8c-476f-85eb-a2d3755c6686-1681960292a9c4901d-1"
       ],
+      "disabled": true,
       "settings": {
         "space_h_item": "30",
         "space_v_item": "30",
@@ -2300,13 +2421,12 @@
       "blocks": {
         "template--18492613886273__55c0f5ba-0766-4ef2-9926-32d16de0c838-16837673067d630457-0": {
           "type": "shipping",
-          "disabled": true,
           "settings": {
-            "icon_themes": "box2",
-            "icon": "<i class=\"fa-solid fa-rocket\"></i>",
+            "icon_themes": "box",
+            "icon": "",
             "link": "",
-            "title": "Free Shipping Worldwide",
-            "text": "For all oders over $99",
+            "title": "Buy More and Save",
+            "text": "Discounts are reflected in the cart",
             "html_content": ""
           }
         },
@@ -2325,7 +2445,7 @@
           "type": "shipping",
           "settings": {
             "icon_themes": "money",
-            "icon": "<i class=\"fa-solid fa-messages-question\"></i>",
+            "icon": "",
             "link": "",
             "title": "Money Back Guaranteed",
             "text": "If goods have problems",
