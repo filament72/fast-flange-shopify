@@ -181,7 +181,7 @@
             {%- else -%}
 
               <div data-swatch-option data-id="{{ forloop.index0 }}" class="t4s-swatch__option is-t4s-name__{{ option_name | handle }}">
-                <h4 class="t4s-swatch__title"><span>{{ option_name }}: <span data-current-value class="t4s-swatch__current">{{ selected_value | default: choose_an_option | escape }}</span></span>{% if name_sizeg == name_downcase %}{{ html_sizeg }}{% endif %}</h4>
+                
                 <div class="t4s-swatch__list">
                   {%- if selector_mode != 'dropdown' -%}
                     {%- for value in option.values -%}
