@@ -2434,10 +2434,10 @@
           "type": "shipping",
           "settings": {
             "icon_themes": "guaranteed",
-            "icon": "<i class=\"fa-solid fa-handshake\"></i>",
+            "icon": "",
             "link": "",
             "title": "Authenticity 100% Guaranteed",
-            "text": "We sell on our site is 100% authentic",
+            "text": "Everything we sell is authentic",
             "html_content": ""
           }
         },
@@ -2448,7 +2448,7 @@
             "icon": "",
             "link": "",
             "title": "Money Back Guaranteed",
-            "text": "If goods have problems",
+            "text": "If goods have any problems",
             "html_content": ""
           }
         }
