@@ -297,6 +297,7 @@
     },
     "product_pagination": {
       "type": "product-pagination",
+      "disabled": true,
       "settings": {
         "pr_pag_des": "sticky",
         "bg_info_pr": "#f9f9f9",
