@@ -300,7 +300,7 @@
       "settings": {
         "pr_pag_des": "sticky",
         "bg_info_pr": "#f9f9f9",
-        "layout": "t4s-container-fluid",
+        "layout": "t4s-container-wrap",
         "cl_bg": "rgba(0,0,0,0)",
         "cl_bg_gradient": "",
         "mg": "50px,,50px,",
