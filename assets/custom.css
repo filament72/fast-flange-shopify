@@ -37,16 +37,7 @@ margin:0;
     background-color: #8dc63f;
 }
 
-.t4s-main-collection-item .t4s-img-wrap:before {
-  background: rgb(255, 255, 255);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 1) 90%
-  );
-  opacity: 1;
-  visibility: visible;
-}
+
 
 /*---------------- Custom CSS for only desktop -------------------*/
 @media (min-width: 1025px) {
