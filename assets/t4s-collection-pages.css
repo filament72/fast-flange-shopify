@@ -425,8 +425,12 @@
   bottom: 0;
   content: "";
   background-color: var(--pri-cl2);
-  opacity: 0;
-  visibility: hidden;
+  /*opacity: 0;
+  visibility: hidden;*/
+  background: linear-gradient( 180deg,rgba(255, 255, 255, 1) 0%,rgba(255, 255, 255, 1) 90%);
+  opacity: 1 !important;
+  visibility: visible !important;
+  }
   transition: 0.4s ease 0s;
 }
 /*Search page*/
