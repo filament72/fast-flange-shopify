@@ -427,7 +427,7 @@
   background-color: var(--pri-cl2);
   /*opacity: 0;
   visibility: hidden;*/
-  background: linear-gradient( 180deg,rgba(255, 255, 255, .25) 0%,rgba(255, 255, 255, 1) 90%);
+  background: linear-gradient( 180deg,rgba(255, 255, 255, .5) 0%,rgba(255, 255, 255, 1) 90%);
   opacity: 1;
   visibility: visible;
   transition: 0.4s ease 0s;
