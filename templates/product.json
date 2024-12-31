@@ -56,7 +56,6 @@
         },
         "custom_liquid_b4bq78": {
           "type": "custom_liquid",
-          "disabled": true,
           "settings": {
             "custom_liquid": "{% for variant in product.variants %}\n{% if product.selected_or_first_available_variant.id  == variant.id %}\n{% if variant.metafields.custom.variant_description != blank %}\n<h4 id=\"variant_description\">{{variant.metafields.custom.variant_description | escape }}</h4>\n{% endif %}\n{% endif %}\n{% endfor %}"
           }
@@ -75,6 +74,7 @@
         },
         "custom_liquid_Xq7mXc": {
           "type": "custom_liquid",
+          "disabled": true,
           "settings": {
             "custom_liquid": "{% for variant in product.variants %}\n{% if product.selected_or_first_available_variant.id  == variant.id %}\n{% if variant.metafields.custom.threads != blank %}\n<strong>Threads:</strong> <span id=\"bolt_thread\">{{variant.metafields.custom.threads}}</span>\n{% endif %}\n{% if variant.metafields.custom.diameter != blank %}\n<br><strong>Diameter:</strong> <span id=\"diameter\">{{variant.metafields.custom.diameter}}</span>&Prime;\n{% endif %}\n{% endif %}\n{% endfor %}"
           }
