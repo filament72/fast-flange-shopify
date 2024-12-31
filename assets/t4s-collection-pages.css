@@ -432,6 +432,9 @@
   visibility: visible;
   transition: 0.4s ease 0s;
 }
+a.t4s_collection_item_link:hover {
+  background-color: rgba(255, 255, 255, .8);
+}
 /*Search page*/
 .t4s-main-collection-search .t4s-search-form .t4s-search-form-inner {
   display: flex;
