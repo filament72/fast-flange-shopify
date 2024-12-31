@@ -559,7 +559,7 @@ endif
                       {%- endif -%}
                       {%- if block.settings.show_options and product.has_only_default_variant == false -%}{%- assign ck_meta = true -%}
                         {%- for product_option in product.options_with_values -%}
-                        <div class="t4s-option-wrapper"><span class="t4s-product-meta__text">{{ product_option.name | escape }}: </span> <span class="t4s-productMeta__value t4s-option-value">{{ product_option.values | join: ', ' | escape }}</span></div>
+                        
                         {%- endfor -%}
                       {%- endif -%}
                       {%- if block.settings.show_vendor and pr_vendor != blank %}{% assign ck_meta = true -%}
