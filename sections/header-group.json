@@ -344,6 +344,19 @@
             "lb_cl": ""
           }
         },
+        "base_XrKzAP": {
+          "type": "base",
+          "settings": {
+            "title": "Why Us",
+            "url": "shopify://pages/why-us",
+            "open_link": "_self",
+            "icon": "",
+            "cus_cl": false,
+            "cl": "#ec0101",
+            "lb": "",
+            "lb_cl": ""
+          }
+        },
         "base_Gh9EyX": {
           "type": "base",
           "settings": {
@@ -366,6 +379,7 @@
         "base_cPNeUR",
         "base_h6dNkh",
         "base_JfLgbe",
+        "base_XrKzAP",
         "base_Gh9EyX"
       ],
       "settings": {
