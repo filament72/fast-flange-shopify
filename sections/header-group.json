@@ -318,6 +318,19 @@
             "lb_cl": ""
           }
         },
+        "base_XrKzAP": {
+          "type": "base",
+          "settings": {
+            "title": "WHY US",
+            "url": "shopify://pages/why-us",
+            "open_link": "_self",
+            "icon": "",
+            "cus_cl": false,
+            "cl": "#ec0101",
+            "lb": "",
+            "lb_cl": ""
+          }
+        },
         "base_h6dNkh": {
           "type": "base",
           "settings": {
@@ -336,19 +349,6 @@
           "settings": {
             "title": "ENVIRONMENTAL",
             "url": "shopify://pages/environmental",
-            "open_link": "_self",
-            "icon": "",
-            "cus_cl": false,
-            "cl": "#ec0101",
-            "lb": "",
-            "lb_cl": ""
-          }
-        },
-        "base_XrKzAP": {
-          "type": "base",
-          "settings": {
-            "title": "Why Us",
-            "url": "shopify://pages/why-us",
             "open_link": "_self",
             "icon": "",
             "cus_cl": false,
@@ -377,9 +377,9 @@
         "3f6e8627-62e5-458b-92d2-a0471e1c0f18",
         "988a7fd7-ae5e-4427-b4bb-a5e3a9e2ecd1",
         "base_cPNeUR",
+        "base_XrKzAP",
         "base_h6dNkh",
         "base_JfLgbe",
-        "base_XrKzAP",
         "base_Gh9EyX"
       ],
       "settings": {
