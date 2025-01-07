@@ -78,7 +78,7 @@
           "type": "bl_info",
           "settings": {
             "heading": "We work for  your success",
-            "sub_heading": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh.",
+            "sub_heading": "",
             "text": "<p>We love to hear from you on our customer service, merchandise, website or any topics you want to share with us. Your comments and suggestions will be appreciated.</p>"
           }
         },
@@ -100,7 +100,7 @@
       ],
       "settings": {
         "layout": "t4s-se-container",
-        "cl_bg": "#fff",
+        "cl_bg": "#ffffff",
         "cl_bg_gradient": "",
         "mg": "0px,,0px,",
         "pd": "50px, 15%,50px,15%",
