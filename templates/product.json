@@ -57,7 +57,7 @@
         "custom_liquid_WeEa9V": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% if product.metafields.custom.stock_message != blank %}\n<h2 id=\"stock-message\">{{variant.metafields.custom.stock_message}}</h2>\n{% endif %}"
+            "custom_liquid": "{% if product.metafields.custom.stock_message != blank %}\n<h2 id=\"stock-message\">{{product.metafields.custom.stock_message}}</h2>\n{% endif %}"
           }
         },
         "custom_liquid_b4bq78": {
