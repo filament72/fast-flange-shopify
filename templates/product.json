@@ -131,7 +131,7 @@
         "custom_liquid_DNQRyf": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% if current_variant.available and current_variant.inventory_quantity <= 0 %}<h3 class=\"statusBackorder\">Available on backorder. Please allow 2-3 weeks for delivery</h3>{% endif %}"
+            "custom_liquid": "{% unless product.available %}\n  <p style=\"color: #000; background-color: darkseagreen; padding: 5px; border-radius: 5px; border: 1px solid #000; font-weight: 600;\">Not in stock but we can order this in for you</p>\n{% endunless %}"
           }
         },
         "daffa30d-b8c4-4638-b717-db06e6ff429b": {
