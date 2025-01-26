@@ -94,10 +94,10 @@
             "text": "<p><strong>Buy More and Save!</strong> Discounts are reflected in the cart.</p>"
           }
         },
-        "custom_liquid_DNQRyf": {
+        "custom_liquid_xfbLdd": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% if product.variants.first.inventory_quantity > 1 %}\n<h3 class=\"out-of-stock\">This product is on backorder and can be purchased but will be shipped as soon as available.</h3>\n{% endif %}"
+            "custom_liquid": "<div>We currently have <B id=\"variant-inventory\">{{ current_variant.inventory_quantity }}</B> in stock.</div>"
           }
         },
         "form": {
@@ -238,7 +238,7 @@
         "custom_liquid_Xq7mXc",
         "description",
         "text_MbPMDV",
-        "custom_liquid_DNQRyf",
+        "custom_liquid_xfbLdd",
         "form",
         "daffa30d-b8c4-4638-b717-db06e6ff429b",
         "8706b66f-5af2-4c70-a804-e8771986119f",
