@@ -128,6 +128,12 @@
             "advance_pr_list": []
           }
         },
+        "custom_liquid_DNQRyf": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% if current_variant.available and current_variant.inventory_quantity <= 0 %}<h3 class=\"statusBackorder\">Available on backorder. Please allow 2-3 weeks for delivery</h3>{% endif %}"
+          }
+        },
         "daffa30d-b8c4-4638-b717-db06e6ff429b": {
           "type": "size_delivery_ask",
           "settings": {
@@ -233,6 +239,7 @@
         "description",
         "text_MbPMDV",
         "form",
+        "custom_liquid_DNQRyf",
         "daffa30d-b8c4-4638-b717-db06e6ff429b",
         "8706b66f-5af2-4c70-a804-e8771986119f",
         "custom_liquid_FtTCMj",
