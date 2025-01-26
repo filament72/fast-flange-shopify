@@ -131,7 +131,7 @@
         "custom_liquid_DNQRyf": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% if variant.inventory_quantity <= 0 %}\n<h3 class=\"out-of-stock\">This product is on backorder and will be shipped when available.</h3>\n{% endif %}"
+            "custom_liquid": "{% if variant.inventory_quantity < 1 %}\n<h3 class=\"out-of-stock\">This product is on backorder and will be shipped when available.</h3>\n{% endif %}"
           }
         },
         "daffa30d-b8c4-4638-b717-db06e6ff429b": {
