@@ -37,6 +37,10 @@ margin:0;
     background-color: #8dc63f;
 }
 
+#shipping_methods label {
+  text-transform: capitalize;
+}
+
 
 
 /*---------------- Custom CSS for only desktop -------------------*/
