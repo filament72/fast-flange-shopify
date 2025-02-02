@@ -54,6 +54,12 @@
             "price_sale": "#c91f28"
           }
         },
+        "custom_liquid_WeEa9V": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% if product.metafields.custom.stock_message != blank %}\n<h2 id=\"stock-message\">{{product.metafields.custom.stock_message}}</h2>\n{% endif %}"
+          }
+        },
         "custom_liquid_b4bq78": {
           "type": "custom_liquid",
           "settings": {
@@ -226,6 +232,7 @@
       "block_order": [
         "title",
         "c56bcbfd-608c-4bad-ae67-b95910f78ebe",
+        "custom_liquid_WeEa9V",
         "custom_liquid_b4bq78",
         "custom_liquid_7Nq8rg",
         "custom_liquid_egWXBX",

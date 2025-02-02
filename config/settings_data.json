@@ -148,6 +148,18 @@
               "lb_cl": ""
             }
           },
+          "menu_EKp8pd": {
+            "type": "menu",
+            "settings": {
+              "title": "WHY US",
+              "url": "shopify://pages/why-us",
+              "open_link": "_self",
+              "menu": "",
+              "icon": "",
+              "lb": "",
+              "lb_cl": ""
+            }
+          },
           "ca2caeeb-6d73-4e5d-9e43-d470111df421": {
             "type": "menu",
             "settings": {
@@ -218,6 +230,7 @@
           "mb_nav-2",
           "mb_nav-3",
           "de0ea4ee-fa6e-4d05-8912-ad786e400e35",
+          "menu_EKp8pd",
           "ca2caeeb-6d73-4e5d-9e43-d470111df421",
           "6e980315-ce8b-48bf-84e1-78658d529f2c",
           "menu_GQwCYx",
