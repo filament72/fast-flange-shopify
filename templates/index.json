@@ -824,7 +824,6 @@
         },
         "custom_text_M7mKQH": {
           "type": "custom_text",
-          "disabled": true,
           "settings": {
             "text": "Grade 8",
             "remove_br_tag": false,
@@ -886,7 +885,7 @@
             "height_tb": 300,
             "custom_mb": true,
             "height_mb": 300,
-            "image": "shopify://shop_images/bolt_04a_16ba7aea-ae92-4fbd-8d11-2e19e0a39785.jpg",
+            "image": "shopify://shop_images/bolt_04av2.jpg",
             "image_size": "cover",
             "image_position": "start",
             "b_link": "shopify://products/grade-5-hex-serrated-flange-nut-zinc-clear-trivalent",
@@ -926,6 +925,33 @@
             "br_pd_mb": 10,
             "time_animation": 1,
             "animation_delay": 40
+          }
+        },
+        "custom_text_YjWB3U": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Grade 5",
+            "remove_br_tag": false,
+            "tag": "h6",
+            "fontf": "inherit",
+            "text_cl": "#1a5e3f",
+            "text_fs": 16,
+            "text_lh": 0,
+            "text_fw": 400,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 15,
+            "text_fs_tb": 16,
+            "text_lh_tb": 0,
+            "text_ls_tb": 0,
+            "mgb_tb": 10,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "mgb_mb": 10,
+            "animation": "none"
           }
         },
         "3210c83d-a43d-4a47-94da-ecb9cf2b10aa": {
@@ -1111,10 +1137,37 @@
             "animation_delay": 40
           }
         },
+        "custom_text_M7yEr4": {
+          "type": "custom_text",
+          "settings": {
+            "text": "ASTM A574 Alloy Steel",
+            "remove_br_tag": false,
+            "tag": "h6",
+            "fontf": "inherit",
+            "text_cl": "#6f5839",
+            "text_fs": 16,
+            "text_lh": 0,
+            "text_fw": 400,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 15,
+            "text_fs_tb": 16,
+            "text_lh_tb": 0,
+            "text_ls_tb": 0,
+            "mgb_tb": 10,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "mgb_mb": 10,
+            "animation": "none"
+          }
+        },
         "6f2f8706-a1dc-4851-acc2-8915b0eb095b": {
           "type": "custom_text",
           "settings": {
-            "text": "Socket Head Cap Screw <br>\nThermal Black Oxide",
+            "text": "Socket Head Cap Screw Thermal Black Oxide",
             "remove_br_tag": true,
             "tag": "h4",
             "fontf": "1",
@@ -1189,6 +1242,33 @@
             "animation_delay": 40
           }
         },
+        "custom_text_aCLDUj": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Grade 8",
+            "remove_br_tag": false,
+            "tag": "h6",
+            "fontf": "inherit",
+            "text_cl": "#8d1014",
+            "text_fs": 16,
+            "text_lh": 0,
+            "text_fw": 400,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 15,
+            "text_fs_tb": 16,
+            "text_lh_tb": 0,
+            "text_ls_tb": 0,
+            "mgb_tb": 10,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "mgb_mb": 10,
+            "animation": "none"
+          }
+        },
         "84b3d6d8-a13d-45dc-a0d7-80f9827ab0f9": {
           "type": "custom_text",
           "settings": {
@@ -1225,13 +1305,16 @@
         "custom_text_M7mKQH",
         "template--18492613886273__c6fbe903-f6b5-4039-bfb0-2df1d917cb0f-168196026724a47ef4-5",
         "618f8c91-c82a-467d-8994-96a6ab7b4f89",
+        "custom_text_YjWB3U",
         "3210c83d-a43d-4a47-94da-ecb9cf2b10aa",
         "0c65e77c-c42c-41cc-81af-3f6699c3b3f9",
         "ce8340d8-2038-4af8-b1ce-f5cce12a8f70",
         "49c8d56b-eeba-4141-9462-d360309eeb4f",
         "0e9b01e3-695a-4048-b6f8-26605ae5efc5",
+        "custom_text_M7yEr4",
         "6f2f8706-a1dc-4851-acc2-8915b0eb095b",
         "571425d5-b260-4e10-8f57-032ea2de271d",
+        "custom_text_aCLDUj",
         "84b3d6d8-a13d-45dc-a0d7-80f9827ab0f9"
       ],
       "custom_css": [
