@@ -1599,7 +1599,7 @@
         "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-1": {
           "type": "custom_text",
           "settings": {
-            "text": "anniversary",
+            "text": "Bulk Discounts",
             "remove_br_tag": true,
             "tag": "h4",
             "fontf": "4",
@@ -1625,7 +1625,7 @@
         "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-2": {
           "type": "custom_text",
           "settings": {
-            "text": "<span style=\"font-size:25px\">sale</span> celebrate and save today!",
+            "text": "Buy <span style=\"font-size:25px\">More</span> and save today!",
             "remove_br_tag": false,
             "tag": "p",
             "fontf": "1",
@@ -1670,7 +1670,7 @@
         "1371e787-0573-4184-ae2f-3a49a77b6f7d": {
           "type": "custom_text",
           "settings": {
-            "text": "<span class=\"t4s-d-flex t4s-justify-content-center t4s-flex-wrap t4s-justify-content-lg-start\" style=\"gap:12px;\">up to <span style=\"font-size:52px\">45% off</span> sitewide</span>",
+            "text": "<span class=\"t4s-d-flex t4s-justify-content-center t4s-flex-wrap t4s-justify-content-lg-start\" style=\"gap:12px;\">up to <span style=\"font-size:52px\">40% off</span> sitewide</span>",
             "remove_br_tag": true,
             "tag": "h4",
             "fontf": "4",
@@ -1701,7 +1701,6 @@
         "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-3",
         "1371e787-0573-4184-ae2f-3a49a77b6f7d"
       ],
-      "disabled": true,
       "custom_css": [
         ".t4s-container-inner {background-position: right;}"
       ],
@@ -1715,7 +1714,7 @@
         "layout": "t4s-se-container",
         "cl_bg": "",
         "cl_bg_gradient": "",
-        "image_bg": "shopify://shop_images/depositphotos_508482156-stock-photo-closeup-metal-silver-bolts-black.jpg",
+        "image_bg": "shopify://shop_images/boltsbanner_b68a36b0-7e58-497e-b7cb-8c02dd299dc3.jpg",
         "mg": ",,25px,",
         "pd": "",
         "mg_tb": ",,20px,",
