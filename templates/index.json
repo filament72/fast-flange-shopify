@@ -993,7 +993,7 @@
             "image": "shopify://shop_images/bolt_02b.jpg",
             "image_size": "cover",
             "image_position": "end",
-            "b_link": "shopify://products/copy-of-grade-8-hex-flange-screws-zinc-yellow-trivalent-bake",
+            "b_link": "shopify://products/grade-8-hex-flange-frame-bolt-zinc-yellow-trivalent-bake-copy",
             "open_link": "_self",
             "img_effect": "zoom",
             "b_effect": "plus-zoom-overlay",
@@ -1035,7 +1035,7 @@
         "ce8340d8-2038-4af8-b1ce-f5cce12a8f70": {
           "type": "custom_text",
           "settings": {
-            "text": "Grade 8",
+            "text": "Grade 5",
             "remove_br_tag": false,
             "tag": "h5",
             "fontf": "1",
@@ -1203,7 +1203,7 @@
             "image": "shopify://shop_images/bolt_06b_06345004-1655-4e56-9836-a58f62750637.jpg",
             "image_size": "cover",
             "image_position": "start",
-            "b_link": "shopify://collections/electronics-17",
+            "b_link": "shopify://products/grade-8-hex-flange-nut-zinc-phosphate-oil",
             "open_link": "_self",
             "img_effect": "zoom",
             "b_effect": "plus-zoom-overlay",
