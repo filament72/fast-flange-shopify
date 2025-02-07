@@ -1,1 +1,130 @@
-{"sections":{"main":{"type":"main-list-collections","blocks":{"56c9c0b3-70bb-4ee9-a858-38093da28e8e":{"type":"collection","settings":{"collection":"flange-bolt","title":"Flange Bolts"}},"1389ada4-fb5b-4e5f-ac9b-21c647c0296c":{"type":"collection","settings":{"collection":"flange-nut","image":"shopify:\/\/shop_images\/NHF8P-FS-NON-SERRATED-GR8-FLANGE-NUT.jpg","title":"Flange Nuts"}},"661c4e9c-7a06-4d96-9102-d7a886eb31ae":{"type":"collection","settings":{"collection":"socket-cap-screw","title":"Socket Cap Screws"}},"33a9cdae-25f4-428a-b620-362edb64307f":{"type":"collection","disabled":true,"settings":{"collection":"men-fashion","title":"Blazen"}},"83889de8-0f43-488c-8e43-f8fb36b68058":{"type":"collection","disabled":true,"settings":{"collection":"womens-watch","title":"Jewerly"}},"a2601505-faa9-41a6-a5db-7811e8bd4143":{"type":"collection","disabled":true,"settings":{"collection":"fashions","title":"Leather"}}},"block_order":["56c9c0b3-70bb-4ee9-a858-38093da28e8e","1389ada4-fb5b-4e5f-ac9b-21c647c0296c","661c4e9c-7a06-4d96-9102-d7a886eb31ae","33a9cdae-25f4-428a-b620-362edb64307f","83889de8-0f43-488c-8e43-f8fb36b68058","a2601505-faa9-41a6-a5db-7811e8bd4143"],"settings":{"display_type":"selected","layout_des":"1","limit":6,"col_dk":"3","col_tb":"2","col_mb":"2","space_h_item":"10","space_v_item":"10","space_h_item_tb":"10","space_v_item_tb":"10","space_h_item_mb":"10","space_v_item_mb":"10","title_fs":28,"title_lh":40,"title_fw":500,"title_fonf":"3","content_fs":18,"content_fw":400,"title_fs_tb":28,"title_lh_tb":35,"content_fs_tb":16,"title_fs_mb":20,"title_lh_mb":25,"content_fs_mb":14,"pri_cl":"#293341","second_cl":"#8dc63f","pri_hover_cl":"#c91f28","second_hover_cl":"#ffffff","open_link":"_self","item_rd":0,"img_effect":"none","image_ratio":"t4s_ratio1_1","image_size":"t4s_cover","image_position":"t4s_position_8","use_pagination":"default","btn_replace":"","enable_bar_lm":true,"btn_icon":false,"button_style":"default","btns_size":"default","btns_cl":"dark","button_effect":"default","pagination_pos":"t4s-text-center","pagination_distance":70,"layout":"t4s-se-container","cl_bg":"","cl_bg_gradient":"","mg":"0","pd":"60px, 0, 60px, 0","mg_mb":"0","pd_mb":"40px, 0, 40px, 0"}}},"order":["main"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "blocks": {
+        "56c9c0b3-70bb-4ee9-a858-38093da28e8e": {
+          "type": "collection",
+          "settings": {
+            "collection": "flange-bolt",
+            "image": "{{ block.settings.collection.image }}",
+            "title": "Flange Bolts"
+          }
+        },
+        "1389ada4-fb5b-4e5f-ac9b-21c647c0296c": {
+          "type": "collection",
+          "settings": {
+            "collection": "flange-nut",
+            "image": "{{ block.settings.collection.image }}",
+            "title": "Flange Nuts"
+          }
+        },
+        "661c4e9c-7a06-4d96-9102-d7a886eb31ae": {
+          "type": "collection",
+          "settings": {
+            "collection": "socket-cap-screw",
+            "image": "{{ block.settings.collection.image }}",
+            "title": "Socket Cap Screws"
+          }
+        },
+        "33a9cdae-25f4-428a-b620-362edb64307f": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "men-fashion",
+            "title": "Blazen"
+          }
+        },
+        "83889de8-0f43-488c-8e43-f8fb36b68058": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "womens-watch",
+            "title": "Jewerly"
+          }
+        },
+        "a2601505-faa9-41a6-a5db-7811e8bd4143": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "fashions",
+            "title": "Leather"
+          }
+        }
+      },
+      "block_order": [
+        "56c9c0b3-70bb-4ee9-a858-38093da28e8e",
+        "1389ada4-fb5b-4e5f-ac9b-21c647c0296c",
+        "661c4e9c-7a06-4d96-9102-d7a886eb31ae",
+        "33a9cdae-25f4-428a-b620-362edb64307f",
+        "83889de8-0f43-488c-8e43-f8fb36b68058",
+        "a2601505-faa9-41a6-a5db-7811e8bd4143"
+      ],
+      "settings": {
+        "display_type": "selected",
+        "layout_des": "1",
+        "limit": 6,
+        "col_dk": "3",
+        "col_tb": "2",
+        "col_mb": "2",
+        "space_h_item": "10",
+        "space_v_item": "10",
+        "space_h_item_tb": "10",
+        "space_v_item_tb": "10",
+        "space_h_item_mb": "10",
+        "space_v_item_mb": "10",
+        "title_fs": 28,
+        "title_lh": 40,
+        "title_fw": 500,
+        "title_fonf": "3",
+        "content_fs": 18,
+        "content_fw": 400,
+        "title_fs_tb": 28,
+        "title_lh_tb": 35,
+        "content_fs_tb": 16,
+        "title_fs_mb": 20,
+        "title_lh_mb": 25,
+        "content_fs_mb": 14,
+        "pri_cl": "#293341",
+        "second_cl": "#8dc63f",
+        "pri_hover_cl": "#c91f28",
+        "second_hover_cl": "#ffffff",
+        "open_link": "_self",
+        "item_rd": 0,
+        "img_effect": "none",
+        "image_ratio": "t4s_ratio1_1",
+        "image_size": "t4s_cover",
+        "image_position": "t4s_position_8",
+        "use_pagination": "default",
+        "btn_replace": "",
+        "enable_bar_lm": true,
+        "btn_icon": false,
+        "button_style": "default",
+        "btns_size": "default",
+        "btns_cl": "dark",
+        "button_effect": "default",
+        "pagination_pos": "t4s-text-center",
+        "pagination_distance": 70,
+        "layout": "t4s-se-container",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": "0",
+        "pd": "60px, 0, 60px, 0",
+        "mg_mb": "0",
+        "pd_mb": "40px, 0, 40px, 0"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
