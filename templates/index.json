@@ -144,7 +144,7 @@
         "image_parent_TmWP3j": {
           "type": "image_parent",
           "settings": {
-            "image": "shopify://shop_images/warehouse_57b73205-9102-4940-b328-bbb7f9a575f6.jpg",
+            "image": "shopify://shop_images/bolt_field.jpg",
             "image_position": "8",
             "cl_img": "",
             "link_img1": "",
@@ -661,6 +661,155 @@
         "pd_tb": "",
         "mg_mb": "",
         "pd_mb": ""
+      }
+    },
+    "4e479c32-9f6e-4959-abf9-2b96041d9458": {
+      "type": "custom-section",
+      "blocks": {
+        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-0": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "4",
+            "col_dk_w": "33.33333",
+            "col_tb": "4",
+            "col_dk_w_tb": "33.33333",
+            "col_mb": "12",
+            "align_vertical": false,
+            "border_col": false,
+            "content_align": "start",
+            "content_align_tablet": "start",
+            "content_align_mobile": "center",
+            "padding_inner": "0px,,0px,111px",
+            "padding_inner_tb": "",
+            "padding_inner_mb": ",,20px,",
+            "bg_cl": "rgba(0,0,0,0)"
+          }
+        },
+        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-1": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Bulk Discounts",
+            "remove_br_tag": true,
+            "tag": "h4",
+            "fontf": "4",
+            "text_cl": "#ffffff",
+            "text_fs": 39,
+            "text_lh": 47,
+            "text_fw": 700,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 5,
+            "text_fs_tb": 30,
+            "text_lh_tb": 36,
+            "text_ls_tb": 0,
+            "mgb_tb": 10,
+            "hidden_mobile": false,
+            "text_fs_mb": 24,
+            "text_lh_mb": 29,
+            "text_ls_mb": 0,
+            "mgb_mb": 10
+          }
+        },
+        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-2": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Buy <span style=\"font-size:25px\">More</span> and save today!",
+            "remove_br_tag": false,
+            "tag": "p",
+            "fontf": "1",
+            "text_cl": "#ffffff",
+            "text_fs": 15,
+            "text_lh": 18,
+            "text_fw": 400,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 0,
+            "text_fs_tb": 15,
+            "text_lh_tb": 18,
+            "text_ls_tb": 0,
+            "mgb_tb": 10,
+            "hidden_mobile": false,
+            "text_fs_mb": 15,
+            "text_lh_mb": 18,
+            "text_ls_mb": 0,
+            "mgb_mb": 10
+          }
+        },
+        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-3": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_dk_w": "33.33333",
+            "col_tb": "6",
+            "col_dk_w_tb": "33.33333",
+            "col_mb": "12",
+            "align_vertical": true,
+            "border_col": false,
+            "content_align": "start",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "rgba(0,0,0,0)"
+          }
+        },
+        "1371e787-0573-4184-ae2f-3a49a77b6f7d": {
+          "type": "custom_text",
+          "settings": {
+            "text": "<span class=\"t4s-d-flex t4s-justify-content-center t4s-flex-wrap t4s-justify-content-lg-start\" style=\"gap:12px;\">up to <span style=\"font-size:52px\">40% off</span> sitewide</span>",
+            "remove_br_tag": true,
+            "tag": "h4",
+            "fontf": "4",
+            "text_cl": "#ffffff",
+            "text_fs": 35,
+            "text_lh": 42,
+            "text_fw": 700,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 0,
+            "text_fs_tb": 30,
+            "text_lh_tb": 36,
+            "text_ls_tb": 0,
+            "mgb_tb": 0,
+            "hidden_mobile": false,
+            "text_fs_mb": 24,
+            "text_lh_mb": 29,
+            "text_ls_mb": 0,
+            "mgb_mb": 0
+          }
+        }
+      },
+      "block_order": [
+        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-0",
+        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-1",
+        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-2",
+        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-3",
+        "1371e787-0573-4184-ae2f-3a49a77b6f7d"
+      ],
+      "custom_css": [
+        ".t4s-container-inner {background-position: right;}"
+      ],
+      "settings": {
+        "space_h_item": "0",
+        "space_v_item": "0",
+        "space_h_item_tb": "0",
+        "space_v_item_tb": "0",
+        "space_h_item_mb": "0",
+        "space_v_item_mb": "0",
+        "layout": "t4s-se-container",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "image_bg": "shopify://shop_images/boltsbanner_b68a36b0-7e58-497e-b7cb-8c02dd299dc3.jpg",
+        "mg": ",,25px,",
+        "pd": "",
+        "mg_tb": ",,20px,",
+        "pd_tb": "40px,15px,40px,15px",
+        "mg_mb": ",,20px,",
+        "pd_mb": "40px,,40px,"
       }
     },
     "c6fbe903-f6b5-4039-bfb0-2df1d917cb0f": {
@@ -1574,155 +1723,6 @@
         "pd_mb": ""
       }
     },
-    "4e479c32-9f6e-4959-abf9-2b96041d9458": {
-      "type": "custom-section",
-      "blocks": {
-        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-0": {
-          "type": "bl_col",
-          "settings": {
-            "col_dk": "4",
-            "col_dk_w": "33.33333",
-            "col_tb": "4",
-            "col_dk_w_tb": "33.33333",
-            "col_mb": "12",
-            "align_vertical": false,
-            "border_col": false,
-            "content_align": "start",
-            "content_align_tablet": "start",
-            "content_align_mobile": "center",
-            "padding_inner": "0px,,0px,111px",
-            "padding_inner_tb": "",
-            "padding_inner_mb": ",,20px,",
-            "bg_cl": "rgba(0,0,0,0)"
-          }
-        },
-        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-1": {
-          "type": "custom_text",
-          "settings": {
-            "text": "Bulk Discounts",
-            "remove_br_tag": true,
-            "tag": "h4",
-            "fontf": "4",
-            "text_cl": "#ffffff",
-            "text_fs": 39,
-            "text_lh": 47,
-            "text_fw": 700,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "mgb": 5,
-            "text_fs_tb": 30,
-            "text_lh_tb": 36,
-            "text_ls_tb": 0,
-            "mgb_tb": 10,
-            "hidden_mobile": false,
-            "text_fs_mb": 24,
-            "text_lh_mb": 29,
-            "text_ls_mb": 0,
-            "mgb_mb": 10
-          }
-        },
-        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-2": {
-          "type": "custom_text",
-          "settings": {
-            "text": "Buy <span style=\"font-size:25px\">More</span> and save today!",
-            "remove_br_tag": false,
-            "tag": "p",
-            "fontf": "1",
-            "text_cl": "#ffffff",
-            "text_fs": 15,
-            "text_lh": 18,
-            "text_fw": 400,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "mgb": 0,
-            "text_fs_tb": 15,
-            "text_lh_tb": 18,
-            "text_ls_tb": 0,
-            "mgb_tb": 10,
-            "hidden_mobile": false,
-            "text_fs_mb": 15,
-            "text_lh_mb": 18,
-            "text_ls_mb": 0,
-            "mgb_mb": 10
-          }
-        },
-        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-3": {
-          "type": "bl_col",
-          "settings": {
-            "col_dk": "6",
-            "col_dk_w": "33.33333",
-            "col_tb": "6",
-            "col_dk_w_tb": "33.33333",
-            "col_mb": "12",
-            "align_vertical": true,
-            "border_col": false,
-            "content_align": "start",
-            "content_align_tablet": "center",
-            "content_align_mobile": "center",
-            "padding_inner": "",
-            "padding_inner_tb": "",
-            "padding_inner_mb": "",
-            "bg_cl": "rgba(0,0,0,0)"
-          }
-        },
-        "1371e787-0573-4184-ae2f-3a49a77b6f7d": {
-          "type": "custom_text",
-          "settings": {
-            "text": "<span class=\"t4s-d-flex t4s-justify-content-center t4s-flex-wrap t4s-justify-content-lg-start\" style=\"gap:12px;\">up to <span style=\"font-size:52px\">40% off</span> sitewide</span>",
-            "remove_br_tag": true,
-            "tag": "h4",
-            "fontf": "4",
-            "text_cl": "#ffffff",
-            "text_fs": 35,
-            "text_lh": 42,
-            "text_fw": 700,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "mgb": 0,
-            "text_fs_tb": 30,
-            "text_lh_tb": 36,
-            "text_ls_tb": 0,
-            "mgb_tb": 0,
-            "hidden_mobile": false,
-            "text_fs_mb": 24,
-            "text_lh_mb": 29,
-            "text_ls_mb": 0,
-            "mgb_mb": 0
-          }
-        }
-      },
-      "block_order": [
-        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-0",
-        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-1",
-        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-2",
-        "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-3",
-        "1371e787-0573-4184-ae2f-3a49a77b6f7d"
-      ],
-      "custom_css": [
-        ".t4s-container-inner {background-position: right;}"
-      ],
-      "settings": {
-        "space_h_item": "0",
-        "space_v_item": "0",
-        "space_h_item_tb": "0",
-        "space_v_item_tb": "0",
-        "space_h_item_mb": "0",
-        "space_v_item_mb": "0",
-        "layout": "t4s-se-container",
-        "cl_bg": "",
-        "cl_bg_gradient": "",
-        "image_bg": "shopify://shop_images/boltsbanner_b68a36b0-7e58-497e-b7cb-8c02dd299dc3.jpg",
-        "mg": ",,25px,",
-        "pd": "",
-        "mg_tb": ",,20px,",
-        "pd_tb": "40px,15px,40px,15px",
-        "mg_mb": ",,20px,",
-        "pd_mb": "40px,,40px,"
-      }
-    },
     "75fa069e-44a7-42c6-8edc-2ae45d797efc": {
       "type": "featured-collection",
       "disabled": true,
@@ -2606,10 +2606,10 @@
     "e10c341f-aa23-4128-9c82-c81241c20b41",
     "26aad063-4ea4-4b42-a079-ab97aa76522b",
     "b84cd7e0-9b8c-476f-85eb-a2d3755c6686",
+    "4e479c32-9f6e-4959-abf9-2b96041d9458",
     "c6fbe903-f6b5-4039-bfb0-2df1d917cb0f",
     "49337ccc-cc9b-4fbe-b436-7135d5d9f453",
     "c2cbb403-f7ed-403c-a5a0-e3c54fe24f44",
-    "4e479c32-9f6e-4959-abf9-2b96041d9458",
     "75fa069e-44a7-42c6-8edc-2ae45d797efc",
     "47583590-bb34-401d-b0f4-63c1492b0a4b",
     "7a0475d9-8d7d-438f-9dc3-04a9cd7017e2",
