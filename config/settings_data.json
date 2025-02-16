@@ -1641,6 +1641,16 @@
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      },
+      "1935445597218932304": {
+        "type": "shopify://apps/avada-seo-suite/blocks/avada-seo/15507c6e-1aa3-45d3-b698-7e175e033440",
+        "disabled": false,
+        "settings": {}
+      },
+      "12732002020968342082": {
+        "type": "shopify://apps/avada-seo-suite/blocks/avada-critical-css/15507c6e-1aa3-45d3-b698-7e175e033440",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
