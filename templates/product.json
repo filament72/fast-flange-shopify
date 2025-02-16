@@ -54,6 +54,10 @@
             "price_sale": "#c91f28"
           }
         },
+        "judge_me_reviews_preview_badge_9HMkeD": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
         "custom_liquid_WeEa9V": {
           "type": "custom_liquid",
           "settings": {
@@ -208,7 +212,7 @@
           "type": "tab_rivui",
           "settings": {
             "title": "Reviews",
-            "review_liquid": ""
+            "review_liquid": "<div id=\"judgeme_product_reviews\" class=\"jdgm-widget jdgm-review-widget\" data-product-title=\"{{ product.title }}\" data-id=\"{{ product.id }}\"> {{ product.metafields.judgeme.widget }} </div>"
           }
         },
         "tab_liquid_QbWX3Y": {
@@ -231,6 +235,7 @@
       "block_order": [
         "title",
         "c56bcbfd-608c-4bad-ae67-b95910f78ebe",
+        "judge_me_reviews_preview_badge_9HMkeD",
         "custom_liquid_WeEa9V",
         "custom_liquid_b4bq78",
         "custom_liquid_7Nq8rg",
@@ -460,12 +465,6 @@
         "mg_mb": ",,30px,",
         "pd_mb": ""
       }
-    },
-    "1739727381d62dc0fb": {
-      "type": "apps",
-      "settings": {
-        "include_margins": true
-      }
     }
   },
   "order": [
@@ -474,7 +473,6 @@
     "product_pagination",
     "sidebar",
     "product-recommendations",
-    "recently-viewed-products",
-    "1739727381d62dc0fb"
+    "recently-viewed-products"
   ]
 }
