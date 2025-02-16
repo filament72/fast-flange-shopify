@@ -43,6 +43,7 @@
     "preorder_badge_color": "#5686b1",
     "custom_badge_color": "#8dc63f",
     "price_varies_style": "2",
+    "enable_rating": true,
     "show_qty": false,
     "enable_pr_color": true,
     "swatch_color_style": "1",
