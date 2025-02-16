@@ -2504,7 +2504,7 @@
         "template--18492613886273__55c0f5ba-0766-4ef2-9926-32d16de0c838-16837673067d630457-0": {
           "type": "shipping",
           "settings": {
-            "icon_themes": "box",
+            "icon_themes": "discount",
             "icon": "",
             "link": "",
             "title": "Buy More and Save",
