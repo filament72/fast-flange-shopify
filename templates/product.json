@@ -60,6 +60,10 @@
             "custom_liquid": "{% if product.metafields.custom.stock_message != blank %}\n<h2 id=\"stock-message\">{{product.metafields.custom.stock_message}}</h2>\n{% endif %}"
           }
         },
+        "judge_me_reviews_preview_badge_cHjtfR": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
         "custom_liquid_b4bq78": {
           "type": "custom_liquid",
           "settings": {
@@ -232,6 +236,7 @@
         "title",
         "c56bcbfd-608c-4bad-ae67-b95910f78ebe",
         "custom_liquid_WeEa9V",
+        "judge_me_reviews_preview_badge_cHjtfR",
         "custom_liquid_b4bq78",
         "custom_liquid_7Nq8rg",
         "custom_liquid_egWXBX",
