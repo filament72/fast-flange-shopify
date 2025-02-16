@@ -208,7 +208,7 @@
           "type": "tab_rivui",
           "settings": {
             "title": "Reviews",
-            "review_liquid": "<!-- Start of Judge.me code -->\n<div style='clear:both'></div>\n<div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ card_product.title | escape }}' data-id='{{ card_product.id }}' data-auto-install='false'>\n{{ card_product.metafields.judgeme.widget }}\n</div>\n<!-- End of Judge.me code -->"
+            "review_liquid": ""
           }
         },
         "tab_liquid_QbWX3Y": {
