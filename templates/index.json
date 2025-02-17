@@ -9,6 +9,77 @@
  */
 {
   "sections": {
+    "custom_section_QRhnFE": {
+      "type": "custom-section",
+      "blocks": {
+        "bl_col_GQY9BV": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "12",
+            "col_dk_w": "100%",
+            "col_tb": "12",
+            "col_dk_w_tb": "100",
+            "col_mb": "12",
+            "align_vertical": true,
+            "border_col": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "rgba(0,0,0,0)"
+          }
+        },
+        "custom_text_7zbfTK": {
+          "type": "custom_text",
+          "settings": {
+            "text": "<span class=\"t4s-d-flex t4s-justify-content-center t4s-flex-wrap t4s-justify-content-lg-center\" style=\"gap:12px;\">sitewide <span style=\"font-size:52px\">FREE Shipping,</span> no minimums!</span>",
+            "remove_br_tag": true,
+            "tag": "h4",
+            "fontf": "4",
+            "text_cl": "#ffffff",
+            "text_fs": 35,
+            "text_lh": 42,
+            "text_fw": 700,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 0,
+            "text_fs_tb": 30,
+            "text_lh_tb": 36,
+            "text_ls_tb": 0,
+            "mgb_tb": 0,
+            "hidden_mobile": false,
+            "text_fs_mb": 24,
+            "text_lh_mb": 29,
+            "text_ls_mb": 0,
+            "mgb_mb": 0
+          }
+        }
+      },
+      "block_order": [
+        "bl_col_GQY9BV",
+        "custom_text_7zbfTK"
+      ],
+      "settings": {
+        "space_h_item": "0",
+        "space_v_item": "0",
+        "space_h_item_tb": "0",
+        "space_v_item_tb": "0",
+        "space_h_item_mb": "0",
+        "space_v_item_mb": "0",
+        "layout": "t4s-container-fluid",
+        "cl_bg": "#8dc63f",
+        "cl_bg_gradient": "linear-gradient(180deg, rgba(141, 198, 63, 1), rgba(113, 173, 30, 1) 100%)",
+        "mg": "0,0,0,0",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "40px,15px,40px,15px",
+        "mg_mb": ",,20px,",
+        "pd_mb": "40px,,40px,"
+      }
+    },
     "e10c341f-aa23-4128-9c82-c81241c20b41": {
       "type": "slideshow",
       "blocks": {
@@ -661,77 +732,6 @@
         "pd_tb": "",
         "mg_mb": "",
         "pd_mb": ""
-      }
-    },
-    "custom_section_QRhnFE": {
-      "type": "custom-section",
-      "blocks": {
-        "bl_col_GQY9BV": {
-          "type": "bl_col",
-          "settings": {
-            "col_dk": "12",
-            "col_dk_w": "100%",
-            "col_tb": "12",
-            "col_dk_w_tb": "100",
-            "col_mb": "12",
-            "align_vertical": true,
-            "border_col": false,
-            "content_align": "center",
-            "content_align_tablet": "center",
-            "content_align_mobile": "center",
-            "padding_inner": "",
-            "padding_inner_tb": "",
-            "padding_inner_mb": "",
-            "bg_cl": "rgba(0,0,0,0)"
-          }
-        },
-        "custom_text_7zbfTK": {
-          "type": "custom_text",
-          "settings": {
-            "text": "<span class=\"t4s-d-flex t4s-justify-content-center t4s-flex-wrap t4s-justify-content-lg-center\" style=\"gap:12px;\">sitewide <span style=\"font-size:52px\">FREE Shipping,</span> no minimums!</span>",
-            "remove_br_tag": true,
-            "tag": "h4",
-            "fontf": "4",
-            "text_cl": "#ffffff",
-            "text_fs": 35,
-            "text_lh": 42,
-            "text_fw": 700,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "mgb": 0,
-            "text_fs_tb": 30,
-            "text_lh_tb": 36,
-            "text_ls_tb": 0,
-            "mgb_tb": 0,
-            "hidden_mobile": false,
-            "text_fs_mb": 24,
-            "text_lh_mb": 29,
-            "text_ls_mb": 0,
-            "mgb_mb": 0
-          }
-        }
-      },
-      "block_order": [
-        "bl_col_GQY9BV",
-        "custom_text_7zbfTK"
-      ],
-      "settings": {
-        "space_h_item": "0",
-        "space_v_item": "0",
-        "space_h_item_tb": "0",
-        "space_v_item_tb": "0",
-        "space_h_item_mb": "0",
-        "space_v_item_mb": "0",
-        "layout": "t4s-se-container",
-        "cl_bg": "#8dc63f",
-        "cl_bg_gradient": "linear-gradient(180deg, rgba(141, 198, 63, 1), rgba(113, 173, 30, 1) 100%)",
-        "mg": ",,25px,",
-        "pd": "",
-        "mg_tb": ",,20px,",
-        "pd_tb": "40px,15px,40px,15px",
-        "mg_mb": ",,20px,",
-        "pd_mb": "40px,,40px,"
       }
     },
     "c6fbe903-f6b5-4039-bfb0-2df1d917cb0f": {
@@ -2674,12 +2674,12 @@
     }
   },
   "order": [
+    "custom_section_QRhnFE",
     "e10c341f-aa23-4128-9c82-c81241c20b41",
     "26aad063-4ea4-4b42-a079-ab97aa76522b",
     "b84cd7e0-9b8c-476f-85eb-a2d3755c6686",
-    "custom_section_QRhnFE",
-    "c6fbe903-f6b5-4039-bfb0-2df1d917cb0f",
     "4e479c32-9f6e-4959-abf9-2b96041d9458",
+    "c6fbe903-f6b5-4039-bfb0-2df1d917cb0f",
     "49337ccc-cc9b-4fbe-b436-7135d5d9f453",
     "c2cbb403-f7ed-403c-a5a0-e3c54fe24f44",
     "75fa069e-44a7-42c6-8edc-2ae45d797efc",
