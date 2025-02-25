@@ -353,13 +353,6 @@
             "space_h_item_mb": "15",
             "space_v_item_mb": "0"
           }
-        },
-        "html_8XzqmC": {
-          "type": "html",
-          "settings": {
-            "html_content": "<!-- Start of Nextiva Widget script -->\n<script src=\"https://d4cq8fw7kph8i.cloudfront.net/Simplify360Chat.js?key=T1JzOUJXMTZhUk09\"></script>\n<!-- End of Nextiva Widget script -->",
-            "hidden_mobile": false
-          }
         }
       },
       "block_order": [
@@ -368,8 +361,7 @@
         "sections--18492623126849__89fa9973-0260-4693-ac11-73292d4daf8d-1683540447c1d909b9-2",
         "sections--18492623126849__89fa9973-0260-4693-ac11-73292d4daf8d-1683540447c1d909b9-1",
         "html_tQTmRx",
-        "3c6c0b15-8111-4b5f-9c86-6d58fc9d8774",
-        "html_8XzqmC"
+        "3c6c0b15-8111-4b5f-9c86-6d58fc9d8774"
       ],
       "custom_css": [
         ".bee-socials a svg {fill: #7b7b7b;}"
