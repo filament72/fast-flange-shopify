@@ -357,7 +357,7 @@
         "html_HEkm9k": {
           "type": "html",
           "settings": {
-            "html_content": "<!-- Start of Nextiva Widget script -->\n<script src=\"https://d4cq8fw7kph8i.cloudfront.net/Simplify360Chat.js?key=T1JzOUJXMTZhUk09\"></script>\n<!-- End of Nextiva Widget script -->",
+            "html_content": "",
             "hidden_mobile": false
           }
         }
