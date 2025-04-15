@@ -1,0 +1,93 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "heading": {
+      "type": "heading-static",
+      "blocks": {
+        "634ae9d5-f71f-40fb-81f4-737016407cf5": {
+          "type": "1",
+          "settings": {
+            "tag": "h2",
+            "fontf": "3",
+            "text_cl": "#293341",
+            "text_fs": 35,
+            "text_lh": 40,
+            "text_fw": 500,
+            "text_ls": 0,
+            "mgb": 15,
+            "font_italic": false,
+            "font_uppercase": false,
+            "text_shadow": false,
+            "text_fs_tb": 35,
+            "text_lh_tb": 0,
+            "text_ls_tb": 0,
+            "mgb_tb": 10,
+            "hidden_mobile": false,
+            "text_fs_mb": 30,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "mgb_mb": 10
+          }
+        },
+        "a3b43d3e-b62a-4c7b-8209-3a9a1a28ad2a": {
+          "type": "3",
+          "settings": {
+            "breadcrumb_color_link": "#7b7b7b",
+            "breadcrumb_color": "#7b7b7b",
+            "brc_mgb": 0,
+            "brc_mgb_tb": 0,
+            "brc_mgb_mb": 0
+          }
+        }
+      },
+      "block_order": [
+        "634ae9d5-f71f-40fb-81f4-737016407cf5",
+        "a3b43d3e-b62a-4c7b-8209-3a9a1a28ad2a"
+      ],
+      "settings": {
+        "content_align": "center",
+        "parallax": false,
+        "bg_overlay": "#f5f5f5",
+        "bg_opacity": 0,
+        "padding_top": 60,
+        "padding_bottom": 65,
+        "padding_top_tb": 50,
+        "padding_bottom_tb": 55,
+        "padding_top_mb": 40,
+        "padding_bottom_mb": 45,
+        "box_border": "none",
+        "bg_repeat": "no-repeat",
+        "bg_size": "cover",
+        "mgb": 0,
+        "mgb_tb": 0,
+        "mgb_mb": 0
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "layout": "t4s-se-container",
+        "cl_bg": "#ffffff",
+        "cl_bg_gradient": "",
+        "mg": "0px,,0px,",
+        "pd": "50px, 15%,50px,15%",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": "",
+        "pd_mb": "20px, 20px,20px,20px"
+      }
+    }
+  },
+  "order": [
+    "heading",
+    "main"
+  ]
+}
