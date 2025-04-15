@@ -863,6 +863,9 @@
       "block_order": [
         "3220ac75-fb68-453a-9445-e81b9076e17e"
       ],
+      "custom_css": [
+        "h3.t4s-product-title {font-size: 18px;}"
+      ],
       "settings": {
         "design_heading": "1",
         "heading_center": false,
