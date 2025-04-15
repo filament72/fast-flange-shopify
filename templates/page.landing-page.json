@@ -62,6 +62,7 @@
         "bl_col_GQY9BV",
         "custom_text_7zbfTK"
       ],
+      "disabled": true,
       "settings": {
         "space_h_item": "0",
         "space_v_item": "0",
@@ -85,6 +86,7 @@
       "blocks": {
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-0": {
           "type": "image_parent",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/sustainablysourced.jpg",
             "image_position": "8",
@@ -127,6 +129,7 @@
         },
         "custom_label_ntVyz4": {
           "type": "custom_label",
+          "disabled": true,
           "settings": {
             "text": "FEATURED",
             "label_cl": "#293341",
@@ -147,6 +150,7 @@
         },
         "custom_text_bTU3Cw": {
           "type": "custom_text",
+          "disabled": true,
           "settings": {
             "text": "SUSTAINABLY<br>\nSOURCED<br>\nFASTENERS",
             "remove_br_tag": true,
@@ -174,6 +178,7 @@
         },
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-3": {
           "type": "custom_button",
+          "disabled": true,
           "settings": {
             "button_text": "SHOP NOW",
             "product": "",
@@ -256,8 +261,9 @@
         },
         "298e0e28-0bfd-4e94-9a65-cd3b20be1b20": {
           "type": "custom_label",
+          "disabled": true,
           "settings": {
-            "text": "STOCK UP",
+            "text": "FEATURED",
             "label_cl": "#293341",
             "label_bg_cl": "#ffffff",
             "fontf": "1",
@@ -277,7 +283,7 @@
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-1": {
           "type": "custom_text",
           "settings": {
-            "text": "BUY MORE<br>\nAND SAVE<br>",
+            "text": "FASTENERS",
             "remove_br_tag": true,
             "tag": "h3",
             "fontf": "3",
@@ -301,16 +307,43 @@
             "animation": "fadeInUp"
           }
         },
+        "custom_text_L6tiYz": {
+          "type": "custom_text",
+          "settings": {
+            "text": "WITHOUT THE FRICTION",
+            "remove_br_tag": true,
+            "tag": "h3",
+            "fontf": "3",
+            "text_cl": "#ffffff",
+            "text_fs": 45,
+            "text_lh": 45,
+            "text_fw": 900,
+            "text_ls": 0,
+            "mgb": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_fs_tb": 50,
+            "text_lh_tb": 60,
+            "text_ls_tb": 0,
+            "mgb_tb": 0,
+            "hidden_mobile": false,
+            "text_fs_mb": 30,
+            "text_lh_mb": 36,
+            "text_ls_mb": 0,
+            "mgb_mb": 0,
+            "animation": "fadeInUp"
+          }
+        },
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-2": {
           "type": "custom_text",
           "settings": {
-            "text": "Discounts Reflected in Cart",
+            "text": "In-stock bolts. Fast Shipping. No Backorders.<br> Built for the work you actually do.",
             "remove_br_tag": true,
             "tag": "h5",
             "fontf": "1",
             "text_cl": "#ffffff",
             "text_fs": 28,
-            "text_lh": 28,
+            "text_lh": 34,
             "text_fw": 400,
             "text_ls": 0,
             "mgb": 25,
@@ -358,6 +391,7 @@
         },
         "e4e0d48a-ad03-4858-9581-0fe4b8e54e1a": {
           "type": "image_parent",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/boltpattern_884e17ea-7fa3-4cab-aa1a-afa4dfb30626.jpg",
             "image_position": "8",
@@ -400,6 +434,7 @@
         },
         "82f183c9-1af5-40f2-83a5-d32fc080f22e": {
           "type": "custom_text",
+          "disabled": true,
           "settings": {
             "text": "CONFLICT MINERAL FREE",
             "remove_br_tag": true,
@@ -427,6 +462,7 @@
         },
         "3313c349-069b-4191-b096-c8b64da8ec7f": {
           "type": "custom_text",
+          "disabled": true,
           "settings": {
             "text": "BOLTS AND<br> \nNUTS",
             "remove_br_tag": false,
@@ -454,6 +490,7 @@
         },
         "09c1ae6f-ccb8-45a3-b7fb-8bd38e7bada7": {
           "type": "custom_button",
+          "disabled": true,
           "settings": {
             "button_text": "SHOP NOW",
             "product": "",
@@ -501,6 +538,7 @@
         "image_parent_TmWP3j",
         "298e0e28-0bfd-4e94-9a65-cd3b20be1b20",
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-1",
+        "custom_text_L6tiYz",
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-2",
         "custom_text_PbkhtG",
         "e4e0d48a-ad03-4858-9581-0fe4b8e54e1a",
@@ -565,6 +603,235 @@
         "pd_mb": ""
       }
     },
+    "47583590-bb34-401d-b0f4-63c1492b0a4b": {
+      "type": "custom-section",
+      "blocks": {
+        "8b1c6933-1b4e-40db-bb97-6807e0426084": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "12",
+            "col_dk_w": "100",
+            "col_tb": "12",
+            "col_dk_w_tb": "100",
+            "col_mb": "12",
+            "align_vertical": true,
+            "border_col": false,
+            "content_align": "center",
+            "content_align_tablet": "start",
+            "content_align_mobile": "start",
+            "padding_inner": "",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "rgba(0,0,0,0)"
+          }
+        },
+        "f576a4aa-0c63-4a45-8ae3-d0e58ae3506c": {
+          "type": "custom_text",
+          "settings": {
+            "text": "This Week's Featured Products",
+            "remove_br_tag": true,
+            "tag": "h2",
+            "fontf": "inherit",
+            "text_cl": "#293341",
+            "text_fs": 48,
+            "text_lh": 40,
+            "text_fw": 300,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 50,
+            "text_fs_tb": 25,
+            "text_lh_tb": 40,
+            "text_ls_tb": 0,
+            "mgb_tb": 15,
+            "hidden_mobile": false,
+            "text_fs_mb": 20,
+            "text_lh_mb": 24,
+            "text_ls_mb": 0,
+            "mgb_mb": 10
+          }
+        },
+        "custom_text_eAf9yk": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Now in stock: Our most requested heavy-duty bolts—available while supplies last.<br>\nUse code <strong>LAUNCH10</strong> at checkout for 10% off this week's featured products.",
+            "remove_br_tag": true,
+            "tag": "h4",
+            "fontf": "inherit",
+            "text_cl": "#293341",
+            "text_fs": 24,
+            "text_lh": 32,
+            "text_fw": 300,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 50,
+            "text_fs_tb": 25,
+            "text_lh_tb": 40,
+            "text_ls_tb": 0,
+            "mgb_tb": 15,
+            "hidden_mobile": false,
+            "text_fs_mb": 20,
+            "text_lh_mb": 24,
+            "text_ls_mb": 0,
+            "mgb_mb": 10
+          }
+        }
+      },
+      "block_order": [
+        "8b1c6933-1b4e-40db-bb97-6807e0426084",
+        "f576a4aa-0c63-4a45-8ae3-d0e58ae3506c",
+        "custom_text_eAf9yk"
+      ],
+      "settings": {
+        "space_h_item": "0",
+        "space_v_item": "0",
+        "space_h_item_tb": "0",
+        "space_v_item_tb": "0",
+        "space_h_item_mb": "0",
+        "space_v_item_mb": "0",
+        "layout": "t4s-se-container",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": "0,0,0,0",
+        "pd": "",
+        "mg_tb": "0,0,0,0",
+        "pd_tb": "",
+        "mg_mb": "0,0,5px,0",
+        "pd_mb": ""
+      }
+    },
+    "custom_section_WzcyhW": {
+      "type": "custom-section",
+      "blocks": {
+        "bl_col_WQLqGH": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_dk_w": "33.33333",
+            "col_tb": "6",
+            "col_dk_w_tb": "33.33333",
+            "col_mb": "6",
+            "align_vertical": true,
+            "border_col": false,
+            "content_align": "start",
+            "content_align_tablet": "start",
+            "content_align_mobile": "start",
+            "padding_inner": "",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "rgba(0,0,0,0)"
+          }
+        },
+        "custom_text_QLrnRU": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Electronics",
+            "remove_br_tag": true,
+            "tag": "h3",
+            "fontf": "1",
+            "text_cl": "#293341",
+            "text_fs": 25,
+            "text_lh": 40,
+            "text_fw": 300,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "mgb": 20,
+            "text_fs_tb": 25,
+            "text_lh_tb": 40,
+            "text_ls_tb": 0,
+            "mgb_tb": 15,
+            "hidden_mobile": false,
+            "text_fs_mb": 20,
+            "text_lh_mb": 24,
+            "text_ls_mb": 0,
+            "mgb_mb": 10
+          }
+        },
+        "bl_col_rfQbCY": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_dk_w": "33.33333",
+            "col_tb": "6",
+            "col_dk_w_tb": "33.33333",
+            "col_mb": "6",
+            "align_vertical": true,
+            "border_col": false,
+            "content_align": "end",
+            "content_align_tablet": "end",
+            "content_align_mobile": "end",
+            "padding_inner": "",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "rgba(0,0,0,0)"
+          }
+        },
+        "custom_button_iYYnaj": {
+          "type": "custom_button",
+          "settings": {
+            "button_text": "View all",
+            "button_link": "shopify://collections",
+            "target_link": "_self",
+            "button_style": "link",
+            "icon_style": "2",
+            "button_icon_w": 10,
+            "border_w": 1,
+            "button_effect": "default",
+            "pri_cl": "#7b7b7b",
+            "second_cl": "#ffffff",
+            "pri_cl_hover": "#c91f28",
+            "second_cl_hover": "#ffffff",
+            "fontf": "1",
+            "fsbutton": 14,
+            "fwbutton": 400,
+            "button_ls": 0,
+            "button_mh": 42,
+            "button_bdr": 0,
+            "button_pd_lr": 30,
+            "mgb": 0,
+            "fsbutton_tb": 12,
+            "button_icon_w_tb": 10,
+            "button_mh_tb": 36,
+            "button_pd_lr_tb": 15,
+            "button_ls_tb": 0,
+            "mgb_tb": 0,
+            "fsbutton_mb": 12,
+            "button_icon_w_mb": 10,
+            "button_mh_mb": 36,
+            "button_pd_lr_mb": 15,
+            "button_ls_mb": 0,
+            "mgb_mb": 0,
+            "hidden_mobile": false
+          }
+        }
+      },
+      "block_order": [
+        "bl_col_WQLqGH",
+        "custom_text_QLrnRU",
+        "bl_col_rfQbCY",
+        "custom_button_iYYnaj"
+      ],
+      "disabled": true,
+      "settings": {
+        "space_h_item": "0",
+        "space_v_item": "0",
+        "space_h_item_tb": "0",
+        "space_v_item_tb": "0",
+        "space_h_item_mb": "0",
+        "space_v_item_mb": "0",
+        "layout": "t4s-se-container",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": "0,0,0,0",
+        "pd": "",
+        "mg_tb": "0,0,0,0",
+        "pd_tb": "",
+        "mg_mb": "0,0,5px,0",
+        "pd_mb": ""
+      }
+    },
     "26aad063-4ea4-4b42-a079-ab97aa76522b": {
       "type": "featured-discount-collection",
       "blocks": {
@@ -574,12 +841,12 @@
             "show_stock_bar": true,
             "txt_sold": "Sold:",
             "txt_avai": "Available:",
-            "cl_stock_1": "#c91f28",
+            "cl_stock_1": "#8dc63f",
             "cl_stock_2": "#ededed",
             "cl_stock_3": "#7b7b7b",
-            "cd_title": "End in",
-            "date": "2024/12/26",
-            "cd_primary_color": "#c91f28",
+            "cd_title": "Ends in",
+            "date": "2025/4/18",
+            "cd_primary_color": "#8dc63f",
             "cd_secondary_color": "#293341",
             "head_btn_label": "View all",
             "head_btn_url": "shopify://collections",
@@ -589,38 +856,34 @@
             "head_btns_size": "default",
             "head_btns_cl": "custom3",
             "head_button_effect": "default",
-            "hidden_btn_mb": false
+            "hidden_btn_mb": true
           }
         }
       },
       "block_order": [
         "3220ac75-fb68-453a-9445-e81b9076e17e"
       ],
-      "disabled": true,
       "settings": {
         "design_heading": "1",
         "heading_center": false,
-        "top_heading": "Deals of the week",
+        "top_heading": "This Week's Featured Products",
         "top_subheading": "",
         "tophead_mb": 30,
         "tophead_mb_tb": 30,
         "tophead_mb_mb": 25,
         "bg_heading": "#ffffff",
         "product_list": [
-          "ipanema-26060-mais-tiras-fem",
-          "atlas-armchair-and-footstool",
-          "shimmer-glow-liquid-eye-shadow",
-          "airbrush-flawless-setting-spray",
-          "ginkong-bluetooth-speaker",
-          "matte-blue-glasses"
+          "grade-8-hex-flange-bolt-zinc-phosphate-oil",
+          "grade-8-hex-flange-screws-zinc-yellow-trivalent-bake",
+          "grade-5-hex-serrated-bolt-zinc-clear-trivalent"
         ],
         "show_vendor": false,
-        "image_ratio": "ratiocus1",
+        "image_ratio": "ratio4_3",
         "image_size": "cover",
         "image_position": "8",
         "content_align": "default",
-        "limit": 8,
-        "col_dk": "5",
+        "limit": 3,
+        "col_dk": "3",
         "col_tb": "3",
         "col_mb": "2",
         "space_h_item": "30",
@@ -629,7 +892,7 @@
         "space_v_item_tb": "30",
         "space_h_item_mb": "10",
         "space_v_item_mb": "10",
-        "layout_des": "2",
+        "layout_des": "1",
         "enable_box_border": false,
         "loop": true,
         "au_time": 0,
@@ -861,6 +1124,7 @@
         "template--18492594749761__4e479c32-9f6e-4959-abf9-2b96041d9458-16823211255f34509e-3",
         "1371e787-0573-4184-ae2f-3a49a77b6f7d"
       ],
+      "disabled": true,
       "custom_css": [
         ".t4s-container-inner {background-position: right;}"
       ],
@@ -1537,6 +1801,7 @@
         "custom_text_aCLDUj",
         "84b3d6d8-a13d-45dc-a0d7-80f9827ab0f9"
       ],
+      "disabled": true,
       "custom_css": [
         "@media (max-width: 767px) {.t4s-text-bl {color: #fff; }}"
       ],
@@ -1875,137 +2140,6 @@
         "mg_tb": ",,30px,",
         "pd_tb": "",
         "mg_mb": ",,30px,",
-        "pd_mb": ""
-      }
-    },
-    "47583590-bb34-401d-b0f4-63c1492b0a4b": {
-      "type": "custom-section",
-      "blocks": {
-        "8b1c6933-1b4e-40db-bb97-6807e0426084": {
-          "type": "bl_col",
-          "settings": {
-            "col_dk": "6",
-            "col_dk_w": "33.33333",
-            "col_tb": "6",
-            "col_dk_w_tb": "33.33333",
-            "col_mb": "6",
-            "align_vertical": true,
-            "border_col": false,
-            "content_align": "start",
-            "content_align_tablet": "start",
-            "content_align_mobile": "start",
-            "padding_inner": "",
-            "padding_inner_tb": "",
-            "padding_inner_mb": "",
-            "bg_cl": "rgba(0,0,0,0)"
-          }
-        },
-        "f576a4aa-0c63-4a45-8ae3-d0e58ae3506c": {
-          "type": "custom_text",
-          "settings": {
-            "text": "Electronics",
-            "remove_br_tag": true,
-            "tag": "h3",
-            "fontf": "1",
-            "text_cl": "#293341",
-            "text_fs": 25,
-            "text_lh": 40,
-            "text_fw": 300,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "mgb": 20,
-            "text_fs_tb": 25,
-            "text_lh_tb": 40,
-            "text_ls_tb": 0,
-            "mgb_tb": 15,
-            "hidden_mobile": false,
-            "text_fs_mb": 20,
-            "text_lh_mb": 24,
-            "text_ls_mb": 0,
-            "mgb_mb": 10
-          }
-        },
-        "84963ecc-9d99-42de-801b-f3709f969777": {
-          "type": "bl_col",
-          "settings": {
-            "col_dk": "6",
-            "col_dk_w": "33.33333",
-            "col_tb": "6",
-            "col_dk_w_tb": "33.33333",
-            "col_mb": "6",
-            "align_vertical": true,
-            "border_col": false,
-            "content_align": "end",
-            "content_align_tablet": "end",
-            "content_align_mobile": "end",
-            "padding_inner": "",
-            "padding_inner_tb": "",
-            "padding_inner_mb": "",
-            "bg_cl": "rgba(0,0,0,0)"
-          }
-        },
-        "1e7afb9f-825e-421f-9909-ddb5ffb53005": {
-          "type": "custom_button",
-          "settings": {
-            "button_text": "View all",
-            "button_link": "shopify://collections",
-            "target_link": "_self",
-            "button_style": "link",
-            "icon_style": "2",
-            "button_icon_w": 10,
-            "border_w": 1,
-            "button_effect": "default",
-            "pri_cl": "#7b7b7b",
-            "second_cl": "#ffffff",
-            "pri_cl_hover": "#c91f28",
-            "second_cl_hover": "#ffffff",
-            "fontf": "1",
-            "fsbutton": 14,
-            "fwbutton": 400,
-            "button_ls": 0,
-            "button_mh": 42,
-            "button_bdr": 0,
-            "button_pd_lr": 30,
-            "mgb": 0,
-            "fsbutton_tb": 12,
-            "button_icon_w_tb": 10,
-            "button_mh_tb": 36,
-            "button_pd_lr_tb": 15,
-            "button_ls_tb": 0,
-            "mgb_tb": 0,
-            "fsbutton_mb": 12,
-            "button_icon_w_mb": 10,
-            "button_mh_mb": 36,
-            "button_pd_lr_mb": 15,
-            "button_ls_mb": 0,
-            "mgb_mb": 0,
-            "hidden_mobile": false
-          }
-        }
-      },
-      "block_order": [
-        "8b1c6933-1b4e-40db-bb97-6807e0426084",
-        "f576a4aa-0c63-4a45-8ae3-d0e58ae3506c",
-        "84963ecc-9d99-42de-801b-f3709f969777",
-        "1e7afb9f-825e-421f-9909-ddb5ffb53005"
-      ],
-      "disabled": true,
-      "settings": {
-        "space_h_item": "0",
-        "space_v_item": "0",
-        "space_h_item_tb": "0",
-        "space_v_item_tb": "0",
-        "space_h_item_mb": "0",
-        "space_v_item_mb": "0",
-        "layout": "t4s-se-container",
-        "cl_bg": "",
-        "cl_bg_gradient": "",
-        "mg": "0,0,0,0",
-        "pd": "",
-        "mg_tb": "0,0,0,0",
-        "pd_tb": "",
-        "mg_mb": "0,0,5px,0",
         "pd_mb": ""
       }
     },
@@ -2685,6 +2819,7 @@
       "block_order": [
         "judge_me_reviews_featured_carousel_CUeEXj"
       ],
+      "disabled": true,
       "settings": {
         "include_margins": true
       }
@@ -2693,6 +2828,8 @@
   "order": [
     "custom_section_QRhnFE",
     "e10c341f-aa23-4128-9c82-c81241c20b41",
+    "47583590-bb34-401d-b0f4-63c1492b0a4b",
+    "custom_section_WzcyhW",
     "26aad063-4ea4-4b42-a079-ab97aa76522b",
     "b84cd7e0-9b8c-476f-85eb-a2d3755c6686",
     "4e479c32-9f6e-4959-abf9-2b96041d9458",
@@ -2700,7 +2837,6 @@
     "49337ccc-cc9b-4fbe-b436-7135d5d9f453",
     "c2cbb403-f7ed-403c-a5a0-e3c54fe24f44",
     "75fa069e-44a7-42c6-8edc-2ae45d797efc",
-    "47583590-bb34-401d-b0f4-63c1492b0a4b",
     "7a0475d9-8d7d-438f-9dc3-04a9cd7017e2",
     "ab7cfccd-4885-41b2-9091-620ec1a36c27",
     "07981567-7228-4ee0-bc86-41f308c4b833",
