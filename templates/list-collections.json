@@ -36,6 +36,14 @@
             "title": "Socket Cap Screws"
           }
         },
+        "collection_qgHx8d": {
+          "type": "collection",
+          "settings": {
+            "collection": "fastener-kits",
+            "image": "{{ block.settings.collection.image }}",
+            "title": "Fastener Kits"
+          }
+        },
         "33a9cdae-25f4-428a-b620-362edb64307f": {
           "type": "collection",
           "disabled": true,
@@ -65,6 +73,7 @@
         "56c9c0b3-70bb-4ee9-a858-38093da28e8e",
         "1389ada4-fb5b-4e5f-ac9b-21c647c0296c",
         "661c4e9c-7a06-4d96-9102-d7a886eb31ae",
+        "collection_qgHx8d",
         "33a9cdae-25f4-428a-b620-362edb64307f",
         "83889de8-0f43-488c-8e43-f8fb36b68058",
         "a2601505-faa9-41a6-a5db-7811e8bd4143"
@@ -73,7 +82,7 @@
         "display_type": "selected",
         "layout_des": "1",
         "limit": 6,
-        "col_dk": "3",
+        "col_dk": "4",
         "col_tb": "2",
         "col_mb": "2",
         "space_h_item": "10",
