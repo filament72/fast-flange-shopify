@@ -292,11 +292,11 @@
               "icon": ""
             }
           },
-          "1e80a434-0330-47c8-8d10-54e748a48c31": {
+          "cat_VJdQzJ": {
             "type": "cat",
             "settings": {
-              "cat": "avada-best-sellers",
-              "title": "BEST SELLERS",
+              "cat": "fastener-kits",
+              "title": "FASTENER KITS",
               "url": "",
               "menu": "",
               "lb": "",
@@ -305,11 +305,11 @@
               "icon": ""
             }
           },
-          "cat_VJdQzJ": {
+          "1e80a434-0330-47c8-8d10-54e748a48c31": {
             "type": "cat",
             "settings": {
-              "cat": "fastener-kits",
-              "title": "FASTENER KITS",
+              "cat": "avada-best-sellers",
+              "title": "BEST SELLERS",
               "url": "",
               "menu": "",
               "lb": "",
@@ -323,8 +323,8 @@
           "00928cb6-25d5-40f3-91e9-c73bec32dce3",
           "e793a139-c917-42ef-9caa-4682de9830f2",
           "23e24d02-4975-4bda-9dde-5eee3b500081",
-          "1e80a434-0330-47c8-8d10-54e748a48c31",
-          "cat_VJdQzJ"
+          "cat_VJdQzJ",
+          "1e80a434-0330-47c8-8d10-54e748a48c31"
         ],
         "settings": {}
       },
