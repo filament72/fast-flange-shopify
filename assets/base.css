@@ -411,8 +411,8 @@ small {
 }
 
 hr {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top:50px;
+  margin-bottom: 50px;
   max-width: 100px;
   border: none;
   border-bottom: 1px solid var(--border-color);
