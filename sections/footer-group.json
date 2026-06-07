@@ -333,15 +333,14 @@
         "html_tQTmRx": {
           "type": "html",
           "settings": {
-            "html_content": "<a href=\"/policies/terms-of-service\">Terms of Service</a> | <a href=\"/policies/privacy-policy\">Privacy Policy</a> | <a href=\"/policies/refund-policy\">Returns</a>",
+            "html_content": "<a href=\"/policies/terms-of-service\">Terms of Service</a> | <a href=\"/policies/privacy-policy\">Privacy Policy</a> | <a href=\"/policies/refund-policy\">Returns</a><br> ",
             "hidden_mobile": false
           }
         },
         "3c6c0b15-8111-4b5f-9c86-6d58fc9d8774": {
           "type": "cus_socials",
-          "disabled": true,
           "settings": {
-            "title": "",
+            "title": "Follow Us",
             "social_mode": "1",
             "social_style": "outline",
             "social_size": "medium",

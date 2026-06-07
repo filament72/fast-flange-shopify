@@ -411,6 +411,7 @@
         },
         "d1117bae-eb58-4731-a2a6-a31dc1209785": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Household Supplies",
             "url": "shopify://collections/cosmetic-beauty",
@@ -424,6 +425,7 @@
         },
         "50f85fee-7530-4990-ac54-008e55b47db9": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Health & Beauty",
             "url": "shopify://collections/cosmetic",
@@ -437,6 +439,7 @@
         },
         "31c2240b-394d-4d51-8ed3-47fb0b171178": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Electronics & Computers",
             "url": "shopify://collections/gaming-laptops",
@@ -450,6 +453,7 @@
         },
         "84c612f0-3ac2-486b-90b3-e86724f65c6a": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Video Games & Consoles",
             "url": "shopify://collections/playstation-4-consoles",
@@ -463,6 +467,7 @@
         },
         "eb66f609-c3ef-4d29-8717-259b4aafa639": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Furniture",
             "url": "shopify://collections/frontpage",
@@ -476,6 +481,7 @@
         },
         "4faab9de-3b32-4012-900d-7a44a7a617af": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Women's Fashion",
             "url": "shopify://collections/fashion",
@@ -489,6 +495,7 @@
         },
         "35fa1274-1f03-4a04-b715-a0e77cc5a246": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Baby",
             "url": "shopify://collections/fashion-17",
@@ -502,6 +509,7 @@
         },
         "302a87c7-4c33-416f-b2c8-7111d7b964fa": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Pet Supplies",
             "url": "shopify://collections/furniture-home-11",
@@ -515,6 +523,7 @@
         },
         "5eee379f-8968-42f9-b628-0d5f829cf1d8": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Appliances",
             "url": "shopify://collections/electronics-17",
@@ -528,6 +537,7 @@
         },
         "38b7df4a-3602-4a98-82f3-d86054c3bb60": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Sports, Fitness & Outdoors",
             "url": "shopify://collections/shose",
@@ -541,6 +551,7 @@
         },
         "2b2fe98c-3eae-411d-a1d5-c45b3003f9d5": {
           "type": "lv0_base",
+          "disabled": true,
           "settings": {
             "title": "Books, Music & Movies",
             "url": "shopify://collections/kitchen-dining",
@@ -567,6 +578,7 @@
         "38b7df4a-3602-4a98-82f3-d86054c3bb60",
         "2b2fe98c-3eae-411d-a1d5-c45b3003f9d5"
       ],
+      "disabled": true,
       "settings": {
         "arrow": true
       }

@@ -13,7 +13,9 @@
     "general_layout": "custom",
     "cus_w_bd": 1430,
     "body_bg": "#eff5f8",
-    "platform_email": "4",
+    "home_keywords": "",
+    "shop_author": "fastflange",
+    "platform_email": "1",
     "ajax_klaviyo": false,
     "c_1": "shopify://shop_images/Homepage18.ratio1.jpg",
     "c_2": "shopify://shop_images/Homepage18.ratio2.jpg",
@@ -36,11 +38,13 @@
     "rules_google_font": "font-family: 'Poppins', sans-serif;\nfont-family: 'Poppins', sans-serif;\nfont-family: 'Poppins', sans-serif;",
     "enable_compe": true,
     "enable_compe_popup": false,
+    "app_review": "7",
     "badge_shape": "horizontal_flag",
     "new_badge_color": "#8dc63f",
     "preorder_badge_color": "#5686b1",
     "custom_badge_color": "#8dc63f",
     "price_varies_style": "2",
+    "enable_rating": true,
     "show_qty": false,
     "enable_pr_color": true,
     "swatch_color_style": "1",
@@ -64,9 +68,10 @@
     "desktop_css": ".t4s-article-info{\npadding-inline-end:45px;} .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__account { padding-inline-end: calc(var(--space-icon)/2)!important; } .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__cart {  padding-inline-end: 0 !important;}",
     "tablet_css": ".t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__account { padding-inline-end: calc(var(--space-icon-tb)/2)!important; } .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__cart {  padding-inline-end: 0 !important;}",
     "mobile_css": ".t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__account { padding-inline-end: calc(var(--space-icon-mb)/2)!important; } .t4s-site-nav__icons .t4s-site-nav__icon.t4s-site-nav__cart {  padding-inline-end: 0 !important;}",
-    "social_facebook_link": "https://facebook.com/shopify",
-    "social_twitter_link": "https://twitter.com/shopify",
-    "social_instagram_link": "https://instagram.com/shopify",
+    "social_facebook_link": "https://www.facebook.com/people/Fast-Flange-LLC/61571457370263/",
+    "social_twitter_link": "https://x.com/fastflange",
+    "social_instagram_link": "https://www.instagram.com/fastflange?igsh=N2Y4OGdxbzNwOTV5&utm_source=qr",
+    "social_linkedin_link": "https://www.linkedin.com/company/fastflange/",
     "favicon": "shopify://shop_images/FF-favicon.png",
     "checkout_logo_image": "shopify://shop_images/fastflange-logo.png",
     "checkout_input_background_color_mode": "white",
@@ -256,7 +261,7 @@
               "url": "",
               "menu": "",
               "lb": "",
-              "lb_cl": "#e91e63",
+              "lb_cl": "#8dc63f",
               "icons_op": "2",
               "icon": ""
             }
@@ -269,7 +274,7 @@
               "url": "",
               "menu": "",
               "lb": "",
-              "lb_cl": "#e91e63",
+              "lb_cl": "#8dc63f",
               "icons_op": "2",
               "icon": ""
             }
@@ -282,7 +287,20 @@
               "url": "",
               "menu": "",
               "lb": "",
-              "lb_cl": "#e91e63",
+              "lb_cl": "#8dc63f",
+              "icons_op": "2",
+              "icon": ""
+            }
+          },
+          "cat_VJdQzJ": {
+            "type": "cat",
+            "settings": {
+              "cat": "fastener-kits",
+              "title": "FASTENER KITS",
+              "url": "",
+              "menu": "",
+              "lb": "",
+              "lb_cl": "#8dc63f",
               "icons_op": "2",
               "icon": ""
             }
@@ -295,7 +313,7 @@
               "url": "",
               "menu": "",
               "lb": "",
-              "lb_cl": "#e91e63",
+              "lb_cl": "#8dc63f",
               "icons_op": "2",
               "icon": ""
             }
@@ -305,6 +323,7 @@
           "00928cb6-25d5-40f3-91e9-c73bec32dce3",
           "e793a139-c917-42ef-9caa-4682de9830f2",
           "23e24d02-4975-4bda-9dde-5eee3b500081",
+          "cat_VJdQzJ",
           "1e80a434-0330-47c8-8d10-54e748a48c31"
         ],
         "settings": {}
@@ -412,7 +431,7 @@
             "type": "description",
             "settings": {
               "des": "2",
-              "text": "<p>Ocolus - most powerful Shopify theme for your store online. The best choice for your next personal or multi-vendor marketplace</p>",
+              "text": "",
               "length": 31
             }
           },
@@ -1635,7 +1654,24 @@
         }
       }
     },
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "1935445597218932304": {
+        "type": "shopify://apps/avada-seo-suite/blocks/avada-seo/15507c6e-1aa3-45d3-b698-7e175e033440",
+        "disabled": false,
+        "settings": {}
+      },
+      "pagefly-page-builder": {
+        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "platform_customizations": {
     "custom_css": []

@@ -60,6 +60,10 @@
             "custom_liquid": "{% if product.metafields.custom.stock_message != blank %}\n<h2 id=\"stock-message\">{{product.metafields.custom.stock_message}}</h2>\n{% endif %}"
           }
         },
+        "judge_me_reviews_preview_badge_cHjtfR": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
         "custom_liquid_b4bq78": {
           "type": "custom_liquid",
           "settings": {
@@ -75,7 +79,7 @@
         "custom_liquid_egWXBX": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% for variant in product.variants %}\n{% if product.selected_or_first_available_variant.id  == variant.id %}\n<strong>Weight Each:</strong> <span id=\"weight_each\">{{variant.metafields.custom.weight_per}}</span> lb<br>\n<strong>Weight /Pack:</strong> <span id=\"weight_pack\">{{variant.metafields.custom.weight_pack}}</span> lb<br>\n<strong>Weight /Carton:</strong> <span id=\"weight_carton\">{{variant.metafields.custom.weight_carton}}lb</span> lb\n{% endif %}\n{% endfor %}"
+            "custom_liquid": "{% for variant in product.variants %}\n\n{% if product.selected_or_first_available_variant.id  == variant.id %}{% if variant.metafields.custom.weight_per != blank %}\n<strong>Weight Each:</strong> <span id=\"weight_each\">{{variant.metafields.custom.weight_per}}</span> lb<br>{% endif %}{% if variant.metafields.custom.weight_pack != blank %}\n<strong>Weight /Pack:</strong> <span id=\"weight_pack\">{{variant.metafields.custom.weight_pack}}</span> lb<br>{% endif %}{% if variant.metafields.custom.weight_carton != blank %}\n<strong>Weight /Carton:</strong> <span id=\"weight_carton\">{{variant.metafields.custom.weight_carton}}lb</span> lb{% endif %}\n{% endif %}\n{% endfor %}"
           }
         },
         "custom_liquid_Xq7mXc": {
@@ -206,10 +210,9 @@
         },
         "10cfdfb4-7e28-468b-b71d-858e249268c2": {
           "type": "tab_rivui",
-          "disabled": true,
           "settings": {
             "title": "Reviews",
-            "review_liquid": ""
+            "review_liquid": "<div id=\"judgeme_product_reviews\" class=\"jdgm-widget jdgm-review-widget\" data-product-title=\"{{ product.title }}\" data-id=\"{{ product.id }}\"> {{ product.metafields.judgeme.widget }} </div>"
           }
         },
         "tab_liquid_QbWX3Y": {
@@ -233,6 +236,7 @@
         "title",
         "c56bcbfd-608c-4bad-ae67-b95910f78ebe",
         "custom_liquid_WeEa9V",
+        "judge_me_reviews_preview_badge_cHjtfR",
         "custom_liquid_b4bq78",
         "custom_liquid_7Nq8rg",
         "custom_liquid_egWXBX",
@@ -461,6 +465,12 @@
         "mg_mb": ",,30px,",
         "pd_mb": ""
       }
+    },
+    "173972831677804c1c": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -469,6 +479,7 @@
     "product_pagination",
     "sidebar",
     "product-recommendations",
-    "recently-viewed-products"
+    "recently-viewed-products",
+    "173972831677804c1c"
   ]
 }
