@@ -83,8 +83,180 @@
     "e10c341f-aa23-4128-9c82-c81241c20b41": {
       "type": "slideshow",
       "blocks": {
+        "image_parent_ywkgrn": {
+          "type": "image_parent",
+          "settings": {
+            "image": "shopify://shop_images/bannerBG.jpg",
+            "image_position": "8",
+            "cl_img": "",
+            "link_img1": "",
+            "open_link": "_blank",
+            "animate_slide": "none",
+            "text_align": "center",
+            "text_align_tb": "center",
+            "text_align_mb": "center",
+            "content_width": "container",
+            "cv_pos": 50,
+            "ch_pos": 50,
+            "cv_pos_tb": 50,
+            "ch_pos_tb": 50,
+            "cv_pos_mb": 50,
+            "ch_pos_mb": 50,
+            "bg_overlay": "#000000",
+            "bg_opacity": 0,
+            "bg_content_cl": "#ffffff",
+            "bg_content_op": 0,
+            "content_pd_tb": 0,
+            "content_pd_lr": 0,
+            "content_pd_tb_tb": 0,
+            "content_pd_lr_tb": 0,
+            "content_pd_tb_mb": 0,
+            "content_pd_lr_mb": 0,
+            "border_bl": false,
+            "br_color": "#222222",
+            "br_bg": "#ffffff",
+            "br_opacity": 50,
+            "br_style": "solid",
+            "br_pd": 20,
+            "br_pd_tb": 15,
+            "br_pd_mb": 10,
+            "label_nav": "Season Sale",
+            "time_animation": 1,
+            "animation_delay": 40
+          }
+        },
+        "image_dKa3cU": {
+          "type": "image",
+          "settings": {
+            "image_child": "shopify://shop_images/Made-in-USA-Banner.jpg",
+            "img_width": 0,
+            "img_width_tb": 0,
+            "img_width_mb": 0,
+            "img_link": "shopify://collections/flange-bolt",
+            "hidden_mobile": false,
+            "mgb": 0,
+            "mgb_tb": 0,
+            "mgb_mb": 0,
+            "animation": "none"
+          }
+        },
+        "image_parent_fLV3aG": {
+          "type": "image_parent",
+          "settings": {
+            "image": "shopify://shop_images/bannerBG.jpg",
+            "image_position": "8",
+            "cl_img": "",
+            "link_img1": "",
+            "open_link": "_blank",
+            "animate_slide": "none",
+            "text_align": "center",
+            "text_align_tb": "center",
+            "text_align_mb": "center",
+            "content_width": "container",
+            "cv_pos": 50,
+            "ch_pos": 50,
+            "cv_pos_tb": 50,
+            "ch_pos_tb": 50,
+            "cv_pos_mb": 50,
+            "ch_pos_mb": 50,
+            "bg_overlay": "#000000",
+            "bg_opacity": 0,
+            "bg_content_cl": "#ffffff",
+            "bg_content_op": 0,
+            "content_pd_tb": 0,
+            "content_pd_lr": 0,
+            "content_pd_tb_tb": 0,
+            "content_pd_lr_tb": 0,
+            "content_pd_tb_mb": 0,
+            "content_pd_lr_mb": 0,
+            "border_bl": false,
+            "br_color": "#222222",
+            "br_bg": "#ffffff",
+            "br_opacity": 50,
+            "br_style": "solid",
+            "br_pd": 20,
+            "br_pd_tb": 15,
+            "br_pd_mb": 10,
+            "label_nav": "Season Sale",
+            "time_animation": 1,
+            "animation_delay": 40
+          }
+        },
+        "image_qDQUzn": {
+          "type": "image",
+          "settings": {
+            "image_child": "shopify://shop_images/Metric-Flange-Bolts-Banner.jpg",
+            "img_width": 0,
+            "img_width_tb": 0,
+            "img_width_mb": 0,
+            "img_link": "shopify://collections/metric",
+            "hidden_mobile": false,
+            "mgb": 20,
+            "mgb_tb": 20,
+            "mgb_mb": 10,
+            "animation": "none"
+          }
+        },
+        "image_parent_arbB8E": {
+          "type": "image_parent",
+          "settings": {
+            "image": "shopify://shop_images/bannerBG.jpg",
+            "image_position": "8",
+            "cl_img": "",
+            "link_img1": "",
+            "open_link": "_blank",
+            "animate_slide": "none",
+            "text_align": "center",
+            "text_align_tb": "center",
+            "text_align_mb": "center",
+            "content_width": "container",
+            "cv_pos": 50,
+            "ch_pos": 50,
+            "cv_pos_tb": 50,
+            "ch_pos_tb": 50,
+            "cv_pos_mb": 50,
+            "ch_pos_mb": 50,
+            "bg_overlay": "#000000",
+            "bg_opacity": 0,
+            "bg_content_cl": "#ffffff",
+            "bg_content_op": 0,
+            "content_pd_tb": 0,
+            "content_pd_lr": 0,
+            "content_pd_tb_tb": 0,
+            "content_pd_lr_tb": 0,
+            "content_pd_tb_mb": 0,
+            "content_pd_lr_mb": 0,
+            "border_bl": false,
+            "br_color": "#222222",
+            "br_bg": "#ffffff",
+            "br_opacity": 50,
+            "br_style": "solid",
+            "br_pd": 20,
+            "br_pd_tb": 15,
+            "br_pd_mb": 10,
+            "label_nav": "Season Sale",
+            "time_animation": 1,
+            "animation_delay": 40
+          }
+        },
+        "image_GcmJnW": {
+          "type": "image",
+          "settings": {
+            "image_child": "shopify://shop_images/Fine-Thread-Flange-Bolt-Banner.jpg",
+            "img_width": 0,
+            "img_width_tb": 0,
+            "img_width_mb": 0,
+            "img_link": "shopify://collections/flange-bolt",
+            "hidden_mobile": false,
+            "mgb": 20,
+            "mgb_tb": 20,
+            "mgb_mb": 10,
+            "animation": "none"
+          }
+        },
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-0": {
           "type": "image_parent",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/sustainablysourced.jpg",
             "image_position": "8",
@@ -127,6 +299,7 @@
         },
         "custom_label_ntVyz4": {
           "type": "custom_label",
+          "disabled": true,
           "settings": {
             "text": "FEATURED",
             "label_cl": "#293341",
@@ -147,6 +320,7 @@
         },
         "custom_text_bTU3Cw": {
           "type": "custom_text",
+          "disabled": true,
           "settings": {
             "text": "SUSTAINABLY<br>\nSOURCED<br>\nFASTENERS",
             "remove_br_tag": true,
@@ -174,6 +348,7 @@
         },
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-3": {
           "type": "custom_button",
+          "disabled": true,
           "settings": {
             "button_text": "SHOP NOW",
             "product": "",
@@ -214,6 +389,7 @@
         },
         "image_parent_TmWP3j": {
           "type": "image_parent",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/bolt_field.jpg",
             "image_position": "8",
@@ -256,6 +432,7 @@
         },
         "298e0e28-0bfd-4e94-9a65-cd3b20be1b20": {
           "type": "custom_label",
+          "disabled": true,
           "settings": {
             "text": "STOCK UP",
             "label_cl": "#293341",
@@ -276,6 +453,7 @@
         },
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-1": {
           "type": "custom_text",
+          "disabled": true,
           "settings": {
             "text": "BUY MORE<br>\nAND SAVE<br>",
             "remove_br_tag": true,
@@ -303,6 +481,7 @@
         },
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-2": {
           "type": "custom_text",
+          "disabled": true,
           "settings": {
             "text": "Discounts Reflected in Cart",
             "remove_br_tag": true,
@@ -358,6 +537,7 @@
         },
         "e4e0d48a-ad03-4858-9581-0fe4b8e54e1a": {
           "type": "image_parent",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/boltpattern_884e17ea-7fa3-4cab-aa1a-afa4dfb30626.jpg",
             "image_position": "8",
@@ -400,6 +580,7 @@
         },
         "82f183c9-1af5-40f2-83a5-d32fc080f22e": {
           "type": "custom_text",
+          "disabled": true,
           "settings": {
             "text": "CONFLICT MINERAL FREE",
             "remove_br_tag": true,
@@ -427,6 +608,7 @@
         },
         "3313c349-069b-4191-b096-c8b64da8ec7f": {
           "type": "custom_text",
+          "disabled": true,
           "settings": {
             "text": "BOLTS AND<br> \nNUTS",
             "remove_br_tag": false,
@@ -454,6 +636,7 @@
         },
         "09c1ae6f-ccb8-45a3-b7fb-8bd38e7bada7": {
           "type": "custom_button",
+          "disabled": true,
           "settings": {
             "button_text": "SHOP NOW",
             "product": "",
@@ -494,6 +677,12 @@
         }
       },
       "block_order": [
+        "image_parent_ywkgrn",
+        "image_dKa3cU",
+        "image_parent_fLV3aG",
+        "image_qDQUzn",
+        "image_parent_arbB8E",
+        "image_GcmJnW",
         "template--18118974112051__e10c341f-aa23-4128-9c82-c81241c20b41-167809025745361a23-0",
         "custom_label_ntVyz4",
         "custom_text_bTU3Cw",
@@ -511,11 +700,11 @@
       "settings": {
         "se_height": "t4s_ratioadapt_f_mix",
         "custom_dk": true,
-        "height_dk": 550,
+        "height_dk": 680,
         "custom_tb": true,
         "height_tb": 400,
         "custom_mb": true,
-        "height_mb": 250,
+        "height_mb": 175,
         "eff": "slide",
         "loop": true,
         "au_time": 10,
