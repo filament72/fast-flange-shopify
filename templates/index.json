@@ -1340,7 +1340,7 @@
         "custom_text_YjWB3U": {
           "type": "custom_text",
           "settings": {
-            "text": "Grade 8",
+            "text": "Grade 5",
             "remove_br_tag": false,
             "tag": "h6",
             "fontf": "inherit",
@@ -1554,7 +1554,7 @@
             "remove_br_tag": false,
             "tag": "h6",
             "fontf": "inherit",
-            "text_cl": "#FFFFFF",
+            "text_cl": "#ffffff",
             "text_fs": 16,
             "text_lh": 0,
             "text_fw": 400,
@@ -1581,7 +1581,7 @@
             "remove_br_tag": true,
             "tag": "h4",
             "fontf": "1",
-            "text_cl": "#FFFFFF",
+            "text_cl": "#ffffff",
             "text_fs": 20,
             "text_lh": 25,
             "text_fw": 500,
@@ -1613,7 +1613,7 @@
             "image": "shopify://shop_images/06-nuts.jpg",
             "image_size": "cover",
             "image_position": "start",
-            "b_link": "shopify://collections/flange-nut",
+            "b_link": "shopify://products/grade-g-hex-flange-prevailing-torque-top-lock-nut-zinc-yellow-trivalent-wax",
             "open_link": "_self",
             "img_effect": "zoom",
             "b_effect": "plus-zoom-overlay",
@@ -1655,11 +1655,11 @@
         "custom_text_aCLDUj": {
           "type": "custom_text",
           "settings": {
-            "text": "Grade 8",
+            "text": "Grade G",
             "remove_br_tag": false,
             "tag": "h6",
             "fontf": "inherit",
-            "text_cl": "#FFFFFF",
+            "text_cl": "#ffffff",
             "text_fs": 16,
             "text_lh": 0,
             "text_fw": 400,
@@ -1682,11 +1682,11 @@
         "84b3d6d8-a13d-45dc-a0d7-80f9827ab0f9": {
           "type": "custom_text",
           "settings": {
-            "text": "Hex<br> Flange Nut",
+            "text": "Hex Flange Nut",
             "remove_br_tag": true,
             "tag": "h4",
             "fontf": "1",
-            "text_cl": "#FFFFFF",
+            "text_cl": "#ffffff",
             "text_fs": 20,
             "text_lh": 25,
             "text_fw": 500,
