@@ -144,17 +144,17 @@
               {%- if blog != blank -%} 
                 {%- case article_des -%} 
                   {%- when '1' -%} 
-                    {%- render 'article_loop_1' for blog.articles as article, show_blog_title: show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
+                    {%- render 'article_loop_1' for blog.articles as article, show_blog_title: show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
                   {%- when '2' -%}
-                    {%- render 'article_loop_2' for blog.articles as article, show_blog_title: show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt, col_dk: col_dk, col_tb: col_tb -%}
+                    {%- render 'article_loop_2' for blog.articles as article, show_blog_title: show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt, col_dk: col_dk, col_tb: col_tb -%}
                   {%- when '3' -%}
-                    {%- render 'article_loop_3' for blog.articles as article, show_blog_title: show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
+                    {%- render 'article_loop_3' for blog.articles as article, show_blog_title: show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
                   {%- when '4' -%}
-                    {%- render 'article_loop_4' for blog.articles as article, show_blog_title: show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
+                    {%- render 'article_loop_4' for blog.articles as article, show_blog_title: show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
                   {%- when '5' -%}
-                    {%- render 'article_loop_5' for blog.articles as article, date: date, show_blog_title: show_blog_title, section.settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
+                    {%- render 'article_loop_5' for blog.articles as article, date: date, show_blog_title: show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
                   {%- when '6' -%}
-                    {%- render 'article_loop_6' for blog.articles as article, show_blog_title: show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
+                    {%- render 'article_loop_6' for blog.articles as article, show_blog_title: show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}
                 {%- endcase -%}
               {%- else -%}
                 {%- for i in (1..6) limit: limit -%}
@@ -2669,4 +2669,90 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'article_loop_1' for blog.articles as article, show_blog_title:
+    show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title:
+    blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect,
+    show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags:
+    show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore:
+    show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}"
+  to: "{%- render 'article_loop_1' for blog.articles as article, show_blog_title:
+    show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title,
+    by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date:
+    show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags,
+    show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore,
+    date_format: date_format, readmore_txt: readmore_txt -%}"
+  position: 10095..10581
+- from: "{%- render 'article_loop_2' for blog.articles as article, show_blog_title:
+    show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title:
+    blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect,
+    show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags:
+    show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore:
+    show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt, col_dk:
+    col_dk, col_tb: col_tb -%}"
+  to: "{%- render 'article_loop_2' for blog.articles as article, show_blog_title:
+    show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title,
+    by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date:
+    show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags,
+    show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore,
+    date_format: date_format, readmore_txt: readmore_txt, col_dk: col_dk, col_tb:
+    col_tb -%}"
+  position: 10637..11155
+- from: "{%- render 'article_loop_3' for blog.articles as article, show_blog_title:
+    show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title:
+    blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect,
+    show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags:
+    show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore:
+    show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}"
+  to: "{%- render 'article_loop_3' for blog.articles as article, show_blog_title:
+    show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title,
+    by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date:
+    show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags,
+    show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore,
+    date_format: date_format, readmore_txt: readmore_txt -%}"
+  position: 11211..11697
+- from: "{%- render 'article_loop_4' for blog.articles as article, show_blog_title:
+    show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title:
+    blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect,
+    show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags:
+    show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore:
+    show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}"
+  to: "{%- render 'article_loop_4' for blog.articles as article, show_blog_title:
+    show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title,
+    by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date:
+    show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags,
+    show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore,
+    date_format: date_format, readmore_txt: readmore_txt -%}"
+  position: 11753..12239
+- from: "{%- render 'article_loop_5' for blog.articles as article, date: date, show_blog_title:
+    show_blog_title, section.settings: block.settings, blog_url: blog_url, blog_title:
+    blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect,
+    show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags:
+    show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore:
+    show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}"
+  to: "{%- render 'article_loop_5' for blog.articles as article, date: date, show_blog_title:
+    show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title,
+    by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date:
+    show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags,
+    show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore,
+    date_format: date_format, readmore_txt: readmore_txt -%}"
+  position: 12295..12793
+- from: "{%- render 'article_loop_6' for blog.articles as article, show_blog_title:
+    show_blog_title, block.settings: block.settings, blog_url: blog_url, blog_title:
+    blog_title, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect,
+    show_date: show_date, show_author: show_author, show_comment: show_comment, show_tags:
+    show_tags, show_content: show_content, show_readmore: show_readmore, show_ic_readmore:
+    show_ic_readmore, date_format: date_format, readmore_txt: readmore_txt -%}"
+  to: "{%- render 'article_loop_6' for blog.articles as article, show_blog_title:
+    show_blog_title, settings: block.settings, blog_url: blog_url, blog_title: blog_title,
+    by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_date:
+    show_date, show_author: show_author, show_comment: show_comment, show_tags: show_tags,
+    show_content: show_content, show_readmore: show_readmore, show_ic_readmore: show_ic_readmore,
+    date_format: date_format, readmore_txt: readmore_txt -%}"
+  position: 12849..13335
+{%- endcomment -%}
